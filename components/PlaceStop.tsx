@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { CheckCircle, MapPin, NavigationArrow, Warning } from "@phosphor-icons/react/dist/ssr";
-import type { Place } from "@/content/types";
-import { getSenior } from "@/content/seniors";
+import type { Place, Senior } from "@/content/types";
 import { mapsUrl } from "@/lib/format";
 import { Photo } from "./Photo";
 import { Price } from "./Price";
 import { StationCode } from "./StationCode";
 
 // A Place as a station on its category's line: no card, the line joins them.
-export function PlaceStop({ place, code }: { place: Place; code: string }) {
-  const senior = place.senior && getSenior(place.senior.id);
+export function PlaceStop({ place, code, senior }: { place: Place; code: string; senior?: Senior }) {
   return (
     <article className="stop" id={place.id}>
       {place.photo && <Photo photo={place.photo} className="stop-photo" />}

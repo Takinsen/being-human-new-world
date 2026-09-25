@@ -210,6 +210,14 @@ svg { flex: none; }
   font-size: var(--step--1);
 }
 
+.site-footer a {
+  display: inline-block;
+  min-height: 44px;
+  line-height: 44px;
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* ---------- Home ---------- */
 
 .hero {
@@ -1299,4 +1307,81 @@ body:has(.explorer) .site-footer {
   flex: 1;
   overflow-y: auto;
   padding: 0 var(--gutter) 24px;
+}
+
+/* ช่วยเติมข้อมูล (/contribute) */
+.contribute-form {
+  display: grid;
+  gap: 14px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.contribute-form h2 { margin-bottom: -10px; }
+.contribute-form .status-note { margin: 0; }
+
+.contribute-form label {
+  display: grid;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.contribute-form label.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.contribute-form label.check input { margin-top: 6px; width: 20px; height: 20px; }
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 14px;
+}
+
+.contribute-form input:not([type="checkbox"]),
+.contribute-form select,
+.contribute-form textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 2px solid var(--rule);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-weight: 400;
+}
+
+.contribute-form input:focus,
+.contribute-form select:focus,
+.contribute-form textarea:focus { border-color: var(--ink); }
+
+.contribute-form button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--paper);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.contribute-form button:disabled { opacity: 0.6; cursor: progress; }
+
+.form-status {
+  padding: 10px 14px;
+  border-left: 4px solid var(--transport);
+  background: #eef6f0;
+  font-weight: 600;
+}
+
+.form-status.is-error {
+  border-left-color: var(--caution);
+  background: #fdeeec;
 }

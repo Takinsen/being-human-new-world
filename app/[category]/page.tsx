@@ -3,17 +3,13 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { BowlSteam, MapTrifold } from "@phosphor-icons/react/dist/ssr";
 import { categories, getCategory } from "@/content/categories";
-import { guidesIn } from "@/content/guides";
-import { placesIn } from "@/content/places";
-import { seniors } from "@/content/seniors";
 import { CategoryHead } from "@/components/CategoryBand";
 import { GuideBlock } from "@/components/GuideBlock";
 import { PlaceStop } from "@/components/PlaceStop";
+import { type Content, getContent, guidesIn, placesIn, seniorFor } from "@/lib/content";
 import { placeCode } from "@/lib/format";
 
 type Props = { params: Promise<{ category: string }> };
-
-export const dynamicParams = false;
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.id }));
@@ -28,8 +24,9 @@ export default async function CategoryPage({ params }: Props) {
   const category = getCategory((await params).category);
   if (!category) notFound();
 
-  const places = placesIn(category.id);
-  const guides = guidesIn(category.id);
+  const content = await getContent();
+  const places = placesIn(content, category.id);
+  const guides = guidesIn(content, category.id);
 
   return (
     <div data-line={category.id}>
@@ -49,13 +46,13 @@ export default async function CategoryPage({ params }: Props) {
           </div>
           <div className="line-stops">
             {places.map((p, i) => (
-              <PlaceStop key={p.id} place={p} code={placeCode(p.category, i)} />
+              <PlaceStop key={p.id} place={p} code={placeCode(p.category, i)} senior={seniorFor(content, p)} />
             ))}
           </div>
         </section>
       )}
 
-      {category.id === "food" && <HomeTaste />}
+      {category.id === "food" && <HomeTaste content={content} />}
 
       {guides.length > 0 && (
         <section className="guides inner">
@@ -72,24 +69,25 @@ export default async function CategoryPage({ params }: Props) {
   );
 }
 
-function HomeTaste() {
-  const vouched = placesIn("food").filter((p) => p.homeTaste);
+function HomeTaste({ content }: { content: Content }) {
+  const vouched = placesIn(content, "food").filter((p) => p.homeTaste);
   return (
     <section className="home-taste" id="home-taste">
       <div className="inner">
         <h2>
           <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน
         </h2>
-        <p>ร้านอาหารภาคต่างๆ แถวจุฬาฯ ที่รุ่นพี่จากภาคนั้นกินแล้วบอกว่าใช่</p>
+        <p>ร้านอาหารภาคต่างๆ แถวจุฬาฯ ที่รุ่นพี่จากภาคนั้นกินแล้วบอกว่าใช่ หรือที่ทีมหามาให้ลอง</p>
         <ul>
-          {seniors.map((s) => {
-            const place = vouched.find((p) => p.homeTaste === s.region && p.senior?.id === s.id);
+          {content.seniors.map((s) => {
+            const byRegion = vouched.filter((p) => p.homeTaste === s.region);
+            const place = byRegion.find((p) => p.senior?.id === s.id) ?? byRegion[0];
             return (
               <li key={s.id}>
                 <b>อาหาร{s.region}</b>
                 {place ? (
                   <a href={`#${place.id}`}>
-                    {place.name}, {s.name}แนะนำ
+                    {place.name}, {place.senior?.id === s.id ? `${s.name}แนะนำ` : "ทีมหามาให้ลอง"}
                   </a>
                 ) : (
                   <span className="pending">{s.name}กำลังเลือกร้านให้</span>

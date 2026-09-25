@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { HandHeart, MapTrifold } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
-import { seniors } from "@/content/seniors";
 import { CategoryBand } from "@/components/CategoryBand";
 import { LineMap } from "@/components/LineMap";
 import { WeekRoute } from "@/components/WeekRoute";
+import { getContent } from "@/lib/content";
 
-export default function Home() {
+export default async function Home() {
+  const { seniors } = await getContent();
   return (
     <>
       <section className="hero inner">

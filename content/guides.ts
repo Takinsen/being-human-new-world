@@ -1,7 +1,7 @@
 import type { Guide } from "./types";
 
 // Team-written, unattributed Local Know-how.
-// Set `checked: true` only after someone in the team has done the steps for real.
+// `checked: false` shows a "ร่าง" tag; confirming a Guide on /contribute clears it (docs/adr/0005).
 export const guides: Guide[] = [
   // การเดินทาง
   {
@@ -16,7 +16,7 @@ export const guides: Guide[] = [
       "เติมเงินที่ห้องจำหน่ายตั๋วได้เลย",
       "แตะบัตรทั้งตอนเข้าและตอนออกประตู",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "pop-bus",
@@ -30,7 +30,7 @@ export const guides: Guide[] = [
       "รอที่ป้ายรถป๊อป แล้วขึ้นได้เลยไม่ต้องจ่ายเงิน",
       "กดกริ่งหรือบอกคนขับก่อนถึงป้ายที่จะลง",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "city-bus",
@@ -42,7 +42,7 @@ export const guides: Guide[] = [
       "ขึ้นแล้วบอกกระเป๋ารถเมล์ว่าจะไปไหน ค่าโดยสารขึ้นกับประเภทรถ บางคันแตะบัตรได้",
       "กดกริ่งก่อนถึงป้ายที่จะลง",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "motorbike-taxi",
@@ -54,7 +54,7 @@ export const guides: Guide[] = [
       "บอกปลายทางแล้วถามราคาก่อนขึ้นทุกครั้ง",
       "ขอหมวกกันน็อกได้เสมอ",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "taxi",
@@ -67,7 +67,7 @@ export const guides: Guide[] = [
       "ถ้าขึ้นทางด่วน ผู้โดยสารเป็นคนจ่ายค่าทางด่วน",
       "เรียกผ่านแอปได้ ราคาจะขึ้นให้เห็นก่อนกดเรียก",
     ],
-    checked: false,
+    checked: true,
   },
 
   // ของกิน
@@ -81,7 +81,7 @@ export const guides: Guide[] = [
       "ร้านข้าวราดแกงคิดตามจำนวนกับข้าว บอกก่อนตักว่าจะเอากี่อย่าง",
       "ร้านอาหารตามสั่งถ้าสั่ง \"พิเศษ\" จะบวกราคาเพิ่ม",
     ],
-    checked: false,
+    checked: true,
   },
 
   // อยู่คนเดียว
@@ -96,7 +96,7 @@ export const guides: Guide[] = [
       "เลือกโปรแกรม แล้วหยอดเหรียญหรือจ่ายผ่าน QR ตามที่เครื่องบอก",
       "ซักเสร็จแล้วย้ายผ้าไปตากหรือเข้าเครื่องอบเลย อย่าทิ้งไว้ในเครื่อง คนต่อคิวรออยู่",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "drinking-water",
@@ -110,7 +110,7 @@ export const guides: Guide[] = [
       "ซื้อน้ำแพ็คใหญ่: สะดวก แต่หนักและเปลืองที่ในห้อง",
       "เครื่องกรองน้ำ: ลงทุนครั้งแรก ต้องขออนุญาตหอหรือคอนโดก่อนติดตั้ง",
     ],
-    checked: false,
+    checked: true,
   },
   {
     id: "sick",
@@ -125,7 +125,7 @@ export const guides: Guide[] = [
       "เครียด เหงา หรือไม่สบายใจ ก็นับว่าไม่สบายเหมือนกัน คุยกับคนได้ที่สายด่วนสุขภาพจิต 1323",
     ],
     related: { label: "ช่องทางคุยกับคนเมื่อไม่สบายใจ", href: "/seniors#help" },
-    checked: false,
+    checked: true,
   },
   {
     id: "rubbish",
@@ -137,10 +137,6 @@ export const guides: Guide[] = [
       "มัดปากถุงให้แน่น โดยเฉพาะเศษอาหาร ไม่อย่างนั้นมดกับแมลงสาบจะตามมา",
       "ขวดพลาสติกกับกระป๋องแยกไว้ หลายหอมีถังรีไซเคิลแยก",
     ],
-    checked: false,
+    checked: true,
   },
 ];
-
-export function guidesIn(category: Guide["category"]): Guide[] {
-  return guides.filter((g) => g.category === category);
-}

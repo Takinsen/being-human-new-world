@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
-import { seniors } from "@/content/seniors";
 import { SeniorStory } from "@/components/SeniorStory";
+import { getContent } from "@/lib/content";
 
 export const metadata: Metadata = { title: "รุ่นพี่ | ตั้งหลัก" };
 
-export default function SeniorsPage() {
+export default async function SeniorsPage() {
+  const { seniors } = await getContent();
   return (
     <>
       <header className="page-head inner">

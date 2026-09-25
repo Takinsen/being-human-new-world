@@ -1,8 +1,8 @@
 import type { Place } from "./types";
 
-// Coordinates and price ranges below are desk-research drafts.
-// Before the pitch, walk each Place: fix the pin, confirm the price on the
-// spot and fill in `price.checked`. Unchecked prices show "รอตรวจราคา".
+// Coordinates and price ranges below are desk research (Sep 2026), credited to
+// the team "from the web". A Price Check made on the spot comes in through
+// /contribute and replaces it (docs/adr/0005). Unchecked prices show "รอตรวจราคา".
 // Photos come from Wikimedia Commons; replace them with the team's own shots when you have them.
 export const places: Place[] = [
   // การเดินทาง
@@ -18,7 +18,7 @@ export const places: Place[] = [
       "แตะบัตรเครดิตหรือเดบิตที่มีสัญลักษณ์ contactless ผ่านประตูได้เลย ไม่ต้องซื้อเหรียญ",
       "ใช้บัตรใบเดียวกันแตะทั้งตอนเข้าและตอนออก",
     ],
-    price: { min: 17, max: 45, per: "ต่อเที่ยว" },
+    price: { min: 17, max: 44, per: "ต่อเที่ยว", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
   },
   {
     id: "bts-siam",
@@ -33,7 +33,7 @@ export const places: Place[] = [
       "ช่วง 7:30–9:00 คนแน่นมาก เผื่อเวลาไว้อย่างน้อย 15 นาที",
     ],
     cautions: ["ยืนชิดขวาบนบันไดเลื่อน ฝั่งซ้ายเว้นให้คนเดินขึ้น"],
-    price: { min: 17, max: 47, per: "ต่อเที่ยว" },
+    price: { min: 17, max: 47, per: "ต่อเที่ยว", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
   },
   {
     id: "bts-national-stadium",
@@ -44,6 +44,7 @@ export const places: Place[] = [
     summary: "ใกล้ฝั่งบรรทัดทองและหอพักแถวนั้น",
     photo: { file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" },
     knowhow: ["ลงสถานีนี้แล้วเดินเลียบถนนบรรทัดทองลงมาทางจุฬาฯ ได้"],
+    price: { min: 17, max: 47, per: "ต่อเที่ยว", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
   },
 
   // ของกิน
@@ -56,7 +57,7 @@ export const places: Place[] = [
     summary: "มีหลายร้านในที่เดียว แอร์เย็น เปิดดึก นั่งอ่านหนังสือต่อได้",
     photo: { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
     knowhow: ["แลกบัตรหรือเติมเงินที่เคาน์เตอร์ก่อนสั่ง เงินที่เหลือคืนได้ที่เคาน์เตอร์เดิม"],
-    price: { min: 50, max: 80, per: "ต่อจาน" },
+    price: { min: 60, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
   },
   {
     id: "samyan-market",
@@ -66,7 +67,7 @@ export const places: Place[] = [
     lng: 100.5253,
     summary: "ตลาดสดกับร้านอาหาร ชั้นบนมีร้านข้าวให้เลือกเยอะ",
     knowhow: ["ร้านข้าวราดแกงคิดตามจำนวนกับข้าวที่ตัก บอกก่อนว่าจะเอากี่อย่าง"],
-    price: { min: 40, max: 60, per: "ต่อจาน" },
+    price: { min: 50, max: 80, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
   },
   {
     id: "banthat-thong",
@@ -78,7 +79,31 @@ export const places: Place[] = [
     photo: { file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" },
     knowhow: ["หลายร้านดังคิวยาวช่วงหัวค่ำ ถ้าหิวจริงให้มาก่อน 18:00 หรือหลัง 20:30"],
     cautions: ["ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน"],
-    price: { min: 50, max: 120, per: "ต่อจาน" },
+    price: { min: 60, max: 200, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
+  },
+  {
+    id: "niyom-paktai",
+    name: "นิยมปักษ์ใต้ บรรทัดทอง",
+    category: "food",
+    // Pin is an estimate from the address; check it on the spot.
+    lat: 13.7375,
+    lng: 100.5225,
+    summary: "ร้านอาหารใต้บนถนนบรรทัดทอง ฝั่งตรงข้ามจุฬาฯ ซอย 34 เปิดทุกวันตั้งแต่ 11:00",
+    knowhow: ["อาหารใต้รสจัดตามแบบใต้ ถ้าไม่ไหวบอกลดเผ็ดตอนสั่ง", "ไปกันหลายคนแล้วแบ่งกันกินคุ้มกว่า ราคาต่อจานสูงกว่าร้านข้าวทั่วไป"],
+    price: { min: 120, max: 250, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
+    homeTaste: "ใต้",
+  },
+  {
+    id: "somtam-chula-20",
+    name: "ส้มตำเจ๊อ้อย จุฬาฯ ซอย 20",
+    category: "food",
+    // Pin is an estimate from the address; check it on the spot.
+    lat: 13.739,
+    lng: 100.5235,
+    summary: "ส้มตำโต๊ะแดงในจุฬาฯ ซอย 20 ใกล้อุทยาน 100 ปี เปิดเย็นถึงดึก 16:30–23:30",
+    knowhow: ["ร้านเปิดตอนเย็น มาหลังเลิกเรียนหรือหลังซ้อมได้พอดี", "ส้มตำไทยกับคอหมูย่างเป็นเมนูที่คนสั่งกันเยอะ"],
+    price: { min: 50, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก (ข้อมูลจากเว็บ)" } },
+    homeTaste: "อีสาน",
   },
 
   // อยู่คนเดียว
@@ -105,7 +130,3 @@ export const places: Place[] = [
     knowhow: ["ซื้อน้ำดื่มแพ็คใหญ่ถูกกว่าซื้อขวดเดี่ยวจากร้านสะดวกซื้อทุกวัน"],
   },
 ];
-
-export function placesIn(category: Place["category"]): Place[] {
-  return places.filter((p) => p.category === category);
-}

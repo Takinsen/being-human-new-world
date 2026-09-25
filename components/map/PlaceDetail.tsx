@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, CheckCircle, NavigationArrow, Warning } from "@phosphor-icons/react";
 import { getCategory } from "@/content/categories";
-import { getSenior } from "@/content/seniors";
 import { mapsUrl } from "@/lib/format";
 import { Price } from "../Price";
 import { StationCode } from "../StationCode";
@@ -9,9 +8,8 @@ import type { MapStop } from "./types";
 
 // The selected Place's know-how, in the sidebar or bottom sheet.
 export function PlaceDetail({ stop, onBack }: { stop: MapStop; onBack: () => void }) {
-  const { place, code } = stop;
+  const { place, code, senior } = stop;
   const line = getCategory(place.category);
-  const senior = place.senior && getSenior(place.senior.id);
   return (
     <article className="detail" data-line={place.category}>
       <button type="button" className="detail-back" onClick={onBack}>

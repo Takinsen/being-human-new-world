@@ -14,11 +14,20 @@ npm install
 npm run dev   # http://localhost:3000
 ```
 
-### MongoDB
+### ต่อ Google Sheet (ฟอร์มช่วยเติมข้อมูล)
 
-คัดลอก `.env.example` เป็น `.env.local` แล้วใส่ connection string ของ Atlas ใน `MONGODB_URI` (ห้าม commit `.env.local`)
-เช็กว่าต่อติดไหมได้ที่ `http://localhost:3000/api/health` → `{"ok":true}`
-โค้ดฝั่ง server เรียก `getDb()` จาก `lib/mongodb.ts`
+ข้อมูลที่คนกรอกผ่านหน้า `/contribute` เก็บใน Google Sheet (ดู `docs/adr/0005-google-sheet-as-the-store.md`)
+
+1. สร้าง Google Sheet ใหม่ แล้วเปิด **Extensions → Apps Script**
+2. ลบโค้ดเดิม วางโค้ดจาก `sheet/apps-script.gs` แล้วกดบันทึก
+3. กด **Deploy → New deployment** เลือกชนิด **Web app** ตั้ง *Execute as* = **Me** และ *Who has access* = **Anyone** แล้วกด Deploy (ครั้งแรก Google จะขอสิทธิ์ ให้กดอนุญาต)
+4. copy ลิงก์ที่ลงท้ายด้วย `/exec` ใส่ใน `.env.local` (ดูตัวอย่างใน `.env.example`) และใน Environment Variables ของ Vercel
+
+```
+SHEET_API_URL=https://script.google.com/macros/s/XXXX/exec
+```
+
+แท็บ `prices`, `notes`, `seniors`, `guides` จะถูกสร้างเองตอนมีคนกรอกครั้งแรก จะแก้หรือลบแถวใน Sheet ตรงๆ ก็ได้ ถ้าไม่ตั้ง `SHEET_API_URL` เว็บจะใช้ข้อมูลใน `content/` อย่างเดียว
 
 ## แก้เนื้อหา
 

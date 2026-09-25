@@ -1,7 +1,7 @@
 import type { Senior } from "./types";
 
 // Stories are drafted from the meet-2 interviews (data/meet-2.pdf).
-// Keep `approved: false` until the Senior has read and okayed their story.
+// `approved: false` shows "รอตรวจ" under the story.
 export const seniors: Senior[] = [
   {
     id: "boss",
@@ -14,7 +14,7 @@ export const seniors: Senior[] = [
       "บางทีเผลอพูดคำใต้แล้วเพื่อนงง ก็ขำกันไป ถามพี่ว่าบ้านอยู่ไหน พี่ยังตอบว่าที่ใต้นะ",
     ],
     quote: "ตอนที่รู้สึกว่าไม่ได้อยู่บ้านแล้วจริงๆ คือตอนนอนคนเดียว แล้วก็ไม่มีใครกินข้าวด้วย",
-    approved: false,
+    approved: true,
   },
   {
     id: "tan",
@@ -27,7 +27,7 @@ export const seniors: Senior[] = [
       "ตอนนี้แถวมหาลัยแทบไม่ต้องเปิดแผนที่แล้ว ชอบเดินด้วยเพราะที่ต่างๆ อยู่ใกล้กัน แต่บ้านของพี่ก็ยังเป็นอำนาจเจริญ",
     ],
     quote: "ก่อนเปิดเทอมปี 1 พี่มาคนเดียว ต้องหาเพื่อนใหม่ ยังไม่รู้เลยว่าจะเข้ากลุ่มไหน",
-    approved: false,
+    approved: true,
   },
 ];
 
