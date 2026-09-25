@@ -123,33 +123,7 @@ svg { flex: none; }
   font-size: var(--step--1);
 }
 
-/* ---------- Header ---------- */
-
-/* Sticky only where there is room; on phones the wrapped nav would eat the screen */
-.site-header {
-  position: relative;
-  z-index: 1000;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 20px;
-  padding: 12px var(--edge);
-  background: var(--paper);
-  border-bottom: 1px solid var(--rule);
-}
-
-@media (min-width: 700px) {
-  .site-header {
-    position: sticky;
-    top: 0;
-  }
-}
-
-.site-header[data-line] {
-  background: var(--c);
-  border-bottom-color: transparent;
-  color: #fff;
-}
+/* ---------- Wordmark and tab bar ---------- */
 
 .wordmark {
   display: flex;
@@ -173,32 +147,41 @@ svg { flex: none; }
   background: var(--c);
 }
 
-.site-header[data-line] .wordmark-lines i {
-  background: #fff;
+.tab-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--paper);
+  border-top: 1px solid var(--rule);
+  box-shadow: 0 -4px 16px -8px rgb(19 35 61 / 0.25);
 }
 
-.site-header nav {
+.tab-bar a {
   display: flex;
-  flex-wrap: wrap;
-  column-gap: 16px;
-  margin-block: -8px;
-  font-size: var(--step--1);
-  font-weight: 500;
-}
-
-.site-header nav a {
-  display: inline-flex;
+  flex-direction: column;
   align-items: center;
-  min-height: 44px;
+  justify-content: center;
+  gap: 2px;
+  min-height: 60px;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
   text-decoration: none;
-  white-space: nowrap;
 }
 
-.site-header nav a:hover,
-.site-header nav a[aria-current="page"] {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
+.tab-bar svg {
+  font-size: 1.5rem;
+}
+
+.tab-bar a[aria-current="page"] {
+  color: var(--ink);
+}
+
+.tab-bar a[aria-current="page"] svg {
+  color: var(--ink);
 }
 
 .site-footer {
@@ -218,65 +201,7 @@ svg { flex: none; }
   font-weight: 600;
 }
 
-/* ---------- Home ---------- */
-
-.hero {
-  padding-top: 28px;
-}
-
-.hero h1 {
-  font-size: var(--step-3);
-  line-height: 1.15;
-}
-
-.line-map {
-  display: block;
-  width: 100%;
-  max-width: 440px;
-  height: auto;
-  margin-top: 8px;
-}
-
-.lm-line {
-  fill: none;
-  stroke-width: 10;
-  stroke-linecap: round;
-}
-
-.lm-line.lm-transport,
-.lm-stop.lm-transport { stroke: var(--transport); }
-.lm-line.lm-food,
-.lm-stop.lm-food { stroke: var(--food); }
-.lm-line.lm-living,
-.lm-stop.lm-living { stroke: var(--living); }
-.lm-label.lm-transport { fill: var(--transport); }
-.lm-label.lm-food { fill: var(--food); }
-.lm-label.lm-living { fill: var(--living); }
-
-.lm-stop {
-  fill: #fff;
-  stroke-width: 4;
-}
-
-.lm-hub {
-  fill: #fff;
-  stroke: var(--ink);
-  stroke-width: 6;
-}
-
-.lm-hub-label,
-.lm-label {
-  font-family: var(--font);
-  font-weight: 700;
-}
-
-.lm-hub-label { fill: var(--ink); }
-
-.lm-hub-label { font-size: 16px; }
-.lm-label { font-size: 12px; stroke: none; }
-.line-map a:hover .lm-label { text-decoration: underline; }
-
-/* Week route */
+/* ---------- Starter Checklist ---------- */
 
 .week {
   padding: 12px 0 28px;
@@ -388,151 +313,7 @@ svg { flex: none; }
   white-space: nowrap;
 }
 
-/* Category bands */
-
-.band {
-  padding: 18px var(--edge) 20px;
-  background: var(--c);
-  color: #fff;
-}
-
-.band-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-height: 48px;
-  text-decoration: none;
-}
-
-.band-head h2 {
-  font-size: var(--step-2);
-}
-
-.band-icon {
-  font-size: 2rem;
-  line-height: 0;
-}
-
-.band-go {
-  margin-left: auto;
-  font-size: 1.5rem;
-}
-
-.band-head:hover h2 {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
-}
-
-.band-stops {
-  position: relative;
-  display: flex;
-  margin-top: 6px;
-}
-
-.band-stops::before {
-  content: "";
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 12px;
-  height: 4px;
-  border-radius: 2px;
-  background: rgb(255 255 255 / 0.55);
-}
-
-.band-stops li {
-  flex: 1;
-  min-width: 0;
-}
-
-.band-stops a {
-  position: relative;
-  display: block;
-  min-height: 48px;
-  padding-top: 28px;
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  line-height: 1.25;
-  text-decoration: none;
-}
-
-.band-stops a::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 6px;
-  width: 16px;
-  height: 16px;
-  margin-left: -8px;
-  border-radius: 50%;
-  background: var(--c);
-  border: 3px solid #fff;
-}
-
-.band-stops a:hover {
-  text-decoration: underline;
-}
-
-.voices {
-  padding-top: 28px;
-  padding-bottom: 8px;
-}
-
-.voices h2 {
-  font-size: var(--step-1);
-}
-
-.voice {
-  display: block;
-  margin-top: 16px;
-  padding-left: 14px;
-  border-left: 5px solid var(--ink);
-  text-decoration: none;
-}
-
-.voice p {
-  font-weight: 500;
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
-.voice span,
-.voice footer {
-  display: block;
-  margin-top: 4px;
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
-
-/* ---------- Category page ---------- */
-
-.band-page {
-  padding-top: 8px;
-  padding-bottom: 22px;
-}
-
-.crumb {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  font-size: var(--step--1);
-  text-decoration: none;
-}
-
-.band-page h1 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 6px;
-  font-size: var(--step-3);
-}
-
-.band-page > p {
-  margin-top: 4px;
-}
+/* ---------- Place details ---------- */
 
 .code {
   display: inline-grid;
@@ -575,43 +356,6 @@ svg { flex: none; }
   background: #e7e3da;
 }
 
-/* Places as stations on the line */
-
-.line-stops {
-  max-width: var(--measure);
-  margin: 0 auto;
-}
-
-.stop {
-  --rail: 52px;
-  position: relative;
-  display: flow-root; /* keep the head's margin inside, so the line has no gaps */
-  padding: 0 var(--gutter) 28px var(--rail);
-}
-
-.stop::before {
-  content: "";
-  position: absolute;
-  left: 23px;
-  top: 0;
-  bottom: 0;
-  width: 6px;
-  background: var(--c);
-}
-
-.stop:last-child::before {
-  bottom: auto;
-  height: 64px;
-}
-
-.stop:target .stop-head h3 {
-  background: color-mix(in srgb, var(--c) 18%, #fff);
-}
-
-.stop-photo {
-  margin: 0 calc(var(--gutter) * -1) 0 calc(var(--rail) * -1);
-}
-
 .photo {
   position: relative;
   aspect-ratio: 16 / 9;
@@ -639,23 +383,6 @@ svg { flex: none; }
   color: #fff;
   text-shadow: 0 1px 2px #000;
   text-decoration: none;
-}
-
-.stop-head {
-  display: flex;
-  align-items: center;
-  min-height: 2.2em;
-  margin-top: 14px;
-}
-
-.stop-head .code {
-  position: absolute;
-  left: 8px;
-}
-
-.stop-head h3 {
-  padding: 0 4px;
-  margin-left: -4px;
 }
 
 .stop-summary {
@@ -729,60 +456,11 @@ svg { flex: none; }
   margin-top: 0.25em;
 }
 
-.stop .voice {
-  margin-top: 14px;
-}
-
-.nav-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  margin-top: 4px;
-  font-size: var(--step--1);
-  font-weight: 600;
-}
-
-/* Home Taste */
-
-.home-taste {
-  padding: 22px 0 24px;
-  background: color-mix(in srgb, var(--food) 9%, #fff);
-  border-top: 6px solid var(--food);
-}
-
-.home-taste h2,
 .help h2 {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: var(--step-1);
-}
-
-.home-taste p {
-  margin-top: 4px;
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
-.home-taste ul {
-  margin-top: 12px;
-}
-
-.home-taste li {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0 12px;
-  padding: 10px 0;
-  border-top: 1px solid color-mix(in srgb, var(--food) 25%, #fff);
-}
-
-.home-taste b {
-  min-width: 6em;
-}
-
-.home-taste .pending {
-  color: var(--ink-soft);
 }
 
 /* Guides */
@@ -877,16 +555,12 @@ svg { flex: none; }
 /* ---------- Seniors ---------- */
 
 .page {
-  padding-top: 24px;
+  padding-top: 12px;
 }
 
 .page-head {
-  padding-top: 28px;
+  padding-top: 12px;
   padding-bottom: 8px;
-}
-
-.page-head h1 {
-  font-size: var(--step-3);
 }
 
 .story {
@@ -972,8 +646,7 @@ svg { flex: none; }
   font-weight: 700;
 }
 
-.related-link,
-.help-link {
+.related-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1011,35 +684,9 @@ svg { flex: none; }
   color: #fff;
 }
 
-.help-link {
-  margin-top: 20px;
-}
+/* ---------- Map (home) ---------- */
 
-/* ---------- Links into the map ---------- */
-
-.map-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 44px;
-  margin-top: 4px;
-  font-weight: 600;
-}
-
-.places-intro {
-  padding-top: 16px;
-  padding-bottom: 4px;
-}
-
-.stop-links {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 20px;
-}
-
-/* ---------- Map page ---------- */
-
-/* The map page fills the screen under the header, with no footer */
+/* The map fills the screen above the tab bar, with no footer */
 body:has(.explorer) {
   display: flex;
   flex-direction: column;
@@ -1050,6 +697,10 @@ body:has(.explorer) {
 body:has(.explorer) main {
   flex: 1;
   min-height: 0;
+}
+
+body:has(.explorer) .tab-bar {
+  flex: none;
 }
 
 body:has(.explorer) .site-footer {
@@ -1083,10 +734,6 @@ body:has(.explorer) .site-footer {
   background: var(--paper);
   border-radius: 14px;
   box-shadow: 0 12px 32px -12px rgb(19 35 61 / 0.35), 0 0 0 1px rgb(19 35 61 / 0.06);
-}
-
-.explorer-panel h1 {
-  font-size: var(--step-2);
 }
 
 .line-filters {
@@ -1137,7 +784,7 @@ body:has(.explorer) .site-footer {
   margin-top: 4px;
 }
 
-/* The line runs through the codes, as on the category pages */
+/* The line runs through the codes */
 .stop-group ul::before {
   content: "";
   position: absolute;
@@ -1384,4 +1031,308 @@ body:has(.explorer) .site-footer {
 .form-status.is-error {
   border-left-color: var(--caution);
   background: #fdeeec;
+}
+
+/* ---------- Page heads ---------- */
+
+.page-head .wordmark {
+  margin-bottom: 12px;
+  font-size: var(--step-0);
+}
+
+.page-head h1 {
+  font-size: var(--step-3);
+}
+
+.head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 16px;
+}
+
+.page-head .line-filters {
+  margin-top: 16px;
+}
+
+/* A pill button, filled for the main action */
+.action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  color: var(--ink);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.action.is-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ---------- Map bar ---------- */
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.brand .wordmark {
+  min-height: 36px;
+}
+
+.tagline {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.explorer-top {
+  right: 10px;
+}
+
+.explorer-top .brand {
+  justify-self: start;
+  width: fit-content;
+  margin-bottom: 8px;
+  padding: 2px 14px;
+  border-radius: 12px;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
+}
+
+.explorer-top .brand .wordmark {
+  font-size: var(--step-0);
+}
+
+.line-chip[aria-current="page"] {
+  background: var(--c);
+  color: #fff;
+}
+
+a.line-chip {
+  text-decoration: none;
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 12px;
+  padding-left: 14px;
+  border-radius: 10px;
+  background: #fff6cc;
+  border: 2px solid var(--platform);
+}
+
+.welcome a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.welcome button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.stop-group .note-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+  color: var(--c);
+  font-weight: 600;
+}
+
+/* ---------- Place details (short) ---------- */
+
+.detail .price {
+  margin-top: 8px;
+}
+
+.detail-notes {
+  margin-top: 14px;
+}
+
+.more {
+  margin-top: 10px;
+}
+
+.more summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.more .knowhow {
+  margin-top: 0;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.more .knowhow li {
+  display: list-item;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* ---------- Notes ---------- */
+
+.note {
+  padding: 14px 0 14px 14px;
+  border-left: 4px solid var(--c);
+}
+
+.feed .note + .note {
+  margin-top: 16px;
+}
+
+.note.is-compact {
+  padding: 10px 12px;
+  border-radius: 0 8px 8px 0;
+  background: color-mix(in srgb, var(--c) 8%, #fff);
+}
+
+.note-text {
+  font-size: var(--step-1);
+  line-height: 1.5;
+}
+
+.note.is-compact .note-text {
+  font-size: var(--step-0);
+}
+
+.note-by {
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.note-by a,
+.note-by b {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.note-place {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  color: var(--c);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.feed-filters {
+  margin: 20px 0 16px;
+}
+
+.feed {
+  padding-bottom: 32px;
+}
+
+.feed-scope {
+  margin: 20px 0 16px;
+  font-weight: 600;
+}
+
+/* ---------- Guides page ---------- */
+
+.guides-line {
+  scroll-margin-top: 0;
+}
+
+.line-head {
+  margin-top: 32px;
+  padding: 14px 0;
+  background: var(--c);
+  color: #fff;
+  font-size: var(--step-2);
+}
+
+.line-head .inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.guides-line .guides {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.home-taste-list small {
+  color: var(--ink-soft);
+}
+
+/* ---------- Note form ---------- */
+
+.counter {
+  justify-self: end;
+  color: var(--ink-soft);
+  font-weight: 400;
+}
+
+.line-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.line-pick legend {
+  margin-bottom: 4px;
+  padding: 0;
+  font-weight: 600;
+}
+
+.line-pick label.check {
+  align-items: center;
+  min-height: 44px;
+}
+
+.line-pick label.check input {
+  margin: 0;
+}
+
+/* Phones: all four chips fit across without scrolling */
+@media (max-width: 899px) {
+  .explorer-top .line-filters {
+    gap: 4px;
+  }
+
+  .explorer-top .line-chip {
+    padding: 0 10px;
+  }
+
+  .explorer-top .line-chip svg {
+    display: none;
+  }
 }

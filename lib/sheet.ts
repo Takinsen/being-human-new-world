@@ -5,7 +5,15 @@ export const SHEET_TAG = "sheet";
 
 export type SheetRows = {
   prices: { timestamp: string; placeId: string; min: string; max: string; per: string; by: string }[];
-  notes: { timestamp: string; placeId: string; seniorId: string; note: string; homeTaste: string }[];
+  notes: {
+    timestamp: string;
+    text: string;
+    name: string;
+    hometown: string;
+    placeId: string;
+    category: string;
+    homeTaste: string;
+  }[];
   seniors: {
     timestamp: string;
     id: string;

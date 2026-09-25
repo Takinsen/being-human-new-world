@@ -1,52 +1,18 @@
-import Link from "next/link";
-import { HandHeart, MapTrifold } from "@phosphor-icons/react/dist/ssr";
+import { Suspense } from "react";
 import { categories } from "@/content/categories";
-import { CategoryBand } from "@/components/CategoryBand";
-import { LineMap } from "@/components/LineMap";
-import { WeekRoute } from "@/components/WeekRoute";
-import { getContent } from "@/lib/content";
+import { MapExplorer } from "@/components/map/MapExplorer";
+import { getContent, notesOn, placesIn } from "@/lib/content";
+import { placeCode } from "@/lib/format";
 
+// Home is the map (docs/adr/0006).
 export default async function Home() {
-  const { seniors } = await getContent();
+  const content = await getContent();
+  const stops = categories.flatMap((c) =>
+    placesIn(content, c.id).map((place, i) => ({ place, code: placeCode(c.id, i), notes: notesOn(content, place.id) })),
+  );
   return (
-    <>
-      <section className="hero inner">
-        <h1>
-          บ้านยังเป็นบ้าน
-          <br />
-          ที่นี่คือที่ตั้งหลัก
-        </h1>
-        <p className="lede">เรื่องที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่แถวจุฬาฯ</p>
-        <LineMap />
-        <Link href="/map" className="map-link">
-          <MapTrifold weight="bold" aria-hidden="true" />
-          เปิดแผนที่ย่านจุฬาฯ
-        </Link>
-      </section>
-
-      <div className="inner">
-        <WeekRoute />
-      </div>
-
-      {categories.map((c) => (
-        <CategoryBand key={c.id} category={c} />
-      ))}
-
-      <section className="voices inner">
-        <h2>รุ่นพี่ก็เคยมาใหม่</h2>
-        {seniors.map((s) => (
-          <Link key={s.id} href={`/seniors#${s.id}`} className="voice">
-            <p>&ldquo;{s.quote}&rdquo;</p>
-            <span>
-              {s.name} บ้านอยู่{s.hometown}
-            </span>
-          </Link>
-        ))}
-        <Link href="/seniors#help" className="help-link">
-          <HandHeart weight="bold" aria-hidden="true" />
-          ถ้าหนักเกินไป คุยกับคนได้
-        </Link>
-      </section>
-    </>
+    <Suspense fallback={<div className="explorer map-loading">กำลังโหลดแผนที่</div>}>
+      <MapExplorer stops={stops} lines={categories} />
+    </Suspense>
   );
 }

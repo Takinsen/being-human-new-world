@@ -1,15 +1,17 @@
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, CheckCircle, NavigationArrow, Warning } from "@phosphor-icons/react";
-import { getCategory } from "@/content/categories";
+import { ArrowLeft, NavigationArrow, PencilSimpleLine, Warning } from "@phosphor-icons/react";
 import { mapsUrl } from "@/lib/format";
+import { NoteCard } from "../NoteCard";
 import { Price } from "../Price";
 import { StationCode } from "../StationCode";
 import type { MapStop } from "./types";
 
-// The selected Place's know-how, in the sidebar or bottom sheet.
+// The selected Place, short: what it costs, one line, one caution, the latest
+// Note. Everything else waits behind "อ่านเพิ่ม" (docs/adr/0006).
 export function PlaceDetail({ stop, onBack }: { stop: MapStop; onBack: () => void }) {
-  const { place, code, senior } = stop;
-  const line = getCategory(place.category);
+  const { place, code, notes } = stop;
+  const [caution, ...moreCautions] = place.cautions ?? [];
+  const [latest] = notes;
   return (
     <article className="detail" data-line={place.category}>
       <button type="button" className="detail-back" onClick={onBack}>
@@ -19,45 +21,53 @@ export function PlaceDetail({ stop, onBack }: { stop: MapStop; onBack: () => voi
         <StationCode code={code} />
         <h2>{place.name}</h2>
       </header>
-      <p className="stop-summary">{place.summary}</p>
       {place.price && <Price price={place.price} />}
-      <ul className="knowhow">
-        {place.knowhow.map((k) => (
-          <li key={k}>
-            <CheckCircle weight="bold" aria-hidden="true" />
-            <span>{k}</span>
-          </li>
-        ))}
-      </ul>
-      {place.cautions?.map((c) => (
-        <p className="caution" key={c}>
+      <p className="stop-summary">{place.summary}</p>
+      {caution && (
+        <p className="caution">
           <Warning weight="bold" aria-hidden="true" />
           <span>
             <span className="visually-hidden">ข้อควรระวัง: </span>
-            {c}
+            {caution}
           </span>
         </p>
-      ))}
-      {senior && place.senior && (
-        <blockquote className="voice">
-          <p>&ldquo;{place.senior.note}&rdquo;</p>
-          <footer>
-            {senior.name} บ้านอยู่{senior.hometown}
-          </footer>
-        </blockquote>
       )}
-      <div className="detail-links">
-        {line && (
-          <Link href={`/${line.id}#${place.id}`} className="related-link">
-            อ่านต่อในสาย{line.name}
-            <ArrowRight weight="bold" aria-hidden="true" />
-          </Link>
-        )}
-        <a className="nav-link" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
+      {latest && (
+        <div className="detail-notes">
+          <NoteCard note={latest} compact />
+          {notes.length > 1 && (
+            <Link href={`/notes?place=${place.id}`} className="related-link">
+              ดูโน้ตทั้งหมด ({notes.length})
+            </Link>
+          )}
+        </div>
+      )}
+      {(place.knowhow.length > 0 || moreCautions.length > 0) && (
+        <details className="more">
+          <summary>อ่านเพิ่ม</summary>
+          <ul className="knowhow">
+            {place.knowhow.map((k) => (
+              <li key={k}>{k}</li>
+            ))}
+          </ul>
+          {moreCautions.map((c) => (
+            <p className="caution" key={c}>
+              <Warning weight="bold" aria-hidden="true" />
+              <span>{c}</span>
+            </p>
+          ))}
+        </details>
+      )}
+      <div className="detail-actions">
+        <a className="action" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
           <NavigationArrow weight="bold" aria-hidden="true" />
-          นำทางใน Google Maps
-          <span className="visually-hidden"> ไป{place.name} (เปิดแท็บใหม่)</span>
+          นำทาง
+          <span className="visually-hidden"> ไป{place.name} ใน Google Maps (เปิดแท็บใหม่)</span>
         </a>
+        <Link className="action is-primary" href={`/notes/new?place=${place.id}`}>
+          <PencilSimpleLine weight="bold" aria-hidden="true" />
+          เขียนโน้ต
+        </Link>
       </div>
     </article>
   );

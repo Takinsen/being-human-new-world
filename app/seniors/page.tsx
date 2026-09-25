@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
+import { PageHead } from "@/components/PageHead";
 import { SeniorStory } from "@/components/SeniorStory";
 import { getContent } from "@/lib/content";
 
@@ -10,10 +11,7 @@ export default async function SeniorsPage() {
   const { seniors } = await getContent();
   return (
     <>
-      <header className="page-head inner">
-        <h1>รุ่นพี่ก็เคยมาใหม่</h1>
-        <p className="lede">ปีแรกของทุกคนมีช่วงที่ยาก เหงา หรือหลง ไม่ได้แปลว่าเราปรับตัวไม่เก่ง</p>
-      </header>
+      <PageHead title="รุ่นพี่ก็เคยมาใหม่" lede="ปีแรกของทุกคนมีช่วงที่ยาก เหงา หรือหลง ไม่ได้แปลว่าเราปรับตัวไม่เก่ง" />
       <div className="inner">
         {seniors.map((s) => (
           <SeniorStory key={s.id} senior={s} />

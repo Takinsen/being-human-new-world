@@ -3,10 +3,12 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import { ArrowRight, CaretDown, CaretUp, ChatCenteredText, X } from "@phosphor-icons/react";
+import Link from "next/link";
 import type { Category } from "@/content/categories";
 import type { CategoryId } from "@/content/types";
 import { CategoryIcon } from "../icons";
+import { Wordmark } from "../PageHead";
 import { StationCode } from "../StationCode";
 import { PlaceDetail } from "./PlaceDetail";
 import type { MapStop } from "./types";
@@ -29,6 +31,29 @@ function useViewportHeight() {
     return () => window.removeEventListener("resize", update);
   }, []);
   return h;
+}
+
+// The first-visit pointer to the Starter Checklist stays dismissed in this browser.
+const WELCOME_KEY = "tanglak:welcome-dismissed";
+
+function useWelcome() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    try {
+      setShow(window.localStorage.getItem(WELCOME_KEY) !== "1");
+    } catch {
+      setShow(true);
+    }
+  }, []);
+  const dismiss = () => {
+    setShow(false);
+    try {
+      window.localStorage.setItem(WELCOME_KEY, "1");
+    } catch {
+      // Storage blocked: hidden until the page reloads.
+    }
+  };
+  return { show, dismiss };
 }
 
 function useWide() {
@@ -58,10 +83,12 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
     return fromUrl?.length ? fromUrl : lines.map((l) => l.id);
   }, [lineParam, lines]);
 
+  const withNotes = params.get("notes") === "1";
   const [sheetOpen, setSheetOpen] = useState(true);
+  const welcome = useWelcome();
 
   const update = useCallback(
-    (next: { place?: string | null; line?: CategoryId[] }) => {
+    (next: { place?: string | null; line?: CategoryId[]; notes?: boolean }) => {
       const q = new URLSearchParams(params.toString());
       if (next.place !== undefined) {
         if (next.place) q.set("place", next.place);
@@ -71,18 +98,23 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
         if (next.line.length === lines.length) q.delete("line");
         else q.set("line", next.line.join(","));
       }
+      if (next.notes !== undefined) {
+        if (next.notes) q.set("notes", "1");
+        else q.delete("notes");
+      }
       router.replace(`${pathname}${q.size ? `?${q}` : ""}`, { scroll: false });
     },
     [params, pathname, router, lines.length],
   );
 
-  const visible = stops.filter((s) => active.includes(s.place.category));
+  // Lines are alternatives; "มีโน้ต" narrows whatever lines are on.
+  const visible = stops.filter((s) => active.includes(s.place.category) && (!withNotes || s.notes.length > 0));
   const selected = stops.find((s) => s.place.id === selectedId);
 
   const select = (id: string) => {
     const stop = stops.find((s) => s.place.id === id);
     const line = stop && !active.includes(stop.place.category) ? [...active, stop.place.category] : undefined;
-    update({ place: id, line });
+    update({ place: id, line, notes: stop && withNotes && !stop.notes.length ? false : undefined });
     setSheetOpen(true);
   };
 
@@ -111,12 +143,32 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
           {l.name}
         </button>
       ))}
+      <button
+        type="button"
+        className="line-chip"
+        data-line="general"
+        aria-pressed={withNotes}
+        onClick={() => update({ notes: !withNotes, place: withNotes ? undefined : null })}
+      >
+        <ChatCenteredText weight="bold" aria-hidden="true" />
+        มีโน้ต
+      </button>
     </div>
   );
 
   const list = (
     <div className="stop-list">
-      {visible.length === 0 && <p className="status-note">เลือกอย่างน้อยหนึ่งสายด้านบน เพื่อดูที่ต่างๆ</p>}
+      {visible.length === 0 && (
+        <p className="status-note">
+          {withNotes ? (
+            <>
+              ยังไม่มีใครเขียนโน้ตไว้ที่ไหนบนสายที่เลือก <Link href="/notes/new">เขียนโน้ตแรก</Link>
+            </>
+          ) : (
+            "เลือกอย่างน้อยหนึ่งสายด้านบน เพื่อดูที่ต่างๆ"
+          )}
+        </p>
+      )}
       {lines
         .filter((l) => active.includes(l.id))
         .map((l) => {
@@ -126,13 +178,18 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
             <section key={l.id} data-line={l.id} className="stop-group">
               <h2>{l.name}</h2>
               <ul>
-                {onLine.map(({ place, code }) => (
+                {onLine.map(({ place, code, notes }) => (
                   <li key={place.id}>
                     <button type="button" onClick={() => select(place.id)}>
                       <StationCode code={code} />
                       <span>
                         <b>{place.name}</b>
                         <small>{place.summary}</small>
+                        {notes.length > 0 && (
+                          <small className="note-count">
+                            <ChatCenteredText weight="bold" aria-hidden="true" /> {notes.length} โน้ต
+                          </small>
+                        )}
                       </span>
                     </button>
                   </li>
@@ -144,7 +201,33 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
     </div>
   );
 
-  const panelBody = selected ? <PlaceDetail stop={selected} onBack={() => update({ place: null })} /> : list;
+  const welcomeNote = welcome.show && !selected && (
+    <p className="welcome">
+      <Link href="/checklist">
+        เพิ่งมาใหม่? เริ่มที่ สัปดาห์แรก <ArrowRight weight="bold" aria-hidden="true" />
+      </Link>
+      <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
+        <X weight="bold" aria-hidden="true" />
+      </button>
+    </p>
+  );
+
+  const panelBody = selected ? (
+    <PlaceDetail stop={selected} onBack={() => update({ place: null })} />
+  ) : (
+    <>
+      {welcomeNote}
+      {list}
+    </>
+  );
+
+  const brand = (
+    <div className="brand">
+      <h1 className="visually-hidden">ตั้งหลัก แผนที่ย่านจุฬาฯ</h1>
+      <Wordmark />
+      <p className="tagline">บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก</p>
+    </div>
+  );
 
   return (
     <div className="explorer">
@@ -152,14 +235,16 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
 
       {wide ? (
         <aside className="explorer-panel" aria-label="แผงแผนที่" style={{ width: SIDEBAR }}>
-          <h1>แผนที่ย่านจุฬาฯ</h1>
-          <p className="status-note">แผนที่บอกว่าอยู่ตรงไหน กดที่แต่ละที่เพื่อดูว่าต้องรู้อะไรก่อนไป</p>
+          {brand}
           {filters}
           {panelBody}
         </aside>
       ) : (
         <>
-          <div className="explorer-top">{filters}</div>
+          <div className="explorer-top">
+            {brand}
+            {filters}
+          </div>
           <section
             className={sheetOpen ? "explorer-sheet is-open" : "explorer-sheet"}
             style={{ height: sheetOpen ? `${SHEET_PEEK * 100}dvh` : 72 }}

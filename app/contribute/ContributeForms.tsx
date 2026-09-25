@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import type { CategoryId, Senior } from "@/content/types";
-import { type FormState, saveGuideCheck, saveNote, savePrice, saveSenior } from "./actions";
+import { type FormState, saveGuideCheck, savePrice, saveSenior } from "./actions";
 
 type Line = { id: CategoryId; name: string };
 type PlaceOption = { id: string; name: string; category: CategoryId; per?: string };
@@ -62,7 +62,6 @@ export function ContributeForms({
   guides: GuideOption[];
 }) {
   const [priceState, priceAction, pricePending] = useActionState(savePrice, null);
-  const [noteState, noteAction, notePending] = useActionState(saveNote, null);
   const [seniorState, seniorAction, seniorPending] = useActionState(saveSenior, null);
   const [guideState, guideAction, guidePending] = useActionState(saveGuideCheck, null);
 
@@ -99,37 +98,6 @@ export function ContributeForms({
           {pricePending ? "กำลังบันทึก" : "บันทึกราคา"}
         </button>
         <Status state={priceState} />
-      </form>
-
-      <form action={noteAction} className="contribute-form">
-        <h2>รุ่นพี่แนะนำที่</h2>
-        <p className="status-note">คำแนะนำสั้นๆ ในคำพูดของรุ่นพี่เอง จะขึ้นในการ์ดของที่นั้น</p>
-        <PlaceSelect lines={lines} places={places} />
-        <label>
-          รุ่นพี่
-          <select name="seniorId" required defaultValue="">
-            <option value="" disabled>
-              เลือกรุ่นพี่
-            </option>
-            {seniors.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.name} ({s.hometown})
-              </option>
-            ))}
-          </select>
-        </label>
-        <label>
-          คำแนะนำ
-          <textarea name="note" rows={3} required />
-        </label>
-        <label className="check">
-          <input type="checkbox" name="homeTaste" />
-          ร้านนี้รสชาติเหมือนอาหารบ้านของรุ่นพี่ (ขึ้นในหัวข้อรสชาติบ้าน)
-        </label>
-        <button type="submit" disabled={notePending}>
-          {notePending ? "กำลังบันทึก" : "บันทึกคำแนะนำ"}
-        </button>
-        <Status state={noteState} />
       </form>
 
       <form action={seniorAction} className="contribute-form" key={seniorId}>

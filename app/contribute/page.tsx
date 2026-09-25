@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { categories } from "@/content/categories";
 import { getContent } from "@/lib/content";
 import { sheetConfigured } from "@/lib/sheet";
+import { PageHead } from "@/components/PageHead";
 import { ContributeForms } from "./ContributeForms";
 
 export const metadata: Metadata = { title: "ช่วยเติมข้อมูล | ตั้งหลัก" };
@@ -9,11 +10,9 @@ export const metadata: Metadata = { title: "ช่วยเติมข้อม
 export default async function ContributePage() {
   const content = await getContent();
   return (
-    <div className="inner page">
-      <header className="page-head">
-        <h1>ช่วยเติมข้อมูล</h1>
-        <p className="lede">ตรวจราคา แนะนำที่ เล่าเรื่องปีแรก หรือบอกว่าลองทำตามวิธีแล้ว กดบันทึกแล้วขึ้นเว็บเลย</p>
-      </header>
+    <>
+      <PageHead title="ช่วยเติมข้อมูล" lede="ตรวจราคา เล่าเรื่องปีแรก หรือบอกว่าลองทำตามวิธีแล้ว กดบันทึกแล้วขึ้นเว็บเลย" />
+      <div className="inner">
       {!sheetConfigured() && (
         <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) ฟอร์มจะยังบันทึกไม่ได้</p>
       )}
@@ -23,6 +22,7 @@ export default async function ContributePage() {
         seniors={content.seniors}
         guides={content.guides.map((g) => ({ id: g.id, title: g.title, category: g.category, checked: g.checked }))}
       />
-    </div>
+      </div>
+    </>
   );
 }

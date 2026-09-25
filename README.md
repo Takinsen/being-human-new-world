@@ -16,7 +16,7 @@ npm run dev   # http://localhost:3000
 
 ### ต่อ Google Sheet (ฟอร์มช่วยเติมข้อมูล)
 
-ข้อมูลที่คนกรอกผ่านหน้า `/contribute` เก็บใน Google Sheet (ดู `docs/adr/0005-google-sheet-as-the-store.md`)
+โน้ตที่เขียนผ่านหน้า `/notes/new` และข้อมูลที่กรอกผ่านหน้า `/contribute` เก็บใน Google Sheet (ดู `docs/adr/0005-google-sheet-as-the-store.md`)
 
 1. สร้าง Google Sheet ใหม่ แล้วเปิด **Extensions → Apps Script**
 2. ลบโค้ดเดิม วางโค้ดจาก `sheet/apps-script.gs` แล้วกดบันทึก
@@ -27,7 +27,9 @@ npm run dev   # http://localhost:3000
 SHEET_API_URL=https://script.google.com/macros/s/XXXX/exec
 ```
 
-แท็บ `prices`, `notes`, `seniors`, `guides` จะถูกสร้างเองตอนมีคนกรอกครั้งแรก จะแก้หรือลบแถวใน Sheet ตรงๆ ก็ได้ ถ้าไม่ตั้ง `SHEET_API_URL` เว็บจะใช้ข้อมูลใน `content/` อย่างเดียว
+แท็บ `prices`, `notes`, `seniors`, `guides` จะถูกสร้างเองตอนมีคนกรอกครั้งแรก จะแก้หรือลบแถวใน Sheet ตรงๆ ก็ได้ (ลบโน้ตที่ไม่เหมาะสมก็ลบแถวในแท็บ `notes`)
+
+ถ้าเคย deploy Apps Script เวอร์ชันก่อนหน้าไว้แล้ว ให้วางโค้ดใหม่จาก `sheet/apps-script.gs` แล้วกด **Deploy → Manage deployments → แก้ไข (ไอคอนดินสอ) → Version: New version → Deploy** ลิงก์ `/exec` จะเหมือนเดิม ถ้าไม่ตั้ง `SHEET_API_URL` เว็บจะใช้ข้อมูลใน `content/` อย่างเดียว
 
 ## แก้เนื้อหา
 
@@ -38,6 +40,7 @@ SHEET_API_URL=https://script.google.com/macros/s/XXXX/exec
 | `content/places.ts` | ที่ต่างๆ บนแผนที่ พร้อมราคาและข้อควรระวัง |
 | `content/guides.ts` | วิธีทำเรื่องต่างๆ ที่ทีมเขียน |
 | `content/seniors.ts` | รุ่นพี่และเรื่องปีแรกของรุ่นพี่ |
+| `content/notes.ts` | โน้ตตั้งต้นจากบทสัมภาษณ์ (โน้ตที่คนเขียนบนเว็บอยู่ใน Sheet) |
 | `content/checklist.ts` | เช็กลิสต์สัปดาห์แรก |
 | `content/help.ts` | ช่องทางขอความช่วยเหลือ |
 

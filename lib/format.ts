@@ -9,6 +9,14 @@ export function thaiMonthYear(yyyyMm: string): string {
   return `${thaiMonths[m - 1]} ${String(y + 543).slice(-2)}`;
 }
 
+/** ISO timestamp -> "25 ก.ย. 69" */
+export function thaiDate(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "";
+  const local = new Date(d.getTime() + 7 * 3600 * 1000); // Bangkok
+  return `${local.getUTCDate()} ${thaiMonths[local.getUTCMonth()]} ${String(local.getUTCFullYear() + 543).slice(-2)}`;
+}
+
 export function checkedBy(check: PriceCheck): string {
   return getSenior(check.by)?.name ?? check.by;
 }

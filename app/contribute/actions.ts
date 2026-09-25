@@ -37,15 +37,6 @@ export async function savePrice(_: FormState, form: FormData): Promise<FormState
   );
 }
 
-export async function saveNote(_: FormState, form: FormData): Promise<FormState> {
-  const placeId = text(form, "placeId", 100);
-  const seniorId = text(form, "seniorId", 100);
-  const note = text(form, "note", 500);
-  const homeTaste = form.get("homeTaste") ? "yes" : "";
-  if (!placeId || !seniorId || !note) return { ok: false, message: "เลือกที่ เลือกรุ่นพี่ และเขียนคำแนะนำ" };
-  return save(() => appendRow("notes", { placeId, seniorId, note, homeTaste }), `/map?place=${placeId}`);
-}
-
 export async function saveSenior(_: FormState, form: FormData): Promise<FormState> {
   const picked = text(form, "id", 100);
   const id = picked && picked !== "new" ? picked : `s-${Date.now().toString(36)}`;

@@ -53,10 +53,26 @@ export type Place = {
   knowhow: string[];
   cautions?: string[];
   price?: Price;
-  /** Senior who recommends this Place, with their note in their own words */
-  senior?: { id: string; note: string };
   /** Set when the Place is Home Taste for a region */
   homeTaste?: Region;
+};
+
+/** A short piece of Local Know-how anyone writes, signed with name and hometown. See CONTEXT.md. */
+export type Note = {
+  id: string;
+  text: string;
+  name: string;
+  /** Province */
+  hometown: string;
+  region?: Region;
+  category: CategoryId;
+  placeId?: string;
+  /** The writer says this Place tastes like home (food Places only) */
+  homeTaste?: boolean;
+  /** Set when the writer has a Senior Story */
+  seniorId?: string;
+  /** ISO timestamp; seed Notes have none */
+  on?: string;
 };
 
 export type Guide = {

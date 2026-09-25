@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
-import { SiteHeader } from "@/components/SiteHeader";
+import { TabBar } from "@/components/TabBar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <SiteHeader />
         <main>{children}</main>
         <footer className="site-footer">
           <p>ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน</p>
@@ -30,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Link href="/contribute">ช่วยเติมข้อมูล</Link>
           </p>
         </footer>
+        <TabBar />
       </body>
     </html>
   );

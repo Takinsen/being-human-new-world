@@ -5,7 +5,7 @@
 
 const TABS = {
   prices: ["timestamp", "placeId", "min", "max", "per", "by"],
-  notes: ["timestamp", "placeId", "seniorId", "note", "homeTaste"],
+  notes: ["timestamp", "text", "name", "hometown", "placeId", "category", "homeTaste"],
   seniors: ["timestamp", "id", "name", "hometown", "region", "about", "story", "quote"],
   guides: ["timestamp", "guideId", "by"],
 };
@@ -17,7 +17,12 @@ function sheetFor(name) {
     sheet = book.insertSheet(name);
     sheet.appendRow(TABS[name]);
     sheet.setFrozenRows(1);
+    return sheet;
   }
+  // A tab made by an older version of this script gets the columns it lacks.
+  const header = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  const missing = TABS[name].filter((key) => !header.includes(key));
+  if (missing.length) sheet.getRange(1, header.length + 1, 1, missing.length).setValues([missing]);
   return sheet;
 }
 
