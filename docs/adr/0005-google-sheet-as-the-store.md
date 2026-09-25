@@ -7,6 +7,7 @@ Data the team left for real people to fill in (Price Checks, a Senior's note on 
 - Rows go to a Google Sheet through an Apps Script web app (`sheet/apps-script.gs`): `POST` appends a row, `GET` returns every tab as JSON. The site only knows its URL (`SHEET_API_URL`).
 - `content/*.ts` stays the starting point. `lib/content.ts` lays the Sheet's rows over it, the newest row per Place, Senior or Guide winning.
 - There is no review step and no login: a saved row shows on the site at once for the person who saved it, and for everyone else within 30 seconds.
+- Anyone can write a Note (CONTEXT.md) by typing their name and hometown, with no review. The hometown is required because a Note signed by a real person from a real place is the product's "Being Human" argument, and it lets a Note vouch for Home Taste. A Note has its own tab in the Sheet and replaces the Senior's recommendation stored on a Place.
 - A Price Check from the form is dated the month it was saved and credited to the name typed in, so 0001 still holds.
 
 ## Considered options
