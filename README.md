@@ -14,6 +14,12 @@ npm install
 npm run dev   # http://localhost:3000
 ```
 
+### MongoDB
+
+คัดลอก `.env.example` เป็น `.env.local` แล้วใส่ connection string ของ Atlas ใน `MONGODB_URI` (ห้าม commit `.env.local`)
+เช็กว่าต่อติดไหมได้ที่ `http://localhost:3000/api/health` → `{"ok":true}`
+โค้ดฝั่ง server เรียก `getDb()` จาก `lib/mongodb.ts`
+
 ## แก้เนื้อหา
 
 เนื้อหาทั้งหมดอยู่ใน `content/` แก้ไฟล์เหล่านี้ได้เลย ไม่ต้องแตะ component
