@@ -4,26 +4,22 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { MapContainer, Marker, TileLayer, Tooltip } from "react-leaflet";
 import type { Place } from "@/content/types";
+import { placeCode } from "@/lib/format";
 
-function pinIcon(n: number) {
+function pinIcon(code: string, line: string) {
   return L.divIcon({
     className: "map-pin",
-    html: `<span>${n}</span>`,
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
+    html: `<span class="code" data-line="${line}">${code}</span>`,
+    iconSize: [40, 28],
+    iconAnchor: [20, 14],
   });
 }
 
-// The map is only an index: a pin jumps to the Place's know-how card (docs/adr/0002).
+// The map is only an index: a pin jumps to the Place's know-how (docs/adr/0002).
 export default function MapInner({ places }: { places: Place[] }) {
   const bounds = L.latLngBounds(places.map((p) => [p.lat, p.lng]));
   return (
-    <MapContainer
-      className="map"
-      bounds={bounds}
-      boundsOptions={{ padding: [40, 40], maxZoom: 16 }}
-      scrollWheelZoom={false}
-    >
+    <MapContainer className="map" bounds={bounds} boundsOptions={{ padding: [40, 40], maxZoom: 16 }} scrollWheelZoom={false}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -32,7 +28,7 @@ export default function MapInner({ places }: { places: Place[] }) {
         <Marker
           key={p.id}
           position={[p.lat, p.lng]}
-          icon={pinIcon(i + 1)}
+          icon={pinIcon(placeCode(p.category, i), p.category)}
           title={p.name}
           eventHandlers={{
             click: () => {

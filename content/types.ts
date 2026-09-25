@@ -21,6 +21,26 @@ export type Price = {
   checked?: PriceCheck;
 };
 
+/** A photo from Wikimedia Commons, by file name (without "File:"). */
+export type Photo = {
+  file: string;
+  alt: string;
+};
+
+/** Icon keys map to Phosphor icons in components/icons.tsx. */
+export type IconKey =
+  | "train"
+  | "bus"
+  | "motorcycle"
+  | "taxi"
+  | "card"
+  | "food"
+  | "cutlery"
+  | "laundry"
+  | "water"
+  | "trash"
+  | "sick";
+
 export type Place = {
   id: string;
   name: string;
@@ -29,6 +49,7 @@ export type Place = {
   lng: number;
   /** One line: why a Newcomer would come here */
   summary: string;
+  photo?: Photo;
   knowhow: string[];
   cautions?: string[];
   price?: Price;
@@ -42,7 +63,9 @@ export type Guide = {
   id: string;
   category: CategoryId;
   title: string;
+  icon: IconKey;
   intro?: string;
+  photo?: Photo;
   steps: string[];
   /** false until the team has walked through the steps for real */
   checked: boolean;
@@ -65,6 +88,8 @@ export type ChecklistItem = {
   id: string;
   title: string;
   href: string;
+  /** Colours the stop with its category's line; none for general items */
+  category?: CategoryId;
 };
 
 export type HelpLink = {

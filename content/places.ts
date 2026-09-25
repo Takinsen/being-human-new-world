@@ -3,6 +3,7 @@ import type { Place } from "./types";
 // Coordinates and price ranges below are desk-research drafts.
 // Before the pitch, walk each Place: fix the pin, confirm the price on the
 // spot and fill in `price.checked`. Unchecked prices show "รอตรวจราคา".
+// Photos come from Wikimedia Commons; replace them with the team's own shots when you have them.
 export const places: Place[] = [
   // การเดินทาง
   {
@@ -12,6 +13,7 @@ export const places: Place[] = [
     lat: 13.7324,
     lng: 100.5294,
     summary: "สถานีที่ใกล้ฝั่งสามย่านที่สุด มีทางเดินใต้ดินเชื่อมสามย่านมิตรทาวน์",
+    photo: { file: "Exit no.2 Sam Yan MRT.jpg", alt: "ทางออก 2 สถานี MRT สามย่าน" },
     knowhow: [
       "แตะบัตรเครดิตหรือเดบิตที่มีสัญลักษณ์ contactless ผ่านประตูได้เลย ไม่ต้องซื้อเหรียญ",
       "ใช้บัตรใบเดียวกันแตะทั้งตอนเข้าและตอนออก",
@@ -25,6 +27,7 @@ export const places: Place[] = [
     lat: 13.7456,
     lng: 100.5347,
     summary: "สถานีเปลี่ยนสายสุขุมวิทกับสีลม เดินต่อหรือขึ้นรถป๊อปเข้าจุฬาฯ",
+    photo: { file: "Siam BTS Station, view from Siam Paragon.jpg", alt: "สถานี BTS สยาม มองจากสยามพารากอน" },
     knowhow: [
       "ถ้าขึ้นทุกวัน ทำบัตร Rabbit ดีกว่าซื้อตั๋วเที่ยวเดียว ไม่ต้องต่อคิวที่ตู้",
       "ช่วง 7:30–9:00 คนแน่นมาก เผื่อเวลาไว้อย่างน้อย 15 นาที",
@@ -39,6 +42,7 @@ export const places: Place[] = [
     lat: 13.7466,
     lng: 100.529,
     summary: "ใกล้ฝั่งบรรทัดทองและหอพักแถวนั้น",
+    photo: { file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" },
     knowhow: ["ลงสถานีนี้แล้วเดินเลียบถนนบรรทัดทองลงมาทางจุฬาฯ ได้"],
   },
 
@@ -50,6 +54,7 @@ export const places: Place[] = [
     lat: 13.7338,
     lng: 100.5282,
     summary: "มีหลายร้านในที่เดียว แอร์เย็น เปิดดึก นั่งอ่านหนังสือต่อได้",
+    photo: { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
     knowhow: ["แลกบัตรหรือเติมเงินที่เคาน์เตอร์ก่อนสั่ง เงินที่เหลือคืนได้ที่เคาน์เตอร์เดิม"],
     price: { min: 50, max: 80, per: "ต่อจาน" },
   },
@@ -70,6 +75,7 @@ export const places: Place[] = [
     lat: 13.742,
     lng: 100.5222,
     summary: "ร้านอาหารเรียงยาวทั้งถนน คึกคักตอนเย็นถึงดึก",
+    photo: { file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" },
     knowhow: ["หลายร้านดังคิวยาวช่วงหัวค่ำ ถ้าหิวจริงให้มาก่อน 18:00 หรือหลัง 20:30"],
     cautions: ["ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน"],
     price: { min: 50, max: 120, per: "ต่อจาน" },
@@ -83,6 +89,7 @@ export const places: Place[] = [
     lat: 13.731,
     lng: 100.5362,
     summary: "โรงพยาบาลใหญ่ใกล้มหาลัย สำหรับกรณีหนักหรือต้องพบแพทย์เฉพาะทาง",
+    photo: { file: "King Chulalongkorn Memorial Hospital and MDCU Chulalongkorn University.jpg", alt: "โรงพยาบาลจุฬาลงกรณ์" },
     knowhow: [
       "ถ้าไม่ฉุกเฉิน ลองไปที่บริการสุขภาพนิสิตก่อน (ดูในวิธี \"ถ้าป่วย\")",
       "พกบัตรประชาชนกับบัตรนิสิตไปด้วยทุกครั้ง",

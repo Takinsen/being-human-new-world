@@ -26,4 +26,8 @@ npm run dev   # http://localhost:3000
 | `content/checklist.ts` | เช็กลิสต์สัปดาห์แรก |
 | `content/help.ts` | ช่องทางขอความช่วยเหลือ |
 
+รูปใส่ได้ที่ `photo: { file: "ชื่อไฟล์บน Wikimedia Commons", alt: "คำอธิบายรูป" }` ไอคอนของแต่ละวิธีเลือกจากชื่อใน `components/icons.tsx`
+
+หน้าตาของเว็บ: แนวแผนผังรถไฟฟ้า ดู `design/board-d.html` (ภาพที่ approve แล้ว)
+
 ถ้าจะให้ราคาขึ้นเป็นตัวเลข ต้องใส่ `checked: { on: "2026-09", by: "boss" }` ด้วย ถ้าไม่ใส่ เว็บจะแสดงว่า "รอตรวจราคา" (ADR 0001)

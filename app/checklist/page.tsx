@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Checklist } from "@/components/Checklist";
+import { WeekRoute } from "@/components/WeekRoute";
 
-export const metadata: Metadata = { title: "สัปดาห์แรก · ตั้งหลัก" };
+export const metadata: Metadata = { title: "สัปดาห์แรก | ตั้งหลัก" };
 
 export default function ChecklistPage() {
   return (
-    <>
-      <header className="page-head">
-        <h1>สัปดาห์แรก</h1>
-        <p className="lede">
-          เรียงตามลำดับที่ต้องใช้จริง ติ๊กได้เลยเมื่อทำแล้ว ข้อมูลเก็บไว้ในเครื่องนี้เท่านั้น ไม่ต้องสมัครสมาชิก
-        </p>
-      </header>
-      <Checklist />
-    </>
+    <div className="inner page">
+      <WeekRoute heading="h1" />
+      <p className="fine-print">
+        เรียงตามลำดับที่ต้องใช้จริง กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี ข้อมูลเก็บไว้ในเครื่องนี้เท่านั้น ไม่ต้องสมัครสมาชิก
+      </p>
+    </div>
   );
 }
