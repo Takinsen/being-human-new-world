@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HandHeart } from "@phosphor-icons/react/dist/ssr";
+import { HandHeart, MapTrifold } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { seniors } from "@/content/seniors";
 import { CategoryBand } from "@/components/CategoryBand";
@@ -17,6 +17,10 @@ export default function Home() {
         </h1>
         <p className="lede">เรื่องที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่แถวจุฬาฯ</p>
         <LineMap />
+        <Link href="/map" className="map-link">
+          <MapTrifold weight="bold" aria-hidden="true" />
+          เปิดแผนที่ย่านจุฬาฯ
+        </Link>
       </section>
 
       <div className="inner">

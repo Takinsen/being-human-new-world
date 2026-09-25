@@ -1,6 +1,6 @@
 # Embedded map with pins, know-how on the cards
 
-Status: accepted (2026-09-25)
+Status: superseded by 0004 (2026-09-25)
 
 Each category page embeds a map with a pin for every Place. The team chose this over "cards only, with an Open in Google Maps button", even though it risks the site reading as another Google Maps. One interviewee (บอส) asked directly for something that shows "จุดต่างๆ ชัดเจนขึ้น", so a map earns its place.
 

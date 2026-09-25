@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BowlSteam } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { BowlSteam, MapTrifold } from "@phosphor-icons/react/dist/ssr";
 import { categories, getCategory } from "@/content/categories";
 import { guidesIn } from "@/content/guides";
 import { placesIn } from "@/content/places";
 import { seniors } from "@/content/seniors";
 import { CategoryHead } from "@/components/CategoryBand";
 import { GuideBlock } from "@/components/GuideBlock";
-import { PlaceMap } from "@/components/PlaceMap";
 import { PlaceStop } from "@/components/PlaceStop";
 import { placeCode } from "@/lib/format";
 
@@ -40,8 +40,13 @@ export default async function CategoryPage({ params }: Props) {
           <h2 id="places-heading" className="visually-hidden">
             ที่ต่างๆ บนสาย{category.name}
           </h2>
-          <PlaceMap places={places} />
-          <p className="inner status-note">ราคาจะขึ้นเป็นตัวเลขเมื่อมีคนไปตรวจที่หน้าร้านหรือหน้าสถานีแล้ว พร้อมชื่อคนตรวจและเดือนที่ตรวจ</p>
+          <div className="inner places-intro">
+            <Link href={`/map?line=${category.id}`} className="map-link">
+              <MapTrifold weight="bold" aria-hidden="true" />
+              ดูทุกที่บนสาย{category.name}ในแผนที่
+            </Link>
+            <p className="status-note">ราคาจะขึ้นเป็นตัวเลขเมื่อมีคนไปตรวจที่หน้าร้านหรือหน้าสถานีแล้ว พร้อมชื่อคนตรวจและเดือนที่ตรวจ</p>
+          </div>
           <div className="line-stops">
             {places.map((p, i) => (
               <PlaceStop key={p.id} place={p} code={placeCode(p.category, i)} />

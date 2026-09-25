@@ -1,0 +1,178 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { CaretDown, CaretUp } from "@phosphor-icons/react";
+import type { Category } from "@/content/categories";
+import type { CategoryId } from "@/content/types";
+import { CategoryIcon } from "../icons";
+import { StationCode } from "../StationCode";
+import { PlaceDetail } from "./PlaceDetail";
+import type { MapStop } from "./types";
+
+// Leaflet touches `window`, so the map renders only in the browser.
+const ExplorerMap = dynamic(() => import("./ExplorerMap"), {
+  ssr: false,
+  loading: () => <div className="explorer-map map-loading">กำลังโหลดแผนที่</div>,
+});
+
+const SIDEBAR = 380; // px, wide screens
+const SHEET_PEEK = 0.45; // share of the viewport the open sheet covers on phones
+
+function useViewportHeight() {
+  const [h, setH] = useState(800);
+  useEffect(() => {
+    const update = () => setH(window.innerHeight);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return h;
+}
+
+function useWide() {
+  const [wide, setWide] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 900px)");
+    const update = () => setWide(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return wide;
+}
+
+export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Category[] }) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const wide = useWide();
+  const viewportHeight = useViewportHeight();
+
+  // State lives in the URL so category pages can link straight to a line or a Place.
+  const selectedId = params.get("place") ?? undefined;
+  const lineParam = params.get("line");
+  const active = useMemo<CategoryId[]>(() => {
+    const fromUrl = lineParam?.split(",").filter((l): l is CategoryId => lines.some((c) => c.id === l));
+    return fromUrl?.length ? fromUrl : lines.map((l) => l.id);
+  }, [lineParam, lines]);
+
+  const [sheetOpen, setSheetOpen] = useState(true);
+
+  const update = useCallback(
+    (next: { place?: string | null; line?: CategoryId[] }) => {
+      const q = new URLSearchParams(params.toString());
+      if (next.place !== undefined) {
+        if (next.place) q.set("place", next.place);
+        else q.delete("place");
+      }
+      if (next.line) {
+        if (next.line.length === lines.length) q.delete("line");
+        else q.set("line", next.line.join(","));
+      }
+      router.replace(`${pathname}${q.size ? `?${q}` : ""}`, { scroll: false });
+    },
+    [params, pathname, router, lines.length],
+  );
+
+  const visible = stops.filter((s) => active.includes(s.place.category));
+  const selected = stops.find((s) => s.place.id === selectedId);
+
+  const select = (id: string) => {
+    const stop = stops.find((s) => s.place.id === id);
+    const line = stop && !active.includes(stop.place.category) ? [...active, stop.place.category] : undefined;
+    update({ place: id, line });
+    setSheetOpen(true);
+  };
+
+  const toggleLine = (id: CategoryId) => {
+    const next = active.includes(id) ? active.filter((a) => a !== id) : [...active, id];
+    const dropSelected = selected && !next.includes(selected.place.category);
+    update({ line: next, place: dropSelected ? null : undefined });
+  };
+
+  const inset = wide
+    ? { left: SIDEBAR + 16, bottom: 0 }
+    : { left: 0, bottom: sheetOpen ? Math.round(viewportHeight * SHEET_PEEK) : 72 };
+
+  const filters = (
+    <div className="line-filters" role="group" aria-label="เลือกสายที่จะแสดง">
+      {lines.map((l) => (
+        <button
+          key={l.id}
+          type="button"
+          className="line-chip"
+          data-line={l.id}
+          aria-pressed={active.includes(l.id)}
+          onClick={() => toggleLine(l.id)}
+        >
+          <CategoryIcon id={l.id} />
+          {l.name}
+        </button>
+      ))}
+    </div>
+  );
+
+  const list = (
+    <div className="stop-list">
+      {visible.length === 0 && <p className="status-note">เลือกอย่างน้อยหนึ่งสายด้านบน เพื่อดูที่ต่างๆ</p>}
+      {lines
+        .filter((l) => active.includes(l.id))
+        .map((l) => {
+          const onLine = visible.filter((s) => s.place.category === l.id);
+          if (!onLine.length) return null;
+          return (
+            <section key={l.id} data-line={l.id} className="stop-group">
+              <h2>{l.name}</h2>
+              <ul>
+                {onLine.map(({ place, code }) => (
+                  <li key={place.id}>
+                    <button type="button" onClick={() => select(place.id)}>
+                      <StationCode code={code} />
+                      <span>
+                        <b>{place.name}</b>
+                        <small>{place.summary}</small>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+    </div>
+  );
+
+  const panelBody = selected ? <PlaceDetail stop={selected} onBack={() => update({ place: null })} /> : list;
+
+  return (
+    <div className="explorer">
+      <ExplorerMap stops={visible} selectedId={selectedId} onSelect={select} inset={inset} />
+
+      {wide ? (
+        <aside className="explorer-panel" aria-label="แผงแผนที่" style={{ width: SIDEBAR }}>
+          <h1>แผนที่ย่านจุฬาฯ</h1>
+          <p className="status-note">แผนที่บอกว่าอยู่ตรงไหน กดที่แต่ละที่เพื่อดูว่าต้องรู้อะไรก่อนไป</p>
+          {filters}
+          {panelBody}
+        </aside>
+      ) : (
+        <>
+          <div className="explorer-top">{filters}</div>
+          <section
+            className={sheetOpen ? "explorer-sheet is-open" : "explorer-sheet"}
+            style={{ height: sheetOpen ? `${SHEET_PEEK * 100}dvh` : 72 }}
+            aria-label="รายการบนแผนที่"
+          >
+            <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
+              <span>{selected ? selected.place.name : `แผนที่ย่านจุฬาฯ ${visible.length} ที่`}</span>
+              {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
+            </button>
+            {sheetOpen && <div className="sheet-body">{panelBody}</div>}
+          </section>
+        </>
+      )}
+    </div>
+  );
+}

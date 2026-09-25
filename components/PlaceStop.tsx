@@ -1,4 +1,5 @@
-import { CheckCircle, NavigationArrow, Warning } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
+import { CheckCircle, MapPin, NavigationArrow, Warning } from "@phosphor-icons/react/dist/ssr";
 import type { Place } from "@/content/types";
 import { getSenior } from "@/content/seniors";
 import { mapsUrl } from "@/lib/format";
@@ -44,11 +45,18 @@ export function PlaceStop({ place, code }: { place: Place; code: string }) {
             </footer>
           </blockquote>
         )}
-        <a className="nav-link" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
-          <NavigationArrow weight="bold" aria-hidden="true" />
-          นำทางใน Google Maps
-          <span className="visually-hidden"> ไป{place.name} (เปิดแท็บใหม่)</span>
-        </a>
+        <div className="stop-links">
+          <Link className="nav-link" href={`/map?place=${place.id}`}>
+            <MapPin weight="bold" aria-hidden="true" />
+            ดูบนแผนที่
+            <span className="visually-hidden"> {place.name}</span>
+          </Link>
+          <a className="nav-link" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
+            <NavigationArrow weight="bold" aria-hidden="true" />
+            นำทางใน Google Maps
+            <span className="visually-hidden"> ไป{place.name} (เปิดแท็บใหม่)</span>
+          </a>
+        </div>
       </div>
     </article>
   );
