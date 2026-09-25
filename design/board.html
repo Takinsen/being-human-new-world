@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตั้งหลัก design board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap">
+<style>
+  :root {
+    --ink: #13233d;
+    --ink-soft: #56647d;
+    --concrete: #eceef1;
+    --white: #ffffff;
+    --rule: #d3d8e0;
+    --night: #0f2440;
+    --transport: #2e9a47;
+    --food: #ee7b22;
+    --living: #1f57b8;
+    --platform: #ffd100;
+    --caution: #c2410c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f7f8fa;
+    color: var(--ink);
+    font-family: "Bai Jamjuree", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  svg { vertical-align: -0.125em; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 16px 96px; }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; }
+
+  /* Board chrome */
+  .intro h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; font-weight: 700; }
+  .intro p { max-width: 42rem; margin-top: 12px; font-size: 1.125rem; color: var(--ink-soft); }
+  .section { margin-top: 72px; }
+  .section > h2 { font-size: 1.625rem; font-weight: 700; }
+  .section > p { margin-top: 6px; color: var(--ink-soft); max-width: 44rem; }
+
+  .variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px 28px; margin-top: 28px; }
+  .variant > h3 { font-size: 1.25rem; font-weight: 700; }
+  .variant > p { color: var(--ink-soft); font-size: .95rem; margin: 4px 0 16px; min-height: 4.8em; }
+  .phone {
+    width: 100%; max-width: 380px; height: 760px; overflow: hidden auto;
+    border: 10px solid #1d2230; border-radius: 36px; background: var(--white);
+    box-shadow: 0 20px 40px -24px rgb(19 35 61 / .45);
+  }
+
+  /* Shared components */
+  .code {
+    display: inline-grid; place-items: center; min-width: 2.4em; height: 1.7em; padding: 0 .35em;
+    border: 3px solid currentColor; border-radius: .45em; background: var(--white);
+    font-weight: 700; font-size: .85rem; line-height: 1; color: var(--c, var(--ink));
+  }
+  .t { --c: var(--transport); } .f { --c: var(--food); } .l { --c: var(--living); }
+  .price-strip {
+    display: inline-flex; align-items: baseline; gap: .4em; padding: .15em .55em;
+    background: var(--platform); color: var(--ink); font-weight: 700; font-size: 1.25rem;
+    border-radius: 3px;
+  }
+  .price-meta { display: block; margin-top: 4px; font-size: .8rem; color: var(--ink-soft); }
+  .photo { position: relative; aspect-ratio: 16 / 10; background: #c9cfd8; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .credit { position: absolute; right: 6px; bottom: 4px; font-size: .65rem; color: #fff; text-shadow: 0 1px 2px #000; }
+  .bubble {
+    position: relative; padding: 12px 14px; border-radius: 14px; background: var(--concrete);
+    font-size: .95rem; line-height: 1.55;
+  }
+  .bubble::after {
+    content: ""; position: absolute; left: 18px; bottom: -8px; border: 8px solid transparent;
+    border-top-color: var(--concrete); border-bottom: 0;
+  }
+  .who { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: .85rem; color: var(--ink-soft); }
+  .who b { color: var(--ink); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-weight: 700; font-size: .8rem; }
+
+  /* Route (checklist) horizontal */
+  .route { position: relative; display: flex; justify-content: space-between; margin-top: 14px; }
+  .route::before { content: ""; position: absolute; left: 6px; right: 6px; top: 6px; height: 4px; background: var(--rule); border-radius: 2px; }
+  .route::after { content: ""; position: absolute; left: 6px; width: calc((100% - 12px) * 2 / 6); top: 6px; height: 4px; background: var(--transport); border-radius: 2px; }
+  .route span { position: relative; z-index: 1; width: 16px; height: 16px; border-radius: 50%; background: var(--white); border: 3px solid var(--rule); }
+  .route span.done { border-color: var(--transport); background: var(--transport); }
+  .route span.next { border-color: var(--transport); }
+
+  /* ===== Variant A: ชานชาลา ===== */
+  .va { background: var(--concrete); min-height: 100%; }
+  .va .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--white); border-top: 6px solid; border-image: linear-gradient(90deg, var(--transport) 0 33.3%, var(--food) 0 66.6%, var(--living) 0) 1; }
+  .va .mark { background: var(--night); color: #fff; font-weight: 700; padding: 2px 10px; border-radius: 6px; font-size: 1.05rem; }
+  .va .bar .menu { font-size: 1.5rem; }
+  .va .hero { padding: 28px 16px 20px; }
+  .va .hero h2 { font-size: 2.1rem; line-height: 1.15; font-weight: 700; }
+  .va .hero p { margin-top: 10px; color: var(--ink-soft); }
+  .va .next-card { margin: 18px 0 0; padding: 14px; background: var(--white); border-radius: 12px; }
+  .va .next-card .label { font-size: .85rem; color: var(--ink-soft); }
+  .va .next-card .title { font-weight: 600; margin-top: 2px; }
+  .va .cats { margin: 4px 16px 0; display: grid; gap: 8px; }
+  .va .cat { display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 10px; background: var(--white); border-radius: 12px; text-decoration: none; }
+  .va .cat .ic { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 1.5rem; flex: none; }
+  .va .cat h4 { font-size: 1.1rem; font-weight: 700; }
+  .va .cat p { font-size: .8rem; color: var(--ink-soft); line-height: 1.4; }
+  .va .cat .chev { margin-left: auto; color: var(--c); font-size: 1.2rem; }
+  .va .place { margin: 20px 16px 24px; background: var(--white); border-radius: 12px; overflow: hidden; }
+  .va .place .photo .code { position: absolute; left: 10px; top: 10px; }
+  .va .place .body { padding: 14px; }
+  .va .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .va .place .sum { font-size: .85rem; color: var(--ink-soft); }
+  .va .place .price { margin-top: 10px; }
+
+  /* ===== Variant B: ป้ายกลางคืน ===== */
+  .vb .top { background: var(--night); color: #fff; }
+  .vb .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
+  .vb .mark { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+  .vb .mark i { width: 10px; height: 22px; border-radius: 3px; background: var(--platform); display: inline-block; }
+  .vb .hero { position: relative; }
+  .vb .hero .photo { aspect-ratio: 4 / 3; }
+  .vb .hero .photo img { filter: saturate(.8) brightness(.55); }
+  .vb .hero .text { position: absolute; inset: auto 16px 18px; }
+  .vb .hero h2 { font-size: 2.15rem; line-height: 1.15; font-weight: 700; }
+  .vb .hero p { margin-top: 6px; font-size: .95rem; opacity: .85; }
+  .vb .progress { padding: 14px 16px 18px; }
+  .vb .progress .label { font-size: .85rem; opacity: .8; }
+  .vb .route::before { background: #34496b; }
+  .vb .route span { background: var(--night); border-color: #34496b; }
+  .vb .route span.done { background: var(--platform); border-color: var(--platform); }
+  .vb .route span.next { border-color: var(--platform); }
+  .vb .route::after { background: var(--platform); }
+  .vb .cats { display: grid; }
+  .vb .cat { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--c); color: #fff; text-decoration: none; }
+  .vb .cat .ic { font-size: 2rem; }
+  .vb .cat h4 { font-size: 1.25rem; font-weight: 700; }
+  .vb .cat p { font-size: .8rem; opacity: .9; line-height: 1.4; }
+  .vb .cat .arrow { margin-left: auto; font-size: 1.4rem; }
+  .vb .place { padding: 20px 16px 24px; }
+  .vb .place .head { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .vb .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .vb .place .photo { border-radius: 10px; }
+  .vb .place .price { margin-top: 10px; }
+  .vb .place .sum { font-size: .85rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ===== Variant C: แผนผังเส้นทาง ===== */
+  .vc { background: var(--white); }
+  .vc .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--rule); }
+  .vc .mark { font-weight: 700; font-size: 1.15rem; }
+  .vc .hero { padding: 24px 16px 8px; }
+  .vc .hero h2 { font-size: 2rem; line-height: 1.15; font-weight: 700; }
+  .vc .map-svg { display: block; width: 100%; height: auto; margin-top: 8px; }
+  .vc .line { padding: 8px 16px 0; }
+  .vc .line h3 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .vc .line h3 small { font-weight: 500; color: var(--ink-soft); }
+  .vc .stops { list-style: none; margin: 10px 0 0; padding: 0; position: relative; }
+  .vc .stops::before { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 6px; background: var(--transport); border-radius: 3px; }
+  .vc .stops li { position: relative; display: flex; gap: 14px; align-items: center; padding: 7px 0; font-size: .95rem; }
+  .vc .stops li::before { content: ""; flex: none; position: relative; z-index: 1; width: 24px; height: 24px; border-radius: 50%; border: 5px solid var(--transport); background: #fff; }
+  .vc .stops li.done::before { background: var(--transport); }
+  .vc .stops li.done { color: var(--ink-soft); }
+  .vc .place { margin: 18px 16px 24px; border: 3px solid var(--food); border-radius: 14px; overflow: hidden; }
+  .vc .place .body { padding: 12px 14px 14px; }
+  .vc .place .head { display: flex; gap: 10px; align-items: center; }
+  .vc .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .vc .place .price { margin-top: 10px; }
+
+  /* Tokens */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
+  .sw { border-radius: 12px; overflow: hidden; background: var(--white); border: 1px solid var(--rule); }
+  .sw div { height: 72px; }
+  .sw p { padding: 8px 10px; font-size: .85rem; line-height: 1.35; }
+  .sw b { display: block; }
+  .type-scale { margin-top: 20px; display: grid; gap: 14px; background: var(--white); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+  .type-scale div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: baseline; }
+  .type-scale small { color: var(--ink-soft); font-size: .8rem; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-top: 20px; }
+  .icons div { background: var(--white); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 8px; text-align: center; font-size: .8rem; color: var(--ink-soft); }
+  .icons div span { display: block; font-size: 2rem; color: var(--ink); }
+  .components { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+  .comp { background: var(--white); border: 1px solid var(--rule); border-radius: 14px; padding: 18px; }
+  .comp h4 { font-size: .85rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 12px; }
+  .note { margin-top: 20px; padding: 16px 18px; background: #fff8d6; border-radius: 12px; font-size: .95rem; }
+  .credits { margin-top: 48px; font-size: .8rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="intro">
+    <h1>ตั้งหลัก: แนวภาพแบบป้ายรถไฟฟ้า</h1>
+    <p>ทั้งสามแบบใช้ฟอนต์ Bai Jamjuree ชุดสีตามหมวด ไอคอน และ component ชุดเดียวกัน ต่างกันที่บรรยากาศและจุดเด่น เลือกแบบเดียว หรือบอกว่าจะเอาส่วนไหนจากแบบไหนมาผสมกันก็ได้</p>
+  </header>
+
+  <section class="section">
+    <h2>หน้าแรกบนมือถือ 3 แบบ</h2>
+    <p>ทุกแบบมีหัวข้อ ความคืบหน้าของสัปดาห์แรก 3 หมวด และการ์ดสถานที่ 1 ใบ ให้เทียบกันได้</p>
+
+    <div class="variants">
+
+      <!-- A -->
+      <div class="variant">
+        <h3>A. ชานชาลา</h3>
+        <p>สว่าง สะอาด พื้นสีเทาคอนกรีต ป้ายสีขาว แต่ละหมวดมีสีเหมือนสายรถไฟฟ้า ราคาอยู่บนแถบสีเหลืองแบบขอบชานชาลา อ่านง่ายที่สุด ดูเป็นกันเอง</p>
+        <div class="phone">
+          <div class="va">
+            <div class="bar"><span class="mark">ตั้งหลัก</span><span class="menu"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128ZM40,76H216a12,12,0,0,0,0-24H40a12,12,0,0,0,0,24ZM216,180H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"></path></svg></span></div>
+            <div class="hero">
+              <h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2>
+              <p>เรื่องที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่เหมือนกัน</p>
+              <div class="next-card">
+                <span class="label">สัปดาห์แรก ผ่านมาแล้ว 2 จาก 7 สถานี</span>
+                <div class="route"><span class="done"></span><span class="done"></span><span class="next"></span><span></span><span></span><span></span><span></span></div>
+                <p class="title" style="margin-top:12px">สถานีถัดไป: รู้ราคาข้าวปกติแถวนี้</p>
+              </div>
+            </div>
+            <div class="cats">
+              <a class="cat t"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184,20H72A36,36,0,0,0,36,56V184a36,36,0,0,0,36,36h0l-9.6,12.8a12,12,0,1,0,19.2,14.4L102,220h52l20.4,27.2a12,12,0,0,0,19.2-14.4L184,220h0a36,36,0,0,0,36-36V56A36,36,0,0,0,184,20ZM60,116V84h56v32Zm80-32h56v32H140ZM72,44H184a12,12,0,0,1,12,12v4H60V56A12,12,0,0,1,72,44ZM184,196H72a12,12,0,0,1-12-12V140H196v44A12,12,0,0,1,184,196Zm-80-28a16,16,0,1,1-16-16A16,16,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16,16,0,0,1,184,168Z"></path></svg></span><div><h4>การเดินทาง</h4><p>ค่ารถ วิน รถป๊อป</p></div><span class="chev"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></span></a>
+              <a class="cat f" style="--c:var(--food)"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,100h-4.78a92,92,0,0,0-182.44,0H32a12,12,0,0,0-12,12,108.38,108.38,0,0,0,56,94.68V208a20,20,0,0,0,20,20h64a20,20,0,0,0,20-20v-1.32A108.38,108.38,0,0,0,236,112,12,12,0,0,0,224,100ZM170.29,60.06A92,92,0,0,0,127.19,100H106a68.27,68.27,0,0,1,62-40C168.76,60,169.52,60,170.29,60.06Zm17.22,19.08A67.66,67.66,0,0,1,194.92,100H156.13A67.91,67.91,0,0,1,187.51,79.14ZM128,44c.83,0,1.65,0,2.48.06A92.3,92.3,0,0,0,80.37,100H61.08A68.1,68.1,0,0,1,128,44Zm35,144.39a12,12,0,0,0-7,10.91V204H100v-4.7a12,12,0,0,0-7-10.91A84.32,84.32,0,0,1,44.87,124H211.13A84.32,84.32,0,0,1,163,188.39Z"></path></svg></span><div><h4>ของกิน</h4><p>อิ่มในงบ และรสชาติบ้าน</p></div><span class="chev"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></span></a>
+              <a class="cat l" style="--c:var(--living)"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M160,80a16,16,0,1,1,16,16A16,16,0,0,1,160,80Zm72-36V212a20,20,0,0,1-20,20H44a20,20,0,0,1-20-20V44A20,20,0,0,1,44,24H212A20,20,0,0,1,232,44Zm-24,4H48V208H208Zm-68.49,75.51-16,16a12,12,0,0,0,17,17l16-16a12,12,0,1,0-17-17Zm-15-16a12,12,0,0,0-17,0l-8,8a12,12,0,0,0,17,17l8-8A12,12,0,0,0,124.49,107.51ZM128,196a68.05,68.05,0,0,0,67.19-78.52,12,12,0,0,0-23.72,3.69,44,44,0,1,1-36.64-36.64,12,12,0,0,0,3.69-23.72A68,68,0,1,0,128,196Z"></path></svg></span><div><h4>อยู่คนเดียว</h4><p>ซักผ้า น้ำ ขยะ ป่วย</p></div><span class="chev"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184.49,136.49l-80,80a12,12,0,0,1-17-17L159,128,87.51,56.49a12,12,0,1,1,17-17l80,80A12,12,0,0,1,184.49,136.49Z"></path></svg></span></a>
+            </div>
+            <div class="place">
+              <div class="photo">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Banthat_Thong_Road.jpg?width=640" alt="ถนนบรรทัดทอง" loading="lazy" onerror="this.remove()">
+                <span class="code f">F3</span>
+              </div>
+              <div class="body">
+                <h4>ถนนบรรทัดทอง</h4>
+                <p class="sum">ร้านอาหารเรียงทั้งถนน คึกคักตอนเย็นถึงดึก</p>
+                <div class="price"><span class="price-strip">50–120 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="variant">
+        <h3>B. ป้ายกลางคืน</h3>
+        <p>ด้านบนเป็นสีกรมท่าแบบป้ายใน MRT มีรูปย่านจริงเต็มจอ หมวดเป็นแถบสีเต็มความกว้างแบบป้ายบอกทางออก ดูเป็นเมืองและมีพลังที่สุด</p>
+        <div class="phone">
+          <div class="vb">
+            <div class="top">
+              <div class="bar"><span class="mark"><i></i>ตั้งหลัก</span><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128ZM40,76H216a12,12,0,0,0,0-24H40a12,12,0,0,0,0,24ZM216,180H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"></path></svg></span></div>
+              <div class="hero">
+                <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bangkok_-_Sam_Yan_Intersection_-_%E0%B9%81%E0%B8%A2%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A1%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%99_(2025)_-_img_04.jpg?width=800" alt="แยกสามย่าน" loading="lazy" onerror="this.remove()"></div>
+                <div class="text"><h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2><p>คู่มือตั้งหลักแถวจุฬาฯ จากรุ่นพี่</p></div>
+              </div>
+              <div class="progress">
+                <span class="label">สัปดาห์แรก 2 จาก 7</span>
+                <div class="route"><span class="done"></span><span class="done"></span><span class="next"></span><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="cats">
+              <a class="cat" style="--c:var(--transport)"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184,20H72A36,36,0,0,0,36,56V184a36,36,0,0,0,36,36h0l-9.6,12.8a12,12,0,1,0,19.2,14.4L102,220h52l20.4,27.2a12,12,0,0,0,19.2-14.4L184,220h0a36,36,0,0,0,36-36V56A36,36,0,0,0,184,20ZM60,116V84h56v32Zm80-32h56v32H140ZM72,44H184a12,12,0,0,1,12,12v4H60V56A12,12,0,0,1,72,44ZM184,196H72a12,12,0,0,1-12-12V140H196v44A12,12,0,0,1,184,196Zm-80-28a16,16,0,1,1-16-16A16,16,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16,16,0,0,1,184,168Z"></path></svg></span><div><h4>การเดินทาง</h4><p>ค่ารถ วิน รถป๊อป</p></div><span class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"></path></svg></span></a>
+              <a class="cat" style="--c:var(--food)"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,100h-4.78a92,92,0,0,0-182.44,0H32a12,12,0,0,0-12,12,108.38,108.38,0,0,0,56,94.68V208a20,20,0,0,0,20,20h64a20,20,0,0,0,20-20v-1.32A108.38,108.38,0,0,0,236,112,12,12,0,0,0,224,100ZM170.29,60.06A92,92,0,0,0,127.19,100H106a68.27,68.27,0,0,1,62-40C168.76,60,169.52,60,170.29,60.06Zm17.22,19.08A67.66,67.66,0,0,1,194.92,100H156.13A67.91,67.91,0,0,1,187.51,79.14ZM128,44c.83,0,1.65,0,2.48.06A92.3,92.3,0,0,0,80.37,100H61.08A68.1,68.1,0,0,1,128,44Zm35,144.39a12,12,0,0,0-7,10.91V204H100v-4.7a12,12,0,0,0-7-10.91A84.32,84.32,0,0,1,44.87,124H211.13A84.32,84.32,0,0,1,163,188.39Z"></path></svg></span><div><h4>ของกิน</h4><p>อิ่มในงบ และรสชาติบ้าน</p></div><span class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"></path></svg></span></a>
+              <a class="cat" style="--c:var(--living)"><span class="ic"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M160,80a16,16,0,1,1,16,16A16,16,0,0,1,160,80Zm72-36V212a20,20,0,0,1-20,20H44a20,20,0,0,1-20-20V44A20,20,0,0,1,44,24H212A20,20,0,0,1,232,44Zm-24,4H48V208H208Zm-68.49,75.51-16,16a12,12,0,0,0,17,17l16-16a12,12,0,1,0-17-17Zm-15-16a12,12,0,0,0-17,0l-8,8a12,12,0,0,0,17,17l8-8A12,12,0,0,0,124.49,107.51ZM128,196a68.05,68.05,0,0,0,67.19-78.52,12,12,0,0,0-23.72,3.69,44,44,0,1,1-36.64-36.64,12,12,0,0,0,3.69-23.72A68,68,0,1,0,128,196Z"></path></svg></span><div><h4>อยู่คนเดียว</h4><p>ซักผ้า น้ำ ขยะ ป่วย</p></div><span class="arrow"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224.49,136.49l-72,72a12,12,0,0,1-17-17L187,140H40a12,12,0,0,1,0-24H187L135.51,64.48a12,12,0,0,1,17-17l72,72A12,12,0,0,1,224.49,136.49Z"></path></svg></span></a>
+            </div>
+            <div class="place">
+              <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Exit_no.2_Sam_Yan_MRT.jpg?width=640" alt="ทางออก 2 MRT สามย่าน" loading="lazy" onerror="this.remove()"></div>
+              <div class="head"><span class="code t">T1</span><h4>MRT สามย่าน</h4></div>
+              <p class="sum">ทางออก 2 เดินใต้ดินเข้าสามย่านมิตรทาวน์ได้เลย</p>
+              <div class="price"><span class="price-strip">17–45 บาท <small>ต่อเที่ยว</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยทีมตั้งหลัก</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="variant">
+        <h3>C. แผนผังเส้นทาง</h3>
+        <p>พื้นขาว ภาพหลักเป็นแผนผังเส้นทางที่วาดเอง สามสายมาบรรจบกันที่จุฬาฯ เช็กลิสต์เป็นสายรถไฟฟ้าแนวตั้งที่มีสถานี ดูเป็นกราฟิกและมีเอกลักษณ์ที่สุด แต่ใช้รูปถ่ายน้อย</p>
+        <div class="phone">
+          <div class="vc">
+            <div class="bar"><span class="mark">ตั้งหลัก</span><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M228,128a12,12,0,0,1-12,12H40a12,12,0,0,1,0-24H216A12,12,0,0,1,228,128ZM40,76H216a12,12,0,0,0,0-24H40a12,12,0,0,0,0,24ZM216,180H40a12,12,0,0,0,0,24H216a12,12,0,0,0,0-24Z"></path></svg></span></div>
+            <div class="hero">
+              <h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2>
+              <svg class="map-svg" viewBox="0 0 340 170" role="img" aria-label="สามสายมาบรรจบที่จุฬาฯ">
+                <path d="M10 30 H120 Q150 30 160 60 L170 85" fill="none" stroke="#2e9a47" stroke-width="10" stroke-linecap="round"/>
+                <path d="M330 40 H230 Q200 40 188 70 L176 88" fill="none" stroke="#ee7b22" stroke-width="10" stroke-linecap="round"/>
+                <path d="M40 160 H120 Q150 160 160 125 L170 95" fill="none" stroke="#1f57b8" stroke-width="10" stroke-linecap="round"/>
+                <circle cx="172" cy="90" r="17" fill="#fff" stroke="#13233d" stroke-width="6"/>
+                <text x="198" y="120" font-family="Bai Jamjuree" font-weight="700" font-size="16" fill="#13233d">จุฬาฯ</text>
+                <text x="12" y="20" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#2e9a47">การเดินทาง</text>
+                <text x="268" y="30" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#ee7b22">ของกิน</text>
+                <text x="40" y="150" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#1f57b8">อยู่คนเดียว</text>
+                <circle cx="60" cy="30" r="6" fill="#fff" stroke="#2e9a47" stroke-width="4"/>
+                <circle cx="280" cy="40" r="6" fill="#fff" stroke="#ee7b22" stroke-width="4"/>
+                <circle cx="90" cy="160" r="6" fill="#fff" stroke="#1f57b8" stroke-width="4"/>
+              </svg>
+            </div>
+            <div class="line">
+              <h3><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M200,164a36.07,36.07,0,0,0-33.94,24H72a28,28,0,0,1,0-56h96a44,44,0,0,0,0-88H72a12,12,0,0,0,0,24h96a20,20,0,0,1,0,40H72a52,52,0,0,0,0,104h94.06A36,36,0,1,0,200,164Zm0,48a12,12,0,1,1,12-12A12,12,0,0,1,200,212Z"></path></svg> สายสัปดาห์แรก <small>2 จาก 7</small></h3>
+              <ol class="stops">
+                <li class="done">ทำบัตร Rabbit</li>
+                <li class="done">ขึ้นรถป๊อปเป็น</li>
+                <li>รู้ราคาข้าวปกติ</li>
+                <li>ซักผ้าหยอดเหรียญ 1 รอบ</li>
+                <li>ตัดสินใจเรื่องน้ำดื่ม</li>
+              </ol>
+            </div>
+            <div class="place">
+              <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Banthat_Thong_Road.jpg?width=640" alt="ถนนบรรทัดทอง" loading="lazy" onerror="this.remove()"></div>
+              <div class="body">
+                <div class="head"><span class="code f">F3</span><h4>ถนนบรรทัดทอง</h4></div>
+                <div class="price"><span class="price-strip">50–120 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>สีที่ใช้ร่วมกัน</h2>
+    <p>แต่ละหมวดคือ "สาย" ของมันเอง สีหมวดใช้กับไอคอน หมุด รหัสสถานี และเส้นทาง สีเหลืองขอบชานชาลาใช้กับราคาที่ตรวจแล้วเท่านั้น</p>
+    <div class="swatches">
+      <div class="sw"><div style="background:var(--transport)"></div><p><b>สายเดินทาง</b>#2E9A47</p></div>
+      <div class="sw"><div style="background:var(--food)"></div><p><b>สายของกิน</b>#EE7B22</p></div>
+      <div class="sw"><div style="background:var(--living)"></div><p><b>สายอยู่คนเดียว</b>#1F57B8</p></div>
+      <div class="sw"><div style="background:var(--platform)"></div><p><b>เหลืองชานชาลา</b>#FFD100 ราคาที่ตรวจแล้ว</p></div>
+      <div class="sw"><div style="background:var(--night)"></div><p><b>กรมท่าป้าย</b>#0F2440</p></div>
+      <div class="sw"><div style="background:var(--concrete)"></div><p><b>คอนกรีต</b>#ECEEF1 พื้นหลัง</p></div>
+      <div class="sw"><div style="background:var(--ink)"></div><p><b>หมึก</b>#13233D ตัวอักษร</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>ตัวอักษร: Bai Jamjuree</h2>
+    <p>ใช้ฟอนต์เดียวทั้งเว็บ ต่างกันที่น้ำหนักและขนาด ฟอนต์นี้มีหัวเหลี่ยมคล้ายป้ายสาธารณะอยู่แล้ว</p>
+    <div class="type-scale">
+      <div><small>หัวเรื่อง 700</small><span style="font-size:2.5rem;font-weight:700;line-height:1.15">บ้านยังเป็นบ้าน</span></div>
+      <div><small>หัวข้อ 700</small><span style="font-size:1.625rem;font-weight:700">รสชาติบ้าน</span></div>
+      <div><small>ชื่อการ์ด 600</small><span style="font-size:1.25rem;font-weight:600">ถนนบรรทัดทอง</span></div>
+      <div><small>เนื้อหา 400</small><span>ร้านข้าวราดแกงคิดตามจำนวนกับข้าวที่ตัก บอกก่อนว่าจะเอากี่อย่าง</span></div>
+      <div><small>คำพูดรุ่นพี่ 500 ตัวเอียง</small><span style="font-style:italic;font-weight:500;font-size:1.1rem">"ปีแรกพี่กินเซเว่นเยอะมาก"</span></div>
+      <div><small>ข้อมูลรอง 400</small><span style="font-size:.85rem;color:var(--ink-soft)">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>ไอคอน: Phosphor แบบเส้นหนา</h2>
+    <p>ใช้แบบ Bold ให้หนาพอๆ กับป้ายสาธารณะ ใช้ฟรีตามสัญญาอนุญาต MIT</p>
+    <div class="icons">
+      <div><span style="color:var(--transport)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184,20H72A36,36,0,0,0,36,56V184a36,36,0,0,0,36,36h0l-9.6,12.8a12,12,0,1,0,19.2,14.4L102,220h52l20.4,27.2a12,12,0,0,0,19.2-14.4L184,220h0a36,36,0,0,0,36-36V56A36,36,0,0,0,184,20ZM60,116V84h56v32Zm80-32h56v32H140ZM72,44H184a12,12,0,0,1,12,12v4H60V56A12,12,0,0,1,72,44ZM184,196H72a12,12,0,0,1-12-12V140H196v44A12,12,0,0,1,184,196Zm-80-28a16,16,0,1,1-16-16A16,16,0,0,1,104,168Zm80,0a16,16,0,1,1-16-16A16,16,0,0,1,184,168Z"></path></svg></span>BTS / MRT</div>
+      <div><span style="color:var(--transport)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M184,28H72A36,36,0,0,0,36,64V208a20,20,0,0,0,20,20H84a20,20,0,0,0,20-20V192h48v16a20,20,0,0,0,20,20h28a20,20,0,0,0,20-20V64A36,36,0,0,0,184,28ZM60,168V112H196v56ZM72,52H184a12,12,0,0,1,12,12V88H60V64A12,12,0,0,1,72,52Zm8,152H60V192H80Zm96,0V192h20v12Zm-68-64a16,16,0,1,1-16-16A16,16,0,0,1,108,140Zm72,0a16,16,0,1,1-16-16A16,16,0,0,1,180,140Zm76-60v24a12,12,0,0,1-24,0V80a12,12,0,0,1,24,0ZM24,80v24a12,12,0,0,1-24,0V80a12,12,0,0,1,24,0Z"></path></svg></span>รถเมล์ รถป๊อป</div>
+      <div><span style="color:var(--transport)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M208,112c-.57,0-1.13,0-1.69,0l-3.5-11.8c1.71-.15,3.44-.24,5.19-.24a12,12,0,0,0,0-24H195.63l-8.12-27.41A12,12,0,0,0,176,40H144a12,12,0,0,0,0,24h23l3.56,12H152c-19.44,0-35.32,4.62-45.92,13.37a12,12,0,0,1-12.56,1.52c-13.13-6-57.19-25-61.65-26.89L26.6,61.76S22.4,60,20,60a12,12,0,0,0-4.61,23.08c1.72.73,43.67,18.5,68.2,29.66a36.25,36.25,0,0,0,15,3.23,35.78,35.78,0,0,0,22.78-8.09c5.74-4.73,15.58-7.48,27.89-7.84a84,84,0,0,0-24.4,48H94.48a48,48,0,1,0,0,24H136a12,12,0,0,0,12-12,60,60,0,0,1,31.8-52.94l3.5,11.8A48,48,0,1,0,208,112ZM48,172H68.77a24,24,0,1,1,0-24H48a12,12,0,0,0,0,24Zm160,12a24,24,0,0,1-17.4-40.5l5.89,19.91A12,12,0,0,0,208,172a12.28,12.28,0,0,0,3.41-.49,12,12,0,0,0,8.1-14.92l-5.91-19.92A24,24,0,0,1,208,184Z"></path></svg></span>วิน</div>
+      <div><span style="color:var(--transport)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M240,100h-9L204.72,54.08A20,20,0,0,0,187.36,44H168.12l-11-27.43A19.9,19.9,0,0,0,138.58,4H117.42A19.9,19.9,0,0,0,98.85,16.57L87.88,44H68.64A20,20,0,0,0,51.28,54.08L25,100H16a12,12,0,0,0,0,24h4v76a20,20,0,0,0,20,20H68a20,20,0,0,0,20-20V180h80v20a20,20,0,0,0,20,20h28a20,20,0,0,0,20-20V124h4a12,12,0,0,0,0-24ZM120.12,28h15.76l6.4,16H113.72ZM71,68H185l18.28,32H52.68ZM64,196H44V180H64Zm148,0H192V180h20Zm0-40H44V124H212Z"></path></svg></span>แท็กซี่</div>
+      <div><span style="color:var(--transport)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,44H32A20,20,0,0,0,12,64V192a20,20,0,0,0,20,20H224a20,20,0,0,0,20-20V64A20,20,0,0,0,224,44Zm-4,24V88H36V68ZM36,188V112H220v76Zm172-24a12,12,0,0,1-12,12H164a12,12,0,0,1,0-24h32A12,12,0,0,1,208,164Zm-68,0a12,12,0,0,1-12,12H116a12,12,0,0,1,0-24h12A12,12,0,0,1,140,164Z"></path></svg></span>บัตร Rabbit</div>
+      <div><span style="color:var(--food)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,100h-4.78a92,92,0,0,0-182.44,0H32a12,12,0,0,0-12,12,108.38,108.38,0,0,0,56,94.68V208a20,20,0,0,0,20,20h64a20,20,0,0,0,20-20v-1.32A108.38,108.38,0,0,0,236,112,12,12,0,0,0,224,100ZM170.29,60.06A92,92,0,0,0,127.19,100H106a68.27,68.27,0,0,1,62-40C168.76,60,169.52,60,170.29,60.06Zm17.22,19.08A67.66,67.66,0,0,1,194.92,100H156.13A67.91,67.91,0,0,1,187.51,79.14ZM128,44c.83,0,1.65,0,2.48.06A92.3,92.3,0,0,0,80.37,100H61.08A68.1,68.1,0,0,1,128,44Zm35,144.39a12,12,0,0,0-7,10.91V204H100v-4.7a12,12,0,0,0-7-10.91A84.32,84.32,0,0,1,44.87,124H211.13A84.32,84.32,0,0,1,163,188.39Z"></path></svg></span>ของกิน</div>
+      <div><span style="color:var(--food)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M224,108H32a12,12,0,0,0-12,12,108.38,108.38,0,0,0,56,94.68V216a20,20,0,0,0,20,20h64a20,20,0,0,0,20-20v-1.32A108.38,108.38,0,0,0,236,120,12,12,0,0,0,224,108Zm-61,88.39a12,12,0,0,0-7,10.9V212H100v-4.71a12,12,0,0,0-7-10.9A84.32,84.32,0,0,1,44.87,132H211.13A84.32,84.32,0,0,1,163,196.39ZM74.93,50.15a26.32,26.32,0,0,0,4.71-7,12,12,0,0,1,7.7-22.7c5.67,1.64,13.2,6.63,15.77,15.3,2.71,9.14-.67,19.26-10,30.08a26.32,26.32,0,0,0-4.71,7A12,12,0,0,1,84,96a11.81,11.81,0,0,1-3.33-.47C75,93.89,67.46,88.9,64.89,80.23,62.18,71.09,65.56,61,74.93,50.15Zm44,0a26.32,26.32,0,0,0,4.71-7,12,12,0,0,1,7.7-22.7c5.67,1.64,13.2,6.63,15.77,15.3,2.71,9.14-.67,19.26-10,30.08a26.32,26.32,0,0,0-4.71,7A12,12,0,0,1,128,96a11.81,11.81,0,0,1-3.33-.47c-5.67-1.64-13.21-6.63-15.78-15.3C106.18,71.09,109.56,61,118.93,50.15Zm44,0a26.32,26.32,0,0,0,4.71-7,12,12,0,0,1,7.7-22.7c5.67,1.64,13.2,6.63,15.77,15.3,2.71,9.14-.67,19.26-10,30.08a26.32,26.32,0,0,0-4.71,7A12,12,0,0,1,172,96a11.81,11.81,0,0,1-3.33-.47c-5.67-1.64-13.21-6.63-15.78-15.3C150.18,71.09,153.56,61,162.93,50.15Z"></path></svg></span>รสชาติบ้าน</div>
+      <div><span style="color:var(--food)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M236,96a12,12,0,0,0-.44-3.3L221.2,42.51A20.08,20.08,0,0,0,202,28H54A20.08,20.08,0,0,0,34.8,42.51L20.46,92.7A12,12,0,0,0,20,96h0v16a43.94,43.94,0,0,0,16,33.92V216a12,12,0,0,0,12,12H208a12,12,0,0,0,12-12V145.92A43.94,43.94,0,0,0,236,112V96ZM57.05,52H199l9.14,32H47.91Zm91,56v4a20,20,0,0,1-40,0v-4ZM53,128.71A20,20,0,0,1,44,112v-4H84v4a20,20,0,0,1-20,20,19.76,19.76,0,0,1-9.07-2.2A11.54,11.54,0,0,0,53,128.71ZM196,204H60V155.81c1.32.12,2.65.19,4,.19a43.86,43.86,0,0,0,32-13.85,43.89,43.89,0,0,0,64,0A43.86,43.86,0,0,0,192,156c1.35,0,2.68-.07,4-.19Zm16-92a20,20,0,0,1-9,16.71,11.66,11.66,0,0,0-1.88,1.09A20,20,0,0,1,172,112v-4h40Z"></path></svg></span>ร้าน / ตลาด</div>
+      <div><span style="color:var(--living)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M160,80a16,16,0,1,1,16,16A16,16,0,0,1,160,80Zm72-36V212a20,20,0,0,1-20,20H44a20,20,0,0,1-20-20V44A20,20,0,0,1,44,24H212A20,20,0,0,1,232,44Zm-24,4H48V208H208Zm-68.49,75.51-16,16a12,12,0,0,0,17,17l16-16a12,12,0,1,0-17-17Zm-15-16a12,12,0,0,0-17,0l-8,8a12,12,0,0,0,17,17l8-8A12,12,0,0,0,124.49,107.51ZM128,196a68.05,68.05,0,0,0,67.19-78.52,12,12,0,0,0-23.72,3.69,44,44,0,1,1-36.64-36.64,12,12,0,0,0,3.69-23.72A68,68,0,1,0,128,196Z"></path></svg></span>ซักผ้า</div>
+      <div><span style="color:var(--living)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M134.88,6.17a12,12,0,0,0-13.76,0,259,259,0,0,0-42.18,39C50.85,77.43,36,111.62,36,144a92,92,0,0,0,184,0C220,66.64,138.36,8.6,134.88,6.17ZM128,212a68.07,68.07,0,0,1-68-68c0-33.31,20-63.37,36.7-82.71A249.35,249.35,0,0,1,128,31.11a249.35,249.35,0,0,1,31.3,30.18C176,80.63,196,110.69,196,144A68.07,68.07,0,0,1,128,212Zm49.62-52.4a52,52,0,0,1-34,34,12.2,12.2,0,0,1-3.6.55,12,12,0,0,1-3.6-23.45,28,28,0,0,0,18.32-18.32,12,12,0,0,1,22.9,7.2Z"></path></svg></span>น้ำดื่ม</div>
+      <div><span style="color:var(--living)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M216,48H180V36A28,28,0,0,0,152,8H104A28,28,0,0,0,76,36V48H40a12,12,0,0,0,0,24h4V208a20,20,0,0,0,20,20H192a20,20,0,0,0,20-20V72h4a12,12,0,0,0,0-24ZM100,36a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4V48H100Zm88,168H68V72H188ZM116,104v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Zm48,0v64a12,12,0,0,1-24,0V104a12,12,0,0,1,24,0Z"></path></svg></span>ขยะ</div>
+      <div><span style="color:var(--living)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M216,52H180V44a28,28,0,0,0-28-28H104A28,28,0,0,0,76,44v8H40A20,20,0,0,0,20,72V200a20,20,0,0,0,20,20H216a20,20,0,0,0,20-20V72A20,20,0,0,0,216,52ZM100,44a4,4,0,0,1,4-4h48a4,4,0,0,1,4,4v8H100ZM212,196H44V76H212Zm-48-60a12,12,0,0,1-12,12H140v12a12,12,0,0,1-24,0V148H104a12,12,0,0,1,0-24h12V112a12,12,0,0,1,24,0v12h12A12,12,0,0,1,164,136Z"></path></svg></span>ป่วย</div>
+      <div><span style="color:var(--living)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M140,128v40a12,12,0,0,1-24,0V128a12,12,0,0,1,24,0Zm28.06-1.19-4,40a12,12,0,0,0,10.75,13.13c.4,0,.81.06,1.2.06a12,12,0,0,0,11.93-10.81l4-40a12,12,0,0,0-23.88-2.38Zm-80.12,0a12,12,0,0,0-23.88,2.38l4,40A12,12,0,0,0,80,180c.39,0,.8,0,1.2-.06a12,12,0,0,0,10.75-13.13Zm156-37.22-15.07,113A20.06,20.06,0,0,1,209,220H47a20.06,20.06,0,0,1-19.82-17.36l-15.07-113A12,12,0,0,1,24,76H66.55L119,16.1a12,12,0,0,1,18.06,0L189.45,76H232a12,12,0,0,1,11.89,13.59ZM98.45,76h59.1L128,42.22Zm119.84,24H37.71l12.8,96h155Z"></path></svg></span>ของใช้</div>
+      <div><span style="color:var(--caution)"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"></path></svg></span>ข้อควรระวัง</div>
+      <div><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M232.76,137.88a28.66,28.66,0,0,0-12-5.39C236.19,114.94,244,97.37,244,80c0-28.67-23.09-52-51.46-52A51.77,51.77,0,0,0,156,42.85,51.77,51.77,0,0,0,119.46,28C91.09,28,68,51.33,68,80c0,10.15,2.72,20.3,8.22,30.7a35.9,35.9,0,0,0-11.73,7.84L43,140H20A20,20,0,0,0,0,160v40a20,20,0,0,0,20,20H120a11.89,11.89,0,0,0,2.91-.36l64-16a11.4,11.4,0,0,0,1.79-.6l38.82-16.54c.23-.09.45-.19.67-.3a28.61,28.61,0,0,0,4.57-48.32ZM119.46,52A27.18,27.18,0,0,1,144.9,68.56a12,12,0,0,0,22.2,0A27.18,27.18,0,0,1,192.54,52C207.42,52,220,64.82,220,80c0,18.06-15,38.84-43.38,60.19L172,141.26c0-.42,0-.84,0-1.26a32,32,0,0,0-32-32H102.71C95.42,97.76,92,88.77,92,80,92,64.82,104.58,52,119.46,52ZM24,164H36v32H24Zm193.68.61-37.51,16L118.52,196H60V157l21.46-21.46A11.93,11.93,0,0,1,89.94,132H140a8,8,0,0,1,0,16H112a12,12,0,0,0,0,24h32a12.19,12.19,0,0,0,2.69-.3l67-15.41.47-.12a4.61,4.61,0,0,1,5.82,4.44A4.58,4.58,0,0,1,217.68,164.61Z"></path></svg></span>ขอความช่วยเหลือ</div>
+      <div><span><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M200,164a36.07,36.07,0,0,0-33.94,24H72a28,28,0,0,1,0-56h96a44,44,0,0,0,0-88H72a12,12,0,0,0,0,24h96a20,20,0,0,1,0,40H72a52,52,0,0,0,0,104h94.06A36,36,0,1,0,200,164Zm0,48a12,12,0,1,1,12-12A12,12,0,0,1,200,212Z"></path></svg></span>สัปดาห์แรก</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Component หลัก</h2>
+    <div class="components">
+      <div class="comp">
+        <h4>รหัสสถานีของสถานที่ (แทนตัวเลขบนหมุด)</h4>
+        <span class="code t">T1</span> <span class="code t">T2</span> <span class="code f">F1</span> <span class="code f">F3</span> <span class="code l">L2</span>
+        <p style="margin-top:10px;font-size:.85rem;color:var(--ink-soft)">หมุดบนแผนที่ใช้รหัสเดียวกัน ถ้าเห็น F3 บนแผนที่ ก็หาการ์ด F3 ได้เลย</p>
+      </div>
+      <div class="comp">
+        <h4>ราคาที่ตรวจแล้ว / ยังไม่ได้ตรวจ</h4>
+        <span class="price-strip">40–60 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span>
+        <p style="margin-top:14px;font-size:.9rem;color:var(--ink-soft);border:2px dashed var(--rule);display:inline-block;padding:2px 10px;border-radius:4px">ราคาปกติ: รอตรวจหน้าร้าน</p>
+      </div>
+      <div class="comp">
+        <h4>คำพูดรุ่นพี่</h4>
+        <div class="bubble" style="font-style:italic;font-weight:500">"ปีแรกพี่หาร้านข้าวที่ถูกปากไม่เจอ เลยกินเซเว่นเยอะมาก"</div>
+        <div class="who"><span class="avatar">บ</span><span><b>พี่บอส</b> บ้านอยู่สุราษฎร์ธานี</span></div>
+      </div>
+      <div class="comp">
+        <h4>ข้อควรระวัง</h4>
+        <p style="display:flex;gap:8px;color:var(--caution);font-weight:500"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true"><path d="M240.26,186.1,152.81,34.23h0a28.74,28.74,0,0,0-49.62,0L15.74,186.1a27.45,27.45,0,0,0,0,27.71A28.31,28.31,0,0,0,40.55,228h174.9a28.31,28.31,0,0,0,24.79-14.19A27.45,27.45,0,0,0,240.26,186.1Zm-20.8,15.7a4.46,4.46,0,0,1-4,2.2H40.55a4.46,4.46,0,0,1-4-2.2,3.56,3.56,0,0,1,0-3.73L124,46.2a4.77,4.77,0,0,1,8,0l87.44,151.87A3.56,3.56,0,0,1,219.46,201.8ZM116,136V104a12,12,0,0,1,24,0v32a12,12,0,0,1-24,0Zm28,40a16,16,0,1,1-16-16A16,16,0,0,1,144,176Z"></path></svg><span>ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน</span></p>
+      </div>
+    </div>
+    <p class="note">ราคาและชื่อคนตรวจในบอร์ดนี้เป็นตัวอย่างเพื่อให้เห็นหน้าตาเท่านั้น ยังไม่ได้ตรวจจริง<br><br>รูปสถานที่ในบอร์ดนี้ดึงมาจาก Wikimedia Commons (สัญญาอนุญาต CC) เพื่อให้เห็นภาพรวม ถ้าวันเสาร์ทีมถ่ายรูปเองตอนออกไปตรวจราคา แนะนำให้ใช้รูปของทีมแทน จะได้เห็นมุมที่ Newcomer เจอจริง และไม่ต้องติดเครดิตทีละรูป</p>
+  </section>
+
+  <p class="credits">ภาพ: "Banthat Thong Road", "Exit no.2 Sam Yan MRT", "Bangkok - Sam Yan Intersection (2025) img 04" จาก Wikimedia Commons ดูชื่อเจ้าของภาพและสัญญาอนุญาตได้ที่หน้าไฟล์แต่ละรูป</p>
+</div>
+</body>
+</html>

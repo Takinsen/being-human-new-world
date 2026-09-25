@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตั้งหลัก design board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap">
+<style>
+  :root {
+    --ink: #13233d;
+    --ink-soft: #56647d;
+    --concrete: #eceef1;
+    --white: #ffffff;
+    --rule: #d3d8e0;
+    --night: #0f2440;
+    --transport: #2e9a47;
+    --food: #ee7b22;
+    --living: #1f57b8;
+    --platform: #ffd100;
+    --caution: #c2410c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #f7f8fa;
+    color: var(--ink);
+    font-family: "Bai Jamjuree", system-ui, sans-serif;
+    line-height: 1.6;
+  }
+  svg { vertical-align: -0.125em; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 48px 16px 96px; }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; }
+
+  /* Board chrome */
+  .intro h1 { font-size: clamp(2rem, 5vw, 3.25rem); line-height: 1.15; font-weight: 700; }
+  .intro p { max-width: 42rem; margin-top: 12px; font-size: 1.125rem; color: var(--ink-soft); }
+  .section { margin-top: 72px; }
+  .section > h2 { font-size: 1.625rem; font-weight: 700; }
+  .section > p { margin-top: 6px; color: var(--ink-soft); max-width: 44rem; }
+
+  .variants { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px 28px; margin-top: 28px; }
+  .variant > h3 { font-size: 1.25rem; font-weight: 700; }
+  .variant > p { color: var(--ink-soft); font-size: .95rem; margin: 4px 0 16px; min-height: 4.8em; }
+  .phone {
+    width: 100%; max-width: 380px; height: 760px; overflow: hidden auto;
+    border: 10px solid #1d2230; border-radius: 36px; background: var(--white);
+    box-shadow: 0 20px 40px -24px rgb(19 35 61 / .45);
+  }
+
+  /* Shared components */
+  .code {
+    display: inline-grid; place-items: center; min-width: 2.4em; height: 1.7em; padding: 0 .35em;
+    border: 3px solid currentColor; border-radius: .45em; background: var(--white);
+    font-weight: 700; font-size: .85rem; line-height: 1; color: var(--c, var(--ink));
+  }
+  .t { --c: var(--transport); } .f { --c: var(--food); } .l { --c: var(--living); }
+  .price-strip {
+    display: inline-flex; align-items: baseline; gap: .4em; padding: .15em .55em;
+    background: var(--platform); color: var(--ink); font-weight: 700; font-size: 1.25rem;
+    border-radius: 3px;
+  }
+  .price-meta { display: block; margin-top: 4px; font-size: .8rem; color: var(--ink-soft); }
+  .photo { position: relative; aspect-ratio: 16 / 10; background: #c9cfd8; overflow: hidden; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .credit { position: absolute; right: 6px; bottom: 4px; font-size: .65rem; color: #fff; text-shadow: 0 1px 2px #000; }
+  .bubble {
+    position: relative; padding: 12px 14px; border-radius: 14px; background: var(--concrete);
+    font-size: .95rem; line-height: 1.55;
+  }
+  .bubble::after {
+    content: ""; position: absolute; left: 18px; bottom: -8px; border: 8px solid transparent;
+    border-top-color: var(--concrete); border-bottom: 0;
+  }
+  .who { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: .85rem; color: var(--ink-soft); }
+  .who b { color: var(--ink); }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--ink); color: #fff; font-weight: 700; font-size: .8rem; }
+
+  /* Route (checklist) horizontal */
+  .route { position: relative; display: flex; justify-content: space-between; margin-top: 14px; }
+  .route::before { content: ""; position: absolute; left: 6px; right: 6px; top: 6px; height: 4px; background: var(--rule); border-radius: 2px; }
+  .route::after { content: ""; position: absolute; left: 6px; width: calc((100% - 12px) * 2 / 6); top: 6px; height: 4px; background: var(--transport); border-radius: 2px; }
+  .route span { position: relative; z-index: 1; width: 16px; height: 16px; border-radius: 50%; background: var(--white); border: 3px solid var(--rule); }
+  .route span.done { border-color: var(--transport); background: var(--transport); }
+  .route span.next { border-color: var(--transport); }
+
+  /* ===== Variant A: ชานชาลา ===== */
+  .va { background: var(--concrete); min-height: 100%; }
+  .va .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--white); border-top: 6px solid; border-image: linear-gradient(90deg, var(--transport) 0 33.3%, var(--food) 0 66.6%, var(--living) 0) 1; }
+  .va .mark { background: var(--night); color: #fff; font-weight: 700; padding: 2px 10px; border-radius: 6px; font-size: 1.05rem; }
+  .va .bar .menu { font-size: 1.5rem; }
+  .va .hero { padding: 28px 16px 20px; }
+  .va .hero h2 { font-size: 2.1rem; line-height: 1.15; font-weight: 700; }
+  .va .hero p { margin-top: 10px; color: var(--ink-soft); }
+  .va .next-card { margin: 18px 0 0; padding: 14px; background: var(--white); border-radius: 12px; }
+  .va .next-card .label { font-size: .85rem; color: var(--ink-soft); }
+  .va .next-card .title { font-weight: 600; margin-top: 2px; }
+  .va .cats { margin: 4px 16px 0; display: grid; gap: 8px; }
+  .va .cat { display: flex; align-items: center; gap: 12px; padding: 10px 12px 10px 10px; background: var(--white); border-radius: 12px; text-decoration: none; }
+  .va .cat .ic { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; background: var(--c); color: #fff; font-size: 1.5rem; flex: none; }
+  .va .cat h4 { font-size: 1.1rem; font-weight: 700; }
+  .va .cat p { font-size: .8rem; color: var(--ink-soft); line-height: 1.4; }
+  .va .cat .chev { margin-left: auto; color: var(--c); font-size: 1.2rem; }
+  .va .place { margin: 20px 16px 24px; background: var(--white); border-radius: 12px; overflow: hidden; }
+  .va .place .photo .code { position: absolute; left: 10px; top: 10px; }
+  .va .place .body { padding: 14px; }
+  .va .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .va .place .sum { font-size: .85rem; color: var(--ink-soft); }
+  .va .place .price { margin-top: 10px; }
+
+  /* ===== Variant B: ป้ายกลางคืน ===== */
+  .vb .top { background: var(--night); color: #fff; }
+  .vb .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; }
+  .vb .mark { font-weight: 700; font-size: 1.15rem; display: flex; align-items: center; gap: 8px; }
+  .vb .mark i { width: 10px; height: 22px; border-radius: 3px; background: var(--platform); display: inline-block; }
+  .vb .hero { position: relative; }
+  .vb .hero .photo { aspect-ratio: 4 / 3; }
+  .vb .hero .photo img { filter: saturate(.8) brightness(.55); }
+  .vb .hero .text { position: absolute; inset: auto 16px 18px; }
+  .vb .hero h2 { font-size: 2.15rem; line-height: 1.15; font-weight: 700; }
+  .vb .hero p { margin-top: 6px; font-size: .95rem; opacity: .85; }
+  .vb .progress { padding: 14px 16px 18px; }
+  .vb .progress .label { font-size: .85rem; opacity: .8; }
+  .vb .route::before { background: #34496b; }
+  .vb .route span { background: var(--night); border-color: #34496b; }
+  .vb .route span.done { background: var(--platform); border-color: var(--platform); }
+  .vb .route span.next { border-color: var(--platform); }
+  .vb .route::after { background: var(--platform); }
+  .vb .cats { display: grid; }
+  .vb .cat { display: flex; align-items: center; gap: 14px; padding: 16px; background: var(--c); color: #fff; text-decoration: none; }
+  .vb .cat .ic { font-size: 2rem; }
+  .vb .cat h4 { font-size: 1.25rem; font-weight: 700; }
+  .vb .cat p { font-size: .8rem; opacity: .9; line-height: 1.4; }
+  .vb .cat .arrow { margin-left: auto; font-size: 1.4rem; }
+  .vb .place { padding: 20px 16px 24px; }
+  .vb .place .head { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+  .vb .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .vb .place .photo { border-radius: 10px; }
+  .vb .place .price { margin-top: 10px; }
+  .vb .place .sum { font-size: .85rem; color: var(--ink-soft); margin-top: 4px; }
+
+  /* ===== Variant C: แผนผังเส้นทาง ===== */
+  .vc { background: var(--white); }
+  .vc .bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--rule); }
+  .vc .mark { font-weight: 700; font-size: 1.15rem; }
+  .vc .hero { padding: 24px 16px 8px; }
+  .vc .hero h2 { font-size: 2rem; line-height: 1.15; font-weight: 700; }
+  .vc .map-svg { display: block; width: 100%; height: auto; margin-top: 8px; }
+  .vc .line { padding: 8px 16px 0; }
+  .vc .line h3 { font-size: 1rem; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .vc .line h3 small { font-weight: 500; color: var(--ink-soft); }
+  .vc .stops { list-style: none; margin: 10px 0 0; padding: 0; position: relative; }
+  .vc .stops::before { content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 6px; background: var(--transport); border-radius: 3px; }
+  .vc .stops li { position: relative; display: flex; gap: 14px; align-items: center; padding: 7px 0; font-size: .95rem; }
+  .vc .stops li::before { content: ""; flex: none; position: relative; z-index: 1; width: 24px; height: 24px; border-radius: 50%; border: 5px solid var(--transport); background: #fff; }
+  .vc .stops li.done::before { background: var(--transport); }
+  .vc .stops li.done { color: var(--ink-soft); }
+  .vc .place { margin: 18px 16px 24px; border: 3px solid var(--food); border-radius: 14px; overflow: hidden; }
+  .vc .place .body { padding: 12px 14px 14px; }
+  .vc .place .head { display: flex; gap: 10px; align-items: center; }
+  .vc .place h4 { font-size: 1.15rem; font-weight: 700; }
+  .vc .place .price { margin-top: 10px; }
+
+  /* Tokens */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
+  .sw { border-radius: 12px; overflow: hidden; background: var(--white); border: 1px solid var(--rule); }
+  .sw div { height: 72px; }
+  .sw p { padding: 8px 10px; font-size: .85rem; line-height: 1.35; }
+  .sw b { display: block; }
+  .type-scale { margin-top: 20px; display: grid; gap: 14px; background: var(--white); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+  .type-scale div { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: baseline; }
+  .type-scale small { color: var(--ink-soft); font-size: .8rem; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; margin-top: 20px; }
+  .icons div { background: var(--white); border: 1px solid var(--rule); border-radius: 12px; padding: 14px 8px; text-align: center; font-size: .8rem; color: var(--ink-soft); }
+  .icons div span { display: block; font-size: 2rem; color: var(--ink); }
+  .components { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px; }
+  .comp { background: var(--white); border: 1px solid var(--rule); border-radius: 14px; padding: 18px; }
+  .comp h4 { font-size: .85rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 12px; }
+  .note { margin-top: 20px; padding: 16px 18px; background: #fff8d6; border-radius: 12px; font-size: .95rem; }
+  .credits { margin-top: 48px; font-size: .8rem; color: var(--ink-soft); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="intro">
+    <h1>ตั้งหลัก: แนวภาพแบบป้ายรถไฟฟ้า</h1>
+    <p>ทั้งสามแบบใช้ฟอนต์ Bai Jamjuree ชุดสีตามหมวด ไอคอน และ component ชุดเดียวกัน ต่างกันที่บรรยากาศและจุดเด่น เลือกแบบเดียว หรือบอกว่าจะเอาส่วนไหนจากแบบไหนมาผสมกันก็ได้</p>
+  </header>
+
+  <section class="section">
+    <h2>หน้าแรกบนมือถือ 3 แบบ</h2>
+    <p>ทุกแบบมีหัวข้อ ความคืบหน้าของสัปดาห์แรก 3 หมวด และการ์ดสถานที่ 1 ใบ ให้เทียบกันได้</p>
+
+    <div class="variants">
+
+      <!-- A -->
+      <div class="variant">
+        <h3>A. ชานชาลา</h3>
+        <p>สว่าง สะอาด พื้นสีเทาคอนกรีต ป้ายสีขาว แต่ละหมวดมีสีเหมือนสายรถไฟฟ้า ราคาอยู่บนแถบสีเหลืองแบบขอบชานชาลา อ่านง่ายที่สุด ดูเป็นกันเอง</p>
+        <div class="phone">
+          <div class="va">
+            <div class="bar"><span class="mark">ตั้งหลัก</span><span class="menu">{{List}}</span></div>
+            <div class="hero">
+              <h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2>
+              <p>เรื่องที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่เหมือนกัน</p>
+              <div class="next-card">
+                <span class="label">สัปดาห์แรก ผ่านมาแล้ว 2 จาก 7 สถานี</span>
+                <div class="route"><span class="done"></span><span class="done"></span><span class="next"></span><span></span><span></span><span></span><span></span></div>
+                <p class="title" style="margin-top:12px">สถานีถัดไป: รู้ราคาข้าวปกติแถวนี้</p>
+              </div>
+            </div>
+            <div class="cats">
+              <a class="cat t"><span class="ic">{{Train}}</span><div><h4>การเดินทาง</h4><p>ค่ารถ วิน รถป๊อป</p></div><span class="chev">{{CaretRight}}</span></a>
+              <a class="cat f" style="--c:var(--food)"><span class="ic">{{BowlFood}}</span><div><h4>ของกิน</h4><p>อิ่มในงบ และรสชาติบ้าน</p></div><span class="chev">{{CaretRight}}</span></a>
+              <a class="cat l" style="--c:var(--living)"><span class="ic">{{WashingMachine}}</span><div><h4>อยู่คนเดียว</h4><p>ซักผ้า น้ำ ขยะ ป่วย</p></div><span class="chev">{{CaretRight}}</span></a>
+            </div>
+            <div class="place">
+              <div class="photo">
+                <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Banthat_Thong_Road.jpg?width=640" alt="ถนนบรรทัดทอง" loading="lazy" onerror="this.remove()">
+                <span class="code f">F3</span>
+              </div>
+              <div class="body">
+                <h4>ถนนบรรทัดทอง</h4>
+                <p class="sum">ร้านอาหารเรียงทั้งถนน คึกคักตอนเย็นถึงดึก</p>
+                <div class="price"><span class="price-strip">50–120 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B -->
+      <div class="variant">
+        <h3>B. ป้ายกลางคืน</h3>
+        <p>ด้านบนเป็นสีกรมท่าแบบป้ายใน MRT มีรูปย่านจริงเต็มจอ หมวดเป็นแถบสีเต็มความกว้างแบบป้ายบอกทางออก ดูเป็นเมืองและมีพลังที่สุด</p>
+        <div class="phone">
+          <div class="vb">
+            <div class="top">
+              <div class="bar"><span class="mark"><i></i>ตั้งหลัก</span><span>{{List}}</span></div>
+              <div class="hero">
+                <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bangkok_-_Sam_Yan_Intersection_-_%E0%B9%81%E0%B8%A2%E0%B8%81%E0%B8%AA%E0%B8%B2%E0%B8%A1%E0%B8%A2%E0%B9%88%E0%B8%B2%E0%B8%99_(2025)_-_img_04.jpg?width=800" alt="แยกสามย่าน" loading="lazy" onerror="this.remove()"></div>
+                <div class="text"><h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2><p>คู่มือตั้งหลักแถวจุฬาฯ จากรุ่นพี่</p></div>
+              </div>
+              <div class="progress">
+                <span class="label">สัปดาห์แรก 2 จาก 7</span>
+                <div class="route"><span class="done"></span><span class="done"></span><span class="next"></span><span></span><span></span><span></span><span></span></div>
+              </div>
+            </div>
+            <div class="cats">
+              <a class="cat" style="--c:var(--transport)"><span class="ic">{{Train}}</span><div><h4>การเดินทาง</h4><p>ค่ารถ วิน รถป๊อป</p></div><span class="arrow">{{ArrowRight}}</span></a>
+              <a class="cat" style="--c:var(--food)"><span class="ic">{{BowlFood}}</span><div><h4>ของกิน</h4><p>อิ่มในงบ และรสชาติบ้าน</p></div><span class="arrow">{{ArrowRight}}</span></a>
+              <a class="cat" style="--c:var(--living)"><span class="ic">{{WashingMachine}}</span><div><h4>อยู่คนเดียว</h4><p>ซักผ้า น้ำ ขยะ ป่วย</p></div><span class="arrow">{{ArrowRight}}</span></a>
+            </div>
+            <div class="place">
+              <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Exit_no.2_Sam_Yan_MRT.jpg?width=640" alt="ทางออก 2 MRT สามย่าน" loading="lazy" onerror="this.remove()"></div>
+              <div class="head"><span class="code t">T1</span><h4>MRT สามย่าน</h4></div>
+              <p class="sum">ทางออก 2 เดินใต้ดินเข้าสามย่านมิตรทาวน์ได้เลย</p>
+              <div class="price"><span class="price-strip">17–45 บาท <small>ต่อเที่ยว</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยทีมตั้งหลัก</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="variant">
+        <h3>C. แผนผังเส้นทาง</h3>
+        <p>พื้นขาว ภาพหลักเป็นแผนผังเส้นทางที่วาดเอง สามสายมาบรรจบกันที่จุฬาฯ เช็กลิสต์เป็นสายรถไฟฟ้าแนวตั้งที่มีสถานี ดูเป็นกราฟิกและมีเอกลักษณ์ที่สุด แต่ใช้รูปถ่ายน้อย</p>
+        <div class="phone">
+          <div class="vc">
+            <div class="bar"><span class="mark">ตั้งหลัก</span><span>{{List}}</span></div>
+            <div class="hero">
+              <h2>บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</h2>
+              <svg class="map-svg" viewBox="0 0 340 170" role="img" aria-label="สามสายมาบรรจบที่จุฬาฯ">
+                <path d="M10 30 H120 Q150 30 160 60 L170 85" fill="none" stroke="#2e9a47" stroke-width="10" stroke-linecap="round"/>
+                <path d="M330 40 H230 Q200 40 188 70 L176 88" fill="none" stroke="#ee7b22" stroke-width="10" stroke-linecap="round"/>
+                <path d="M40 160 H120 Q150 160 160 125 L170 95" fill="none" stroke="#1f57b8" stroke-width="10" stroke-linecap="round"/>
+                <circle cx="172" cy="90" r="17" fill="#fff" stroke="#13233d" stroke-width="6"/>
+                <text x="198" y="120" font-family="Bai Jamjuree" font-weight="700" font-size="16" fill="#13233d">จุฬาฯ</text>
+                <text x="12" y="20" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#2e9a47">การเดินทาง</text>
+                <text x="268" y="30" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#ee7b22">ของกิน</text>
+                <text x="40" y="150" font-family="Bai Jamjuree" font-weight="600" font-size="12" fill="#1f57b8">อยู่คนเดียว</text>
+                <circle cx="60" cy="30" r="6" fill="#fff" stroke="#2e9a47" stroke-width="4"/>
+                <circle cx="280" cy="40" r="6" fill="#fff" stroke="#ee7b22" stroke-width="4"/>
+                <circle cx="90" cy="160" r="6" fill="#fff" stroke="#1f57b8" stroke-width="4"/>
+              </svg>
+            </div>
+            <div class="line">
+              <h3>{{Path}} สายสัปดาห์แรก <small>2 จาก 7</small></h3>
+              <ol class="stops">
+                <li class="done">ทำบัตร Rabbit</li>
+                <li class="done">ขึ้นรถป๊อปเป็น</li>
+                <li>รู้ราคาข้าวปกติ</li>
+                <li>ซักผ้าหยอดเหรียญ 1 รอบ</li>
+                <li>ตัดสินใจเรื่องน้ำดื่ม</li>
+              </ol>
+            </div>
+            <div class="place">
+              <div class="photo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Banthat_Thong_Road.jpg?width=640" alt="ถนนบรรทัดทอง" loading="lazy" onerror="this.remove()"></div>
+              <div class="body">
+                <div class="head"><span class="code f">F3</span><h4>ถนนบรรทัดทอง</h4></div>
+                <div class="price"><span class="price-strip">50–120 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>สีที่ใช้ร่วมกัน</h2>
+    <p>แต่ละหมวดคือ "สาย" ของมันเอง สีหมวดใช้กับไอคอน หมุด รหัสสถานี และเส้นทาง สีเหลืองขอบชานชาลาใช้กับราคาที่ตรวจแล้วเท่านั้น</p>
+    <div class="swatches">
+      <div class="sw"><div style="background:var(--transport)"></div><p><b>สายเดินทาง</b>#2E9A47</p></div>
+      <div class="sw"><div style="background:var(--food)"></div><p><b>สายของกิน</b>#EE7B22</p></div>
+      <div class="sw"><div style="background:var(--living)"></div><p><b>สายอยู่คนเดียว</b>#1F57B8</p></div>
+      <div class="sw"><div style="background:var(--platform)"></div><p><b>เหลืองชานชาลา</b>#FFD100 ราคาที่ตรวจแล้ว</p></div>
+      <div class="sw"><div style="background:var(--night)"></div><p><b>กรมท่าป้าย</b>#0F2440</p></div>
+      <div class="sw"><div style="background:var(--concrete)"></div><p><b>คอนกรีต</b>#ECEEF1 พื้นหลัง</p></div>
+      <div class="sw"><div style="background:var(--ink)"></div><p><b>หมึก</b>#13233D ตัวอักษร</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>ตัวอักษร: Bai Jamjuree</h2>
+    <p>ใช้ฟอนต์เดียวทั้งเว็บ ต่างกันที่น้ำหนักและขนาด ฟอนต์นี้มีหัวเหลี่ยมคล้ายป้ายสาธารณะอยู่แล้ว</p>
+    <div class="type-scale">
+      <div><small>หัวเรื่อง 700</small><span style="font-size:2.5rem;font-weight:700;line-height:1.15">บ้านยังเป็นบ้าน</span></div>
+      <div><small>หัวข้อ 700</small><span style="font-size:1.625rem;font-weight:700">รสชาติบ้าน</span></div>
+      <div><small>ชื่อการ์ด 600</small><span style="font-size:1.25rem;font-weight:600">ถนนบรรทัดทอง</span></div>
+      <div><small>เนื้อหา 400</small><span>ร้านข้าวราดแกงคิดตามจำนวนกับข้าวที่ตัก บอกก่อนว่าจะเอากี่อย่าง</span></div>
+      <div><small>คำพูดรุ่นพี่ 500 ตัวเอียง</small><span style="font-style:italic;font-weight:500;font-size:1.1rem">"ปีแรกพี่กินเซเว่นเยอะมาก"</span></div>
+      <div><small>ข้อมูลรอง 400</small><span style="font-size:.85rem;color:var(--ink-soft)">ตรวจ ก.ย. 69 โดยพี่บอส</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>ไอคอน: Phosphor แบบเส้นหนา</h2>
+    <p>ใช้แบบ Bold ให้หนาพอๆ กับป้ายสาธารณะ ใช้ฟรีตามสัญญาอนุญาต MIT</p>
+    <div class="icons">
+      <div><span style="color:var(--transport)">{{Train}}</span>BTS / MRT</div>
+      <div><span style="color:var(--transport)">{{Bus}}</span>รถเมล์ รถป๊อป</div>
+      <div><span style="color:var(--transport)">{{Motorcycle}}</span>วิน</div>
+      <div><span style="color:var(--transport)">{{Taxi}}</span>แท็กซี่</div>
+      <div><span style="color:var(--transport)">{{CreditCard}}</span>บัตร Rabbit</div>
+      <div><span style="color:var(--food)">{{BowlFood}}</span>ของกิน</div>
+      <div><span style="color:var(--food)">{{BowlSteam}}</span>รสชาติบ้าน</div>
+      <div><span style="color:var(--food)">{{Storefront}}</span>ร้าน / ตลาด</div>
+      <div><span style="color:var(--living)">{{WashingMachine}}</span>ซักผ้า</div>
+      <div><span style="color:var(--living)">{{Drop}}</span>น้ำดื่ม</div>
+      <div><span style="color:var(--living)">{{Trash}}</span>ขยะ</div>
+      <div><span style="color:var(--living)">{{FirstAidKit}}</span>ป่วย</div>
+      <div><span style="color:var(--living)">{{Basket}}</span>ของใช้</div>
+      <div><span style="color:var(--caution)">{{Warning}}</span>ข้อควรระวัง</div>
+      <div><span>{{HandHeart}}</span>ขอความช่วยเหลือ</div>
+      <div><span>{{Path}}</span>สัปดาห์แรก</div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Component หลัก</h2>
+    <div class="components">
+      <div class="comp">
+        <h4>รหัสสถานีของสถานที่ (แทนตัวเลขบนหมุด)</h4>
+        <span class="code t">T1</span> <span class="code t">T2</span> <span class="code f">F1</span> <span class="code f">F3</span> <span class="code l">L2</span>
+        <p style="margin-top:10px;font-size:.85rem;color:var(--ink-soft)">หมุดบนแผนที่ใช้รหัสเดียวกัน ถ้าเห็น F3 บนแผนที่ ก็หาการ์ด F3 ได้เลย</p>
+      </div>
+      <div class="comp">
+        <h4>ราคาที่ตรวจแล้ว / ยังไม่ได้ตรวจ</h4>
+        <span class="price-strip">40–60 บาท <small>ต่อจาน</small></span><span class="price-meta">ตรวจ ก.ย. 69 โดยพี่บอส</span>
+        <p style="margin-top:14px;font-size:.9rem;color:var(--ink-soft);border:2px dashed var(--rule);display:inline-block;padding:2px 10px;border-radius:4px">ราคาปกติ: รอตรวจหน้าร้าน</p>
+      </div>
+      <div class="comp">
+        <h4>คำพูดรุ่นพี่</h4>
+        <div class="bubble" style="font-style:italic;font-weight:500">"ปีแรกพี่หาร้านข้าวที่ถูกปากไม่เจอ เลยกินเซเว่นเยอะมาก"</div>
+        <div class="who"><span class="avatar">บ</span><span><b>พี่บอส</b> บ้านอยู่สุราษฎร์ธานี</span></div>
+      </div>
+      <div class="comp">
+        <h4>ข้อควรระวัง</h4>
+        <p style="display:flex;gap:8px;color:var(--caution);font-weight:500">{{Warning}}<span>ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน</span></p>
+      </div>
+    </div>
+    <p class="note">ราคาและชื่อคนตรวจในบอร์ดนี้เป็นตัวอย่างเพื่อให้เห็นหน้าตาเท่านั้น ยังไม่ได้ตรวจจริง<br><br>รูปสถานที่ในบอร์ดนี้ดึงมาจาก Wikimedia Commons (สัญญาอนุญาต CC) เพื่อให้เห็นภาพรวม ถ้าวันเสาร์ทีมถ่ายรูปเองตอนออกไปตรวจราคา แนะนำให้ใช้รูปของทีมแทน จะได้เห็นมุมที่ Newcomer เจอจริง และไม่ต้องติดเครดิตทีละรูป</p>
+  </section>
+
+  <p class="credits">ภาพ: "Banthat Thong Road", "Exit no.2 Sam Yan MRT", "Bangkok - Sam Yan Intersection (2025) img 04" จาก Wikimedia Commons ดูชื่อเจ้าของภาพและสัญญาอนุญาตได้ที่หน้าไฟล์แต่ละรูป</p>
+</div>
+</body>
+</html>
