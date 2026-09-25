@@ -2,9 +2,9 @@ import type { ChecklistItem } from "./types";
 
 // Starter Checklist: first week. Ids are stored in the browser, so don't rename them.
 export const firstWeek: ChecklistItem[] = [
-  { id: "rabbit", title: "ทำบัตร Rabbit และรู้ค่ารถจากที่พักถึงจุฬาฯ", href: "/transport#rabbit", category: "transport" },
+  { id: "rabbit", title: "ถ้านั่งรถไฟฟ้าทุกวัน ทำบัตร Rabbit และรู้ค่ารถจากที่พักถึงจุฬาฯ", href: "/transport#rabbit", category: "transport" },
   { id: "bus", title: "รู้ว่าขึ้นรถป๊อปและรถเมล์ผ่านจุฬาฯ ยังไง", href: "/transport#pop-bus", category: "transport" },
-  { id: "normal-price", title: "รู้ว่าข้าวจานเดียวแถวนี้ราคาปกติเท่าไหร่", href: "/food", category: "food" },
+  { id: "normal-price", title: "รู้ว่าข้าวจานเดียวแถวนี้ราคาปกติเท่าไหร่", href: "/food#eat-cheap", category: "food" },
   { id: "laundry", title: "ซักผ้าหยอดเหรียญเองได้ 1 รอบ", href: "/living#coin-laundry", category: "living" },
   { id: "water", title: "ตัดสินใจเรื่องน้ำดื่ม", href: "/living#drinking-water", category: "living" },
   { id: "sick", title: "รู้ว่าถ้าป่วยต้องไปที่ไหน", href: "/living#sick", category: "living" },

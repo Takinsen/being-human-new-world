@@ -8,7 +8,7 @@ export function SeniorStory({ senior }: { senior: Senior }) {
           {senior.name.replace("พี่", "").slice(0, 1)}
         </span>
         <div>
-          <h3>{senior.name}</h3>
+          <h2>{senior.name}</h2>
           <p className="story-from">
             บ้านอยู่{senior.hometown}
             {senior.about && `, ${senior.about}`}

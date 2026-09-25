@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { seniors } from "@/content/seniors";
 import { CategoryBand } from "@/components/CategoryBand";
@@ -30,12 +31,16 @@ export default function Home() {
         <h2>รุ่นพี่ก็เคยมาใหม่</h2>
         {seniors.map((s) => (
           <Link key={s.id} href={`/seniors#${s.id}`} className="voice">
-            <p>&ldquo;{s.story[0]}&rdquo;</p>
+            <p>&ldquo;{s.quote}&rdquo;</p>
             <span>
               {s.name} บ้านอยู่{s.hometown}
             </span>
           </Link>
         ))}
+        <Link href="/seniors#help" className="help-link">
+          <HandHeart weight="bold" aria-hidden="true" />
+          ถ้าหนักเกินไป คุยกับคนได้
+        </Link>
       </section>
     </>
   );

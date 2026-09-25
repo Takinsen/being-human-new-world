@@ -4,7 +4,7 @@ import { checkedBy, thaiMonthYear } from "@/lib/format";
 // A price is shown as a number only with a Price Check (docs/adr/0001).
 export function Price({ price }: { price: PriceData }) {
   if (!price.checked) {
-    return <p className="price-pending">ราคาปกติ: รอตรวจหน้าร้าน</p>;
+    return <p className="price-pending">ราคาปกติ: รอทีมตรวจราคา</p>;
   }
   const range = price.min === price.max ? `${price.min}` : `${price.min}–${price.max}`;
   return (

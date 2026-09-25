@@ -24,6 +24,9 @@ export function SiteHeader() {
             {c.name}
           </Link>
         ))}
+        <Link href="/checklist" aria-current={pathname === "/checklist" ? "page" : undefined}>
+          สัปดาห์แรก
+        </Link>
         <Link href="/seniors" aria-current={pathname === "/seniors" ? "page" : undefined}>
           รุ่นพี่
         </Link>

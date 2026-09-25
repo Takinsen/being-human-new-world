@@ -3,12 +3,13 @@ import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import type { Category } from "@/content/categories";
 import { CategoryIcon } from "./icons";
 
-function Stops({ category }: { category: Category }) {
+// On its own page the stops are in-page anchors, so plain links keep :target working.
+function Stops({ category, samePage }: { category: Category; samePage?: boolean }) {
   return (
     <ol className="band-stops">
       {category.stops.map((s) => (
         <li key={s.label}>
-          <Link href={s.href}>{s.label}</Link>
+          {samePage ? <a href={s.href.slice(s.href.indexOf("#"))}>{s.label}</a> : <Link href={s.href}>{s.label}</Link>}
         </li>
       ))}
     </ol>
@@ -42,7 +43,7 @@ export function CategoryHead({ category }: { category: Category }) {
         <CategoryIcon id={category.id} /> {category.name}
       </h1>
       <p>{category.blurb}</p>
-      <Stops category={category} />
+      <Stops category={category} samePage />
     </header>
   );
 }

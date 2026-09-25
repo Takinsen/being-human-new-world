@@ -12,7 +12,12 @@ export function Photo({ photo, className }: { photo: PhotoData; className?: stri
     <figure className={className ? `photo ${className}` : "photo"}>
       <img src={commonsImage(photo.file)} alt={photo.alt} loading="lazy" onError={() => setFailed(true)} />
       <figcaption>
-        <a href={commonsPage(photo.file)} target="_blank" rel="noreferrer">
+        <a
+          href={commonsPage(photo.file)}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={`ที่มาของภาพ${photo.alt} บน Wikimedia Commons (เปิดแท็บใหม่)`}
+        >
           ภาพ: Wikimedia Commons
         </a>
       </figcaption>

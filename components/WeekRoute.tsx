@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Path } from "@phosphor-icons/react";
+import { ListChecks } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
 import { useChecklist } from "@/lib/useChecklist";
 
@@ -15,21 +15,26 @@ export function WeekRoute({ heading = "h2" }: { heading?: "h1" | "h2" }) {
     <section className="week">
       <div className="week-head">
         <Heading>
-          <Path weight="bold" aria-hidden="true" /> สัปดาห์แรก
+          <ListChecks weight="bold" aria-hidden="true" /> สัปดาห์แรก
         </Heading>
-        <span>{count === firstWeek.length ? "ครบแล้ว ตั้งหลักได้แล้ว" : `ผ่านมาแล้ว ${count} จาก ${firstWeek.length}`}</span>
+        <span aria-live="polite">
+          {count === firstWeek.length ? "ครบแล้ว ตั้งหลักได้แล้ว" : `ผ่านมาแล้ว ${count} จาก ${firstWeek.length}`}
+        </span>
       </div>
-      <ol className="week-stops" style={{ "--progress": `${(count / firstWeek.length) * 100}%` } as React.CSSProperties}>
+      <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>
+      <ol className="week-stops">
         {firstWeek.map((item) => {
           const isDone = done.includes(item.id);
           return (
             <li key={item.id} className={isDone ? "is-done" : undefined} data-line={item.category ?? "general"}>
-              <input
-                type="checkbox"
-                checked={isDone}
-                onChange={() => toggle(item.id)}
-                aria-label={`ทำแล้ว: ${item.title}`}
-              />
+              <label className="tick">
+                <input
+                  type="checkbox"
+                  checked={isDone}
+                  onChange={() => toggle(item.id)}
+                  aria-label={`ทำแล้ว: ${item.title}`}
+                />
+              </label>
               <Link href={item.href}>{item.title}</Link>
               {item === next && <span className="next-badge">ถัดไป</span>}
             </li>

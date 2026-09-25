@@ -47,6 +47,7 @@ export function PlaceStop({ place, code }: { place: Place; code: string }) {
         <a className="nav-link" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
           <NavigationArrow weight="bold" aria-hidden="true" />
           นำทางใน Google Maps
+          <span className="visually-hidden"> ไป{place.name} (เปิดแท็บใหม่)</span>
         </a>
       </div>
     </article>

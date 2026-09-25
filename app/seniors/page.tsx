@@ -18,7 +18,7 @@ export default function SeniorsPage() {
           <SeniorStory key={s.id} senior={s} />
         ))}
       </div>
-      <section className="help">
+      <section className="help" id="help">
         <div className="inner">
           <h2>
             <HandHeart weight="bold" aria-hidden="true" /> ถ้าหนักเกินไป คุยกับคนได้

@@ -66,7 +66,11 @@ export type Guide = {
   icon: IconKey;
   intro?: string;
   photo?: Photo;
+  /** "options" lists alternatives to choose from; default is ordered steps */
+  kind?: "steps" | "options";
   steps: string[];
+  /** A follow-up link shown after the steps */
+  related?: { label: string; href: string };
   /** false until the team has walked through the steps for real */
   checked: boolean;
 };
@@ -80,6 +84,8 @@ export type Senior = {
   about?: string;
   /** Senior Story, one paragraph per entry */
   story: string[];
+  /** A line from the story that any Newcomer shares, wherever they came from; shown on the home page */
+  quote: string;
   /** false until the Senior has read and approved their story */
   approved: boolean;
 };

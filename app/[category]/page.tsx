@@ -36,8 +36,12 @@ export default async function CategoryPage({ params }: Props) {
       <CategoryHead category={category} />
 
       {places.length > 0 && (
-        <section id="places" aria-label="ที่ต่างๆ บนสายนี้">
+        <section id="places" aria-labelledby="places-heading">
+          <h2 id="places-heading" className="visually-hidden">
+            ที่ต่างๆ บนสาย{category.name}
+          </h2>
           <PlaceMap places={places} />
+          <p className="inner status-note">ราคาจะขึ้นเป็นตัวเลขเมื่อมีคนไปตรวจที่หน้าร้านหรือหน้าสถานีแล้ว พร้อมชื่อคนตรวจและเดือนที่ตรวจ</p>
           <div className="line-stops">
             {places.map((p, i) => (
               <PlaceStop key={p.id} place={p} code={placeCode(p.category, i)} />
@@ -51,6 +55,9 @@ export default async function CategoryPage({ params }: Props) {
       {guides.length > 0 && (
         <section className="guides inner">
           <h2>วิธี</h2>
+          {guides.some((g) => !g.checked) && (
+            <p className="status-note">วิธีที่มีป้าย &ldquo;ร่าง&rdquo; ทีมเขียนจากข้อมูลที่หาได้ ยังไม่ได้ลองทำจริง</p>
+          )}
           {guides.map((g) => (
             <GuideBlock key={g.id} guide={g} />
           ))}

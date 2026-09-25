@@ -3,7 +3,7 @@ import Link from "next/link";
 // Three lines, one per category, meeting at Chula. Drawn, not a real map.
 export function LineMap() {
   return (
-    <svg className="line-map" viewBox="0 0 340 160" role="img" aria-label="สามสาย การเดินทาง ของกิน อยู่คนเดียว มาบรรจบกันที่จุฬาฯ">
+    <svg className="line-map" viewBox="0 0 340 160" role="group" aria-label="แผนผัง: สามสาย การเดินทาง ของกิน อยู่คนเดียว มาบรรจบกันที่จุฬาฯ">
       <path d="M8 28 H116 Q148 28 158 58 L168 80" className="lm-line lm-transport" />
       <path d="M332 36 H228 Q198 36 186 66 L174 84" className="lm-line lm-food" />
       <path d="M36 150 H116 Q148 150 158 118 L168 92" className="lm-line lm-living" />
