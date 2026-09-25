@@ -38,6 +38,14 @@ _Avoid_: Price source, verified price
 Team-written, unattributed step-by-step Local Know-how for a procedure, such as topping up a Rabbit card or using a coin laundry.
 _Avoid_: Article, tutorial
 
+**Note** (โน้ต):
+A short piece of Local Know-how anyone writes for Newcomers, signed with their name and hometown. It may be pinned to a Place or stand alone under a category. Notes are shown newest first in the Feed and on the Place they are pinned to.
+_Avoid_: Post, review, comment, tip, Senior Note (the writer need not be a Senior)
+
+**Feed** (โน้ต page):
+All Notes, newest first, filterable by category.
+_Avoid_: Timeline, wall
+
 **Help Link**:
 A pointer to a university or national support channel (counselling, health), shown next to Senior Stories.
 
@@ -58,7 +66,7 @@ Know-how for the household and health tasks a Newcomer used to have done for the
 _Avoid_: Daily Life (reads as a place list)
 
 **Home Taste** (รสชาติบ้าน):
-A place in the Campus Area serving authentic food from a Thai region, vouched for by a Senior from that region.
+A place in the Campus Area serving authentic food from a Thai region, vouched for in a Note by someone whose hometown is in that region. Until someone vouches for it, a place the team found is shown as a team pick.
 _Avoid_: Regional food, comfort food
 
 **Starter Checklist**:
