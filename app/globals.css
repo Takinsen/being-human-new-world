@@ -1,0 +1,593 @@
+/* ตั้งหลัก: a notebook handed down by a senior.
+   Ballpoint ink on plain paper; seniors write by hand; normal prices get the highlighter. */
+
+:root {
+  --paper: #f4f6fa;
+  --sheet: #ffffff;
+  --ink: #1d2b53;
+  --ink-soft: #5b6785;
+  --rule: #d7dce8;
+  --highlight: #ffe45c;
+  --chula: #de5c8e;
+  --caution: #b4462b;
+
+  --font-body: "Anuphan", "Noto Sans Thai", system-ui, sans-serif;
+  --font-hand: "Mali", "Anuphan", cursive;
+
+  --step--1: 0.875rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.625rem;
+  --step-4: clamp(2.5rem, 11vw, 4rem);
+
+  --gutter: 1rem;
+  --measure: 40rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121a33;
+    --sheet: #1a2445;
+    --ink: #e9edf7;
+    --ink-soft: #a9b3cc;
+    --rule: #33406a;
+    --highlight: #8a7a1c;
+    --caution: #f08a6c;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 4.5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.7;
+}
+
+main,
+.site-footer {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+  margin: 0;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--step-2);
+}
+
+h3 {
+  font-size: var(--step-1);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--chula);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-size: var(--step-1);
+  line-height: 1.6;
+  margin-top: 0.75rem;
+}
+
+.handwriting,
+.senior-note p,
+.story-body {
+  font-family: var(--font-hand);
+}
+
+.draft-tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0 0.4rem;
+  border: 1px dashed var(--ink-soft);
+  border-radius: 4px;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 400;
+  vertical-align: middle;
+}
+
+/* Header */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 1.25rem;
+  padding: 0.75rem var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  font-weight: 700;
+  font-size: var(--step-1);
+  text-decoration: none;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--step--1);
+  overflow-x: auto;
+}
+
+.site-header nav a {
+  text-decoration: none;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.site-header nav a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  padding-bottom: 2.5rem;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+/* Home */
+
+.hero {
+  padding: 3rem 0 2rem;
+}
+
+.hero h1 {
+  font-size: var(--step-4);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.progress {
+  display: block;
+  margin-top: 2rem;
+  padding: 1rem;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+.progress-text {
+  display: block;
+  font-weight: 500;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  margin-top: 0.6rem;
+}
+
+.tick {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--rule);
+}
+
+.tick.is-done {
+  background: var(--chula);
+}
+
+.categories {
+  border-top: 2px solid var(--ink);
+}
+
+.category {
+  display: block;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.category h2 {
+  font-size: var(--step-2);
+}
+
+.category p {
+  color: var(--ink-soft);
+  margin-top: 0.25rem;
+}
+
+.category:hover h2 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+.seniors-teaser {
+  margin-top: 3rem;
+}
+
+.teaser {
+  display: block;
+  margin-top: 1.25rem;
+  text-decoration: none;
+}
+
+.teaser .handwriting {
+  font-size: var(--step-1);
+  line-height: 1.6;
+}
+
+.teaser-from {
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+/* Category pages */
+
+.page-head {
+  padding: 2.5rem 0 1.5rem;
+}
+
+.page-head h1 {
+  font-size: var(--step-4);
+}
+
+.map {
+  height: 45vh;
+  min-height: 260px;
+  max-height: 420px;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--sheet);
+}
+
+.map-loading {
+  display: grid;
+  place-items: center;
+  color: var(--ink-soft);
+}
+
+.map-pin span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--chula);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.3);
+  color: #fff;
+  font: 700 14px/1 var(--font-body);
+}
+
+.places {
+  margin-top: 1.5rem;
+}
+
+.place {
+  padding: 1.25rem 0 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.place:target {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--highlight) 35%, transparent), transparent);
+  margin: 0 calc(var(--gutter) * -1);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.place-head {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.pin-number {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-top: 0.1rem;
+  border-radius: 50%;
+  background: var(--chula);
+  color: #fff;
+  font-weight: 700;
+  font-size: var(--step--1);
+}
+
+.place-summary {
+  color: var(--ink-soft);
+}
+
+.price {
+  margin-top: 0.75rem;
+}
+
+.price-range {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: var(--step-1);
+  padding: 0 0.2em;
+  background: linear-gradient(100deg, transparent 2%, var(--highlight) 4%, var(--highlight) 96%, transparent 98%);
+  background-size: 100% 70%;
+  background-position: 0 70%;
+  background-repeat: no-repeat;
+}
+
+.price-check {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.price-pending {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.knowhow,
+.cautions {
+  margin: 0.75rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.knowhow li + li,
+.cautions li + li {
+  margin-top: 0.35rem;
+}
+
+.cautions {
+  color: var(--caution);
+  list-style: none;
+  padding-left: 0;
+}
+
+.cautions li::before {
+  content: "ระวัง: ";
+  font-weight: 700;
+}
+
+.senior-note {
+  margin: 1rem 0 0;
+  padding-left: 0.9rem;
+  border-left: 3px solid var(--ink);
+}
+
+.senior-note p {
+  font-size: var(--step-1);
+  line-height: 1.55;
+}
+
+.senior-note footer {
+  font-size: var(--step--1);
+  color: var(--ink-soft);
+}
+
+.maps-link {
+  display: inline-block;
+  margin-top: 0.9rem;
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.home-taste {
+  margin-top: 3rem;
+  padding: 1.25rem;
+  background: var(--sheet);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+}
+
+.home-taste > p {
+  color: var(--ink-soft);
+  margin-top: 0.35rem;
+}
+
+.home-taste ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.home-taste li {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.home-taste .region {
+  font-weight: 700;
+  min-width: 6rem;
+}
+
+.home-taste .pending {
+  font-family: var(--font-hand);
+  color: var(--ink-soft);
+}
+
+.guides {
+  margin-top: 3rem;
+}
+
+.guide {
+  margin-top: 1.75rem;
+}
+
+.guide p {
+  margin-top: 0.4rem;
+  color: var(--ink-soft);
+}
+
+.guide ol {
+  margin: 0.75rem 0 0;
+  padding-left: 1.5rem;
+}
+
+.guide li + li {
+  margin-top: 0.4rem;
+}
+
+/* Checklist */
+
+.checklist {
+  list-style: none;
+  counter-reset: item;
+  margin: 0;
+  padding: 0;
+  border-top: 2px solid var(--ink);
+}
+
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.checklist label {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.checklist input {
+  flex: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin-top: 0.2rem;
+  accent-color: var(--chula);
+}
+
+.checklist .is-done span {
+  color: var(--ink-soft);
+  text-decoration: line-through;
+  text-decoration-color: var(--chula);
+  text-decoration-thickness: 2px;
+}
+
+.checklist a {
+  flex: none;
+  font-size: var(--step--1);
+}
+
+/* Seniors */
+
+.story {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.story header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-weight: 700;
+  font-size: var(--step-1);
+}
+
+.story-from {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.story-body {
+  margin-top: 1rem;
+  font-size: var(--step-1);
+  line-height: 1.65;
+}
+
+.story-body p + p {
+  margin-top: 0.75rem;
+}
+
+.story .draft-tag {
+  margin: 1rem 0 0;
+}
+
+.help {
+  margin-top: 3rem;
+}
+
+.help ul {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.help li {
+  padding: 1rem 0;
+  border-top: 1px solid var(--rule);
+}
+
+.help h3 {
+  font-size: var(--step-0);
+}
+
+.help p {
+  color: var(--ink-soft);
+}
+
+.help-contact {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: var(--step-2);
+  font-weight: 700;
+}

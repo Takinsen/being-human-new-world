@@ -1,6 +1,6 @@
-# Being Human New World
+# ตั้งหลัก (Being Human New World)
 
-A starter pack that gives people who have just moved into a Bangkok campus area the local know-how that maps and search engines don't carry.
+A starter pack that gives people who have just moved into a Bangkok campus area the local know-how that maps and search engines don't carry. Tagline: "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก". All user-facing text is Thai, written in a senior-to-junior voice.
 
 ## Language
 
@@ -25,6 +25,21 @@ _Avoid_: Bangkok (as scope), city, New Home
 **Local Know-how**:
 Unwritten knowledge of how things work in a Campus Area and what counts as normal there (prices, procedures, etiquette, traps), as opposed to where things are. Written either by the team (unattributed) or by a Senior (attributed).
 _Avoid_: Local knowledge (too vague), location info, POI
+
+**Place** (ที่):
+A spot in the Campus Area shown as a pin on the map and a know-how card (normal price, cautions, which Senior recommends it). The card, not the pin, is the point; the map only answers "where".
+_Avoid_: POI, listing, shop (a Place can be a station or a clinic)
+
+**Price Check**:
+The date and the person who last confirmed a price on the spot. A price without a Price Check is never shown as a number.
+_Avoid_: Price source, verified price
+
+**Guide** (วิธี):
+Team-written, unattributed step-by-step Local Know-how for a procedure, such as topping up a Rabbit card or using a coin laundry.
+_Avoid_: Article, tutorial
+
+**Help Link**:
+A pointer to a university or national support channel (counselling, health), shown next to Senior Stories.
 
 **Senior Story**:
 A Senior's short first-person account of their own first year, including the hard parts, shown so a Newcomer sees that struggling early is normal.

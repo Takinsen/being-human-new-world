@@ -1,0 +1,75 @@
+// Content model. Terms follow CONTEXT.md.
+
+export type CategoryId = "transport" | "food" | "living";
+
+export type Region = "เหนือ" | "อีสาน" | "กลาง" | "ใต้" | "ตะวันออก" | "ตะวันตก";
+
+/** Who confirmed a price on the spot, and when. See docs/adr/0001. */
+export type PriceCheck = {
+  /** "YYYY-MM" */
+  on: string;
+  /** Senior id, or a team member's display name */
+  by: string;
+};
+
+export type Price = {
+  min: number;
+  max: number;
+  /** What the price is for, e.g. "ต่อจาน", "ต่อเที่ยว" */
+  per: string;
+  /** Without a check, the price renders as "รอตรวจราคา" instead of a number. */
+  checked?: PriceCheck;
+};
+
+export type Place = {
+  id: string;
+  name: string;
+  category: CategoryId;
+  lat: number;
+  lng: number;
+  /** One line: why a Newcomer would come here */
+  summary: string;
+  knowhow: string[];
+  cautions?: string[];
+  price?: Price;
+  /** Senior who recommends this Place, with their note in their own words */
+  senior?: { id: string; note: string };
+  /** Set when the Place is Home Taste for a region */
+  homeTaste?: Region;
+};
+
+export type Guide = {
+  id: string;
+  category: CategoryId;
+  title: string;
+  intro?: string;
+  steps: string[];
+  /** false until the team has walked through the steps for real */
+  checked: boolean;
+};
+
+export type Senior = {
+  id: string;
+  name: string;
+  hometown: string;
+  region: Region;
+  /** e.g. "ปี 3 วิศวะ"; left out until the Senior confirms */
+  about?: string;
+  /** Senior Story, one paragraph per entry */
+  story: string[];
+  /** false until the Senior has read and approved their story */
+  approved: boolean;
+};
+
+export type ChecklistItem = {
+  id: string;
+  title: string;
+  href: string;
+};
+
+export type HelpLink = {
+  name: string;
+  what: string;
+  contact?: string;
+  href?: string;
+};
