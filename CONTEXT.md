@@ -23,7 +23,7 @@ _Avoid_: Bangkok (as scope), city, New Home
 ### Content
 
 **Local Know-how**:
-Unwritten knowledge of how things work in a Campus Area and what counts as normal there (prices, procedures, etiquette, traps), as opposed to where things are. Written either by the team (unattributed) or by a Senior (attributed).
+Unwritten knowledge of how things work in a Campus Area and what counts as normal there (prices, procedures, etiquette, traps), as opposed to where things are. Written either by the team as Guides (unattributed) or by anyone as Notes (signed with a real name and hometown; team members sign their own).
 _Avoid_: Local knowledge (too vague), location info, POI
 
 **Place** (ที่):
@@ -54,6 +54,10 @@ A Senior's short first-person account of their own first year, including the har
 _Avoid_: Testimonial, review
 
 ### Categories
+
+**Category** (หมวด):
+One of the three kinds of Local Know-how below. Every Place, Guide and Note belongs to exactly one.
+_Avoid_: สาย, line (reads as a train line)
 
 **Transportation** (การเดินทาง):
 Know-how for moving around and into the Campus Area: modes, fares, transfers, timing.
