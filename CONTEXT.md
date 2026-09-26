@@ -27,7 +27,7 @@ Unwritten knowledge of how things work in a Campus Area and what counts as norma
 _Avoid_: Local knowledge (too vague), location info, POI
 
 **Place** (ที่):
-A spot in the Campus Area shown as a pin on the map and a know-how card (normal price, cautions, which Senior recommends it). The card, not the pin, is the point; the map only answers "where".
+A spot in the Campus Area shown as a pin on the map and a know-how card (normal price, cautions, the Notes pinned to it). The card, not the pin, is the point; the map only answers "where".
 _Avoid_: POI, listing, shop (a Place can be a station or a clinic)
 
 **Price Check**:
