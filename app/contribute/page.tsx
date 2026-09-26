@@ -19,7 +19,6 @@ export default async function ContributePage() {
       <ContributeForms
         lines={categories.map((c) => ({ id: c.id, name: c.name }))}
         places={content.places.map((p) => ({ id: p.id, name: p.name, category: p.category, per: p.price?.per }))}
-        seniors={content.seniors}
         guides={content.guides.map((g) => ({ id: g.id, title: g.title, category: g.category, checked: g.checked }))}
       />
       </div>

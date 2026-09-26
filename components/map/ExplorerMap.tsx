@@ -2,19 +2,22 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect } from "react";
-import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap } from "react-leaflet";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import type { MapStop } from "./types";
 
 // Fallback view when nothing is visible: Chula.
 const CHULA: L.LatLngTuple = [13.7384, 100.5320];
+const PIN = 44; // px, also the tap target
+const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 
-function pinIcon(code: string, line: string, selected: boolean) {
+// The pin shows its category's icon (docs/adr/0006); the icon itself is CSS.
+function pinIcon(category: string, selected: boolean) {
   return L.divIcon({
     className: selected ? "map-pin is-selected" : "map-pin",
-    html: `<span class="code" data-line="${line}">${code}</span>`,
-    iconSize: [44, 44],
-    iconAnchor: [22, 22],
+    html: `<span class="pin" data-line="${category}"></span>`,
+    iconSize: [PIN, PIN],
+    iconAnchor: [PIN / 2, PIN / 2],
   });
 }
 
@@ -46,7 +49,84 @@ function Camera({ stops, selected, inset, animate }: { stops: MapStop[]; selecte
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected?.place.id]);
 
+  // A pan still running when the page changes throws `_leaflet_pos` errors.
+  useEffect(() => () => void map.stop(), [map]);
+
   return null;
+}
+
+/** Where each pin is drawn at the current zoom: its true spot, pushed apart from pins it would cover. */
+function useSpreadPositions(stops: MapStop[]) {
+  const map = useMap();
+  const [zoom, setZoom] = useState(() => map.getZoom());
+  useMapEvents({ zoomend: () => setZoom(map.getZoom()) });
+
+  return useMemo(() => {
+    const pts = stops.map((s) => map.project([s.place.lat, s.place.lng], zoom));
+    for (let round = 0; round < 12; round++) {
+      let moved = false;
+      for (let i = 0; i < pts.length; i++) {
+        for (let j = i + 1; j < pts.length; j++) {
+          let dx = pts[j].x - pts[i].x;
+          let dy = pts[j].y - pts[i].y;
+          let dist = Math.hypot(dx, dy);
+          if (dist >= GAP) continue;
+          if (dist < 0.01) {
+            // Same spot: split them along a fixed direction so it's stable.
+            dx = Math.cos(j);
+            dy = Math.sin(j);
+            dist = 1;
+          }
+          const push = (GAP - dist) / 2 / dist;
+          pts[i] = pts[i].subtract([dx * push, dy * push]);
+          pts[j] = pts[j].add([dx * push, dy * push]);
+          moved = true;
+        }
+      }
+      if (!moved) break;
+    }
+    return new Map(stops.map((s, i) => [s.place.id, map.unproject(pts[i], zoom)]));
+  }, [stops, zoom, map]);
+}
+
+function Pins({ stops, selectedId, onSelect }: { stops: MapStop[]; selectedId?: string; onSelect: (id: string) => void }) {
+  const positions = useSpreadPositions(stops);
+  const markers = useRef(new Map<string, L.Marker>());
+
+  // Leaflet rebuilds a marker's element when its icon changes, so label every render.
+  useEffect(() => {
+    for (const { place } of stops) {
+      const el = markers.current.get(place.id)?.getElement();
+      if (!el) continue;
+      el.setAttribute("aria-label", place.name);
+      if (place.id === selectedId) el.setAttribute("aria-current", "true");
+      else el.removeAttribute("aria-current");
+    }
+  });
+
+  return stops.map(({ place }) => (
+    <Marker
+      key={place.id}
+      ref={(m) => {
+        if (m) markers.current.set(place.id, m);
+        else markers.current.delete(place.id);
+      }}
+      position={positions.get(place.id) ?? [place.lat, place.lng]}
+      icon={pinIcon(place.category, place.id === selectedId)}
+      zIndexOffset={place.id === selectedId ? 1000 : 0}
+      eventHandlers={{
+        click: () => onSelect(place.id),
+        keypress: (e) => {
+          const key = (e.originalEvent as KeyboardEvent).key;
+          if (key === "Enter" || key === " ") onSelect(place.id);
+        },
+      }}
+    >
+      <Tooltip direction="top" offset={[0, -PIN / 2 + 4]}>
+        {place.name}
+      </Tooltip>
+    </Marker>
+  ));
 }
 
 export default function ExplorerMap({
@@ -78,26 +158,7 @@ export default function ExplorerMap({
       />
       <ZoomControl position="topright" />
       <Camera stops={stops} selected={selected} inset={inset} animate={animate} />
-      {stops.map(({ place, code }) => (
-        <Marker
-          key={place.id}
-          position={[place.lat, place.lng]}
-          icon={pinIcon(code, place.category, place.id === selectedId)}
-          zIndexOffset={place.id === selectedId ? 1000 : 0}
-          eventHandlers={{
-            add: (e) => e.target.getElement()?.setAttribute("aria-label", `${code} ${place.name}`),
-            click: () => onSelect(place.id),
-            keypress: (e) => {
-              const key = (e.originalEvent as KeyboardEvent).key;
-              if (key === "Enter" || key === " ") onSelect(place.id);
-            },
-          }}
-        >
-          <Tooltip direction="top" offset={[0, -16]}>
-            {place.name}
-          </Tooltip>
-        </Marker>
-      ))}
+      <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} />
     </MapContainer>
   );
 }

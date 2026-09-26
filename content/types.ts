@@ -79,6 +79,8 @@ export type Guide = {
   id: string;
   category: CategoryId;
   title: string;
+  /** One line on the Guides list: what you'll be able to do */
+  summary: string;
   icon: IconKey;
   intro?: string;
   photo?: Photo;

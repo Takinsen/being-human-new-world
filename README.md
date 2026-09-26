@@ -16,7 +16,7 @@ npm run dev   # http://localhost:3000
 
 ### ต่อ Google Sheet (ฟอร์มช่วยเติมข้อมูล)
 
-โน้ตที่เขียนผ่านหน้า `/notes/new` และข้อมูลที่กรอกผ่านหน้า `/contribute` เก็บใน Google Sheet (ดู `docs/adr/0005-google-sheet-as-the-store.md`)
+โน้ตที่เขียนผ่านหน้า `/notes/new` และข้อมูลที่กรอกผ่านหน้า `/contribute` (ไม่มีลิงก์บนเว็บ ให้ทีมเปิดเองตอน demo และเพิ่มเรื่องรุ่นพี่ได้อย่างเดียว แก้เรื่องเดิมไม่ได้) เก็บใน Google Sheet (ดู `docs/adr/0005-google-sheet-as-the-store.md`)
 
 1. สร้าง Google Sheet ใหม่ แล้วเปิด **Extensions → Apps Script**
 2. ลบโค้ดเดิม วางโค้ดจาก `sheet/apps-script.gs` แล้วกดบันทึก

@@ -70,3 +70,15 @@ Fixed: B2 (contrast now passes everywhere, lowest 4.66), B3 (pins are buttons na
 - เน็ตช้า 50KB/s หน้าแรกโหลดเสร็จราว 4.4 วินาที
 
 Screenshots and scripts are in the scratchpad `audit2/{boss,tan,dome,a11y}/` folders of the session that ran this audit.
+
+## Status (2026-09-26)
+
+Decided with the team (grilling): B1 no chip = all, B8 icon pins nudged apart, B9 one page per Guide, B11 no footer link and new stories only, B12 หมวด, B13 phone-width tab bar and larger text on wide screens, B2 land on the map or the Feed after posting. Recorded in docs/adr/0006 and CONTEXT.md.
+
+Fixed in code: B1–B22 except the parts below. Content: A2 filled from `content-research.md` (health centre, Chula Student Wellness), A3 new Guides "จากรถไฟฟ้าเข้าจุฬาฯ" and "ขึ้น MRT", A4 laundry Place and prices.
+
+Open:
+- A1/A5: team members post pinned Notes under their own names, from `team-notes-draft.md`.
+- A6: Senior photos.
+- B3: at 360×640 the map between the chips and the sheet is about 177px; the sheet can be closed or the chips scrolled.
+- Research facts marked [กลาง] should be checked on the official pages before the demo (the proxy blocked full page reads).

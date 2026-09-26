@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useActionState, useState } from "react";
-import type { CategoryId, Senior } from "@/content/types";
+import type { CategoryId } from "@/content/types";
 import { type FormState, saveGuideCheck, savePrice, saveSenior } from "./actions";
 
 type Line = { id: CategoryId; name: string };
@@ -53,12 +53,10 @@ function PlaceSelect({ lines, places, onChange }: { lines: Line[]; places: Place
 export function ContributeForms({
   lines,
   places,
-  seniors,
   guides,
 }: {
   lines: Line[];
   places: PlaceOption[];
-  seniors: Senior[];
   guides: GuideOption[];
 }) {
   const [priceState, priceAction, pricePending] = useActionState(savePrice, null);
@@ -66,9 +64,7 @@ export function ContributeForms({
   const [guideState, guideAction, guidePending] = useActionState(saveGuideCheck, null);
 
   const [per, setPer] = useState("");
-  const [seniorId, setSeniorId] = useState("new");
   const [guideId, setGuideId] = useState("");
-  const editing = seniors.find((s) => s.id === seniorId);
 
   return (
     <div className="contribute">
@@ -100,34 +96,23 @@ export function ContributeForms({
         <Status state={priceState} />
       </form>
 
-      <form action={seniorAction} className="contribute-form" key={seniorId}>
+      <form action={seniorAction} className="contribute-form">
         <h2>เรื่องปีแรกของรุ่นพี่</h2>
-        <p className="status-note">เพิ่มรุ่นพี่ใหม่ หรือเลือกชื่อเดิมเพื่อแก้เรื่องของตัวเอง</p>
-        <label>
-          รุ่นพี่
-          <select name="id" value={seniorId} onChange={(e) => setSeniorId(e.target.value)}>
-            <option value="new">เพิ่มรุ่นพี่ใหม่</option>
-            {seniors.map((s) => (
-              <option key={s.id} value={s.id}>
-                แก้เรื่องของ{s.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        <p className="status-note">เพิ่มเรื่องของรุ่นพี่คนใหม่ เรื่องที่ขึ้นเว็บแล้วแก้จากตรงนี้ไม่ได้</p>
         <div className="form-row">
           <label>
             ชื่อที่ให้แสดง
-            <input name="name" placeholder="เช่น พี่บอส" defaultValue={editing?.name} required />
+            <input name="name" placeholder="เช่น พี่บอส" required />
           </label>
           <label>
             บ้านเกิด (จังหวัด)
-            <input name="hometown" defaultValue={editing?.hometown} required />
+            <input name="hometown" required />
           </label>
         </div>
         <div className="form-row">
           <label>
             ภาค
-            <select name="region" defaultValue={editing?.region ?? ""} required>
+            <select name="region" defaultValue="" required>
               <option value="" disabled>
                 เลือกภาค
               </option>
@@ -138,16 +123,16 @@ export function ContributeForms({
           </label>
           <label>
             ปีและคณะ
-            <input name="about" placeholder="เช่น ปี 3 วิศวะ" defaultValue={editing?.about} />
+            <input name="about" placeholder="เช่น ปี 3 วิศวะ" />
           </label>
         </div>
         <label>
           เรื่องปีแรก (เว้นบรรทัดเพื่อขึ้นย่อหน้าใหม่)
-          <textarea name="story" rows={8} defaultValue={editing?.story.join("\n\n")} required />
+          <textarea name="story" rows={8} required />
         </label>
         <label>
           ประโยคเด่นที่ให้ขึ้นหน้าแรก
-          <input name="quote" defaultValue={editing?.quote} />
+          <input name="quote" />
         </label>
         <button type="submit" disabled={seniorPending}>
           {seniorPending ? "กำลังบันทึก" : "บันทึกเรื่อง"}
@@ -158,7 +143,6 @@ export function ContributeForms({
       <form action={guideAction} className="contribute-form">
         <h2>ลองทำตามวิธีแล้ว</h2>
         <p className="status-note">ทำตามขั้นตอนจริงแล้วได้ผล ป้าย &ldquo;ร่าง&rdquo; ของวิธีนั้นจะหายไป</p>
-        <input type="hidden" name="category" value={guides.find((g) => g.id === guideId)?.category ?? ""} />
         <label>
           วิธี
           <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>

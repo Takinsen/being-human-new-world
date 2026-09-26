@@ -25,13 +25,6 @@ export function mapsUrl(lat: number, lng: number): string {
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 }
 
-const prefixes = { transport: "T", food: "F", living: "L" } as const;
-
-/** Station-style code for the nth Place on a category's line: T1, F2, L3 */
-export function placeCode(category: keyof typeof prefixes, index: number): string {
-  return `${prefixes[category]}${index + 1}`;
-}
-
 export function commonsImage(file: string, width = 960): string {
   return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`;
 }

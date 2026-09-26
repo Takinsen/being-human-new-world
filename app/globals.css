@@ -315,22 +315,21 @@ svg { flex: none; }
 
 /* ---------- Place details ---------- */
 
-.code {
+/* A Place's category icon, in the list and on its card */
+.place-icon {
   display: inline-grid;
   place-items: center;
-  min-width: 2.6em;
-  height: 1.8em;
-  padding: 0 0.35em;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
   border: 3px solid var(--c);
-  border-radius: 0.45em;
+  border-radius: 50%;
   background: #fff;
   color: var(--c);
-  font-family: var(--font);
-  font-weight: 700;
-  font-size: 0.85rem;
-  line-height: 1;
+  font-size: 1.1rem;
 }
 
+/* Map pins: a white disc with the category icon, filled when selected */
 .map-pin {
   display: grid;
   place-items: center;
@@ -338,16 +337,43 @@ svg { flex: none; }
   border: 0;
 }
 
-.map-pin .code {
-  box-shadow: 0 2px 4px rgb(0 0 0 / 0.25);
+.map-pin .pin {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 3px solid var(--c);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.3);
 }
 
-.map-pin.is-selected .code {
-  transform: scale(1.3);
+.map-pin .pin::before {
+  content: "";
+  width: 18px;
+  height: 18px;
   background: var(--c);
-  color: #fff;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.map-pin.is-selected .pin {
+  width: 44px;
+  height: 44px;
+  background: var(--c);
   border-color: #fff;
 }
+
+.map-pin.is-selected .pin::before {
+  width: 24px;
+  height: 24px;
+  background: #fff;
+}
+
+/* Pin icons: Phosphor bold Train, BowlFood, WashingMachine, the same icons as CategoryIcon */
+.map-pin .pin[data-line="transport"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M184%2C20H72A36%2C36%2C0%2C0%2C0%2C36%2C56V184a36%2C36%2C0%2C0%2C0%2C36%2C36h0l-9.6%2C12.8a12%2C12%2C0%2C1%2C0%2C19.2%2C14.4L102%2C220h52l20.4%2C27.2a12%2C12%2C0%2C0%2C0%2C19.2-14.4L184%2C220h0a36%2C36%2C0%2C0%2C0%2C36-36V56A36%2C36%2C0%2C0%2C0%2C184%2C20ZM60%2C116V84h56v32Zm80-32h56v32H140ZM72%2C44H184a12%2C12%2C0%2C0%2C1%2C12%2C12v4H60V56A12%2C12%2C0%2C0%2C1%2C72%2C44ZM184%2C196H72a12%2C12%2C0%2C0%2C1-12-12V140H196v44A12%2C12%2C0%2C0%2C1%2C184%2C196Zm-80-28a16%2C16%2C0%2C1%2C1-16-16A16%2C16%2C0%2C0%2C1%2C104%2C168Zm80%2C0a16%2C16%2C0%2C1%2C1-16-16A16%2C16%2C0%2C0%2C1%2C184%2C168Z%22%2F%3E%3C%2Fsvg%3E"); }
+.map-pin .pin[data-line="food"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M224%2C100h-4.78a92%2C92%2C0%2C0%2C0-182.44%2C0H32a12%2C12%2C0%2C0%2C0-12%2C12%2C108.38%2C108.38%2C0%2C0%2C0%2C56%2C94.68V208a20%2C20%2C0%2C0%2C0%2C20%2C20h64a20%2C20%2C0%2C0%2C0%2C20-20v-1.32A108.38%2C108.38%2C0%2C0%2C0%2C236%2C112%2C12%2C12%2C0%2C0%2C0%2C224%2C100ZM170.29%2C60.06A92%2C92%2C0%2C0%2C0%2C127.19%2C100H106a68.27%2C68.27%2C0%2C0%2C1%2C62-40C168.76%2C60%2C169.52%2C60%2C170.29%2C60.06Zm17.22%2C19.08A67.66%2C67.66%2C0%2C0%2C1%2C194.92%2C100H156.13A67.91%2C67.91%2C0%2C0%2C1%2C187.51%2C79.14ZM128%2C44c.83%2C0%2C1.65%2C0%2C2.48.06A92.3%2C92.3%2C0%2C0%2C0%2C80.37%2C100H61.08A68.1%2C68.1%2C0%2C0%2C1%2C128%2C44Zm35%2C144.39a12%2C12%2C0%2C0%2C0-7%2C10.91V204H100v-4.7a12%2C12%2C0%2C0%2C0-7-10.91A84.32%2C84.32%2C0%2C0%2C1%2C44.87%2C124H211.13A84.32%2C84.32%2C0%2C0%2C1%2C163%2C188.39Z%22%2F%3E%3C%2Fsvg%3E"); }
+.map-pin .pin[data-line="living"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M160%2C80a16%2C16%2C0%2C1%2C1%2C16%2C16A16%2C16%2C0%2C0%2C1%2C160%2C80Zm72-36V212a20%2C20%2C0%2C0%2C1-20%2C20H44a20%2C20%2C0%2C0%2C1-20-20V44A20%2C20%2C0%2C0%2C1%2C44%2C24H212A20%2C20%2C0%2C0%2C1%2C232%2C44Zm-24%2C4H48V208H208Zm-68.49%2C75.51-16%2C16a12%2C12%2C0%2C0%2C0%2C17%2C17l16-16a12%2C12%2C0%2C1%2C0-17-17Zm-15-16a12%2C12%2C0%2C0%2C0-17%2C0l-8%2C8a12%2C12%2C0%2C0%2C0%2C17%2C17l8-8A12%2C12%2C0%2C0%2C0%2C124.49%2C107.51ZM128%2C196a68.05%2C68.05%2C0%2C0%2C0%2C67.19-78.52%2C12%2C12%2C0%2C0%2C0-23.72%2C3.69%2C44%2C44%2C0%2C1%2C1-36.64-36.64%2C12%2C12%2C0%2C0%2C0%2C3.69-23.72A68%2C68%2C0%2C1%2C0%2C128%2C196Z%22%2F%3E%3C%2Fsvg%3E"); }
 
 .map-loading {
   display: grid;
@@ -788,7 +814,7 @@ body:has(.explorer) .site-footer {
 .stop-group ul::before {
   content: "";
   position: absolute;
-  left: 20px;
+  left: 21px;
   top: 22px;
   bottom: 22px;
   width: 6px;
@@ -815,8 +841,9 @@ body:has(.explorer) .site-footer {
   background: color-mix(in srgb, var(--c) 10%, #fff);
 }
 
-.stop-group .code {
-  flex: none;
+.stop-group .place-icon {
+  position: relative;
+  margin-left: 2px;
 }
 
 .stop-group b {
@@ -921,16 +948,34 @@ body:has(.explorer) .site-footer {
   }
 }
 
+.sheet-bar {
+  display: flex;
+  flex: none;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sheet-size {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  border: 0;
+  border-left: 1px solid var(--rule);
+  background: none;
+  color: var(--ink);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
 .sheet-handle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  flex: none;
-  min-height: 72px;
+  flex: 1;
+  min-width: 0;
+  min-height: 60px;
   padding: 0 var(--gutter);
   border: 0;
-  border-bottom: 1px solid var(--rule);
   background: none;
   color: var(--ink);
   font: 700 var(--step-0) var(--font);
@@ -1085,7 +1130,7 @@ body:has(.explorer) .site-footer {
 }
 
 .brand .wordmark {
-  min-height: 36px;
+  min-height: 44px;
 }
 
 .tagline {
@@ -1129,14 +1174,17 @@ a.line-chip {
   margin-top: 12px;
   padding-left: 14px;
   border-radius: 10px;
-  background: #fff6cc;
-  border: 2px solid var(--platform);
+  background: #eef1f6;
+  border: 2px solid var(--ink);
 }
 
 .welcome a {
   display: inline-flex;
+  flex: 1;
   align-items: center;
+  justify-content: space-between;
   gap: 6px;
+  padding: 6px 0;
   min-height: 44px;
   font-weight: 700;
   text-decoration: none;
@@ -1179,9 +1227,38 @@ a.line-chip {
 .more summary {
   display: inline-flex;
   align-items: center;
+  gap: 8px;
   min-height: 44px;
+  padding: 0 16px;
+  border: 2px solid var(--rule);
+  border-radius: 99px;
   font-weight: 700;
+  list-style: none;
   cursor: pointer;
+}
+
+.more summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A caret that turns when open, since display: inline-flex drops the marker */
+.more summary::after {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  margin-top: -0.2em;
+  border-right: 2.5px solid currentColor;
+  border-bottom: 2.5px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.more[open] summary::after {
+  margin-top: 0.2em;
+  transform: rotate(-135deg);
+}
+
+.more[open] summary {
+  margin-bottom: 8px;
 }
 
 .more .knowhow {
@@ -1242,7 +1319,7 @@ a.line-chip {
 .note-place {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: 44px;
   color: var(--c);
   font-size: var(--step--1);
   font-weight: 600;
@@ -1335,4 +1412,219 @@ a.line-chip {
   .explorer-top .line-chip svg {
     display: none;
   }
+}
+
+/* ---------- Audit fixes (.scratch/map-first/ux-audit.md) ---------- */
+
+/* Nothing scrolls under the tab bar (B5) */
+html {
+  scroll-padding-bottom: 88px;
+}
+
+body:not(:has(.explorer)) main {
+  padding-bottom: 24px;
+}
+
+/* Price, Home Taste and Notes under a Place in the list (B14) */
+.stop-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  margin-top: 4px;
+}
+
+.stop-tags:empty {
+  display: none;
+}
+
+.stop-tags .price-strip {
+  font-size: var(--step--1);
+}
+
+.stop-group .stop-tags small {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.home-taste-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--food);
+  font-weight: 600;
+}
+
+.detail .home-taste-tag {
+  margin-top: 6px;
+}
+
+.detail-head h2:focus {
+  outline: none;
+}
+
+.detail-head h2:focus-visible {
+  outline: 3px solid var(--platform);
+}
+
+.detail .form-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+/* Guides list: one line per Guide, steps on its own page (B9) */
+.guide-list {
+  margin: 8px 0 16px;
+}
+
+.guide-list a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 64px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+}
+
+.guide-list b {
+  display: block;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.guide-list small {
+  display: block;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+
+.guide-list a > svg {
+  margin-left: auto;
+  color: var(--ink-soft);
+}
+
+.home-taste-list {
+  padding: 8px 0 24px;
+}
+
+.home-taste-list h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-taste-list .options {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.home-taste-list a {
+  display: inline-block;
+  min-height: 44px;
+  line-height: 44px;
+}
+
+.guide-page .back-link {
+  margin-top: 0;
+}
+
+.guide-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: var(--step-2);
+}
+
+.guide-page .guide {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 0;
+}
+
+.help-contact,
+.guide .tel {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Note form: the counter sits outside the label (B16) */
+.field-counter {
+  margin-top: -10px;
+  text-align: right;
+}
+
+/* Small and short screens (B3) */
+@media (max-width: 380px) {
+  .explorer-top .tagline {
+    display: none;
+  }
+}
+
+@media (max-height: 520px) {
+  .tab-bar a {
+    min-height: 44px;
+    flex-direction: row;
+    gap: 6px;
+  }
+
+  .tab-bar svg {
+    font-size: 1.1rem;
+  }
+
+  .explorer-top .brand {
+    display: none;
+  }
+}
+
+/* Wide screens: a phone-width tab bar and larger text for the demo projector (B13) */
+@media (min-width: 900px) {
+  html {
+    font-size: 112.5%;
+  }
+
+  .tab-bar {
+    width: min(480px, 100%);
+    margin: 0 auto;
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .tab-bar a {
+    font-size: 0.85rem;
+  }
+}
+
+.feed-posted {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.note.is-fresh {
+  background: color-mix(in srgb, var(--c) 10%, #fff);
+  border-radius: 0 8px 8px 0;
+  padding-right: 12px;
+}
+
+.feed-scope-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 20px;
+  font-weight: 600;
+}
+
+.note-by a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }

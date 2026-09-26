@@ -3,9 +3,10 @@ import type { Note } from "@/content/types";
 import { thaiDate } from "@/lib/format";
 
 /** One Note: the words, then who wrote it and where they're from. */
-export function NoteCard({ note, placeName, compact }: { note: Note; placeName?: string; compact?: boolean }) {
+export function NoteCard({ note, placeName, compact, fresh }: { note: Note; placeName?: string; compact?: boolean; fresh?: boolean }) {
+  const className = ["note", compact && "is-compact", fresh && "is-fresh"].filter(Boolean).join(" ");
   return (
-    <article className={compact ? "note is-compact" : "note"} data-line={note.category}>
+    <article className={className} data-line={note.category}>
       <p className="note-text">{note.text}</p>
       <footer className="note-by">
         {note.seniorId ? <Link href={`/seniors#${note.seniorId}`}>{note.name}</Link> : <b>{note.name}</b>}

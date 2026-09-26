@@ -33,13 +33,13 @@ export async function savePrice(_: FormState, form: FormData): Promise<FormState
   }
   return save(
     () => appendRow("prices", { placeId, min: String(min), max: String(max), per, by }),
-    `/map?place=${placeId}`,
+    `/?place=${placeId}`,
   );
 }
 
 export async function saveSenior(_: FormState, form: FormData): Promise<FormState> {
-  const picked = text(form, "id", 100);
-  const id = picked && picked !== "new" ? picked : `s-${Date.now().toString(36)}`;
+  // Always a new Senior: a story already on the site can't be overwritten from the form.
+  const id = `s-${Date.now().toString(36)}`;
   const name = text(form, "name", 60);
   const hometown = text(form, "hometown", 60);
   const region = text(form, "region", 20);
@@ -64,8 +64,7 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
 
 export async function saveGuideCheck(_: FormState, form: FormData): Promise<FormState> {
   const guideId = text(form, "guideId", 100);
-  const category = text(form, "category", 20);
   const by = text(form, "by", 80);
   if (!guideId || !by) return { ok: false, message: "เลือกวิธีและใส่ชื่อคนที่ลองทำ" };
-  return save(() => appendRow("guides", { guideId, by }), `/${category}#${guideId}`);
+  return save(() => appendRow("guides", { guideId, by }), `/guides/${guideId}`);
 }

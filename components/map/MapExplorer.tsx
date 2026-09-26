@@ -1,15 +1,14 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowRight, CaretDown, CaretUp, ChatCenteredText, X } from "@phosphor-icons/react";
+import { ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { Category } from "@/content/categories";
 import type { CategoryId } from "@/content/types";
 import { CategoryIcon } from "../icons";
 import { Wordmark } from "../PageHead";
-import { StationCode } from "../StationCode";
 import { PlaceDetail } from "./PlaceDetail";
 import type { MapStop } from "./types";
 
@@ -20,7 +19,9 @@ const ExplorerMap = dynamic(() => import("./ExplorerMap"), {
 });
 
 const SIDEBAR = 380; // px, wide screens
-const SHEET_PEEK = 0.45; // share of the viewport the open sheet covers on phones
+const SHEET_CLOSED = 60; // px: just the handle
+// Share of the map the sheet covers on phones; less on short screens so the map stays usable.
+const sheetShare = (vh: number, full: boolean) => (full ? 0.85 : vh < 640 ? 0.4 : 0.45);
 
 function useViewportHeight() {
   const [h, setH] = useState(800);
@@ -68,34 +69,46 @@ function useWide() {
   return wide;
 }
 
-export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Category[] }) {
+function priceText(stop: MapStop): string | undefined {
+  const p = stop.place.price;
+  if (!p?.checked) return undefined;
+  return `${p.min === p.max ? p.min : `${p.min}–${p.max}`} บาท`;
+}
+
+export function MapExplorer({ stops, categories }: { stops: MapStop[]; categories: Category[] }) {
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
   const wide = useWide();
   const viewportHeight = useViewportHeight();
 
-  // State lives in the URL so category pages can link straight to a line or a Place.
+  // State lives in the URL so other pages can link straight to a category or a Place.
   const selectedId = params.get("place") ?? undefined;
+  const posted = params.get("posted") === "1";
   const lineParam = params.get("line");
-  const active = useMemo<CategoryId[]>(() => {
-    const fromUrl = lineParam?.split(",").filter((l): l is CategoryId => lines.some((c) => c.id === l));
-    return fromUrl?.length ? fromUrl : lines.map((l) => l.id);
-  }, [lineParam, lines]);
-
+  // No category chosen means every Place shows (docs/adr/0006).
+  const active = useMemo<CategoryId[]>(
+    () => lineParam?.split(",").filter((l): l is CategoryId => categories.some((c) => c.id === l)) ?? [],
+    [lineParam, categories],
+  );
   const withNotes = params.get("notes") === "1";
+
   const [sheetOpen, setSheetOpen] = useState(true);
+  const [sheetFull, setSheetFull] = useState(false);
   const welcome = useWelcome();
+  const sheetBody = useRef<HTMLDivElement>(null);
+  const returnTo = useRef<string | undefined>(undefined);
 
   const update = useCallback(
     (next: { place?: string | null; line?: CategoryId[]; notes?: boolean }) => {
       const q = new URLSearchParams(params.toString());
+      q.delete("posted");
       if (next.place !== undefined) {
         if (next.place) q.set("place", next.place);
         else q.delete("place");
       }
       if (next.line) {
-        if (next.line.length === lines.length) q.delete("line");
+        if (next.line.length === 0 || next.line.length === categories.length) q.delete("line");
         else q.set("line", next.line.join(","));
       }
       if (next.notes !== undefined) {
@@ -104,43 +117,56 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
       }
       router.replace(`${pathname}${q.size ? `?${q}` : ""}`, { scroll: false });
     },
-    [params, pathname, router, lines.length],
+    [params, pathname, router, categories.length],
   );
 
-  // Lines are alternatives; "มีโน้ต" narrows whatever lines are on.
-  const visible = stops.filter((s) => active.includes(s.place.category) && (!withNotes || s.notes.length > 0));
+  const shows = (id: CategoryId) => active.length === 0 || active.includes(id);
+  // Categories are alternatives; "มีโน้ต" narrows whatever categories are on.
+  const visible = stops.filter((s) => shows(s.place.category) && (!withNotes || s.notes.length > 0));
   const selected = stops.find((s) => s.place.id === selectedId);
 
   const select = (id: string) => {
     const stop = stops.find((s) => s.place.id === id);
-    const line = stop && !active.includes(stop.place.category) ? [...active, stop.place.category] : undefined;
+    const line = stop && !shows(stop.place.category) ? [...active, stop.place.category] : undefined;
     update({ place: id, line, notes: stop && withNotes && !stop.notes.length ? false : undefined });
     setSheetOpen(true);
+    sheetBody.current?.scrollTo({ top: 0 });
   };
 
-  const toggleLine = (id: CategoryId) => {
+  const back = () => {
+    returnTo.current = selectedId;
+    update({ place: null });
+  };
+
+  // Back from a card: focus returns to that Place in the list.
+  useEffect(() => {
+    if (selected || !returnTo.current) return;
+    document.querySelector<HTMLButtonElement>(`[data-place="${returnTo.current}"]`)?.focus();
+    returnTo.current = undefined;
+  }, [selected]);
+
+  const toggleCategory = (id: CategoryId) => {
     const next = active.includes(id) ? active.filter((a) => a !== id) : [...active, id];
-    const dropSelected = selected && !next.includes(selected.place.category);
-    update({ line: next, place: dropSelected ? null : undefined });
+    const hidesSelected = selected && next.length > 0 && !next.includes(selected.place.category);
+    update({ line: next, place: hidesSelected ? null : undefined });
   };
 
-  const inset = wide
-    ? { left: SIDEBAR + 16, bottom: 0 }
-    : { left: 0, bottom: sheetOpen ? Math.round(viewportHeight * SHEET_PEEK) : 72 };
+  const sheetHeight = sheetOpen ? Math.round(viewportHeight * sheetShare(viewportHeight, sheetFull)) : SHEET_CLOSED;
+  const inset = wide ? { left: SIDEBAR + 16, bottom: 0 } : { left: 0, bottom: sheetHeight };
 
   const filters = (
-    <div className="line-filters" role="group" aria-label="เลือกสายที่จะแสดง">
-      {lines.map((l) => (
+    <div className="line-filters" role="group" aria-label="กรองตามหมวด">
+      {categories.map((c) => (
         <button
-          key={l.id}
+          key={c.id}
           type="button"
           className="line-chip"
-          data-line={l.id}
-          aria-pressed={active.includes(l.id)}
-          onClick={() => toggleLine(l.id)}
+          data-line={c.id}
+          aria-pressed={active.includes(c.id)}
+          onClick={() => toggleCategory(c.id)}
         >
-          <CategoryIcon id={l.id} />
-          {l.name}
+          <CategoryIcon id={c.id} />
+          {c.name}
         </button>
       ))}
       <button
@@ -156,44 +182,58 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
     </div>
   );
 
+  const count = (
+    <p className="visually-hidden" aria-live="polite">
+      แสดง {visible.length} ที่
+    </p>
+  );
+
   const list = (
     <div className="stop-list">
       {visible.length === 0 && (
         <p className="status-note">
-          {withNotes ? (
-            <>
-              ยังไม่มีใครเขียนโน้ตไว้ที่ไหนบนสายที่เลือก <Link href="/notes/new">เขียนโน้ตแรก</Link>
-            </>
-          ) : (
-            "เลือกอย่างน้อยหนึ่งสายด้านบน เพื่อดูที่ต่างๆ"
-          )}
+          ยังไม่มีใครเขียนโน้ตไว้ที่ไหนในหมวดที่เลือก <Link href="/notes/new">เขียนโน้ตแรก</Link>
         </p>
       )}
-      {lines
-        .filter((l) => active.includes(l.id))
-        .map((l) => {
-          const onLine = visible.filter((s) => s.place.category === l.id);
-          if (!onLine.length) return null;
+      {categories
+        .filter((c) => shows(c.id))
+        .map((c) => {
+          const inCategory = visible.filter((s) => s.place.category === c.id);
+          if (!inCategory.length) return null;
           return (
-            <section key={l.id} data-line={l.id} className="stop-group">
-              <h2>{l.name}</h2>
+            <section key={c.id} data-line={c.id} className="stop-group">
+              <h2>{c.name}</h2>
               <ul>
-                {onLine.map(({ place, code, notes }) => (
-                  <li key={place.id}>
-                    <button type="button" onClick={() => select(place.id)}>
-                      <StationCode code={code} />
-                      <span>
-                        <b>{place.name}</b>
-                        <small>{place.summary}</small>
-                        {notes.length > 0 && (
-                          <small className="note-count">
-                            <ChatCenteredText weight="bold" aria-hidden="true" /> {notes.length} โน้ต
-                          </small>
-                        )}
-                      </span>
-                    </button>
-                  </li>
-                ))}
+                {inCategory.map((stop) => {
+                  const { place, notes } = stop;
+                  const price = priceText(stop);
+                  return (
+                    <li key={place.id}>
+                      <button type="button" data-place={place.id} onClick={() => select(place.id)}>
+                        <span className="place-icon">
+                          <CategoryIcon id={place.category} />
+                        </span>
+                        <span>
+                          <b>{place.name}</b>
+                          <small>{place.summary}</small>
+                          <span className="stop-tags">
+                            {price && <mark className="price-strip">{price}</mark>}
+                            {place.homeTaste && (
+                              <small className="home-taste-tag">
+                                <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน{place.homeTaste}
+                              </small>
+                            )}
+                            {notes.length > 0 && (
+                              <small className="note-count">
+                                <ChatCenteredText weight="bold" aria-hidden="true" /> {notes.length} โน้ต
+                              </small>
+                            )}
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  );
+                })}
               </ul>
             </section>
           );
@@ -201,10 +241,13 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
     </div>
   );
 
-  const welcomeNote = welcome.show && !selected && (
+  const welcomeNote = welcome.show && !selected && visible.length > 0 && (
     <p className="welcome">
       <Link href="/checklist">
-        เพิ่งมาใหม่? เริ่มที่ สัปดาห์แรก <ArrowRight weight="bold" aria-hidden="true" />
+        <span>
+          เพิ่งมาใหม่? เริ่มที่ <b>สัปดาห์แรก</b>
+        </span>
+        <ArrowRight weight="bold" aria-hidden="true" />
       </Link>
       <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
         <X weight="bold" aria-hidden="true" />
@@ -213,7 +256,7 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
   );
 
   const panelBody = selected ? (
-    <PlaceDetail stop={selected} onBack={() => update({ place: null })} />
+    <PlaceDetail stop={selected} posted={posted} onBack={back} />
   ) : (
     <>
       {welcomeNote}
@@ -229,10 +272,12 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
     </div>
   );
 
+  const categoryName = selected && categories.find((c) => c.id === selected.place.category)?.name;
+
+  // The panel comes before the map in the page, so Tab reaches the filters before the pins.
   return (
     <div className="explorer">
-      <ExplorerMap stops={visible} selectedId={selectedId} onSelect={select} inset={inset} />
-
+      {count}
       {wide ? (
         <aside className="explorer-panel" aria-label="แผงแผนที่" style={{ width: SIDEBAR }}>
           {brand}
@@ -245,19 +290,33 @@ export function MapExplorer({ stops, lines }: { stops: MapStop[]; lines: Categor
             {brand}
             {filters}
           </div>
-          <section
-            className={sheetOpen ? "explorer-sheet is-open" : "explorer-sheet"}
-            style={{ height: sheetOpen ? `${SHEET_PEEK * 100}dvh` : 72 }}
-            aria-label="รายการบนแผนที่"
-          >
-            <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
-              <span>{selected ? selected.place.name : `แผนที่ย่านจุฬาฯ ${visible.length} ที่`}</span>
-              {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
-            </button>
-            {sheetOpen && <div className="sheet-body">{panelBody}</div>}
+          <section className="explorer-sheet" style={{ height: sheetHeight }} aria-label="รายการบนแผนที่">
+            <div className="sheet-bar">
+              <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
+                <span>{selected ? `หมวด${categoryName}` : `แผนที่ย่านจุฬาฯ ${visible.length} ที่`}</span>
+                {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
+              </button>
+              {sheetOpen && (
+                <button
+                  type="button"
+                  className="sheet-size"
+                  aria-pressed={sheetFull}
+                  onClick={() => setSheetFull((f) => !f)}
+                >
+                  {sheetFull ? <ArrowsInSimple weight="bold" aria-hidden="true" /> : <ArrowsOutSimple weight="bold" aria-hidden="true" />}
+                  <span className="visually-hidden">ขยายเต็มจอ</span>
+                </button>
+              )}
+            </div>
+            {sheetOpen && (
+              <div className="sheet-body" ref={sheetBody}>
+                {panelBody}
+              </div>
+            )}
           </section>
         </>
       )}
+      <ExplorerMap stops={visible} selectedId={selectedId} onSelect={select} inset={inset} />
     </div>
   );
 }

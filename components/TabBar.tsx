@@ -14,7 +14,9 @@ const tabs = [
 // The site's only navigation (docs/adr/0006): within thumb reach on a phone.
 export function TabBar() {
   const pathname = usePathname();
-  const current = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  // Senior Stories are reached from the Feed, so they sit under โน้ต.
+  const current = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/notes" && pathname.startsWith("/seniors"));
   return (
     <nav className="tab-bar" aria-label="เมนูหลัก">
       {tabs.map(({ href, label, Icon }) => (

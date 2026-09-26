@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
@@ -24,9 +23,11 @@ export function NoteForm({
   const [placeId, setPlaceId] = useState(initialPlace ?? "");
   const [length, setLength] = useState(0);
   const place = places.find((p) => p.id === placeId);
+  // Bangkok first: the list is long and many writers live here already.
+  const regionsFirst = (Object.keys(provinces) as Region[]).sort((a, b) => Number(b === "กลาง") - Number(a === "กลาง"));
 
   return (
-    <form action={action} className="contribute-form">
+    <form action={action} className="contribute-form" onInvalidCapture={thaiValidity} onInput={clearValidity}>
       <label>
         โน้ต
         <textarea
@@ -34,13 +35,17 @@ export function NoteForm({
           rows={4}
           maxLength={NOTE_MAX}
           required
+          aria-describedby="note-counter"
           placeholder="เช่น วินหน้าซอย 20 ไปสามย่านคิด 20 บาท อย่าจ่ายเกิน"
           onChange={(e) => setLength(e.target.value.length)}
         />
-        <small className="counter">
-          {length}/{NOTE_MAX}
-        </small>
       </label>
+      <small className="counter field-counter" id="note-counter">
+        {length}/{NOTE_MAX} ตัวอักษร
+      </small>
+      <p className="visually-hidden" aria-live="polite">
+        {length >= NOTE_MAX - 20 ? `เหลือ ${NOTE_MAX - length} ตัวอักษร` : ""}
+      </p>
       <label>
         ที่บนแผนที่ (ไม่ใส่ก็ได้)
         <select name="placeId" value={placeId} onChange={(e) => setPlaceId(e.target.value)}>
@@ -60,7 +65,7 @@ export function NoteForm({
       </label>
       {!place && (
         <fieldset className="line-pick">
-          <legend>เรื่องของสายไหน</legend>
+          <legend>เรื่องหมวดไหน</legend>
           {lines.map((l) => (
             <label key={l.id} className="check" data-line={l.id}>
               <input type="radio" name="category" value={l.id} required />
@@ -78,7 +83,7 @@ export function NoteForm({
       <div className="form-row">
         <label>
           ชื่อ
-          <input name="name" placeholder="เช่น พี่บอส" required maxLength={60} />
+          <input name="name" placeholder="ชื่อเล่นก็ได้ เช่น ต้น" required maxLength={60} autoComplete="nickname" />
         </label>
         <label>
           บ้านเกิด
@@ -86,9 +91,9 @@ export function NoteForm({
             <option value="" disabled>
               เลือกจังหวัด
             </option>
-            {(Object.keys(provinces) as Region[]).map((r) => (
+            {regionsFirst.map((r) => (
               <optgroup key={r} label={`ภาค${r}`}>
-                {provinces[r].map((p) => (
+                {[...provinces[r]].sort((a, b) => Number(b === "กรุงเทพมหานคร") - Number(a === "กรุงเทพมหานคร")).map((p) => (
                   <option key={p}>{p}</option>
                 ))}
               </optgroup>
@@ -96,20 +101,32 @@ export function NoteForm({
           </select>
         </label>
       </div>
+      <p className="form-status is-error" role="alert" hidden={!state}>
+        {state?.message}
+      </p>
       <button type="submit" disabled={pending}>
         {pending ? "กำลังบันทึก" : "ลงโน้ต"}
       </button>
-      {state && (
-        <p className={state.ok ? "form-status" : "form-status is-error"} role="status">
-          {state.message}
-          {state.href && (
-            <>
-              {" "}
-              <Link href={state.href}>ดูโน้ต</Link>
-            </>
-          )}
-        </p>
-      )}
     </form>
   );
+}
+
+// The browser's own messages follow the browser's language; the site is Thai.
+function thaiValidity(e: React.FormEvent<HTMLFormElement>) {
+  const field = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+  if (!field.validity.valueMissing) return;
+  const message: Record<string, string> = {
+    text: "เขียนโน้ตก่อน",
+    category: "เลือกหมวดของโน้ตนี้",
+    name: "ใส่ชื่อที่จะให้ขึ้นกับโน้ต",
+    hometown: "เลือกจังหวัดบ้านเกิด",
+  };
+  field.setCustomValidity(message[field.name] ?? "กรอกช่องนี้ก่อน");
+}
+
+function clearValidity(e: React.FormEvent<HTMLFormElement>) {
+  const target = e.target as HTMLInputElement;
+  target.setCustomValidity?.("");
+  // A radio group shares one message; clear it on every radio.
+  if (target.type === "radio") target.form?.querySelectorAll<HTMLInputElement>(`input[name="${target.name}"]`).forEach((r) => r.setCustomValidity(""));
 }
