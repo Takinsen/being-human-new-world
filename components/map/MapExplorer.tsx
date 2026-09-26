@@ -21,7 +21,7 @@ const ExplorerMap = dynamic(() => import("./ExplorerMap"), {
 const SIDEBAR = 380; // px, wide screens
 const SHEET_CLOSED = 60; // px: just the handle
 // Share of the map the sheet covers on phones; less on short screens so the map stays usable.
-const sheetShare = (vh: number, full: boolean) => (full ? 0.85 : vh < 640 ? 0.4 : 0.45);
+const sheetShare = (vh: number, full: boolean) => (full ? 0.85 : vh < 700 ? 0.36 : 0.45);
 
 function useViewportHeight() {
   const [h, setH] = useState(800);
@@ -108,7 +108,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
         else q.delete("place");
       }
       if (next.line) {
-        if (next.line.length === 0 || next.line.length === categories.length) q.delete("line");
+        if (next.line.length === 0) q.delete("line");
         else q.set("line", next.line.join(","));
       }
       if (next.notes !== undefined) {
@@ -117,7 +117,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       }
       router.replace(`${pathname}${q.size ? `?${q}` : ""}`, { scroll: false });
     },
-    [params, pathname, router, categories.length],
+    [params, pathname, router],
   );
 
   const shows = (id: CategoryId) => active.length === 0 || active.includes(id);

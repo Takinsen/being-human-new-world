@@ -75,10 +75,11 @@ Screenshots and scripts are in the scratchpad `audit2/{boss,tan,dome,a11y}/` fol
 
 Decided with the team (grilling): B1 no chip = all, B8 icon pins nudged apart, B9 one page per Guide, B11 no footer link and new stories only, B12 หมวด, B13 phone-width tab bar and larger text on wide screens, B2 land on the map or the Feed after posting. Recorded in docs/adr/0006 and CONTEXT.md.
 
-Fixed in code: B1–B22 except the parts below. Content: A2 filled from `content-research.md` (health centre, Chula Student Wellness), A3 new Guides "จากรถไฟฟ้าเข้าจุฬาฯ" and "ขึ้น MRT", A4 laundry Place and prices.
+Fixed in code: B1–B22 except the parts below. Content: A2 filled from `content-research.md` (health centre, Chula Student Wellness), A3 new Guides "จากรถไฟฟ้าเข้าจุฬาฯ" and "ขึ้น MRT", A4 laundry and water in the Guides (the Otteri branch is unconfirmed as open, so it is named in the Guide, not pinned).
 
 Open:
 - A1/A5: team members post pinned Notes under their own names, from `team-notes-draft.md`.
 - A6: Senior photos.
-- B3: at 360×640 the map between the chips and the sheet is about 177px; the sheet can be closed or the chips scrolled.
+- B3: map space between the chips and the sheet is now 235px at 360×640, 254px at 360×780 and 189px at 320×568. It is better, but still tight on the smallest phones.
 - Research facts marked [กลาง] should be checked on the official pages before the demo (the proxy blocked full page reads).
+- Code review (2026-09-26) judgement calls not taken: code identifiers still say `line` (only user-facing text moved to หมวด); the map list shows a checked price without who/when (the card shows them); Home Taste tag doesn't say "team pick".

@@ -1416,7 +1416,7 @@ a.line-chip {
 
 /* ---------- Audit fixes (.scratch/map-first/ux-audit.md) ---------- */
 
-/* Nothing scrolls under the tab bar (B5) */
+/* Nothing scrolls under the tab bar */
 html {
   scroll-padding-bottom: 88px;
 }
@@ -1425,7 +1425,7 @@ body:not(:has(.explorer)) main {
   padding-bottom: 24px;
 }
 
-/* Price, Home Taste and Notes under a Place in the list (B14) */
+/* Price, Home Taste and Notes under a Place in the list */
 .stop-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1475,7 +1475,7 @@ body:not(:has(.explorer)) main {
   margin-top: 12px;
 }
 
-/* Guides list: one line per Guide, steps on its own page (B9) */
+/* Guides list: one line per Guide, steps on its own page */
 .guide-list {
   margin: 8px 0 16px;
 }
@@ -1555,13 +1555,13 @@ body:not(:has(.explorer)) main {
   min-height: 44px;
 }
 
-/* Note form: the counter sits outside the label (B16) */
+/* Note form: the counter sits outside the label */
 .field-counter {
   margin-top: -10px;
   text-align: right;
 }
 
-/* Small and short screens (B3) */
+/* Small and short screens */
 @media (max-width: 380px) {
   .explorer-top .tagline {
     display: none;
@@ -1584,7 +1584,7 @@ body:not(:has(.explorer)) main {
   }
 }
 
-/* Wide screens: a phone-width tab bar and larger text for the demo projector (B13) */
+/* Wide screens: a phone-width tab bar and larger text for the demo projector */
 @media (min-width: 900px) {
   html {
     font-size: 112.5%;

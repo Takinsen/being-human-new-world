@@ -2,7 +2,7 @@
 
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from "react-leaflet";
 import type { MapStop } from "./types";
 
@@ -12,7 +12,15 @@ const PIN = 44; // px, also the tap target
 const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 
 // The pin shows its category's icon (docs/adr/0006); the icon itself is CSS.
+// Built once per look, so Leaflet only swaps a marker's element when it changes.
+const icons = new Map<string, L.DivIcon>();
 function pinIcon(category: string, selected: boolean) {
+  const key = `${category}:${selected}`;
+  if (!icons.has(key)) icons.set(key, makePinIcon(category, selected));
+  return icons.get(key)!;
+}
+
+function makePinIcon(category: string, selected: boolean) {
   return L.divIcon({
     className: selected ? "map-pin is-selected" : "map-pin",
     html: `<span class="pin" data-line="${category}"></span>`,
@@ -49,8 +57,17 @@ function Camera({ stops, selected, inset, animate }: { stops: MapStop[]; selecte
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected?.place.id]);
 
-  // A pan still running when the page changes throws `_leaflet_pos` errors.
-  useEffect(() => () => void map.stop(), [map]);
+  // A pan or zoom still running when the page changes throws `_leaflet_pos`
+  // errors once the map is gone. Layout cleanups run before MapContainer
+  // removes the map, so finish the animation here while the map still exists.
+  useLayoutEffect(
+    () => () => {
+      const m = map as L.Map & { _animatingZoom?: boolean; _onZoomTransitionEnd?: () => void };
+      if (m._animatingZoom) m._onZoomTransitionEnd?.();
+      m.stop();
+    },
+    [map],
+  );
 
   return null;
 }

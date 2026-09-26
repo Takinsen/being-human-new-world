@@ -11,7 +11,8 @@ export const viewport: Viewport = { themeColor: "#ffffff", viewportFit: "cover" 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="th">
+    // Next turns smooth scrolling off while changing pages only when told (it opened pages half-scrolled).
+    <html lang="th" data-scroll-behavior="smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />

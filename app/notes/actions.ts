@@ -8,7 +8,7 @@ import { NOTE_MAX } from "@/content/notes";
 import { regionOf } from "@/lib/provinces";
 import { appendRow, SHEET_TAG } from "@/lib/sheet";
 
-export type NoteFormState = { ok: false; message: string } | null;
+export type NoteFormState = { message: string } | null;
 
 function text(form: FormData, key: string, max: number): string {
   return String(form.get(key) ?? "").trim().slice(0, max);
@@ -20,9 +20,9 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
   const hometown = text(form, "hometown", 40);
   const place = places.find((p) => p.id === text(form, "placeId", 100));
   const category = place?.category ?? text(form, "category", 20);
-  if (!body || !name) return { ok: false, message: "เขียนโน้ตและใส่ชื่อก่อน" };
-  if (!regionOf(hometown)) return { ok: false, message: "เลือกจังหวัดบ้านเกิด" };
-  if (!isCategory(category)) return { ok: false, message: "เลือกที่บนแผนที่ หรือเลือกหมวดของโน้ตนี้" };
+  if (!body || !name) return { message: "เขียนโน้ตและใส่ชื่อก่อน" };
+  if (!regionOf(hometown)) return { message: "เลือกจังหวัดบ้านเกิด" };
+  if (!isCategory(category)) return { message: "เลือกที่บนแผนที่ หรือเลือกหมวดของโน้ตนี้" };
   try {
     await appendRow("notes", {
       text: body,
@@ -34,7 +34,7 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
     });
   } catch (err) {
     console.error(err);
-    return { ok: false, message: "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง" };
+    return { message: "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง" };
   }
   updateTag(SHEET_TAG);
   // The writer sees their Note where it landed (docs/adr/0006).
