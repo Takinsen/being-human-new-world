@@ -55,6 +55,12 @@ export type Place = {
   price?: Price;
   /** Set when the Place is Home Taste for a region */
   homeTaste?: Region;
+  /** Stations: how to get into Chula from here, one line */
+  toChula?: string;
+  /** Id of the Guide that goes with this Place */
+  guide?: string;
+  /** Icon when there is no photo; defaults to the category's */
+  icon?: IconKey;
 };
 
 /** A short piece of Local Know-how anyone writes, signed with name and hometown. See CONTEXT.md. */
@@ -121,4 +127,6 @@ export type HelpLink = {
   what: string;
   contact?: string;
   href?: string;
+  /** A website, shown as a link */
+  web?: string;
 };

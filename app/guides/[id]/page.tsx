@@ -5,8 +5,8 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { guides } from "@/content/guides";
 import { GuideBlock } from "@/components/GuideBlock";
-import { IconFor } from "@/components/icons";
-import { Wordmark } from "@/components/PageHead";
+import { PageHead } from "@/components/PageHead";
+import { Photo } from "@/components/Photo";
 import { getContent } from "@/lib/content";
 
 type Props = { params: Promise<{ id: string }> };
@@ -28,18 +28,19 @@ export default async function GuidePage({ params }: Props) {
   if (!guide) notFound();
   const category = categories.find((c) => c.id === guide.category);
   return (
-    <div className="inner page guide-page" data-line={guide.category}>
-      <Wordmark />
-      <Link href={`/guides#${guide.category}`} className="related-link back-link">
-        <ArrowLeft weight="bold" aria-hidden="true" /> วิธีหมวด{category?.name}
-      </Link>
-      <h1 className="guide-title">
-        <span className="guide-icon">
-          <IconFor name={guide.icon} />
-        </span>
-        {guide.title}
-      </h1>
-      <GuideBlock guide={guide} />
+    <div className="guide-page" data-line={guide.category}>
+      <PageHead
+        title={guide.title}
+        back={
+          <Link href={`/guides#${guide.category}`} className="back-link">
+            <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด · {category?.name}
+          </Link>
+        }
+      />
+      <div className="inner">
+        <Photo photo={guide.photo} category={guide.category} icon={guide.icon} className="guide-photo" />
+        <GuideBlock guide={guide} />
+      </div>
     </div>
   );
 }

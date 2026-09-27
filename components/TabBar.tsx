@@ -18,7 +18,7 @@ export function TabBar() {
   const current = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href) || (href === "/notes" && pathname.startsWith("/seniors"));
   return (
-    <nav className="tab-bar" aria-label="เมนูหลัก">
+    <nav className="tab-bar" id="menu" aria-label="เมนูหลัก">
       {tabs.map(({ href, label, Icon }) => (
         <Link key={href} href={href} aria-current={current(href) ? "page" : undefined}>
           <Icon weight={current(href) ? "fill" : "bold"} aria-hidden="true" />

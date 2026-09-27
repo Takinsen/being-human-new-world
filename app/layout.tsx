@@ -22,7 +22,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        <main>{children}</main>
+        <a href="#main" className="skip-link">
+          ข้ามไปเนื้อหา
+        </a>
+        <a href="#menu" className="skip-link">
+          ไปที่เมนู
+        </a>
+        <main id="main">{children}</main>
         <footer className="site-footer">
           <p>ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน</p>
         </footer>

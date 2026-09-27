@@ -25,6 +25,16 @@
 
   --measure: 40rem;
   --gutter: 16px;
+
+  /* Spacing scale: 4 inside a label, 8 inside a group, 12 between items,
+     16 between groups, 24 between sections, 32 under a page head, 48 between big sections */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
   /* Lines full-width bands up with the centred column */
   --edge: max(var(--gutter), calc((100% - var(--measure)) / 2 + var(--gutter)));
 }
@@ -53,7 +63,11 @@ html {
   html { scroll-behavior: smooth; }
 }
 
+/* Every page fills the screen, so the tab bar sits at the bottom even when the page is short */
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
@@ -93,7 +107,7 @@ svg { flex: none; }
 }
 
 .lede {
-  margin-top: 8px;
+  margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step-1);
   line-height: 1.5;
@@ -101,8 +115,8 @@ svg { flex: none; }
 
 .draft-tag {
   display: inline-block;
-  margin-top: 6px;
-  padding: 0 8px;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-2);
   border-radius: 4px;
   background: #eef0f4;
   color: var(--ink-soft);
@@ -111,14 +125,14 @@ svg { flex: none; }
 }
 
 .status-note {
-  margin-top: 10px;
-  margin-bottom: 14px;
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-4);
   color: var(--ink-soft);
   font-size: var(--step--1);
 }
 
 .fine-print {
-  margin: 16px 0 32px;
+  margin: var(--space-4) 0 var(--space-6);
   color: var(--ink-soft);
   font-size: var(--step--1);
 }
@@ -129,7 +143,7 @@ svg { flex: none; }
   display: flex;
   align-items: center;
   min-height: 44px;
-  gap: 8px;
+  gap: var(--space-2);
   font-weight: 700;
   font-size: var(--step-1);
   text-decoration: none;
@@ -187,7 +201,7 @@ svg { flex: none; }
 .site-footer {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: 24px var(--gutter) 40px;
+  padding: var(--space-5) var(--gutter) var(--space-7);
   border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   font-size: var(--step--1);
@@ -204,7 +218,7 @@ svg { flex: none; }
 /* ---------- Starter Checklist ---------- */
 
 .week {
-  padding: 12px 0 28px;
+  padding: var(--space-3) 0 var(--space-6);
 }
 
 .week-head {
@@ -212,14 +226,14 @@ svg { flex: none; }
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  gap: 4px 12px;
+  gap: var(--space-1) var(--space-3);
 }
 
 .week-head h1,
 .week-head h2 {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   font-size: var(--step-1);
 }
 
@@ -234,14 +248,14 @@ svg { flex: none; }
 }
 
 .week-stops {
-  margin-top: 6px;
+  margin-top: var(--space-2);
 }
 
 .week-stops li {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   min-height: 48px;
 }
 
@@ -287,7 +301,7 @@ svg { flex: none; }
 }
 
 .week-stops a {
-  padding: 10px 0;
+  padding: var(--space-3) 0;
   font-weight: 500;
   text-decoration: none;
 }
@@ -304,7 +318,7 @@ svg { flex: none; }
 
 .next-badge {
   margin-left: auto;
-  padding: 1px 8px;
+  padding: 1px var(--space-2);
   border-radius: 99px;
   background: var(--ink);
   color: #fff;
@@ -405,7 +419,7 @@ svg { flex: none; }
 
 .photo figcaption a {
   display: inline-block;
-  padding: 8px 2px 2px;
+  padding: var(--space-2) 2px 2px;
   color: #fff;
   text-shadow: 0 1px 2px #000;
   text-decoration: none;
@@ -417,7 +431,7 @@ svg { flex: none; }
 }
 
 .price {
-  margin-top: 10px;
+  margin-top: var(--space-3);
 }
 
 .price-strip {
@@ -446,8 +460,8 @@ svg { flex: none; }
 
 .price-pending {
   display: inline-block;
-  margin-top: 10px;
-  padding: 1px 8px;
+  margin-top: var(--space-3);
+  padding: 1px var(--space-2);
   border-radius: 4px;
   background: #eef0f4;
   font-weight: 600;
@@ -457,14 +471,14 @@ svg { flex: none; }
 
 .knowhow {
   display: grid;
-  gap: 6px;
-  margin-top: 10px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 .knowhow li,
 .caution {
   display: flex;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .knowhow svg {
@@ -473,7 +487,7 @@ svg { flex: none; }
 }
 
 .caution {
-  margin-top: 8px;
+  margin-top: var(--space-2);
   color: var(--caution);
   font-weight: 500;
 }
@@ -485,30 +499,30 @@ svg { flex: none; }
 .help h2 {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   font-size: var(--step-1);
 }
 
 /* Guides */
 
 .guides {
-  padding-top: 36px;
+  padding-top: var(--space-6);
 }
 
 .guide {
-  padding: 20px 0 4px;
+  padding: var(--space-5) 0 var(--space-1);
   border-top: 1px solid var(--rule);
-  margin-top: 16px;
+  margin-top: var(--space-4);
 }
 
 .guides > h2 + .guide {
-  margin-top: 12px;
+  margin-top: var(--space-3);
 }
 
 .guide h3 {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .guide-icon {
@@ -523,20 +537,20 @@ svg { flex: none; }
 }
 
 .guide-intro {
-  margin-top: 8px;
+  margin-top: var(--space-2);
   color: var(--ink-soft);
 }
 
 .guide-photo {
-  margin-top: 12px;
+  margin-top: var(--space-3);
   border-radius: 6px;
 }
 
 .guide .steps,
 .guide .options {
-  margin-top: 12px;
+  margin-top: var(--space-3);
   display: grid;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 .guide .steps {
@@ -546,7 +560,7 @@ svg { flex: none; }
 .guide .steps li,
 .guide .options li {
   display: flex;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .guide .steps li {
@@ -581,23 +595,23 @@ svg { flex: none; }
 /* ---------- Seniors ---------- */
 
 .page {
-  padding-top: 12px;
+  padding-top: var(--space-3);
 }
 
 .page-head {
-  padding-top: 12px;
-  padding-bottom: 8px;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-2);
 }
 
 .story {
-  padding: 24px 0;
+  padding: var(--space-5) 0;
   border-bottom: 1px solid var(--rule);
 }
 
 .story header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .avatar {
@@ -618,8 +632,8 @@ svg { flex: none; }
 }
 
 .story-body {
-  margin-top: 14px;
-  padding-left: 14px;
+  margin-top: var(--space-4);
+  padding-left: var(--space-4);
   border-left: 5px solid var(--ink);
   font-weight: 500;
   font-size: 1.1rem;
@@ -627,22 +641,22 @@ svg { flex: none; }
 }
 
 .story-body p + p {
-  margin-top: 10px;
+  margin-top: var(--space-3);
 }
 
 .help {
-  margin-top: 32px;
-  padding: 24px 0;
+  margin-top: var(--space-6);
+  padding: var(--space-5) 0;
   background: var(--ink);
   color: #fff;
 }
 
 .help ul {
-  margin-top: 8px;
+  margin-top: var(--space-2);
 }
 
 .help li {
-  padding: 14px 0;
+  padding: var(--space-4) 0;
   border-top: 1px solid rgb(255 255 255 / 0.2);
 }
 
@@ -658,8 +672,8 @@ svg { flex: none; }
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  margin-top: 6px;
-  padding: 0 14px;
+  margin-top: var(--space-2);
+  padding: 0 var(--space-4);
   border-radius: 4px;
   background: #fff;
   color: var(--ink);
@@ -675,19 +689,19 @@ svg { flex: none; }
 .related-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   min-height: 44px;
-  margin-top: 8px;
+  margin-top: var(--space-2);
   font-weight: 600;
 }
 
 .mark-done {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   min-height: 44px;
-  margin-top: 10px;
-  padding: 0 14px;
+  margin-top: var(--space-3);
+  padding: 0 var(--space-4);
   border: 2px solid var(--c);
   border-radius: 99px;
   background: #fff;
@@ -718,6 +732,10 @@ body:has(.explorer) {
   flex-direction: column;
   height: 100dvh;
   overflow: hidden;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 body:has(.explorer) main {
@@ -756,7 +774,7 @@ body:has(.explorer) .site-footer {
   left: 16px;
   z-index: 500;
   overflow-y: auto;
-  padding: 20px 20px 24px;
+  padding: var(--space-5) var(--space-5) var(--space-5);
   background: var(--paper);
   border-radius: 14px;
   box-shadow: 0 12px 32px -12px rgb(19 35 61 / 0.35), 0 0 0 1px rgb(19 35 61 / 0.06);
@@ -765,16 +783,16 @@ body:has(.explorer) .site-footer {
 .line-filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .line-chip {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   min-height: 44px;
-  padding: 0 14px;
+  padding: 0 var(--space-4);
   border: 2px solid var(--c);
   border-radius: 99px;
   background: #fff;
@@ -793,11 +811,11 @@ body:has(.explorer) .site-footer {
 }
 
 .stop-list {
-  margin-top: 8px;
+  margin-top: var(--space-2);
 }
 
 .stop-group {
-  margin-top: 18px;
+  margin-top: var(--space-5);
 }
 
 .stop-group h2 {
@@ -807,7 +825,7 @@ body:has(.explorer) .site-footer {
 
 .stop-group ul {
   position: relative;
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 /* The line runs through the codes */
@@ -825,9 +843,9 @@ body:has(.explorer) .site-footer {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  gap: var(--space-3);
   width: 100%;
-  padding: 8px 4px;
+  padding: var(--space-2) var(--space-1);
   border: 0;
   border-radius: 8px;
   background: none;
@@ -860,13 +878,13 @@ body:has(.explorer) .site-footer {
 }
 
 .detail {
-  margin-top: 12px;
+  margin-top: var(--space-3);
 }
 
 .detail-back {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: var(--space-2);
   min-height: 44px;
   padding: 0;
   border: 0;
@@ -879,8 +897,8 @@ body:has(.explorer) .site-footer {
 .detail-head {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-top: 4px;
+  gap: var(--space-3);
+  margin-top: var(--space-1);
 }
 
 .detail-head h2 {
@@ -888,13 +906,13 @@ body:has(.explorer) .site-footer {
 }
 
 .detail .stop-summary {
-  margin-top: 4px;
+  margin-top: var(--space-1);
 }
 
 .detail-links {
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
+  margin-top: var(--space-2);
 }
 
 /* Phones: filters float on top, a bottom sheet holds the list */
@@ -917,7 +935,7 @@ body:has(.explorer) .site-footer {
   margin: 0;
   flex-wrap: nowrap;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding-bottom: var(--space-1);
 }
 
 .explorer-top .line-chip {
@@ -970,7 +988,7 @@ body:has(.explorer) .site-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: var(--space-3);
   flex: 1;
   min-width: 0;
   min-height: 60px;
@@ -998,14 +1016,14 @@ body:has(.explorer) .site-footer {
 .sheet-body {
   flex: 1;
   overflow-y: auto;
-  padding: 0 var(--gutter) 24px;
+  padding: 0 var(--gutter) var(--space-5);
 }
 
 /* ช่วยเติมข้อมูล (/contribute) */
 .contribute-form {
   display: grid;
-  gap: 14px;
-  padding: 28px 0;
+  gap: var(--space-4);
+  padding: var(--space-6) 0;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -1014,14 +1032,14 @@ body:has(.explorer) .site-footer {
 
 .contribute-form label {
   display: grid;
-  gap: 4px;
+  gap: var(--space-1);
   font-weight: 600;
 }
 
 .contribute-form label.check {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: var(--space-2);
   font-weight: 500;
 }
 
@@ -1029,8 +1047,8 @@ body:has(.explorer) .site-footer {
 
 .form-row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(12rem, 100%), 1fr));
+  gap: var(--space-4);
 }
 
 .contribute-form input:not([type="checkbox"]),
@@ -1038,7 +1056,7 @@ body:has(.explorer) .site-footer {
 .contribute-form textarea {
   width: 100%;
   min-height: 44px;
-  padding: 8px 12px;
+  padding: var(--space-2) var(--space-3);
   border: 2px solid var(--rule);
   border-radius: 6px;
   background: var(--paper);
@@ -1054,7 +1072,7 @@ body:has(.explorer) .site-footer {
 .contribute-form button {
   justify-self: start;
   min-height: 44px;
-  padding: 0 20px;
+  padding: 0 var(--space-5);
   border: 0;
   border-radius: 99px;
   background: var(--ink);
@@ -1067,7 +1085,7 @@ body:has(.explorer) .site-footer {
 .contribute-form button:disabled { opacity: 0.6; cursor: progress; }
 
 .form-status {
-  padding: 10px 14px;
+  padding: var(--space-3) var(--space-4);
   border-left: 4px solid var(--transport);
   background: #eef6f0;
   font-weight: 600;
@@ -1081,7 +1099,7 @@ body:has(.explorer) .site-footer {
 /* ---------- Page heads ---------- */
 
 .page-head .wordmark {
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
   font-size: var(--step-0);
 }
 
@@ -1093,21 +1111,21 @@ body:has(.explorer) .site-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px 20px;
-  margin-top: 16px;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-4);
 }
 
 .page-head .line-filters {
-  margin-top: 16px;
+  margin-top: var(--space-4);
 }
 
 /* A pill button, filled for the main action */
 .action {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   min-height: 44px;
-  padding: 0 18px;
+  padding: 0 var(--space-5);
   border: 2px solid var(--ink);
   border-radius: 99px;
   color: var(--ink);
@@ -1126,7 +1144,7 @@ body:has(.explorer) .site-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  column-gap: 12px;
+  column-gap: var(--space-3);
 }
 
 .brand .wordmark {
@@ -1146,8 +1164,8 @@ body:has(.explorer) .site-footer {
 .explorer-top .brand {
   justify-self: start;
   width: fit-content;
-  margin-bottom: 8px;
-  padding: 2px 14px;
+  margin-bottom: var(--space-2);
+  padding: 2px var(--space-4);
   border-radius: 12px;
   background: rgb(255 255 255 / 0.94);
   box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
@@ -1170,9 +1188,9 @@ a.line-chip {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
-  margin-top: 12px;
-  padding-left: 14px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  padding-left: var(--space-4);
   border-radius: 10px;
   background: #eef1f6;
   border: 2px solid var(--ink);
@@ -1183,8 +1201,8 @@ a.line-chip {
   flex: 1;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
-  padding: 6px 0;
+  gap: var(--space-2);
+  padding: var(--space-2) 0;
   min-height: 44px;
   font-weight: 700;
   text-decoration: none;
@@ -1204,7 +1222,7 @@ a.line-chip {
 .stop-group .note-count {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
   margin-top: 2px;
   color: var(--c);
   font-weight: 600;
@@ -1213,23 +1231,23 @@ a.line-chip {
 /* ---------- Place details (short) ---------- */
 
 .detail .price {
-  margin-top: 8px;
+  margin-top: var(--space-2);
 }
 
 .detail-notes {
-  margin-top: 14px;
+  margin-top: var(--space-4);
 }
 
 .more {
-  margin-top: 10px;
+  margin-top: var(--space-3);
 }
 
 .more summary {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   min-height: 44px;
-  padding: 0 16px;
+  padding: 0 var(--space-4);
   border: 2px solid var(--rule);
   border-radius: 99px;
   font-weight: 700;
@@ -1258,7 +1276,7 @@ a.line-chip {
 }
 
 .more[open] summary {
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
 }
 
 .more .knowhow {
@@ -1274,23 +1292,23 @@ a.line-chip {
 .detail-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 /* ---------- Notes ---------- */
 
 .note {
-  padding: 14px 0 14px 14px;
+  padding: var(--space-4) 0 var(--space-4) var(--space-4);
   border-left: 4px solid var(--c);
 }
 
 .feed .note + .note {
-  margin-top: 16px;
+  margin-top: var(--space-4);
 }
 
 .note.is-compact {
-  padding: 10px 12px;
+  padding: var(--space-3) var(--space-3);
   border-radius: 0 8px 8px 0;
   background: color-mix(in srgb, var(--c) 8%, #fff);
 }
@@ -1305,7 +1323,7 @@ a.line-chip {
 }
 
 .note-by {
-  margin-top: 6px;
+  margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step--1);
 }
@@ -1326,15 +1344,15 @@ a.line-chip {
 }
 
 .feed-filters {
-  margin: 20px 0 16px;
+  margin: var(--space-5) 0 var(--space-4);
 }
 
 .feed {
-  padding-bottom: 32px;
+  padding-bottom: var(--space-6);
 }
 
 .feed-scope {
-  margin: 20px 0 16px;
+  margin: var(--space-5) 0 var(--space-4);
   font-weight: 600;
 }
 
@@ -1345,8 +1363,8 @@ a.line-chip {
 }
 
 .line-head {
-  margin-top: 32px;
-  padding: 14px 0;
+  margin-top: var(--space-6);
+  padding: var(--space-4) 0;
   background: var(--c);
   color: #fff;
   font-size: var(--step-2);
@@ -1355,12 +1373,12 @@ a.line-chip {
 .line-head .inner {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .guides-line .guides {
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: var(--space-3);
+  padding-bottom: var(--space-3);
 }
 
 .home-taste-list small {
@@ -1378,14 +1396,14 @@ a.line-chip {
 .line-pick {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 20px;
+  gap: var(--space-1) var(--space-5);
   margin: 0;
   padding: 0;
   border: 0;
 }
 
 .line-pick legend {
-  margin-bottom: 4px;
+  margin-bottom: var(--space-1);
   padding: 0;
   font-weight: 600;
 }
@@ -1402,11 +1420,11 @@ a.line-chip {
 /* Phones: all four chips fit across without scrolling */
 @media (max-width: 899px) {
   .explorer-top .line-filters {
-    gap: 4px;
+    gap: var(--space-1);
   }
 
   .explorer-top .line-chip {
-    padding: 0 10px;
+    padding: 0 var(--space-3);
   }
 
   .explorer-top .line-chip svg {
@@ -1422,7 +1440,7 @@ html {
 }
 
 body:not(:has(.explorer)) main {
-  padding-bottom: 24px;
+  padding-bottom: var(--space-5);
 }
 
 /* Price, Home Taste and Notes under a Place in the list */
@@ -1430,8 +1448,8 @@ body:not(:has(.explorer)) main {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px 10px;
-  margin-top: 4px;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-1);
 }
 
 .stop-tags:empty {
@@ -1445,19 +1463,19 @@ body:not(:has(.explorer)) main {
 .stop-group .stop-tags small {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
 }
 
 .home-taste-tag {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--space-1);
   color: var(--food);
   font-weight: 600;
 }
 
 .detail .home-taste-tag {
-  margin-top: 6px;
+  margin-top: var(--space-2);
 }
 
 .detail-head h2:focus {
@@ -1471,21 +1489,21 @@ body:not(:has(.explorer)) main {
 .detail .form-status {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 12px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 /* Guides list: one line per Guide, steps on its own page */
 .guide-list {
-  margin: 8px 0 16px;
+  margin: var(--space-2) 0 var(--space-4);
 }
 
 .guide-list a {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-3);
   min-height: 64px;
-  padding: 10px 0;
+  padding: var(--space-3) 0;
   border-bottom: 1px solid var(--rule);
   text-decoration: none;
 }
@@ -1509,42 +1527,29 @@ body:not(:has(.explorer)) main {
 }
 
 .home-taste-list {
-  padding: 8px 0 24px;
+  padding: var(--space-2) 0 var(--space-5);
 }
 
 .home-taste-list h3 {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .home-taste-list .options {
   display: grid;
-  gap: 8px;
-  margin-top: 12px;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 .home-taste-list a {
   display: inline-block;
-  min-height: 44px;
-  line-height: 44px;
-}
-
-.guide-page .back-link {
-  margin-top: 0;
-}
-
-.guide-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-  font-size: var(--step-2);
+  padding-block: var(--space-2);
 }
 
 .guide-page .guide {
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: var(--space-5);
+  padding-top: 0;
   border-top: 0;
 }
 
@@ -1572,7 +1577,7 @@ body:not(:has(.explorer)) main {
   .tab-bar a {
     min-height: 44px;
     flex-direction: row;
-    gap: 6px;
+    gap: var(--space-2);
   }
 
   .tab-bar svg {
@@ -1584,18 +1589,15 @@ body:not(:has(.explorer)) main {
   }
 }
 
-/* Wide screens: a phone-width tab bar and larger text for the demo projector */
+/* Wide screens: tabs grouped in the centre, larger text for the demo projector */
 @media (min-width: 900px) {
   html {
     font-size: 112.5%;
   }
 
   .tab-bar {
-    width: min(480px, 100%);
-    margin: 0 auto;
-    border: 1px solid var(--rule);
-    border-bottom: 0;
-    border-radius: 16px 16px 0 0;
+    grid-template-columns: repeat(4, minmax(0, 132px));
+    justify-content: center;
   }
 
   .tab-bar a {
@@ -1606,20 +1608,20 @@ body:not(:has(.explorer)) main {
 .feed-posted {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
 }
 
 .note.is-fresh {
   background: color-mix(in srgb, var(--c) 10%, #fff);
   border-radius: 0 8px 8px 0;
-  padding-right: 12px;
+  padding-right: var(--space-3);
 }
 
 .feed-scope-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 20px;
+  gap: 0 var(--space-5);
   font-weight: 600;
 }
 
@@ -1627,4 +1629,263 @@ body:not(:has(.explorer)) main {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
+}
+
+@media (min-width: 1600px) {
+  html {
+    font-size: 125%;
+  }
+}
+
+/* ---------- Audit 2 (.scratch/map-first/ux-audit-2.md) ---------- */
+
+/* A photo, or the topic's icon on its category colour when there is none */
+.photo.is-illustration {
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--c) 14%, #fff);
+  color: var(--c);
+  font-size: 3.5rem;
+}
+
+.guide-photo {
+  margin-top: var(--space-5);
+  border-radius: 12px;
+}
+
+.guide-page .page-head h1 {
+  font-size: var(--step-3);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.guide .steps,
+.guide .options {
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.guide .related-link,
+.guide .mark-done {
+  margin-top: var(--space-5);
+}
+
+.guide .mark-done {
+  display: flex;
+  width: fit-content;
+}
+
+/* Place card: photo, name and price, actions, then the rest */
+.detail {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.detail > * {
+  margin-top: 0;
+}
+
+.detail-photo {
+  border-radius: 12px;
+  aspect-ratio: 2 / 1;
+}
+
+.detail-head {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: 0;
+}
+
+.detail-head h2 {
+  font-size: var(--step-2);
+}
+
+.detail-head .price,
+.detail-head .home-taste-tag {
+  margin-top: 0;
+}
+
+.detail-head h2:focus-visible {
+  outline: none;
+  text-decoration: underline 3px var(--platform);
+  text-underline-offset: 6px;
+}
+
+.detail-actions {
+  margin-top: 0;
+}
+
+.detail-actions .action {
+  flex: 1;
+  justify-content: center;
+}
+
+.to-chula {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--c) 10%, #fff);
+}
+
+.to-chula svg {
+  margin-top: 0.25em;
+  color: var(--c);
+  font-size: 1.25rem;
+}
+
+.detail-body {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.detail-body .caution {
+  margin-top: 0;
+}
+
+.detail .more summary {
+  padding: 0;
+  border: 0;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.detail .more[open] summary {
+  margin-bottom: var(--space-2);
+}
+
+.detail .more .knowhow {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.detail-guide {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--rule);
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.detail-guide > svg:first-child {
+  color: var(--c);
+  font-size: 1.4rem;
+}
+
+.detail-guide > svg:last-child {
+  margin-left: auto;
+}
+
+.detail-guide small {
+  display: block;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+/* Feed head: the one action, then a single row of chips */
+.head-action {
+  margin-top: var(--space-4);
+}
+
+.feed-filters,
+.page-head .line-filters {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  margin-inline: calc(-1 * var(--gutter));
+  padding: 2px var(--gutter) var(--space-1);
+  scrollbar-width: none;
+}
+
+.feed-filters .line-chip,
+.page-head .line-chip {
+  flex: none;
+}
+
+/* Chips that scroll fade at the edge, so it's clear there are more */
+.feed-filters,
+.page-head .line-filters,
+.explorer-top .line-filters {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+}
+
+.feed-more {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 var(--space-6);
+}
+
+.feed-more a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  border: 2px solid var(--rule);
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.feed-more a > svg:last-child {
+  margin-left: auto;
+}
+
+.feed .note + .note {
+  margin-top: var(--space-5);
+}
+
+/* Forms: room between fields, a taller submit */
+.contribute-form {
+  gap: var(--space-5);
+}
+
+.contribute-form button[type="submit"] {
+  min-height: 48px;
+}
+
+/* Leaflet's own controls at a tappable size */
+.explorer-map .leaflet-control-zoom a {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  z-index: 2000;
+  padding: var(--space-2) var(--space-4);
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: var(--space-2);
+}
+
+/* Phones: the sheet is short, so a real photo is a strip and the stand-in icon is left out */
+.sheet-body .detail-photo {
+  aspect-ratio: 3 / 1;
+}
+
+.sheet-body .detail-photo.is-illustration {
+  display: none;
 }

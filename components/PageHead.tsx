@@ -1,10 +1,22 @@
 import Link from "next/link";
 
 /** Top of every page but the map: the wordmark, then the page's own heading. */
-export function PageHead({ title, lede, children }: { title: string; lede?: string; children?: React.ReactNode }) {
+export function PageHead({
+  title,
+  lede,
+  back,
+  children,
+}: {
+  title: React.ReactNode;
+  lede?: string;
+  /** A link back up, shown above the title */
+  back?: React.ReactNode;
+  children?: React.ReactNode;
+}) {
   return (
     <header className="page-head inner">
       <Wordmark />
+      {back}
       <h1>{title}</h1>
       {lede && <p className="lede">{lede}</p>}
       {children}

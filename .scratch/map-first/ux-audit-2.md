@@ -61,3 +61,24 @@ Previous: `ux-audit.md`.
 `--space-1:4px` (icon↔text, label↔input), `--space-2:8px` (inside a group), `--space-3:12px` (between items), `--space-4:16px` (between sub-groups, gutter), `--space-5:24px` (between sections), `--space-6:32px` (page head↔content), `--space-7:48px` (between big sections). 6→4/8, 10 and 14→12/16, 18 and 20→16/24, 28 and 36→32.
 
 Screenshots and scripts: scratchpad `audit3/{design,personas,a11y}/` of the session that ran this audit.
+
+## Status (2026-09-27)
+
+Decided with the owner:
+- Q1: Commons photos where found, plus a category-colour illustration as the stand-in.
+- Q2: Place card order is photo, name and price, actions, "เข้าจุฬาฯ" line, then the rest.
+- Q3: Full-width tab bar with the tabs centred.
+
+ADR 0006 is amended to match.
+
+Fixed:
+- O1: spacing tokens replace 163 raw values.
+- O2: the tab bar now sits at the bottom on every page. 9 Guides and 8 Places have photos, and the rest show the illustration.
+- O3: the Place card is laid out in the Q2 order. It focuses only when the user opens it, and phones get a photo strip.
+- O4: the Feed head has one action and a scrolling chip row; the Senior links move after the Notes.
+- N1–N15, except as below. N1: a "เข้าจุฬาฯ" line and a related-Guide link on station cards. N6: food is listed cheapest first.
+
+Open:
+- The photo titles were found through search only; Commons was blocked. Check they load on the real site; a wrong title falls back to the illustration.
+- No Commons photo was found for rabbit, mrt, motorbike-taxi, samyan-market or the supermarket.
+- N15: seed Notes have no date.

@@ -35,6 +35,11 @@ export default async function SeniorsPage() {
                   ) : (
                     <span className="help-contact">{h.contact}</span>
                   ))}
+                {h.web && (
+                  <a href={h.web} className="help-contact" target="_blank" rel="noreferrer">
+                    {h.web.replace(/^https:\/\/|\/$/g, "")}
+                  </a>
+                )}
               </li>
             ))}
           </ul>

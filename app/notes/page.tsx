@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight, BookOpenText, ChatCenteredText, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
@@ -23,17 +23,9 @@ export default async function NotesPage({ searchParams }: Props) {
   return (
     <>
       <PageHead title="โน้ต" lede="เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่">
-        <div className="head-actions">
-          <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary">
-            <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
-          </Link>
-          <Link href="/seniors" className="related-link">
-            อ่านเรื่องปีแรกของรุ่นพี่ <ArrowRight weight="bold" aria-hidden="true" />
-          </Link>
-          <Link href="/seniors#help" className="related-link">
-            <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
-          </Link>
-        </div>
+        <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary head-action">
+          <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
+        </Link>
       </PageHead>
       <div className="inner">
         {posted && (
@@ -56,6 +48,7 @@ export default async function NotesPage({ searchParams }: Props) {
         ) : (
           <nav className="line-filters feed-filters" aria-label="กรองตามหมวด">
             <Link href="/notes" className="line-chip" data-line="general" aria-current={!active ? "page" : undefined}>
+              <ChatCenteredText weight="bold" aria-hidden="true" />
               ทั้งหมด
             </Link>
             {categories.map((c) => (
@@ -78,6 +71,22 @@ export default async function NotesPage({ searchParams }: Props) {
             <NoteCard key={n.id} note={n} placeName={place ? undefined : placeName(n.placeId)} fresh={Boolean(posted) && i === 0} />
           ))}
         </div>
+        <ul className="feed-more">
+          <li>
+            <Link href="/seniors">
+              <BookOpenText weight="bold" aria-hidden="true" />
+              <span>อ่านเรื่องปีแรกของรุ่นพี่</span>
+              <ArrowRight weight="bold" aria-hidden="true" />
+            </Link>
+          </li>
+          <li>
+            <Link href="/seniors#help">
+              <Phone weight="bold" aria-hidden="true" />
+              <span>เหงาหรือเครียด คุยกับคนได้</span>
+              <ArrowRight weight="bold" aria-hidden="true" />
+            </Link>
+          </li>
+        </ul>
       </div>
     </>
   );

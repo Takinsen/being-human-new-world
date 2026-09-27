@@ -38,5 +38,5 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
   }
   updateTag(SHEET_TAG);
   // The writer sees their Note where it landed (docs/adr/0006).
-  redirect(place ? `/?place=${place.id}&posted=1` : "/notes?posted=1");
+  redirect(place ? `/?place=${place.id}&posted=1` : "/notes?posted=1#fresh");
 }

@@ -1,15 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import type { Photo as PhotoData } from "@/content/types";
+import type { CategoryId, IconKey, Photo as PhotoData } from "@/content/types";
 import { commonsImage, commonsPage } from "@/lib/format";
+import { IconFor } from "./icons";
 
-// Hotlinked from Wikimedia Commons. If it fails to load, the slot collapses.
-export function Photo({ photo, className }: { photo: PhotoData; className?: string }) {
+// Hotlinked from Wikimedia Commons. With no photo, or one that fails to load,
+// the slot shows the topic's icon on its category colour instead.
+export function Photo({
+  photo,
+  category,
+  icon,
+  className,
+}: {
+  photo?: PhotoData;
+  category: CategoryId;
+  icon: IconKey;
+  className?: string;
+}) {
   const [failed, setFailed] = useState(false);
-  if (failed) return null;
+  const classes = ["photo", className].filter(Boolean).join(" ");
+  if (!photo || failed) {
+    return (
+      <div className={`${classes} is-illustration`} data-line={category} aria-hidden="true">
+        <IconFor name={icon} />
+      </div>
+    );
+  }
   return (
-    <figure className={className ? `photo ${className}` : "photo"}>
+    <figure className={classes} data-line={category}>
       <img src={commonsImage(photo.file)} alt={photo.alt} loading="lazy" onError={() => setFailed(true)} />
       <figcaption>
         <a

@@ -1,15 +1,15 @@
 # The map is the home page; a bottom tab bar replaces the category pages
 
-Status: accepted (2026-09-25), amended 2026-09-26 after the UX audit in `.scratch/map-first/ux-audit.md`. Supersedes 0004.
+Status: accepted (2026-09-25), amended 2026-09-26 and 2026-09-27 after the UX audits in `.scratch/map-first/ux-audit.md` and `ux-audit-2.md`. Supersedes 0004.
 
 Friends who tried the site said it has too much text, is laid out messily, and they didn't know where to start reading. The long home page (hero, line diagram, Starter Checklist, three category bands, quotes) and the long Place cards were both to blame.
 
 - `/` is the full-screen map. A thin bar floats over it with the wordmark, the tagline and filter chips: the three categories plus "มีโน้ต". No category chip selected shows every Place; selecting categories narrows to those categories (any of them); "มีโน้ต" then narrows further to Places with a Note.
 - Pins show their category's icon, not a code. Pins that would overlap are nudged apart on screen.
-- A bottom tab bar replaces the top navigation: แผนที่ | โน้ต | วิธี | สัปดาห์แรก. On wide screens it stays at the bottom but is capped to a phone-width strip in the centre, and text is larger.
+- A bottom tab bar replaces the top navigation: แผนที่ | โน้ต | วิธี | สัปดาห์แรก. On wide screens it stays full width at the bottom with its tabs grouped in the centre, and text is larger.
 - The three category pages merge into one Guides page (วิธี), grouped by category. Places leave it: they live on the map. The Guides page lists each Guide by title and a one-line summary; each Guide's steps are on its own page, `/guides/<id>`.
-- Senior Stories are reached from the top of the Feed and from a Senior's name on a Note, not from the tab bar.
-- A selected Place shows only its name and price, a one-line summary, one caution and its latest Note. The rest of its know-how sits behind "อ่านเพิ่ม". A Senior's recommendation on a Place becomes a Note.
+- Senior Stories are reached from the Feed (a link after the Notes) and from a Senior's name on a Note, not from the tab bar. The Feed's head holds only its one action, writing a Note.
+- A selected Place shows only its photo, name and price, its two actions (directions, write a Note), a one-line summary, one caution and its latest Note; a station also says how to get into Chula from it. The rest of its know-how sits behind "อ่านเพิ่ม". A Senior's recommendation on a Place becomes a Note.
 - After posting a Note pinned to a Place, the writer lands on the map with that Place open; a Note with no Place lands on the Feed with the new Note first.
 - On first visit the bottom sheet points to the Starter Checklist. Dismissing it is remembered in the browser.
 
