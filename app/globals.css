@@ -40,6 +40,9 @@
   --radius-s: 6px;
   --radius-m: 12px;
   --radius-pill: 99px;
+  /* Depth: cards you act on sit above the page, a photo a little higher */
+  --shadow-1: 0 1px 2px rgb(19 35 61 / 0.06), 0 2px 8px rgb(19 35 61 / 0.06);
+  --shadow-2: 0 2px 4px rgb(19 35 61 / 0.08), 0 8px 24px rgb(19 35 61 / 0.12);
   /* Lines full-width bands up with the centred column */
   --edge: max(var(--gutter), calc((100% - var(--measure)) / 2 + var(--gutter)));
 }
@@ -516,22 +519,6 @@ svg { flex: none; }
   padding-top: var(--space-6);
 }
 
-.guide {
-  padding: var(--space-5) 0 var(--space-1);
-  border-top: 1px solid var(--rule);
-  margin-top: var(--space-4);
-}
-
-.guides > h2 + .guide {
-  margin-top: var(--space-3);
-}
-
-.guide h3 {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-}
-
 .guide-icon {
   display: grid;
   place-items: center;
@@ -546,57 +533,6 @@ svg { flex: none; }
 .guide-intro {
   margin-top: var(--space-2);
   color: var(--ink-soft);
-}
-
-.guide-photo {
-  margin-top: var(--space-3);
-  border-radius: var(--radius-s);
-}
-
-.guide .steps,
-.guide .options {
-  margin-top: var(--space-3);
-  display: grid;
-  gap: var(--space-2);
-}
-
-.guide .steps {
-  counter-reset: step;
-}
-
-.guide .steps li,
-.guide .options li {
-  display: flex;
-  gap: var(--space-3);
-}
-
-.guide .steps li {
-  counter-increment: step;
-}
-
-.guide .options li::before {
-  content: "";
-  flex: none;
-  width: 0.75rem;
-  height: 0.75rem;
-  margin: 0.45rem 0.4rem 0;
-  border-radius: 2px;
-  background: var(--c);
-}
-
-.guide .steps li::before {
-  content: counter(step);
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-top: 0.05rem;
-  border-radius: 50%;
-  border: 3px solid var(--c);
-  color: var(--c);
-  font-weight: 700;
-  font-size: 0.8rem;
 }
 
 /* ---------- Seniors ---------- */
@@ -1553,12 +1489,6 @@ body:not(:has(.explorer)) main {
   padding-block: var(--space-2);
 }
 
-.guide-page .guide {
-  margin-top: var(--space-5);
-  padding-top: 0;
-  border-top: 0;
-}
-
 /* Numbers inside a sentence: a 44px tap area without stretching the line */
 .guide .tel,
 .detail .tel {
@@ -1644,11 +1574,6 @@ body:not(:has(.explorer)) main {
 
 /* ---------- Audit 2 (.scratch/map-first/ux-audit-2.md) ---------- */
 
-.guide-photo {
-  margin-top: var(--space-5);
-  border-radius: var(--radius-m);
-}
-
 .guide-page .page-head h1 {
   font-size: var(--step-3);
 }
@@ -1661,22 +1586,6 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
   font-weight: 600;
   text-decoration: none;
-}
-
-.guide .steps,
-.guide .options {
-  gap: var(--space-4);
-  margin-top: var(--space-5);
-}
-
-.guide .related-link,
-.guide .mark-done {
-  margin-top: var(--space-5);
-}
-
-.guide .mark-done {
-  display: flex;
-  width: fit-content;
 }
 
 /* Place card: photo, name and price, actions, then the rest */
@@ -1999,4 +1908,297 @@ h2 {
     from { opacity: 0.25; }
     to { opacity: 1; }
   }
+}
+
+/* ---------- Guide page: a tinted head, then steps as stations on the line ---------- */
+
+.guide-hero {
+  padding-bottom: var(--space-6);
+  background: color-mix(in srgb, var(--c) 9%, #fff);
+}
+
+/* The photo overlaps the head's lower edge */
+.guide-page:has(.guide-photo) .guide-hero {
+  padding-bottom: 72px;
+}
+
+.guide-hero .lede {
+  color: var(--ink);
+}
+
+.guide-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+}
+
+.guide-facts div {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-m);
+  background: #fff;
+  box-shadow: var(--shadow-1);
+}
+
+.guide-facts dt {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.guide-facts dd {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.guide-facts dd small {
+  display: block;
+  color: var(--ink-soft);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.guide-facts .tel {
+  padding-block: 0;
+}
+
+.guide-body {
+  flex: 1;
+  padding-bottom: var(--space-7);
+  background: #f4f6f9;
+}
+
+.guide-body .guide-photo {
+  position: relative;
+  margin-top: -48px;
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow-2);
+}
+
+.guide {
+  padding-top: var(--space-5);
+}
+
+.guide-page .guide-intro {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.guide-card {
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: #fff;
+  box-shadow: var(--shadow-1);
+}
+
+.guide-card h3 {
+  font-size: 1.0625rem;
+  line-height: 1.45;
+}
+
+.step-when {
+  display: block;
+  color: var(--c);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.guide-card h3 .tel {
+  padding-block: 0;
+}
+
+.guide-bring {
+  margin-top: var(--space-5);
+  border-left: 4px solid var(--c);
+}
+
+.guide-bring h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--step-0);
+}
+
+.guide-bring h2 svg {
+  color: var(--c);
+  font-size: 1.25rem;
+}
+
+.guide-bring ul {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.guide-bring li {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* An empty box to tick in your head */
+.guide-bring li::before {
+  content: "";
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-top: 0.3rem;
+  border: 2px solid var(--c);
+  border-radius: 4px;
+}
+
+.guide-section-title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  font-size: var(--step-1);
+}
+
+.guide-section-title small {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--c);
+  color: #fff;
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+/* Steps: numbered stations joined by the category's line */
+.step-line {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.step-line li,
+.step-end {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-3);
+}
+
+.step-line li::before {
+  content: "";
+  position: absolute;
+  top: var(--space-3);
+  bottom: calc(-1 * var(--space-4) - var(--space-3));
+  left: 17px;
+  width: 6px;
+  background: var(--c);
+}
+
+.step-no {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: var(--space-2);
+  border: 5px solid var(--c);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.step-end {
+  margin-top: var(--space-4);
+  align-items: start;
+}
+
+.step-end .step-no {
+  margin-top: 0;
+  background: var(--c);
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.step-end p {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.step-end .mark-done {
+  margin-top: var(--space-2);
+}
+
+.step-how {
+  margin-top: var(--space-1);
+  line-height: 1.6;
+}
+
+.step-say,
+.step-tip {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  line-height: 1.5;
+}
+
+.step-say svg,
+.step-tip svg {
+  flex: none;
+  margin-top: 0.2rem;
+  font-size: 1.15rem;
+}
+
+/* Words to say: a speech bubble in the line's colour */
+.step-say {
+  padding: var(--space-2) var(--space-3);
+  border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
+  background: color-mix(in srgb, var(--c) 10%, #fff);
+}
+
+/* Darkened so it keeps 4.5:1 on the tint */
+.step-say svg,
+.step-say b {
+  color: color-mix(in srgb, var(--c) 80%, #000);
+}
+
+.step-tip {
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--rule);
+  color: var(--ink-soft);
+}
+
+/* A tip straight under the heading needs no divider */
+.guide-card h3 + .step-tip {
+  margin-top: var(--space-1);
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Options: cards to choose from, each topped with the line */
+.option-cards {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.option-cards .guide-card {
+  border-top: 4px solid var(--c);
+}
+
+.guide > .mark-done {
+  display: flex;
+  width: fit-content;
+  margin-top: var(--space-5);
+}
+
+.guide-next {
+  margin-top: var(--space-6);
+  background: #fff;
+  border-width: 1px;
+  box-shadow: var(--shadow-1);
+}
+
+.guide-next > svg:last-child {
+  color: var(--c);
 }

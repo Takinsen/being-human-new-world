@@ -83,6 +83,20 @@ export type Note = {
   on?: string;
 };
 
+/** One thing to do in a Guide, written so a Newcomer can do it without asking anyone. */
+export type GuideStep = {
+  /** The situation this step or option is for, e.g. "ฉุกเฉิน"; shown above `do` */
+  when?: string;
+  /** The action, short and imperative: the step's heading */
+  do: string;
+  /** How to do it: where, what to press, what it costs */
+  how?: string;
+  /** Words to say, when the step means talking to someone */
+  say?: string;
+  /** A trap to avoid or a shortcut that saves time */
+  tip?: string;
+};
+
 export type Guide = {
   id: string;
   category: CategoryId;
@@ -92,9 +106,15 @@ export type Guide = {
   icon: IconKey;
   intro?: string;
   photo?: Photo;
+  /** At a glance, under the title: cost, time, when it's open. A price found online says so in `note` (docs/adr/0001). */
+  facts?: { label: string; value: string; note?: string }[];
+  /** What to have with you before the first step */
+  bring?: string[];
   /** "options" lists alternatives to choose from; default is ordered steps */
   kind?: "steps" | "options";
-  steps: string[];
+  /** Heading over the options, e.g. "เลือกตามอาการ"; steps are always "ทำตามนี้" */
+  choose?: string;
+  steps: GuideStep[];
   /** A follow-up link shown after the steps */
   related?: { label: string; href: string };
   /** false until the team has walked through the steps for real */

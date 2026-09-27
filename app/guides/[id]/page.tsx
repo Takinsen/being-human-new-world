@@ -8,6 +8,7 @@ import { GuideBlock } from "@/components/GuideBlock";
 import { IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { Photo } from "@/components/Photo";
+import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
 type Props = { params: Promise<{ id: string }> };
@@ -30,24 +31,43 @@ export default async function GuidePage({ params }: Props) {
   const category = categories.find((c) => c.id === guide.category);
   return (
     <div className="guide-page" data-line={guide.category}>
-      <PageHead
-        title={
-          <span className="title-with-icon">
-            <span className="guide-icon">
-              <IconFor name={guide.icon} />
+      <div className="guide-hero">
+        <PageHead
+          title={
+            <span className="title-with-icon">
+              <span className="guide-icon">
+                <IconFor name={guide.icon} />
+              </span>
+              {guide.title}
             </span>
-            {guide.title}
-          </span>
-        }
-        back={
-          <Link href={`/guides#${guide.category}`} className="back-link">
-            <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด · {category?.name}
-          </Link>
-        }
-      />
-      <div className="inner">
-        <Photo photo={guide.photo} className="guide-photo" />
-        <GuideBlock guide={guide} />
+          }
+          back={
+            <Link href={`/guides#${guide.category}`} className="back-link">
+              <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด · {category?.name}
+            </Link>
+          }
+          lede={guide.summary}
+        >
+          {guide.facts && (
+            <dl className="guide-facts">
+              {guide.facts.map((f) => (
+                <div key={f.label}>
+                  <dt>{f.label}</dt>
+                  <dd>
+                    <TelText text={f.value} />
+                    {f.note && <small>{f.note}</small>}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </PageHead>
+      </div>
+      <div className="guide-body">
+        <div className="inner">
+          <Photo photo={guide.photo} className="guide-photo" />
+          <GuideBlock guide={guide} />
+        </div>
       </div>
     </div>
   );
