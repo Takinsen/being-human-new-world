@@ -5,6 +5,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { guides } from "@/content/guides";
 import { GuideBlock } from "@/components/GuideBlock";
+import { IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { Photo } from "@/components/Photo";
 import { getContent } from "@/lib/content";
@@ -30,7 +31,14 @@ export default async function GuidePage({ params }: Props) {
   return (
     <div className="guide-page" data-line={guide.category}>
       <PageHead
-        title={guide.title}
+        title={
+          <span className="title-with-icon">
+            <span className="guide-icon">
+              <IconFor name={guide.icon} />
+            </span>
+            {guide.title}
+          </span>
+        }
         back={
           <Link href={`/guides#${guide.category}`} className="back-link">
             <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด · {category?.name}
@@ -38,7 +46,7 @@ export default async function GuidePage({ params }: Props) {
         }
       />
       <div className="inner">
-        <Photo photo={guide.photo} category={guide.category} icon={guide.icon} className="guide-photo" />
+        <Photo photo={guide.photo} className="guide-photo" />
         <GuideBlock guide={guide} />
       </div>
     </div>

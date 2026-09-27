@@ -14,7 +14,9 @@ export function Price({ price }: { price: PriceData }) {
         {range} บาท <small>{price.per}</small>
       </mark>
       <span className="price-check">
-        ตรวจ {thaiMonthYear(price.checked.on)} โดย{checkedBy(price.checked)}
+        {price.checked.how === "web"
+          ? `ข้อมูลจากเว็บ ${thaiMonthYear(price.checked.on)} ยังไม่มีใครไปดูราคาจริง`
+          : `ตรวจ ${thaiMonthYear(price.checked.on)} โดย${checkedBy(price.checked)}`}
       </span>
     </p>
   );

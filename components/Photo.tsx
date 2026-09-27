@@ -1,35 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import type { CategoryId, IconKey, Photo as PhotoData } from "@/content/types";
+import { useEffect, useRef, useState } from "react";
+import type { Photo as PhotoData } from "@/content/types";
 import { commonsImage, commonsPage } from "@/lib/format";
-import { IconFor } from "./icons";
 
-// Hotlinked from Wikimedia Commons. With no photo, or one that fails to load,
-// the slot shows the topic's icon on its category colour instead.
-export function Photo({
-  photo,
-  category,
-  icon,
-  className,
-}: {
-  photo?: PhotoData;
-  category: CategoryId;
-  icon: IconKey;
-  className?: string;
-}) {
+// Hotlinked from Wikimedia Commons. If it fails to load, the slot collapses:
+// the page's title already carries the topic's icon (docs/adr/0006).
+export function Photo({ photo, className }: { photo?: PhotoData; className?: string }) {
   const [failed, setFailed] = useState(false);
-  const classes = ["photo", className].filter(Boolean).join(" ");
-  if (!photo || failed) {
-    return (
-      <div className={`${classes} is-illustration`} data-line={category} aria-hidden="true">
-        <IconFor name={icon} />
-      </div>
-    );
-  }
+  const img = useRef<HTMLImageElement>(null);
+
+  // An image that failed before React hydrated never fires onError here.
+  useEffect(() => {
+    const el = img.current;
+    if (el?.complete && el.naturalWidth === 0) setFailed(true);
+  }, [photo?.file]);
+
+  if (!photo || failed) return null;
   return (
-    <figure className={classes} data-line={category}>
-      <img src={commonsImage(photo.file)} alt={photo.alt} loading="lazy" onError={() => setFailed(true)} />
+    <figure className={className ? `photo ${className}` : "photo"}>
+      <img ref={img} src={commonsImage(photo.file)} alt={photo.alt} loading="lazy" onError={() => setFailed(true)} />
       <figcaption>
         <a
           href={commonsPage(photo.file)}

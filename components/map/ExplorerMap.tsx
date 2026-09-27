@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from "react-leaflet";
+import { placeIconKey } from "../icons";
 import type { MapStop } from "./types";
 
 // Fallback view when nothing is visible: Chula.
@@ -14,22 +15,22 @@ const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 // The pin shows its category's icon (docs/adr/0006); the icon itself is CSS.
 // Built once per look, so Leaflet only swaps a marker's element when it changes.
 const icons = new Map<string, L.DivIcon>();
-function pinIcon(category: string, selected: boolean) {
-  const key = `${category}:${selected}`;
-  if (!icons.has(key)) icons.set(key, makePinIcon(category, selected));
+function pinIcon(category: string, icon: string, selected: boolean) {
+  const key = `${category}:${icon}:${selected}`;
+  if (!icons.has(key)) icons.set(key, makePinIcon(category, icon, selected));
   return icons.get(key)!;
 }
 
-function makePinIcon(category: string, selected: boolean) {
+function makePinIcon(category: string, icon: string, selected: boolean) {
   return L.divIcon({
     className: selected ? "map-pin is-selected" : "map-pin",
-    html: `<span class="pin" data-line="${category}"></span>`,
+    html: `<span class="pin" data-line="${category}" data-icon="${icon}"></span>`,
     iconSize: [PIN, PIN],
     iconAnchor: [PIN / 2, PIN / 2],
   });
 }
 
-type Inset = { left: number; bottom: number };
+type Inset = { left: number; top: number; bottom: number };
 
 // Keeps the view on what matters: all visible stops, or the selected one,
 // clear of the sidebar (wide screens) or the bottom sheet (phones).
@@ -39,19 +40,20 @@ function Camera({ stops, selected, inset, animate }: { stops: MapStop[]; selecte
 
   useEffect(() => {
     if (selected) return;
-    const opts = { paddingTopLeft: [inset.left + 40, 80] as L.PointTuple, paddingBottomRight: [40, inset.bottom + 40] as L.PointTuple, maxZoom: 16, animate };
+    const opts = { paddingTopLeft: [inset.left + 40, inset.top + 24] as L.PointTuple, paddingBottomRight: [40, inset.bottom + 40] as L.PointTuple, maxZoom: 16, animate };
     if (stops.length) map.fitBounds(L.latLngBounds(stops.map((s) => [s.place.lat, s.place.lng])), opts);
     else map.setView(CHULA, 15, { animate });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visibleKey, inset.left, inset.bottom]);
+  }, [visibleKey, inset.left, inset.top, inset.bottom]);
 
   useEffect(() => {
     if (!selected) return;
     const { lat, lng } = selected.place;
     map.fitBounds(L.latLngBounds([[lat, lng]]), {
-      paddingTopLeft: [inset.left + 40, 80],
+      paddingTopLeft: [inset.left + 40, inset.top + 24],
       paddingBottomRight: [40, inset.bottom + 40],
-      maxZoom: 17,
+      // 16 keeps the neighbours in view, not just the one pin
+      maxZoom: 16,
       animate,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -106,7 +108,18 @@ function useSpreadPositions(stops: MapStop[]) {
   }, [stops, zoom, map]);
 }
 
-function Pins({ stops, selectedId, onSelect }: { stops: MapStop[]; selectedId?: string; onSelect: (id: string) => void }) {
+function Pins({
+  stops,
+  selectedId,
+  onSelect,
+  inset,
+}: {
+  stops: MapStop[];
+  selectedId?: string;
+  onSelect: (id: string) => void;
+  inset: Inset;
+}) {
+  const map = useMap();
   const positions = useSpreadPositions(stops);
   const markers = useRef(new Map<string, L.Marker>());
 
@@ -116,6 +129,12 @@ function Pins({ stops, selectedId, onSelect }: { stops: MapStop[]; selectedId?: 
       const el = markers.current.get(place.id)?.getElement();
       if (!el) continue;
       el.setAttribute("aria-label", place.name);
+      // Tabbing to a pin brings it out from under the chips or the sheet.
+      el.onfocus = () =>
+        map.panInside(markers.current.get(place.id)!.getLatLng(), {
+          paddingTopLeft: [inset.left + 24, inset.top + 24],
+          paddingBottomRight: [24, inset.bottom + 24],
+        });
       if (place.id === selectedId) el.setAttribute("aria-current", "true");
       else el.removeAttribute("aria-current");
     }
@@ -129,7 +148,7 @@ function Pins({ stops, selectedId, onSelect }: { stops: MapStop[]; selectedId?: 
         else markers.current.delete(place.id);
       }}
       position={positions.get(place.id) ?? [place.lat, place.lng]}
-      icon={pinIcon(place.category, place.id === selectedId)}
+      icon={pinIcon(place.category, placeIconKey(place), place.id === selectedId)}
       zIndexOffset={place.id === selectedId ? 1000 : 0}
       eventHandlers={{
         click: () => onSelect(place.id),
@@ -162,6 +181,7 @@ export default function ExplorerMap({
   return (
     <MapContainer
       className="explorer-map"
+      ref={(m) => m?.getContainer().setAttribute("aria-label", "แผนที่ย่านจุฬาฯ")}
       center={CHULA}
       zoom={15}
       zoomControl={false}
@@ -173,9 +193,9 @@ export default function ExplorerMap({
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <ZoomControl position="topright" />
+      <ZoomControl position="topright" zoomInTitle="ขยายแผนที่" zoomOutTitle="ย่อแผนที่" />
       <Camera stops={stops} selected={selected} inset={inset} animate={animate} />
-      <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} />
+      <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} inset={inset} />
     </MapContainer>
   );
 }

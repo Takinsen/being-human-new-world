@@ -3,7 +3,15 @@
 import { useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
+import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
+
+const noteMessages = {
+  text: "เขียนโน้ตก่อน",
+  category: "เลือกหมวดของโน้ตนี้",
+  name: "ใส่ชื่อที่จะให้ขึ้นกับโน้ต",
+  hometown: "เลือกจังหวัดบ้านเกิด",
+};
 
 type Line = { id: CategoryId; name: string };
 type PlaceOption = { id: string; name: string; category: CategoryId };
@@ -27,7 +35,7 @@ export function NoteForm({
   const regionsFirst = (Object.keys(provinces) as Region[]).sort((a, b) => Number(b === "กลาง") - Number(a === "กลาง"));
 
   return (
-    <form action={action} className="contribute-form" onInvalidCapture={thaiValidity} onInput={clearValidity}>
+    <form action={action} className="contribute-form" onInvalidCapture={thaiValidity(noteMessages)} onInput={clearValidity}>
       <label>
         โน้ต
         <textarea
@@ -111,22 +119,3 @@ export function NoteForm({
   );
 }
 
-// The browser's own messages follow the browser's language; the site is Thai.
-function thaiValidity(e: React.FormEvent<HTMLFormElement>) {
-  const field = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-  if (!field.validity.valueMissing) return;
-  const message: Record<string, string> = {
-    text: "เขียนโน้ตก่อน",
-    category: "เลือกหมวดของโน้ตนี้",
-    name: "ใส่ชื่อที่จะให้ขึ้นกับโน้ต",
-    hometown: "เลือกจังหวัดบ้านเกิด",
-  };
-  field.setCustomValidity(message[field.name] ?? "กรอกช่องนี้ก่อน");
-}
-
-function clearValidity(e: React.FormEvent<HTMLFormElement>) {
-  const target = e.target as HTMLInputElement;
-  target.setCustomValidity?.("");
-  // A radio group shares one message; clear it on every radio.
-  if (target.type === "radio") target.form?.querySelectorAll<HTMLInputElement>(`input[name="${target.name}"]`).forEach((r) => r.setCustomValidity(""));
-}

@@ -42,3 +42,12 @@ export function IconFor({ name }: { name: IconKey }) {
 export function CategoryIcon({ id }: { id: CategoryId }) {
   return <IconFor name={categoryIcons[id]} />;
 }
+
+/** A Place's own icon if it has one (a hospital among "อยู่คนเดียว"), else its category's */
+export function placeIconKey(place: { category: CategoryId; icon?: IconKey }): IconKey {
+  return place.icon ?? categoryIcons[place.category];
+}
+
+export function PlaceIcon({ place }: { place: { category: CategoryId; icon?: IconKey } }) {
+  return <IconFor name={placeIconKey(place)} />;
+}

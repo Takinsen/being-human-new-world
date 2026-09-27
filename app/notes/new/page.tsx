@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { PageHead } from "@/components/PageHead";
 import { getContent } from "@/lib/content";
@@ -13,9 +15,18 @@ type Props = { searchParams: Promise<{ place?: string }> };
 export default async function NewNotePage({ searchParams }: Props) {
   const { place } = await searchParams;
   const content = await getContent();
+  const from = content.places.find((p) => p.id === place);
   return (
     <>
-      <PageHead title="เขียนโน้ต" lede="สิ่งที่อยากให้คนมาใหม่รู้ สั้นๆ ในคำพูดของเราเอง" />
+      <PageHead
+        title="เขียนโน้ต"
+        lede="สิ่งที่อยากให้คนมาใหม่รู้ สั้นๆ ในคำพูดของเราเอง"
+        back={
+          <Link href={from ? `/?place=${from.id}` : "/notes"} className="back-link">
+            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : "โน้ต"}
+          </Link>
+        }
+      />
       <div className="inner">
         {!sheetConfigured() && (
           <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) โน้ตจะยังบันทึกไม่ได้</p>

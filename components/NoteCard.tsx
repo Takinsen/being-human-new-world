@@ -6,7 +6,7 @@ import { thaiDate } from "@/lib/format";
 export function NoteCard({ note, placeName, compact, fresh }: { note: Note; placeName?: string; compact?: boolean; fresh?: boolean }) {
   const className = ["note", compact && "is-compact", fresh && "is-fresh"].filter(Boolean).join(" ");
   return (
-    <article className={className} data-line={note.category} id={fresh ? "fresh" : undefined}>
+    <article className={className} data-line={note.category}>
       <p className="note-text">{note.text}</p>
       <footer className="note-by">
         {note.seniorId ? <Link href={`/seniors#${note.seniorId}`}>{note.name}</Link> : <b>{note.name}</b>}

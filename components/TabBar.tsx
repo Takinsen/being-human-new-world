@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link, { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 import { BookOpenText, ChatCenteredText, ListChecks, MapTrifold } from "@phosphor-icons/react";
 
@@ -23,8 +23,15 @@ export function TabBar() {
         <Link key={href} href={href} aria-current={current(href) ? "page" : undefined}>
           <Icon weight={current(href) ? "fill" : "bold"} aria-hidden="true" />
           {label}
+          <Pending />
         </Link>
       ))}
     </nav>
   );
+}
+
+// On a slow connection a tap can take seconds; show that it registered.
+function Pending() {
+  const { pending } = useLinkStatus();
+  return pending ? <span className="tab-pending" aria-hidden="true" /> : null;
 }

@@ -12,13 +12,12 @@ import {
   Warning,
 } from "@phosphor-icons/react";
 import { mapsUrl } from "@/lib/format";
+import { PlaceIcon } from "../icons";
 import { NoteCard } from "../NoteCard";
 import { Photo } from "../Photo";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
 import type { MapStop } from "./types";
-
-const categoryIcon = { transport: "train", food: "food", living: "laundry" } as const;
 
 // The selected Place (docs/adr/0006): photo, name and price, what to do next,
 // then one line, one caution and the latest Note. The rest waits behind "อ่านเพิ่ม".
@@ -32,32 +31,51 @@ export function PlaceDetail({
   posted?: boolean;
   /** Move focus to the card: only when the user opened it, not on page load */
   focusOnOpen: boolean;
-  onBack: () => void;
+  /** Wide screens show a back button here; on phones the sheet's top bar is the way back */
+  onBack?: () => void;
 }) {
   const { place, notes, guide } = stop;
   const [caution, ...moreCautions] = place.cautions ?? [];
   const [latest] = notes;
   const heading = useRef<HTMLHeadingElement>(null);
 
+  const status = useRef<HTMLParagraphElement>(null);
+  const noteBox = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (focusOnOpen) heading.current?.focus({ preventScroll: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place.id]);
 
+  // Just posted a Note here: show it and say so.
+  useEffect(() => {
+    if (!posted) return;
+    status.current?.focus({ preventScroll: true });
+    noteBox.current?.scrollIntoView({ block: "center" });
+  }, [posted]);
+
   return (
     <article className="detail" data-line={place.category}>
-      <button type="button" className="detail-back" onClick={onBack}>
-        <ArrowLeft weight="bold" aria-hidden="true" /> ทุกที่บนแผนที่
-      </button>
-      <Photo photo={place.photo} category={place.category} icon={place.icon ?? categoryIcon[place.category]} className="detail-photo" />
+      {onBack && (
+        <button type="button" className="back-link detail-back" onClick={onBack}>
+          <ArrowLeft weight="bold" aria-hidden="true" /> ทุกที่บนแผนที่
+        </button>
+      )}
+      <Photo photo={place.photo} className="detail-photo" />
 
       <header className="detail-head">
-        <h2 ref={heading} tabIndex={-1}>
-          {place.name}
-        </h2>
+        <div className="detail-title">
+          <span className="place-icon">
+            <PlaceIcon place={place} />
+          </span>
+          <h2 ref={heading} tabIndex={-1}>
+            {place.name}
+          </h2>
+        </div>
         {place.homeTaste && (
           <p className="home-taste-tag">
             <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน อาหาร{place.homeTaste}
+            {stop.homeTasteBy ? ` · ${stop.homeTasteBy} แนะนำ` : " · ทีมหามาให้ลอง"}
           </p>
         )}
         {place.price && <Price price={place.price} />}
@@ -76,7 +94,7 @@ export function PlaceDetail({
       </div>
 
       {posted && (
-        <p className="form-status" role="status">
+        <p className="form-status" role="status" tabIndex={-1} ref={status}>
           <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว
         </p>
       )}
@@ -104,7 +122,7 @@ export function PlaceDetail({
       </div>
 
       {latest && (
-        <div className="detail-notes">
+        <div className="detail-notes" ref={noteBox}>
           <NoteCard note={latest} compact />
           {notes.length > 1 && (
             <Link href={`/notes?place=${place.id}`} className="related-link">

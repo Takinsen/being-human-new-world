@@ -3,11 +3,11 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, Phone, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { Category } from "@/content/categories";
 import type { CategoryId } from "@/content/types";
-import { CategoryIcon } from "../icons";
+import { CategoryIcon, PlaceIcon } from "../icons";
 import { Wordmark } from "../PageHead";
 import { PlaceDetail } from "./PlaceDetail";
 import type { MapStop } from "./types";
@@ -22,7 +22,7 @@ const ExplorerMap = dynamic(() => import("./ExplorerMap"), {
 const sidebarWidth = (vw: number) => (vw >= 1600 ? 460 : 380);
 const SHEET_CLOSED = 60; // px: just the handle
 // Share of the map the sheet covers on phones; less on short screens so the map stays usable.
-const sheetShare = (vh: number, full: boolean) => (full ? 0.85 : vh < 700 ? 0.36 : 0.45);
+const sheetShare = (areaHeight: number, full: boolean) => (full ? 0.94 : areaHeight < 620 ? 0.42 : 0.5);
 
 function useViewport() {
   const [size, setSize] = useState({ w: 390, h: 800 });
@@ -81,8 +81,23 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   const pathname = usePathname();
   const params = useSearchParams();
   const wide = useWide();
-  const { w: viewportWidth, h: viewportHeight } = useViewport();
+  const { w: viewportWidth } = useViewport();
   const sidebar = sidebarWidth(viewportWidth);
+  // The sheet is sized from the map area itself (the screen minus the tab bar),
+  // which at large text sizes is much less than the window.
+  const explorer = useRef<HTMLDivElement>(null);
+  const top = useRef<HTMLDivElement>(null);
+  const [area, setArea] = useState({ h: 700, top: 120 });
+  useEffect(() => {
+    const measure = () =>
+      setArea({ h: explorer.current?.clientHeight ?? 700, top: top.current ? top.current.offsetTop + top.current.offsetHeight : 0 });
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (explorer.current) ro.observe(explorer.current);
+    if (top.current) ro.observe(top.current);
+    return () => ro.disconnect();
+  }, [wide]);
+  const short = area.h < 620;
 
   // State lives in the URL so other pages can link straight to a category or a Place.
   const selectedId = params.get("place") ?? undefined;
@@ -136,7 +151,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     userOpened.current = true;
     setSheetOpen(true);
     // Short phones: a half sheet shows only the name, so open the card full.
-    if (viewportHeight < 700) setSheetFull(true);
+    if (short) setSheetFull(true);
     sheetBody.current?.scrollTo({ top: 0 });
   };
 
@@ -146,8 +161,9 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     update({ place: null });
   };
 
-  // Opened from a link on a short phone: show the card full, as select() does.
-  const opensFull = Boolean(selectedId) && viewportHeight < 700;
+  // Opened from a link on a short phone, or just after posting a Note there:
+  // show the card full, as select() does, so the Note is in view.
+  const opensFull = Boolean(selectedId) && (short || posted);
   useEffect(() => {
     if (opensFull) setSheetFull(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -166,7 +182,10 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   // Back from a card: focus returns to that Place in the list.
   useEffect(() => {
     if (selected || !returnTo.current) return;
-    document.querySelector<HTMLButtonElement>(`[data-place="${returnTo.current}"]`)?.focus();
+    const button = document.querySelector<HTMLButtonElement>(`[data-place="${returnTo.current}"]`);
+    button?.focus({ preventScroll: true });
+    // The sheet may still be shrinking back from full; scroll once it has.
+    setTimeout(() => button?.scrollIntoView({ block: "nearest" }), 250);
     returnTo.current = undefined;
   }, [selected]);
 
@@ -176,8 +195,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     update({ line: next, place: hidesSelected ? null : undefined });
   };
 
-  const sheetHeight = sheetOpen ? Math.round(viewportHeight * sheetShare(viewportHeight, sheetFull)) : SHEET_CLOSED;
-  const inset = wide ? { left: sidebar + 16, bottom: 0 } : { left: 0, bottom: sheetHeight };
+  const sheetHeight = sheetOpen ? Math.round(area.h * sheetShare(area.h, sheetFull)) : SHEET_CLOSED;
+  const inset = wide ? { left: sidebar + 16, top: 16, bottom: 0 } : { left: 0, top: area.top, bottom: sheetHeight };
 
   const filters = (
     <div className="line-filters" role="group" aria-label="กรองตามหมวด">
@@ -217,7 +236,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     <div className="stop-list">
       {visible.length === 0 && (
         <p className="status-note">
-          ยังไม่มีใครเขียนโน้ตไว้ที่ไหนในหมวดที่เลือก <Link href="/notes/new">เขียนโน้ตแรก</Link>
+          {active.length ? "ยังไม่มีใครเขียนโน้ตไว้ที่ไหนในหมวดที่เลือก" : "ยังไม่มีใครเขียนโน้ตผูกกับที่ไหนบนแผนที่"}{" "}
+          <Link href="/notes/new">เขียนโน้ตแรก</Link>
         </p>
       )}
       {categories
@@ -236,7 +256,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                     <li key={place.id}>
                       <button type="button" data-place={place.id} onClick={() => select(place.id)}>
                         <span className="place-icon">
-                          <CategoryIcon id={place.category} />
+                          <PlaceIcon place={place} />
                         </span>
                         <span>
                           <b>{place.name}</b>
@@ -247,6 +267,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                             {place.homeTaste && (
                               <small className="home-taste-tag">
                                 <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน{place.homeTaste}
+                                {stop.homeTasteBy ? "" : " (ทีมหามาให้ลอง)"}
                               </small>
                             )}
                             {notes.length > 0 && (
@@ -264,6 +285,9 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
             </section>
           );
         })}
+      <Link href="/seniors#help" className="list-help">
+        <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
+      </Link>
     </div>
   );
 
@@ -282,9 +306,10 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   );
 
   const panelBody = selected ? (
-    <PlaceDetail stop={selected} posted={posted} focusOnOpen={userOpened.current} onBack={back} />
+    <PlaceDetail stop={selected} posted={posted} focusOnOpen={userOpened.current} onBack={wide ? back : undefined} />
   ) : (
     <>
+      {count}
       {welcomeNote}
       {list}
     </>
@@ -300,8 +325,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
 
   // The panel comes before the map in the page, so Tab reaches the filters before the pins.
   return (
-    <div className="explorer">
-      {count}
+    <div className="explorer" ref={explorer}>
       {wide ? (
         <aside className="explorer-panel" aria-label="แผงแผนที่" style={{ width: sidebar }}>
           {brand}
@@ -310,16 +334,25 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
         </aside>
       ) : (
         <>
-          <div className="explorer-top">
+          <div className="explorer-top" ref={top}>
             {brand}
             {filters}
           </div>
           <section className="explorer-sheet" style={{ height: sheetHeight }} aria-label="รายการบนแผนที่">
             <div className="sheet-bar">
-              <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
-                <span>{selected ? "รายละเอียด" : `แผนที่ย่านจุฬาฯ ${visible.length} ที่`}</span>
-                {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
-              </button>
+              {selected ? (
+                // With a card open, the sheet's top bar is its way back (saves a row on phones).
+                <button type="button" className="sheet-handle" onClick={back}>
+                  <span>
+                    <ArrowLeft weight="bold" aria-hidden="true" /> ทุกที่บนแผนที่
+                  </span>
+                </button>
+              ) : (
+                <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
+                  <span>แผนที่ย่านจุฬาฯ {visible.length} ที่</span>
+                  {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
+                </button>
+              )}
               {sheetOpen && (
                 <button
                   type="button"

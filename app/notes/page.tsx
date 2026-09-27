@@ -22,29 +22,28 @@ export default async function NotesPage({ searchParams }: Props) {
 
   return (
     <>
-      <PageHead title="โน้ต" lede="เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่">
+      <PageHead
+        title={place ? `โน้ตที่${place.name}` : "โน้ต"}
+        lede={place ? undefined : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
+        back={
+          place && (
+            <Link href={`/?place=${place.id}`} className="back-link">
+              <ArrowLeft weight="bold" aria-hidden="true" /> กลับไปที่แผนที่
+            </Link>
+          )
+        }
+      >
         <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary head-action">
           <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
         </Link>
       </PageHead>
       <div className="inner">
-        {posted && (
-          <p className="form-status feed-posted" role="status">
-            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว อยู่บนสุด
-          </p>
-        )}
         {place ? (
-          <div className="feed-scope">
-            <p>โน้ตที่{place.name}</p>
-            <p className="feed-scope-links">
-              <Link href={`/?place=${place.id}`} className="related-link">
-                <ArrowLeft weight="bold" aria-hidden="true" /> กลับไปที่แผนที่
-              </Link>
-              <Link href="/notes" className="related-link">
-                โน้ตจากทุกที่
-              </Link>
-            </p>
-          </div>
+          <p className="feed-scope">
+            <Link href="/notes" className="related-link">
+              ดูโน้ตจากทุกที่ <ArrowRight weight="bold" aria-hidden="true" />
+            </Link>
+          </p>
         ) : (
           <nav className="line-filters feed-filters" aria-label="กรองตามหมวด">
             <Link href="/notes" className="line-chip" data-line="general" aria-current={!active ? "page" : undefined}>
@@ -64,6 +63,12 @@ export default async function NotesPage({ searchParams }: Props) {
               </Link>
             ))}
           </nav>
+        )}
+        {posted && (
+          // The redirect after posting lands here (#fresh), right above the new Note.
+          <p className="form-status feed-posted" role="status" id="fresh" tabIndex={-1}>
+            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว อยู่ข้างล่างนี้
+          </p>
         )}
         <div className="feed">
           {notes.length === 0 && <p className="status-note">ยังไม่มีโน้ตตรงนี้ เขียนโน้ตแรกได้เลย</p>}

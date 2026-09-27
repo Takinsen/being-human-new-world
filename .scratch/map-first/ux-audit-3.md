@@ -76,3 +76,28 @@ Previous: `ux-audit.md`, `ux-audit-2.md`.
 - หัว Feed มีปุ่มเดียว สีเหลืองใช้กับราคาเท่านั้น
 - skip link ใช้ได้ เปิดการ์ดเองแล้วโฟกัสที่ชื่อ เปิดจากลิงก์ไม่มีกรอบค้าง Esc ปิดการ์ดได้
 - contrast ต่ำสุด 4.66 ไม่มี JS error
+
+## Status (2026-09-27)
+
+Decided with the owner:
+- Q1: no stand-in box when there's no photo; the icon sits beside the title.
+- Q2: web-sourced prices read "ข้อมูลจากเว็บ <เดือน> ยังไม่มีใครไปดูราคาจริง". ADR 0001 is amended and CONTEXT.md updated.
+- Q3: on phones the sheet's top bar is the back button while a card is open.
+- Q4: research in `content-research-2.md`. Only the CU Health Service Center qualified for a pin (Chamchuri 9, [กลาง]). BTS Siam exits and the Pop Bus stop were added, and line 4 is marked as not running on Saturdays. Fares and normal food prices are in the Guides, labelled as web data.
+
+Fixed and checked in Chromium:
+- R1: 0 broken figures in 8 loads.
+- R2: zoom buttons are 44×44 with Thai titles.
+- R3: after posting, focus goes to the status and the Note is in view.
+- R4: the hospital and health-centre pins use the first-aid icon.
+- R5: avatars read บ / ท.
+- R6: no sideways scroll at 360@125%.
+- R7, R8.
+- L2–L9, L11, L12, L13.
+- C1 (empty-state wording), C5, C8 ("ทีมหามาให้ลอง"), C9 (link under the map list), C10 (US laundry photo removed).
+
+Open:
+- C1 and C2: team members post their Notes (`team-notes-draft.md`).
+- C6: no student-priced southern restaurant was found with a location.
+- C7: no pharmacy, laundry or water machine could be confirmed open.
+- L10: the duplicate selectors in globals.css are only partly cleaned. Radius tokens and the header comment are done.

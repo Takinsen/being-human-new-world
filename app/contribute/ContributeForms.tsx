@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import type { CategoryId } from "@/content/types";
+import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { type FormState, saveGuideCheck, savePrice, saveSenior } from "./actions";
 
 type Line = { id: CategoryId; name: string };
@@ -50,6 +51,17 @@ function PlaceSelect({ lines, places, onChange }: { lines: Line[]; places: Place
   );
 }
 
+const contributeMessages = {
+  placeId: "เลือกที่",
+  min: "ใส่ราคาต่ำสุด",
+  by: "ใส่ชื่อคนตรวจ",
+  name: "ใส่ชื่อที่ให้แสดง",
+  hometown: "ใส่จังหวัดบ้านเกิด",
+  region: "เลือกภาค",
+  story: "เล่าเรื่องปีแรก",
+  guideId: "เลือกวิธี",
+};
+
 export function ContributeForms({
   lines,
   places,
@@ -68,7 +80,7 @@ export function ContributeForms({
 
   return (
     <div className="contribute">
-      <form action={priceAction} className="contribute-form">
+      <form action={priceAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
         <h2>ตรวจราคา</h2>
         <p className="status-note">ไปถึงที่แล้วเห็นราคาจริง กรอกตรงนี้ ราคาจะขึ้นพร้อมชื่อคนตรวจและเดือนนี้</p>
         <PlaceSelect lines={lines} places={places} onChange={(id) => setPer(places.find((p) => p.id === id)?.per ?? "")} />
@@ -96,7 +108,7 @@ export function ContributeForms({
         <Status state={priceState} />
       </form>
 
-      <form action={seniorAction} className="contribute-form">
+      <form action={seniorAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
         <h2>เรื่องปีแรกของรุ่นพี่</h2>
         <p className="status-note">เพิ่มเรื่องของรุ่นพี่คนใหม่ เรื่องที่ขึ้นเว็บแล้วแก้จากตรงนี้ไม่ได้</p>
         <div className="form-row">
@@ -140,7 +152,7 @@ export function ContributeForms({
         <Status state={seniorState} />
       </form>
 
-      <form action={guideAction} className="contribute-form">
+      <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
         <h2>ลองทำตามวิธีแล้ว</h2>
         <p className="status-note">ทำตามขั้นตอนจริงแล้วได้ผล ป้าย &ldquo;ร่าง&rdquo; ของวิธีนั้นจะหายไป</p>
         <label>

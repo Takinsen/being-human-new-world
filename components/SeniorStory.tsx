@@ -5,7 +5,7 @@ export function SeniorStory({ senior }: { senior: Senior }) {
     <article className="story" id={senior.id}>
       <header>
         <span className="avatar" aria-hidden="true">
-          {senior.name.replace("พี่", "").slice(0, 1)}
+          {initial(senior.name)}
         </span>
         <div>
           <h2>{senior.name}</h2>
@@ -23,4 +23,9 @@ export function SeniorStory({ senior }: { senior: Senior }) {
       {!senior.approved && <p className="draft-tag">ร่างจากบทสัมภาษณ์ รอ{senior.name}ตรวจ</p>}
     </article>
   );
+}
+
+// The first consonant of the name after "พี่": leading vowels (เ แ โ ใ ไ) can't stand alone.
+function initial(name: string): string {
+  return name.replace(/^พี่\s*/, "").replace(/^[เแโใไ]/, "").slice(0, 1);
 }

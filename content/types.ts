@@ -10,6 +10,8 @@ export type PriceCheck = {
   on: string;
   /** Senior id, or a team member's display name */
   by: string;
+  /** "web": the team found the price online and nobody has confirmed it on the spot yet */
+  how?: "spot" | "web";
 };
 
 export type Price = {
