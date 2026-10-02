@@ -1,6 +1,6 @@
 # The map is the home page; a bottom tab bar replaces the category pages
 
-Status: accepted (2026-09-25), amended 2026-09-26, 2026-09-27 and 2026-10-02 after the UX audits in `.scratch/map-first/` (`ux-audit.md` to `ux-audit-4.md`). Supersedes 0004.
+Status: accepted (2026-09-25), amended 2026-09-26, 2026-09-27 and 2026-10-02 after the UX audits in `.scratch/map-first/` (`ux-audit.md` to `ux-audit-4.md`). Supersedes 0004. Its look (the transit-line language, and cards only on Guide pages) is replaced by 0007.
 
 Friends who tried the site said it has too much text, is laid out messily, and they didn't know where to start reading. The long home page (hero, line diagram, Starter Checklist, three category bands, quotes) and the long Place cards were both to blame.
 
