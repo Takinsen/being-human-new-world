@@ -1,4 +1,4 @@
-Status: needs-info (directions D1–D3 recommended; D4 is the owner's call)
+Status: done for D1–D3 (2026-10-02); D4 not taken, the owner said go with the recommendation
 
 # ตรวจ Visual Hierarchy: หน้าโน้ต, สัปดาห์แรก, รุ่นพี่, วิธี, ช่วยเติมข้อมูล
 
@@ -163,3 +163,31 @@ Status: needs-info (directions D1–D3 recommended; D4 is the owner's call)
 - /guides: "รสชาติบ้าน" ลดเป็นขนาดเดียวกับชื่อวิธี หรือทำเป็นแถวหนึ่งใน guide-list แล้วกำหนด `small` เป็น 14px
 - /contribute: เพิ่มลิงก์กระโดด 3 อันใต้ lede (ใช้หน้าตาลิงก์ ไม่ใช่ chip กรอง)
 - /notes/new: เว้น 40px หรือใส่หัวข้อย่อย 14px "ลงชื่อ" ก่อนกลุ่มชื่อ/บ้านเกิด
+
+## Done (2026-10-02)
+
+- **D1, type by role:**
+  - new `--step-half` (1.125rem) and `--type-quote` tokens;
+  - default h2 is 20 and h3 is 18;
+  - lede is 18;
+  - Note text and Senior stories are 18/400 with the same 4px bar;
+  - Senior names are 18 (no longer bigger than "ถ้าหนักเกินไป");
+  - phone buttons are 20, Guide category bands 20, "รสชาติบ้าน" 16;
+  - meta and the badge are 14.
+- **D2, Feed:**
+  - "เขียนโน้ต" sits beside the h1;
+  - chips are drawn 36px with a 1px border (44px to tap);
+  - each Note's meta names its category;
+  - when filtered, the h1 and lede say what's showing;
+  - the first Note moved from y 308 to 231;
+  - the duplicate `.feed .note + .note` rule is removed;
+  - the name link's tap area no longer stretches the bar.
+- **D3, checklist:**
+  - progress "0 / 7" with a bar comes first;
+  - the instruction is now a 14px hint;
+  - the next item is a tinted band with an 18/700 title, its Guide's summary and "อ่านวิธี →", and the whole band is a link;
+  - the other items carry a › caret.
+- **Small jobs:**
+  - /contribute has jump links to its three forms;
+  - /seniors help h3 has a 4px gap before its text.
+- Not done: the /notes/new grouping (W1), and G1/G3 on /guides.

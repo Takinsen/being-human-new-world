@@ -81,7 +81,7 @@ export function ContributeForms({
   return (
     <div className="contribute">
       <form action={priceAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-        <h2>ตรวจราคา</h2>
+        <h2 id="price">ตรวจราคา</h2>
         <p className="status-note">ไปถึงที่แล้วเห็นราคาจริง กรอกตรงนี้ ราคาจะขึ้นพร้อมชื่อคนตรวจและเดือนนี้</p>
         <PlaceSelect lines={lines} places={places} onChange={(id) => setPer(places.find((p) => p.id === id)?.per ?? "")} />
         <div className="form-row">
@@ -109,7 +109,7 @@ export function ContributeForms({
       </form>
 
       <form action={seniorAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-        <h2>เรื่องปีแรกของรุ่นพี่</h2>
+        <h2 id="senior">เรื่องปีแรกของรุ่นพี่</h2>
         <p className="status-note">เพิ่มเรื่องของรุ่นพี่คนใหม่ เรื่องที่ขึ้นเว็บแล้วแก้จากตรงนี้ไม่ได้</p>
         <div className="form-row">
           <label>
@@ -153,7 +153,7 @@ export function ContributeForms({
       </form>
 
       <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-        <h2>ลองทำตามวิธีแล้ว</h2>
+        <h2 id="guide">ลองทำตามวิธีแล้ว</h2>
         <p className="status-note">ทำตามขั้นตอนจริงแล้วได้ผล ป้าย &ldquo;ร่าง&rdquo; ของวิธีนั้นจะหายไป</p>
         <label>
           วิธี

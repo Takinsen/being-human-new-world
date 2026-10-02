@@ -11,7 +11,14 @@ export default async function ContributePage() {
   const content = await getContent();
   return (
     <>
-      <PageHead title="ช่วยเติมข้อมูล" lede="ตรวจราคา เล่าเรื่องปีแรก หรือบอกว่าลองทำตามวิธีแล้ว กดบันทึกแล้วขึ้นเว็บเลย" />
+      <PageHead title="ช่วยเติมข้อมูล" lede="กดบันทึกแล้วขึ้นเว็บเลย เลือกเรื่องที่จะเติม">
+        {/* Three forms on one long page: jump straight to the one you came for */}
+        <nav className="jump-links" aria-label="ไปที่ฟอร์ม">
+          <a href="#price">ตรวจราคา</a>
+          <a href="#senior">เรื่องปีแรกของรุ่นพี่</a>
+          <a href="#guide">ลองทำตามวิธีแล้ว</a>
+        </nav>
+      </PageHead>
       <div className="inner">
       {!sheetConfigured() && (
         <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) ฟอร์มจะยังบันทึกไม่ได้</p>

@@ -19,13 +19,14 @@ export default async function NotesPage({ searchParams }: Props) {
   const place = placeId ? content.places.find((p) => p.id === placeId) : undefined;
   const active = line && isCategory(line) ? line : undefined;
   const notes = content.notes.filter((n) => (place ? n.placeId === place.id : !active || n.category === active));
+  const activeName = categories.find((c) => c.id === active)?.name;
   const placeName = (id?: string) => content.places.find((p) => p.id === id)?.name;
 
   return (
     <>
       <PageHead
-        title={place ? `โน้ตที่${place.name}` : "โน้ต"}
-        lede={place ? undefined : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
+        title={place ? `โน้ตที่${place.name}` : activeName ? `โน้ต · ${activeName}` : "โน้ต"}
+        lede={place ? undefined : activeName ? `${notes.length} โน้ตเรื่อง${activeName}` : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
         back={
           place && (
             <Link href={`/?place=${place.id}`} className="back-link">
@@ -33,11 +34,12 @@ export default async function NotesPage({ searchParams }: Props) {
             </Link>
           )
         }
-      >
-        <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary head-action">
-          <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
-        </Link>
-      </PageHead>
+        action={
+          <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary head-action">
+            <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
+          </Link>
+        }
+      />
       <div className="inner">
         {place ? (
           <p className="feed-scope">

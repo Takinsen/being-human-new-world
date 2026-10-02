@@ -23,9 +23,15 @@
 
   --step--1: 0.875rem;
   --step-0: 1rem;
+  --step-half: 1.125rem;
   --step-1: 1.25rem;
   --step-2: 1.5rem;
   --step-3: clamp(2rem, 8vw, 2.75rem);
+
+  /* Type by role, the same on every page (UX audit 5):
+     h1 --step-3 · section heading --step-1 · item title and lede --step-half ·
+     a person's own words (Note, Senior story) --type-quote · body --step-0 · meta --step--1 */
+  --type-quote: var(--step-half);
 
   --measure: 40rem;
   --gutter: 16px;
@@ -102,8 +108,8 @@ body {
 h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
 h1, h2, h3 { line-height: 1.2; font-weight: 700; }
-h2 { font-size: var(--step-2); }
-h3 { font-size: var(--step-1); }
+h2 { font-size: var(--step-1); }
+h3 { font-size: var(--step-half); }
 a { color: inherit; }
 svg { flex: none; }
 
@@ -132,7 +138,7 @@ svg { flex: none; }
 .lede {
   margin-top: var(--space-2);
   color: var(--ink-soft);
-  font-size: var(--step-1);
+  font-size: var(--step-half);
   line-height: 1.5;
 }
 
@@ -242,43 +248,54 @@ svg { flex: none; }
 /* ---------- Starter Checklist ---------- */
 
 .week {
-  padding: var(--space-3) 0 var(--space-6);
+  padding: var(--space-4) 0 var(--space-6);
 }
 
-.week-head {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: var(--space-1) var(--space-3);
-}
-
-.week-head h1,
-.week-head h2 {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
+/* Progress first: the biggest thing under the title */
+.week-progress p:first-child {
   font-size: var(--step-1);
+  font-weight: 700;
 }
 
-.page .week-head h1 {
-  font-size: var(--step-3);
+.week-progress b {
+  font-size: var(--step-2);
 }
 
-.week-head span,
+.week-progress p:first-child span {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+.week-bar {
+  display: block;
+  height: var(--space-2);
+  margin-top: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.week-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
 .week-hint {
+  margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step--1);
 }
 
 .week-stops {
-  margin-top: var(--space-2);
+  margin-top: var(--space-5);
 }
 
 .week-stops li {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-2);
   min-height: 48px;
 }
@@ -288,8 +305,8 @@ svg { flex: none; }
   content: "";
   position: absolute;
   left: calc((44px - var(--rail)) / 2);
-  top: 50%;
-  height: 100%;
+  top: 22px;
+  bottom: -22px;
   width: var(--rail);
   background: var(--rule);
 }
@@ -316,7 +333,7 @@ svg { flex: none; }
   margin: 0;
   border-radius: 50%;
   border: var(--station-ring) solid var(--c);
-  background: #fff;
+  background: var(--paper);
   cursor: pointer;
 }
 
@@ -325,9 +342,20 @@ svg { flex: none; }
 }
 
 .week-stops a {
-  padding: var(--space-3) 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  min-height: 44px;
+  padding: var(--space-2) 0;
   font-weight: 500;
   text-decoration: none;
+}
+
+.week-stops a > svg {
+  flex: none;
+  margin-left: auto;
+  color: var(--ink-soft);
 }
 
 .week-stops a:hover {
@@ -340,13 +368,52 @@ svg { flex: none; }
   text-decoration-thickness: 2px;
 }
 
+/* The next station opens up: a tinted band, its title as an item title, what it's about */
+.week-next {
+  flex: 1;
+  margin-bottom: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background: var(--tint);
+}
+
+.week-stops .week-next a {
+  min-height: 0;
+  padding: var(--space-1) 0 0;
+  font-size: var(--step-half);
+  font-weight: 700;
+}
+
+/* The whole band is the link */
+.week-next a::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 var(--space-3) 52px;
+}
+
+.week-next p {
+  margin-top: var(--space-1);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+}
+
+.week-read {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
 .next-badge {
-  margin-left: auto;
+  display: inline-block;
   padding: 1px var(--space-2);
   border-radius: var(--radius-pill);
   background: var(--ink);
-  color: #fff;
-  font-size: 0.75rem;
+  color: var(--paper);
+  font-size: var(--step--1);
   font-weight: 700;
   white-space: nowrap;
 }
@@ -589,12 +656,16 @@ svg { flex: none; }
   font-size: var(--step--1);
 }
 
+.story h2 {
+  font-size: var(--step-half);
+}
+
+/* A Senior's words look like a Note: the same size, the same bar */
 .story-body {
   margin-top: var(--space-4);
   padding-left: var(--space-4);
-  border-left: 5px solid var(--ink);
-  font-weight: 500;
-  font-size: 1.1rem;
+  border-left: var(--station-ring) solid var(--ink);
+  font-size: var(--type-quote);
   line-height: 1.6;
 }
 
@@ -623,6 +694,7 @@ svg { flex: none; }
 }
 
 .help p {
+  margin-top: var(--space-1);
   opacity: 0.8;
 }
 
@@ -643,7 +715,7 @@ svg { flex: none; }
   border-radius: var(--radius-s);
   background: #fff;
   color: var(--ink);
-  font-size: var(--step-2);
+  font-size: var(--step-1);
   font-weight: 700;
   text-decoration: none;
 }
@@ -1252,10 +1324,6 @@ a.line-chip {
   border-left: 4px solid var(--c);
 }
 
-.feed .note + .note {
-  margin-top: var(--space-4);
-}
-
 .note.is-compact {
   padding: var(--space-3) var(--space-3);
   border-radius: 0 8px 8px 0;
@@ -1263,7 +1331,7 @@ a.line-chip {
 }
 
 .note-text {
-  font-size: var(--step-1);
+  font-size: var(--type-quote);
   line-height: 1.5;
 }
 
@@ -1293,7 +1361,7 @@ a.line-chip {
 }
 
 .feed-filters {
-  margin: var(--space-5) 0 var(--space-4);
+  margin: var(--space-3) 0 var(--space-4);
 }
 
 .feed {
@@ -1315,8 +1383,8 @@ a.line-chip {
   margin-top: var(--space-6);
   padding: var(--space-4) 0;
   background: var(--c);
-  color: #fff;
-  font-size: var(--step-2);
+  color: var(--paper);
+  font-size: var(--step-1);
 }
 
 .line-head .inner {
@@ -1331,7 +1399,9 @@ a.line-chip {
 }
 
 .home-taste-list small {
+  display: block;
   color: var(--ink-soft);
+  font-size: var(--step--1);
 }
 
 /* ---------- Note form ---------- */
@@ -1481,6 +1551,7 @@ body:not(:has(.explorer)) main {
 }
 
 .home-taste-list h3 {
+  font-size: var(--step-0);
   display: flex;
   align-items: center;
   gap: var(--space-3);
@@ -1570,10 +1641,16 @@ body:not(:has(.explorer)) main {
   font-weight: 600;
 }
 
+/* A 44px tap area that doesn't push the Note's bar down */
 .note-by a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
+  display: inline-block;
+  padding-block: 12px;
+  margin-block: -12px;
+}
+
+.note-cat {
+  color: var(--on-tint);
+  font-weight: 700;
 }
 
 @media (min-width: 1600px) {
@@ -1711,9 +1788,28 @@ body:not(:has(.explorer)) main {
   font-weight: 500;
 }
 
-/* Feed head: the one action, then a single row of chips */
-.head-action {
-  margin-top: var(--space-4);
+/* Feed head: the title with its one action beside it, then a single row of chips */
+.page-title-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-3);
+}
+
+/* Filters are quieter than the action and the Notes: 36px drawn, 44px to tap */
+.feed-filters .line-chip,
+.page-head .line-filters .line-chip {
+  position: relative;
+  min-height: 36px;
+  border-width: 1px;
+}
+
+.feed-filters .line-chip::after,
+.page-head .line-filters .line-chip::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
 }
 
 .feed-filters,
@@ -1746,6 +1842,25 @@ body:not(:has(.explorer)) main {
 
 .feed .note + .note {
   margin-top: var(--space-5);
+}
+
+/* Links to the forms further down: plain links, not filter chips */
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-4);
+  margin-top: var(--space-2);
+  font-weight: 600;
+}
+
+.jump-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.contribute-form h2 {
+  scroll-margin-top: var(--space-4);
 }
 
 /* Forms: room between fields, a taller submit */
