@@ -22,6 +22,17 @@ export function GuideBlock({ guide }: { guide: Guide }) {
         </p>
       )}
 
+      {/* Long options: the urgent ones a tap away, before the list (UX audit 7, U2) */}
+      {guide.jumps && (
+        <nav className="jump-links guide-jumps" aria-label="ไปที่ทางเลือก">
+          {guide.jumps.map((j) => (
+            <a key={j.to} href={`#${j.to}`}>
+              {j.label}
+            </a>
+          ))}
+        </nav>
+      )}
+
       {guide.bring && (
         <section className="guide-card guide-bring" aria-labelledby="bring">
           <h2 id="bring">
@@ -45,7 +56,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       {options ? (
         <ul className="option-cards" role="list" aria-labelledby="steps">
           {guide.steps.map((s) => (
-            <li key={s.do} className="guide-card">
+            <li key={s.do} id={s.id} className="guide-card">
               <StepHeading step={s} />
               <StepBody step={s} />
             </li>

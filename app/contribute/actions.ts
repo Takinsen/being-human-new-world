@@ -1,16 +1,18 @@
 "use server";
 
 import { updateTag } from "next/cache";
-import { isRegion } from "@/lib/content";
+import { places } from "@/content/places";
+import { regionOf } from "@/lib/provinces";
 import { appendRow, SHEET_TAG } from "@/lib/sheet";
 
-export type FormState = { ok: boolean; message: string; href?: string } | null;
+/** `link` labels `href`; without one it reads "ดูบนเว็บ" */
+export type FormState = { ok: boolean; message: string; href?: string; link?: string } | null;
 
 function text(form: FormData, key: string, max = 2000): string {
   return String(form.get(key) ?? "").trim().slice(0, max);
 }
 
-async function save(write: () => Promise<void>, href: string): Promise<FormState> {
+async function save(write: () => Promise<void>, href: string, link?: string): Promise<FormState> {
   try {
     await write();
   } catch (err) {
@@ -19,7 +21,7 @@ async function save(write: () => Promise<void>, href: string): Promise<FormState
   }
   // The person who just saved sees their row straight away.
   updateTag(SHEET_TAG);
-  return { ok: true, message: "บันทึกแล้ว ขึ้นบนเว็บเรียบร้อย", href };
+  return link ? { ok: true, message: "บันทึกแล้ว", href, link } : { ok: true, message: "บันทึกแล้ว ขึ้นบนเว็บเรียบร้อย", href };
 }
 
 export async function savePrice(_: FormState, form: FormData): Promise<FormState> {
@@ -29,11 +31,13 @@ export async function savePrice(_: FormState, form: FormData): Promise<FormState
   const per = text(form, "per", 50);
   const by = text(form, "by", 80);
   if (!placeId || !by || !Number.isFinite(min) || !Number.isFinite(max) || min < 0) {
-    return { ok: false, message: "กรอกที่ ราคา และชื่อคนตรวจให้ครบ" };
+    return { ok: false, message: "กรอกที่ ราคา และชื่อเราให้ครบ" };
   }
+  const name = places.find((p) => p.id === placeId)?.name;
   return save(
     () => appendRow("prices", { placeId, min: String(min), max: String(max), per, by }),
     `/?place=${placeId}`,
+    name ? `ดูราคาใหม่ที่${name} →` : undefined,
   );
 }
 
@@ -42,10 +46,11 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
   const id = `s-${Date.now().toString(36)}`;
   const name = text(form, "name", 60);
   const hometown = text(form, "hometown", 60);
-  const region = text(form, "region", 20);
+  // The region follows from the province, as on a Note (UX audit 7, U11).
+  const region = regionOf(hometown);
   const story = text(form, "story", 4000);
-  if (!name || !hometown || !isRegion(region) || !story) {
-    return { ok: false, message: "กรอกชื่อ บ้านเกิด ภาค และเรื่องปีแรกให้ครบ" };
+  if (!name || !region || !story) {
+    return { ok: false, message: "กรอกชื่อ บ้านเกิด และเรื่องปีแรกให้ครบ" };
   }
   return save(
     () =>
@@ -56,7 +61,8 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
         region,
         about: text(form, "about", 80),
         story,
-        quote: text(form, "quote", 300),
+        // Nothing shows a quote any more; the Sheet keeps the column, left empty.
+        quote: "",
       }),
     `/seniors#${id}`,
   );

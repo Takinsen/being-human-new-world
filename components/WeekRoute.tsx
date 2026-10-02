@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CaretRight } from "@phosphor-icons/react";
+import { ArrowRight, CaretRight, PencilSimpleLine, Receipt } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
 import { Peeps } from "./People";
 import { guides } from "@/content/guides";
@@ -17,7 +17,7 @@ export function WeekRoute() {
   const nextSummary = next && guides.find((g) => `/guides/${g.id}` === next.href)?.summary;
   return (
     <section className="week">
-      {/* All seven: the progress turns into a sunny card and the people come out to cheer */}
+      {/* All done: the progress turns into a sunny card and the people come out to cheer */}
       <div className={complete ? "week-progress is-complete" : "week-progress"}>
         {complete && <Peeps className="week-cheer" set="cheer" />}
         <p aria-live="polite">
@@ -33,6 +33,17 @@ export function WeekRoute() {
           <i style={{ width: `${(count / firstWeek.length) * 100}%` }} />
         </span>
         {!complete && <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>}
+        {/* Whoever finished is the best person to help the next Newcomers (UX audit 7, U6) */}
+        {complete && (
+          <div className="week-after">
+            <Link href="/notes/new" className="action is-primary">
+              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตบอกคนมาใหม่รุ่นถัดไป
+            </Link>
+            <Link href="/contribute#price" className="action">
+              <Receipt weight="bold" aria-hidden="true" /> ไปมาแล้ว ช่วยตรวจราคา
+            </Link>
+          </div>
+        )}
       </div>
       <ol className="week-stops">
         {firstWeek.map((item) => {

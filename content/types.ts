@@ -59,8 +59,8 @@ export type Place = {
   homeTaste?: Region;
   /** Stations: how to get into Chula from here, one line */
   toChula?: string;
-  /** Id of the Guide that goes with this Place */
-  guide?: string;
+  /** Ids of the Guides that go with this Place, the closest first */
+  guides?: string[];
   /** Icon when there is no photo; defaults to the category's */
   icon?: IconKey;
 };
@@ -97,6 +97,8 @@ export type GuideStep = {
   tip?: string;
   /** A link out, e.g. walking directions; opens in a new tab */
   link?: { label: string; href: string };
+  /** Anchor for an option card, so `jumps` can point at it */
+  id?: string;
 };
 
 /** One card in a Guide's head. A price goes in `price`, never typed into `value`, so it shows like a Place's (docs/adr/0001). */
@@ -124,6 +126,8 @@ export type Guide = {
   kind?: "steps" | "options";
   /** Heading over the options, e.g. "เลือกตามอาการ"; steps are always "ทำตามนี้" */
   choose?: string;
+  /** Shortcuts above long options, to the step with that `id` (e.g. emergency first) */
+  jumps?: { to: string; label: string }[];
   steps: GuideStep[];
   /** A follow-up link shown after the steps */
   related?: { label: string; href: string };

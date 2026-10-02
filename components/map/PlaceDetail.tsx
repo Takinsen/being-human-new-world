@@ -20,7 +20,7 @@ import { TelText } from "../TelText";
 import type { MapStop } from "./types";
 
 // The selected Place (docs/adr/0006): photo, name and price, what to do next,
-// then one line, one caution and the latest Note. The rest waits behind "อ่านเพิ่ม".
+// its Guides, then one line, one caution and the latest Note. The rest waits behind "อ่านเพิ่ม".
 export function PlaceDetail({
   stop,
   posted,
@@ -34,7 +34,7 @@ export function PlaceDetail({
   /** Wide screens show a back button here; on phones the sheet's top bar is the way back */
   onBack?: () => void;
 }) {
-  const { place, notes, guide } = stop;
+  const { place, notes, guides } = stop;
   const [caution, ...moreCautions] = place.cautions ?? [];
   const [latest] = notes;
   const heading = useRef<HTMLHeadingElement>(null);
@@ -78,7 +78,17 @@ export function PlaceDetail({
             {stop.homeTasteBy ? ` · ${stop.homeTasteBy} แนะนำ` : " · ทีมหามาให้ลอง"}
           </p>
         )}
-        {place.price && <Price price={place.price} />}
+        {place.price && (
+          <>
+            <Price price={place.price} />
+            {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
+            <Link href={`/contribute?place=${place.id}#price`} className="related-link price-fix">
+              {place.price.checked && place.price.checked.how !== "web"
+                ? "ไปมาแล้ว ราคาไม่ตรง? บอกราคาที่เห็น"
+                : "ใครไปมาแล้ว ช่วยบอกราคาจริงได้"}
+            </Link>
+          </>
+        )}
       </header>
 
       <div className="detail-actions">
@@ -107,6 +117,18 @@ export function PlaceDetail({
           </span>
         </p>
       )}
+
+      {/* Up here so a wide screen's side panel shows it without scrolling (UX audit 7, U14) */}
+      {guides.map((guide) => (
+        <Link key={guide.id} href={`/guides/${guide.id}`} className="detail-guide">
+          <BookOpenText weight="bold" aria-hidden="true" />
+          <span>
+            <small>วิธีที่เกี่ยวข้อง</small>
+            {guide.title}
+          </span>
+          <ArrowRight weight="bold" aria-hidden="true" />
+        </Link>
+      ))}
 
       <div className="detail-body">
         <p className="stop-summary">{place.summary}</p>
@@ -149,16 +171,6 @@ export function PlaceDetail({
         </details>
       )}
 
-      {guide && (
-        <Link href={`/guides/${guide.id}`} className="detail-guide">
-          <BookOpenText weight="bold" aria-hidden="true" />
-          <span>
-            <small>วิธีที่เกี่ยวข้อง</small>
-            {guide.title}
-          </span>
-          <ArrowRight weight="bold" aria-hidden="true" />
-        </Link>
-      )}
     </article>
   );
 }
