@@ -10,6 +10,7 @@ import { firstWeek } from "@/content/checklist";
 import type { CategoryId } from "@/content/types";
 import { useChecklist } from "@/lib/useChecklist";
 import { CategoryIcon, PlaceIcon } from "../icons";
+import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
 import { Wordmark } from "../PageHead";
 import { Canopy } from "../Canopy";
 import { PlaceDetail } from "./PlaceDetail";
@@ -299,6 +300,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       <Link href="/seniors#help" className="list-help">
         <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
       </Link>
+      {SHOW_TRANSIT_LOGOS && <p className="fine-print">{LOGO_NOTICE}</p>}
     </div>
   );
 

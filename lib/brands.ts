@@ -6,6 +6,9 @@ import type { Brand } from "@/content/types";
 // pin, card and Guide goes back to our own icons, and the footer line goes too.
 export const SHOW_TRANSIT_LOGOS = process.env.NEXT_PUBLIC_TRANSIT_LOGOS !== "off";
 
+/** Shown wherever the logos are: the footer, and the map list (the map has no footer) */
+export const LOGO_NOTICE = "โลโก้ BTS และ MRT เป็นเครื่องหมายของเจ้าของ ใช้เพื่อบอกว่าเป็นสถานีอะไรเท่านั้น เว็บนี้ไม่ได้เกี่ยวข้องกับผู้ให้บริการ";
+
 type Logo = { src: string; alt: string };
 
 // The files in public/logos are Wikimedia Commons' copies, byte for byte. Never

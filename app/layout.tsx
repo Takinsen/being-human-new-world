@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
-import { SHOW_TRANSIT_LOGOS } from "@/lib/brands";
+import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </p>
           {SHOW_TRANSIT_LOGOS && (
             <p>
-              <small>โลโก้ BTS และ MRT เป็นเครื่องหมายของเจ้าของ ใช้เพื่อบอกว่าเป็นสถานีอะไรเท่านั้น เว็บนี้ไม่ได้เกี่ยวข้องกับผู้ให้บริการ</small>
+              <small>{LOGO_NOTICE}</small>
             </p>
           )}
         </footer>
