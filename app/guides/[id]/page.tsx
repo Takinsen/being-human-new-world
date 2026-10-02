@@ -4,11 +4,9 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { guides } from "@/content/guides";
-import { GuideBlock } from "@/components/GuideBlock";
-import { BrandLogo, IconFor } from "@/components/icons";
+import { GuideBlock, GuideNeedToKnow } from "@/components/GuideBlock";
+import { BrandLogo, CategoryIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
-import { Price } from "@/components/Price";
-import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
 type Props = { params: Promise<{ id: string }> };
@@ -23,7 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: guide ? `${guide.title} | ตั้งหลัก` : "วิธี | ตั้งหลัก" };
 }
 
-// One Guide per page, so the Guides list stays short (docs/adr/0006).
+// One Guide per page, so the Guides list stays short (docs/adr/0006). It reads like an
+// article: title, a calm lede, the "need to know" box, then the steps (docs/adr/0007).
 export default async function GuidePage({ params }: Props) {
   const { id } = await params;
   const guide = (await getContent()).guides.find((g) => g.id === id);
@@ -31,43 +30,25 @@ export default async function GuidePage({ params }: Props) {
   const category = categories.find((c) => c.id === guide.category);
   return (
     <div className="guide-page" data-line={guide.category}>
-      <div className="guide-hero">
-        <PageHead
-          title={
-            <span className="title-with-icon">
-              <span className="guide-icon">
-                <BrandLogo brand={guide.brand} fallback={<IconFor name={guide.icon} />} />
-              </span>
-              {guide.title}
-            </span>
-          }
-          back={
+      <PageHead
+        title={guide.title}
+        back={
+          <div className="guide-crumbs">
             <Link href={`/guides#${guide.category}`} className="back-link">
-              <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด · {category?.name}
+              <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด
             </Link>
-          }
-          lede={guide.summary}
-        >
-          {guide.facts && (
-            <dl className="guide-facts">
-              {guide.facts.map((f) => (
-                <div key={f.label}>
-                  <dt>{f.label}</dt>
-                  <dd>
-                    {f.value && <TelText text={f.value} />}
-                    {f.price && <Price price={f.price} short />}
-                    {f.note && <small>{f.note}</small>}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          )}
-        </PageHead>
-      </div>
+            {/* A BTS or MRT Guide names its operator with the logo, on white; others show the category's icon */}
+            <span className="guide-eyebrow">
+              <BrandLogo brand={guide.brand} fallback={<CategoryIcon id={guide.category} />} />
+              {category?.name}
+            </span>
+          </div>
+        }
+        lede={guide.summary}
+      />
       <div className="guide-body">
-        <div className="inner">
-          <GuideBlock guide={guide} />
-        </div>
+        <GuideNeedToKnow guide={guide} />
+        <GuideBlock guide={guide} />
       </div>
     </div>
   );

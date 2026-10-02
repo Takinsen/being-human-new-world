@@ -95,30 +95,35 @@ export type Note = {
   on?: string;
 };
 
-/** One thing to do in a Guide, written so a Newcomer can do it without asking anyone. */
+/** One thing to do in a Guide, written so a Newcomer can do it without asking anyone.
+ * Read top to bottom: `when`, the `do` line, its `points`, a link, then `say`, `warn`, `tip`. */
 export type GuideStep = {
   /** The situation this step or option is for, e.g. "ฉุกเฉิน"; shown above `do` */
   when?: string;
-  /** The action, short and imperative: the step's heading */
+  /** The action, short and imperative: the step's heading, set bold in Mitr */
   do: string;
-  /** How to do it: where, what to press, what it costs */
-  how?: string;
-  /** Words to say, when the step means talking to someone */
+  /** How to do it, one short plain line each: where, what to press, what it costs */
+  points?: string[];
+  /** Words to say, when the step means talking to someone. Polite and gender-neutral
+   * ("รบกวนขอ… หน่อย"), never "ค่ะ/ครับ" */
   say?: string;
-  /** A trap to avoid or a shortcut that saves time */
+  /** A real trap that costs money or safety, or emergency criteria: drawn as the page's one
+   * callout, so keep it rare (a Guide has one at most) */
+  warn?: string;
+  /** A shortcut, or a small thing to watch for; a quiet sentence */
   tip?: string;
   /** A link out, e.g. walking directions; opens in a new tab */
   link?: { label: string; href: string };
-  /** Anchor for an option card, so `jumps` can point at it */
+  /** Anchor for an option, so `jumps` can point at it */
   id?: string;
   /** An emergency option: drawn in the caution colour so it can't be mistaken for a mild one */
   urgent?: boolean;
 };
 
-/** One card in a Guide's head. A price goes in `price`, never typed into `value`, so it shows like a Place's (docs/adr/0001). */
+/** One line in a Guide's "need to know" box. A price goes in `price`, never typed into `value`, so its figure gets the platform yellow and its source is said (docs/adr/0001). */
 export type GuideFact = {
   label: string;
-  /** Where the value comes from, or a word about the price */
+  /** A word about the value, e.g. what a price is made of or when a line answers */
   note?: string;
 } & ({ value: string; price?: never } | { price: Price; value?: never });
 
@@ -126,26 +131,27 @@ export type Guide = {
   id: string;
   category: PlaceCategoryId;
   title: string;
-  /** One line on the Guides list: what you'll be able to do */
+  /** On the Guides list and as the Guide's lede: what newcomers get wrong, in a person's words */
   summary: string;
   icon: IconKey;
-  /** Shown instead of the icon when the Guide is about one operator's trains (lib/brands.ts) */
+  /** The Guide is about one operator's trains: its logo shows in the page head (lib/brands.ts) */
   brand?: Brand;
+  /** The article's opening paragraph, under the "need to know" box */
   intro?: string;
   /** Not shown since docs/adr/0007 (Guides use illustration); kept for a Place card or a later look */
   photo?: Photo;
-  /** At a glance, under the title: cost, time, when it's open. A price goes in `price` and shows like a Place's (docs/adr/0001). */
+  /** Need to know at a glance: cost, hours, a number to call. A price goes in `price` (docs/adr/0001). */
   facts?: GuideFact[];
-  /** What to have with you before the first step */
+  /** What to have with you before the first step ("พกไปด้วย") */
   bring?: string[];
   /** "options" lists alternatives to choose from; default is ordered steps */
   kind?: "steps" | "options";
-  /** Heading over the options, e.g. "เลือกตามอาการ"; steps are always "ทำตามนี้" */
+  /** Heading over the options, e.g. "เป็นแค่ไหน"; steps are always "ทำตามนี้" */
   choose?: string;
   /** Shortcuts above long options, to the step with that `id` (e.g. emergency first) */
   jumps?: { to: string; label: string }[];
   steps: GuideStep[];
-  /** A follow-up link shown after the steps */
+  /** A follow-up link shown after the steps, under "อ่านต่อ" */
   related?: { label: string; href: string };
   /** false until the team has walked through the steps for real */
   checked: boolean;
