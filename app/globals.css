@@ -2934,3 +2934,97 @@ html[data-swipe] .tab-bar {
 @keyframes swipe-in-left {
   from { opacity: 0; transform: translateX(-30%); }
 }
+
+/* ---------- Splash (docs/adr/0007) ---------- */
+
+/* On a session's first load only: the leaf draws itself on the dark leaves, then the green
+   lifts into the page's canopy (components/Splash.tsx). The page is underneath all along. */
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  overflow: hidden;
+  /* If the motion never takes over (no script, a slow phone), get out of the way */
+  animation: splash-bail 300ms ease-out 2200ms both;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.splash.is-held {
+  animation: none;
+}
+
+.splash.is-melting {
+  pointer-events: none;
+}
+
+@keyframes splash-bail {
+  to { opacity: 0; visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash { display: none; }
+}
+
+.splash-sheet {
+  position: absolute;
+  inset: 0;
+  background: var(--leaf-dark);
+}
+
+/* The green's edge is the canopy's own dark leaves, sized to the page's canopy by the script,
+   so it comes to rest on them exactly and melts into the lighter leaves and the light */
+.splash-edge {
+  position: absolute;
+  top: calc(100% - 1px);
+  left: 0;
+  width: 100%;
+  height: calc(var(--canopy) + var(--space-4));
+}
+
+.splash-edge .canopy {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: none;
+}
+
+.splash-edge .canopy-leaves > path[fill="var(--leaf)"],
+.splash-edge .canopy svg > g:not(.canopy-leaves) {
+  display: none;
+}
+
+/* The wordmark, as it sits in the canopy's shade on the map */
+.splash-mark {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-4);
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  gap: var(--space-2);
+  color: var(--paper);
+  font-family: var(--font-head);
+  font-size: var(--step-0);
+  font-weight: 500;
+  white-space: nowrap;
+  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
+  transform-origin: 0 0;
+}
+
+.splash:not(.is-playing) .splash-mark {
+  opacity: 0;
+}
+
+.splash-mark .wordmark-leaf {
+  overflow: visible;
+}
+
+.splash-mark .wordmark-leaf path {
+  stroke-dasharray: 18 20;
+  stroke-dashoffset: 19;
+}
+
+.splash-name {
+  display: block;
+}

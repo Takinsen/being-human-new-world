@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
+import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        <Splash />
         <a href="#main" className="skip-link">
           ข้ามไปเนื้อหา
         </a>

@@ -12,6 +12,7 @@ The whole site takes the look of shade under the rain trees (จามจุร�
 - Headings and the wordmark are set in Mitr, text and numbers in IBM Plex Sans Thai Looped. The wordmark's mark is a rain tree leaf, which is also the favicon; the three transit bars went with the transit look.
 - Pictures are illustrations; real photos stay only on Place cards, so a Guide shows no photo.
 - Motion is soft and small (things rise in, buttons give a little when pressed, a ticked station pops), and all of it is off for anyone who asks for reduced motion.
+  - Amended 2026-10-02: a short splash on the first page load of a browser session (concept A, the leaf drawing itself, then the green lifting into the page's canopy), about 1.5s, skipped by any tap or key, and never shown with reduced motion.
 - Each screen has one thing that stands out; secondary text is quieter. The tagline is no longer shown on the site, only in the description a shared link shows (amended 2026-10-02 at the owner's request).
 
 ## Considered options

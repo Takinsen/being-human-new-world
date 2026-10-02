@@ -36,7 +36,7 @@ export function Wordmark() {
 }
 
 /* A rain tree's leaf: leaflets in pairs along a stem, in the text's colour */
-function LeafMark() {
+export function LeafMark() {
   return (
     <svg className="wordmark-leaf" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 23V5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
