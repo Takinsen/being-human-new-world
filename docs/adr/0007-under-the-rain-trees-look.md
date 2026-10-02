@@ -9,7 +9,7 @@ The whole site takes the look of shade under the rain trees (จามจุร�
 - Lists everywhere become soft rounded cards, Notes included; a Note has one corner tucked in like a leaf. Category heads are an icon and a name, not a full-width band.
 - Steps in a Guide and stations in the Starter Checklist are joined by a dotted path rather than a rail.
 - People drawn from Open Peeps (CC0) appear where the site is about people: the Feed, the Seniors page, and a finished first week.
-- Headings and the wordmark are set in Mitr, text and numbers in IBM Plex Sans Thai Looped.
+- Headings and the wordmark are set in Mitr, text and numbers in IBM Plex Sans Thai Looped. The wordmark's mark is a rain tree leaf, which is also the favicon; the three transit bars went with the transit look.
 - Pictures are illustrations; real photos stay only on Place cards, so a Guide shows no photo.
 - Motion is soft and small (things rise in, buttons give a little when pressed, a ticked station pops), and all of it is off for anyone who asks for reduced motion.
 - Each screen has one thing that stands out; secondary text is quieter. The tagline stays.
