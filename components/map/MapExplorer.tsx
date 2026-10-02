@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, FirstAidKit, Phone, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, FirstAidKit, Phone, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { Category } from "@/content/categories";
 import { firstWeek } from "@/content/checklist";
@@ -244,8 +244,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     <div className="stop-list">
       {visible.length === 0 && (
         <p className="status-note">
-          {active.length ? "ยังไม่มีใครเขียนโน้ตไว้ที่ไหนในหมวดที่เลือก" : "ยังไม่มีใครเขียนโน้ตผูกกับที่ไหนบนแผนที่"}{" "}
-          <Link href="/notes/new">เขียนโน้ตแรก</Link>
+          {active.length ? "หมวดนี้ยังไม่มีใครเขียนโน้ตไว้" : "ยังไม่มีโน้ตที่ไหนบนแผนที่เลย"}{" "}
+          <Link href="/notes/new">เขียนเป็นคนแรกเลย</Link>
         </p>
       )}
       {categories
@@ -256,7 +256,10 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
           return (
             <section key={c.id} data-line={c.id} className="stop-group">
               {/* app/page.tsx sorts food cheapest first; say so */}
-              <h2>{c.id === "food" ? `${c.name} · ถูกไปแพง` : c.name}</h2>
+              <h2>
+                {c.name}
+                {c.id === "food" && <small> เรียงจากถูกไปแพง</small>}
+              </h2>
               <ul>
                 {inCategory.map((stop) => {
                   const { place, notes } = stop;
@@ -272,11 +275,10 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                           <span className="visually-hidden">: </span>
                           <small>{place.summary}</small>
                           <span className="stop-tags">
-                            {price && <mark className="price-strip">{price}</mark>}
+                            {price && <b className="stop-price">{price}</b>}
                             {place.homeTaste && (
                               <small className="home-taste-tag">
                                 <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน{place.homeTaste}
-                                {stop.homeTasteBy ? "" : " (ทีมหามาให้ลอง)"}
                               </small>
                             )}
                             {notes.length > 0 && (
@@ -312,17 +314,15 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       {doneCount === 0 ? (
         <Link href="/checklist">
           <span>
-            เพิ่งมาใหม่? เริ่มที่ <b>สัปดาห์แรก</b>
+            เพิ่งย้ายมา เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้
           </span>
-          <ArrowRight weight="bold" aria-hidden="true" />
         </Link>
       ) : (
         <Link href={nextItem.href}>
           <span>
             {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
-            สัปดาห์แรก {doneCount}/{firstWeek.length} · ถัดไป: {nextItem.title}
+            สัปดาห์แรกทำไปแล้ว {doneCount} จาก {firstWeek.length}&nbsp;ข้อ ต่อไปคือ{nextItem.title}
           </span>
-          <ArrowRight weight="bold" aria-hidden="true" />
         </Link>
       )}
       <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
@@ -371,12 +371,12 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                 // With a card open, the sheet's top bar is its way back (saves a row on phones).
                 <button type="button" className="sheet-handle" onClick={back}>
                   <span>
-                    <ArrowLeft weight="bold" aria-hidden="true" /> ทุกที่บนแผนที่
+                    <ArrowLeft weight="bold" aria-hidden="true" /> ดูที่อื่น
                   </span>
                 </button>
               ) : (
                 <button type="button" className="sheet-handle" aria-expanded={sheetOpen} onClick={() => setSheetOpen((o) => !o)}>
-                  <span>แผนที่ย่านจุฬาฯ {visible.length} ที่</span>
+                  <span>แถวจุฬาฯ {visible.length} ที่</span>
                   {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
                 </button>
               )}

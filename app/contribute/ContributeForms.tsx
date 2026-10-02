@@ -20,7 +20,7 @@ function Status({ state }: { state: FormState }) {
       {state.href && (
         <>
           {" "}
-          <Link href={state.href}>{state.link ?? "ดูบนเว็บ"}</Link>
+          <Link href={state.href}>{state.link ?? "ไปดู"}</Link>
         </>
       )}
     </FormStatus>
@@ -40,7 +40,7 @@ function PlaceSelect({
 }) {
   return (
     <label>
-      ที่
+      ที่ไหน
       <select name="placeId" required defaultValue={initial ?? ""} onChange={(e) => onChange?.(e.target.value)}>
         <option value="" disabled>
           เลือกที่
@@ -62,13 +62,13 @@ function PlaceSelect({
 }
 
 const contributeMessages = {
-  placeId: "เลือกที่",
-  min: "ใส่ราคาต่ำสุด",
-  by: "ใส่ชื่อเรา",
-  name: "ใส่ชื่อที่ให้แสดง",
-  hometown: "เลือกจังหวัดบ้านเกิด",
-  story: "เล่าเรื่องปีแรก",
-  guideId: "เลือกวิธี",
+  placeId: "เลือกก่อนว่าที่ไหน",
+  min: "ใส่ราคาถูกสุดด้วย",
+  by: "ใส่ชื่อเราด้วย",
+  name: "ใส่ชื่อที่อยากให้ขึ้น",
+  hometown: "เลือกจังหวัดที่บ้านอยู่",
+  story: "เล่าเรื่องปีแรกก่อน",
+  guideId: "เลือกก่อนว่าวิธีไหน",
 };
 
 export function ContributeForms({
@@ -97,7 +97,7 @@ export function ContributeForms({
   const checkRange = (e: FormEvent<HTMLFormElement>) => {
     const { min, max } = e.currentTarget.elements as unknown as Record<"min" | "max", HTMLInputElement>;
     if (max.value && min.value && Number(max.value) < Number(min.value)) {
-      max.setCustomValidity("ราคาสูงสุดต้องไม่น้อยกว่าต่ำสุด");
+      max.setCustomValidity("แพงสุดต้องไม่ต่ำกว่าถูกสุดนะ");
       max.reportValidity();
       e.preventDefault();
     }
@@ -117,8 +117,8 @@ export function ContributeForms({
         onInput={clearRange}
         onSubmit={checkRange}
       >
-        <h2 id="price">ตรวจราคา</h2>
-        <p className="status-note">ไปถึงที่แล้วเห็นราคาจริง กรอกตรงนี้ ราคาจะขึ้นพร้อมชื่อเราและเดือนนี้</p>
+        <h2 id="price">บอกราคาที่เห็น</h2>
+        <p className="status-note">ไปมาแล้วเห็นราคาเท่าไหร่ ใส่ไว้ตรงนี้ ราคาจะขึ้นพร้อมชื่อเรากับเดือนนี้</p>
         <PlaceSelect
           lines={lines}
           places={places}
@@ -127,11 +127,11 @@ export function ContributeForms({
         />
         <div className="form-row">
           <label>
-            ต่ำสุด (บาท)
+            ถูกสุดกี่บาท
             <input name="min" type="number" inputMode="numeric" min={0} required />
           </label>
           <label>
-            สูงสุด (บาท)
+            แพงสุดกี่บาท
             <input name="max" type="number" inputMode="numeric" min={0} />
           </label>
         </div>
@@ -140,21 +140,21 @@ export function ContributeForms({
           <input name="per" placeholder="เช่น ต่อจาน ต่อเที่ยว" value={per} onChange={(e) => setPer(e.target.value)} />
         </label>
         <label>
-          ชื่อเรา (ขึ้นคู่กับราคา)
+          ชื่อเรา
           <input name="by" placeholder="เช่น พี่บอส" required />
         </label>
         <button type="submit" disabled={pricePending}>
-          {pricePending ? "กำลังบันทึก" : "บันทึกราคา"}
+          {pricePending ? "กำลังส่ง" : "ส่งราคา"}
         </button>
         <Status state={priceState} />
       </form>
 
       <form action={seniorAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-        <h2 id="senior">เรื่องปีแรกของรุ่นพี่</h2>
-        <p className="status-note">เพิ่มเรื่องของรุ่นพี่คนใหม่ เรื่องที่ขึ้นเว็บแล้วแก้จากตรงนี้ไม่ได้</p>
+        <h2 id="senior">เล่าปีแรกของเรา</h2>
+        <p className="status-note">ปีแรกเราเจออะไรมาบ้าง เล่าให้น้องฟัง ขึ้นเว็บแล้วกลับมาแก้ตรงนี้ไม่ได้นะ</p>
         <div className="form-row">
           <label>
-            ชื่อที่ให้แสดง
+            ชื่อที่อยากให้ขึ้น
             <input name="name" placeholder="เช่น พี่บอส" required />
           </label>
           {/* Same list as the Note form; the region follows from the province */}
@@ -165,11 +165,11 @@ export function ContributeForms({
           <input name="about" placeholder="เช่น ปี 3 วิศวะ" />
         </label>
         <label>
-          เรื่องปีแรก (เว้นบรรทัดเพื่อขึ้นย่อหน้าใหม่)
-          <textarea name="story" rows={8} required />
+          เรื่องปีแรก
+          <textarea name="story" rows={8} required placeholder="อยากขึ้นย่อหน้าใหม่ก็เว้นบรรทัด" />
         </label>
         <button type="submit" disabled={seniorPending}>
-          {seniorPending ? "กำลังบันทึก" : "บันทึกเรื่อง"}
+          {seniorPending ? "กำลังส่ง" : "ส่งเรื่อง"}
         </button>
         <Status state={seniorState} />
       </form>
@@ -177,9 +177,9 @@ export function ContributeForms({
       {guides.length > 0 && (
         <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
           <h2 id="guide">ลองทำตามวิธีแล้ว</h2>
-          <p className="status-note">ทำตามขั้นตอนจริงแล้วได้ผล ป้าย &ldquo;ร่าง&rdquo; ของวิธีนั้นจะหายไป</p>
+          <p className="status-note">ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย &ldquo;ร่าง&rdquo; จะหายไป</p>
           <label>
-            วิธี
+            วิธีไหน
             <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>
               <option value="" disabled>
                 เลือกวิธี
@@ -191,7 +191,7 @@ export function ContributeForms({
                     .map((g) => (
                       <option key={g.id} value={g.id}>
                         {g.title}
-                        {g.checked ? " (ยืนยันแล้ว)" : ""}
+                        {g.checked ? " ลองแล้ว" : ""}
                       </option>
                     ))}
                 </optgroup>
@@ -199,11 +199,11 @@ export function ContributeForms({
             </select>
           </label>
           <label>
-            ชื่อคนที่ลองทำ
+            ชื่อเรา
             <input name="by" required />
           </label>
           <button type="submit" disabled={guidePending}>
-            {guidePending ? "กำลังบันทึก" : "ยืนยันวิธีนี้"}
+            {guidePending ? "กำลังส่ง" : "ลองแล้ว ใช้ได้"}
           </button>
           <Status state={guideState} />
         </form>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, HandHeart, PencilSimpleLine } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, HandHeart, PencilSimpleLine } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
 import { Peeps } from "@/components/People";
 import { PageHead } from "@/components/PageHead";
@@ -15,7 +15,7 @@ export default async function SeniorsPage() {
     <>
       <PageHead
         title="รุ่นพี่ก็เคยมาใหม่"
-        lede="ปีแรกของทุกคนมีช่วงที่ยาก เหงา หรือหลง ไม่ได้แปลว่าเราปรับตัวไม่เก่ง"
+        lede="รุ่นพี่เล่าปีแรกของตัวเอง ทั้งตอนหลงทาง ตอนหาร้านไม่เจอจนกินเซเว่นเยอะมาก ตอนนอนคนเดียวแล้วคิดถึงบ้าน"
         back={
           <Link href="/notes" className="back-link">
             <ArrowLeft weight="bold" aria-hidden="true" /> โน้ต
@@ -31,8 +31,7 @@ export default async function SeniorsPage() {
           <li>
             <Link href="/contribute#senior">
               <PencilSimpleLine weight="bold" aria-hidden="true" />
-              <span>เคยเป็นคนมาใหม่เหมือนกัน? เล่าเรื่องปีแรกของเรา</span>
-              <ArrowRight weight="bold" aria-hidden="true" />
+              <span>เล่าปีแรกของเราบ้าง</span>
             </Link>
           </li>
         </ul>

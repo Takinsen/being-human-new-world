@@ -11,7 +11,7 @@ export function SeniorStory({ senior }: { senior: Senior }) {
           <h2>{senior.name}</h2>
           <p className="story-from">
             บ้านอยู่{senior.hometown}
-            {senior.about && `, ${senior.about}`}
+            {senior.about && ` ${senior.about}`}
           </p>
         </div>
       </header>

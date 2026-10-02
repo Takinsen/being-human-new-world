@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
-  ArrowRight,
   BookOpenText,
   BowlSteam,
   CheckCircle,
@@ -58,7 +57,7 @@ export function PlaceDetail({
     <article className="detail" data-line={place.category}>
       {onBack && (
         <button type="button" className="back-link detail-back" onClick={onBack}>
-          <ArrowLeft weight="bold" aria-hidden="true" /> ทุกที่บนแผนที่
+          <ArrowLeft weight="bold" aria-hidden="true" /> ดูที่อื่น
         </button>
       )}
       <Photo photo={place.photo} className="detail-photo" />
@@ -74,8 +73,10 @@ export function PlaceDetail({
         </div>
         {place.homeTaste && (
           <p className="home-taste-tag">
-            <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน อาหาร{place.homeTaste}
-            {stop.homeTasteBy ? ` · ${stop.homeTasteBy} แนะนำ` : " · ทีมหามาให้ลอง"}
+            <BowlSteam weight="bold" aria-hidden="true" />{" "}
+            {stop.homeTasteBy
+              ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน`
+              : `อาหาร${place.homeTaste} ทีมหามาให้ลอง ยังรอคน${place.homeTaste}มาบอกว่าใช่ไหม`}
           </p>
         )}
         {place.price && (
@@ -84,8 +85,8 @@ export function PlaceDetail({
             {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
             <Link href={`/contribute?place=${place.id}#price`} className="related-link price-fix">
               {place.price.checked && place.price.checked.how !== "web"
-                ? "ไปมาแล้ว ราคาไม่ตรง? บอกราคาที่เห็น"
-                : "ใครไปมาแล้ว ช่วยบอกราคาจริงได้"}
+                ? "ไปมาแล้วราคาไม่ตรง บอกเราหน่อย"
+                : "ไปมาแล้วเจอราคาเท่าไหร่ บอกเราหน่อย"}
             </Link>
           </>
         )}
@@ -105,7 +106,7 @@ export function PlaceDetail({
 
       {posted && (
         <p className="form-status" role="status" tabIndex={-1} ref={status}>
-          <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว
+          <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว ขอบคุณนะ
         </p>
       )}
 
@@ -113,7 +114,8 @@ export function PlaceDetail({
         <p className="to-chula">
           <SignIn weight="bold" aria-hidden="true" />
           <span>
-            <b>เข้าจุฬาฯ:</b> {place.toChula}
+            <b className="to-chula-head">เข้าจุฬาฯ ยังไง</b>
+            {place.toChula}
           </span>
         </p>
       )}
@@ -123,10 +125,9 @@ export function PlaceDetail({
         <Link key={guide.id} href={`/guides/${guide.id}`} className="detail-guide">
           <BookOpenText weight="bold" aria-hidden="true" />
           <span>
-            <small>วิธีที่เกี่ยวข้อง</small>
+            <small>อ่านวิธี</small>
             {guide.title}
           </span>
-          <ArrowRight weight="bold" aria-hidden="true" />
         </Link>
       ))}
 
@@ -148,7 +149,7 @@ export function PlaceDetail({
           <NoteCard note={latest} compact />
           {notes.length > 1 && (
             <Link href={`/notes?place=${place.id}`} className="related-link">
-              ดูโน้ตที่นี่ทั้งหมด ({notes.length})
+              อ่านโน้ตที่นี่ทั้งหมด {notes.length} อัน
             </Link>
           )}
         </div>

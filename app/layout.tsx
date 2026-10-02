@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <footer className="site-footer">
           <p>
-            ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน · <Link href="/contribute">ช่วยเติมข้อมูล</Link>
+            ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี <Link href="/contribute">ช่วยเติมได้เลย</Link>
           </p>
           {SHOW_TRANSIT_LOGOS && (
             <p>

@@ -27,7 +27,7 @@ export function Photo({ photo, className }: { photo?: PhotoData; className?: str
           rel="noreferrer"
           aria-label={`ที่มาของภาพ${photo.alt} บน Wikimedia Commons (เปิดแท็บใหม่)`}
         >
-          ภาพ: Wikimedia Commons
+          ภาพจาก Wikimedia Commons
         </a>
       </figcaption>
     </figure>

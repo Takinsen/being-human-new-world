@@ -17,17 +17,10 @@ export default async function ContributePage({ searchParams }: Props) {
   const guidesToConfirm = content.guides.some((g) => !g.checked);
   return (
     <>
-      <PageHead title="ช่วยเติมข้อมูล" lede="กดบันทึกแล้วขึ้นเว็บเลย เลือกเรื่องที่จะเติม">
-        {/* Several forms on one long page: jump straight to the one you came for */}
-        <nav className="jump-links" aria-label="ไปที่ฟอร์ม">
-          <a href="#price">ตรวจราคา</a>
-          <a href="#senior">เรื่องปีแรกของรุ่นพี่</a>
-          {guidesToConfirm && <a href="#guide">ลองทำตามวิธีแล้ว</a>}
-        </nav>
-      </PageHead>
+      <PageHead title="ช่วยเติมข้อมูล" lede="รู้อะไรที่เว็บยังไม่มี เติมตรงนี้ได้ กดส่งแล้วขึ้นเลย" />
       <div className="inner">
       {!sheetConfigured() && (
-        <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) ฟอร์มจะยังบันทึกไม่ได้</p>
+        <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้กดส่งยังไม่ขึ้น</p>
       )}
       <ContributeForms
         // Places and Guides only: Adjusting has neither (docs/adr/0008)

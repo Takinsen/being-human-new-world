@@ -22,16 +22,16 @@ export default async function NewNotePage({ searchParams }: Props) {
     <>
       <PageHead
         title="เขียนโน้ต"
-        lede="สิ่งที่อยากให้คนมาใหม่รู้ สั้นๆ ในคำพูดของเราเอง"
+        lede="อยากบอกอะไรน้องที่เพิ่งมา เขียนสั้นๆ เหมือนพิมพ์บอกเพื่อน"
         back={
           <Link href={from ? `/?place=${from.id}` : fromLine ? `/notes?line=${fromLine.id}` : "/notes"} className="back-link">
-            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : fromLine ? `โน้ต · ${fromLine.name}` : "โน้ต"}
+            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : fromLine ? `โน้ตเรื่อง${fromLine.name}` : "โน้ต"}
           </Link>
         }
       />
       <div className="inner">
         {!sheetConfigured() && (
-          <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) โน้ตจะยังบันทึกไม่ได้</p>
+          <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้ส่งโน้ตยังไม่ขึ้น</p>
         )}
         <NoteForm
           lines={categories.map((c) => ({ id: c.id, name: c.name, hasPlaces: c.hasPlaces }))}
