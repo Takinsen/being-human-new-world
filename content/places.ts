@@ -8,6 +8,7 @@ export const places: Place[] = [
   // การเดินทาง
   {
     id: "mrt-samyan",
+    brand: "mrt",
     name: "MRT สาม\u2060ย่าน",
     category: "transport",
     lat: 13.7324,
@@ -27,6 +28,7 @@ export const places: Place[] = [
   },
   {
     id: "bts-siam",
+    brand: "bts",
     name: "BTS สยาม",
     category: "transport",
     lat: 13.7456,
@@ -44,6 +46,7 @@ export const places: Place[] = [
   },
   {
     id: "bts-national-stadium",
+    brand: "bts",
     name: "BTS สนามกีฬาแห่งชาติ",
     category: "transport",
     lat: 13.7466,
@@ -120,12 +123,12 @@ export const places: Place[] = [
     homeTaste: "อีสาน",
   },
 
-  // อยู่คนเดียว
+  // สุขภาพ
   {
     id: "chula-hospital",
     icon: "sick",
     name: "โรงพยาบาลจุฬาลงกรณ์",
-    category: "living",
+    category: "health",
     lat: 13.731,
     lng: 100.5362,
     // The ER is what people come here for at night, so it leads; it isn't a caution (UX audit 7, U2).
@@ -141,7 +144,7 @@ export const places: Place[] = [
   {
     id: "cu-health-service",
     name: "ศูนย์บริการสุขภาพ จุฬาฯ",
-    category: "living",
+    category: "health",
     icon: "sick",
     lat: 13.736,
     lng: 100.5257,
@@ -155,10 +158,12 @@ export const places: Place[] = [
     cautions: ["เวลาเปิดอาจเปลี่ยน โทรเช็กก่อนไป 02-218-0568 (ข้อมูลจากเว็บจุฬาฯ)"],
     guides: ["sick"],
   },
+
+  // งานบ้าน
   {
     id: "samyan-mitrtown-supermarket",
     name: "ซูเปอร์มาร์เก็ต สาม\u2060ย่านมิตรทาวน์",
-    category: "living",
+    category: "household",
     lat: 13.7334,
     lng: 100.5289,
     summary: "ซื้อของใช้เข้าห้อง น้ำดื่มแพ็คใหญ่ ผง\u2060ซักฟอก",

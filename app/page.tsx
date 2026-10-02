@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { categories } from "@/content/categories";
+import { placeCategories } from "@/content/categories";
 import { MapExplorer } from "@/components/map/MapExplorer";
 import type { Place } from "@/content/types";
 import { getContent, notesOn, placesIn } from "@/lib/content";
@@ -10,7 +10,8 @@ const byPrice = (a: Place, b: Place) => (a.price?.checked ? a.price.min : Infini
 // Home is the map (docs/adr/0006).
 export default async function Home() {
   const content = await getContent();
-  const stops = categories.flatMap((c) => {
+  // Adjusting has no Places, so it has no map chip either (docs/adr/0008).
+  const stops = placeCategories.flatMap((c) => {
     const places = placesIn(content, c.id);
     return (c.id === "food" ? [...places].sort(byPrice) : places).map((place) => {
       const guides = (place.guides ?? []).flatMap((id) => content.guides.filter((g) => g.id === id));
@@ -25,7 +26,7 @@ export default async function Home() {
   });
   return (
     <Suspense fallback={<div className="explorer map-loading">กำลังโหลดแผนที่</div>}>
-      <MapExplorer stops={stops} categories={categories} />
+      <MapExplorer stops={stops} categories={placeCategories} />
     </Suspense>
   );
 }

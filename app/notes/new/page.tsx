@@ -34,7 +34,7 @@ export default async function NewNotePage({ searchParams }: Props) {
           <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) โน้ตจะยังบันทึกไม่ได้</p>
         )}
         <NoteForm
-          lines={categories.map((c) => ({ id: c.id, name: c.name }))}
+          lines={categories.map((c) => ({ id: c.id, name: c.name, hasPlaces: c.hasPlaces }))}
           places={content.places.map((p) => ({ id: p.id, name: p.name, category: p.category }))}
           provinces={provincesByRegion}
           initialPlace={from?.id}

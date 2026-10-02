@@ -15,7 +15,7 @@ const noteMessages = {
   hometown: "เลือกจังหวัดบ้านเกิด",
 };
 
-type Line = { id: CategoryId; name: string };
+type Line = { id: CategoryId; name: string; hasPlaces: boolean };
 type PlaceOption = { id: string; name: string; category: CategoryId };
 
 export function NoteForm({
@@ -62,7 +62,8 @@ export function NoteForm({
         ที่บนแผนที่ (ไม่ใส่ก็ได้)
         <select name="placeId" value={placeId} onChange={(e) => setPlaceId(e.target.value)}>
           <option value="">ไม่ผูกกับที่ไหน</option>
-          {lines.map((l) => (
+          {/* Adjusting has no Places, so no empty group for it (docs/adr/0008) */}
+          {lines.filter((l) => l.hasPlaces).map((l) => (
             <optgroup key={l.id} label={l.name}>
               {places
                 .filter((p) => p.category === l.id)

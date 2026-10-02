@@ -1,6 +1,10 @@
 // Content model. Terms follow CONTEXT.md.
 
-export type CategoryId = "transport" | "food" | "living";
+// Adjusting has Notes only, no Places or Guides (docs/adr/0008).
+export type CategoryId = "transport" | "food" | "health" | "household" | "adjusting";
+
+/** The categories a Place or Guide can belong to */
+export type PlaceCategoryId = Exclude<CategoryId, "adjusting">;
 
 export type Region = "เหนือ" | "อีสาน" | "กลาง" | "ใต้" | "ตะวันออก" | "ตะวันตก";
 
@@ -29,6 +33,9 @@ export type Photo = {
   alt: string;
 };
 
+/** A transit operator whose logo we show to name a station; see lib/brands.ts */
+export type Brand = "bts" | "mrt";
+
 /** Icon keys map to Phosphor icons in components/icons.tsx. */
 export type IconKey =
   | "train"
@@ -41,12 +48,15 @@ export type IconKey =
   | "laundry"
   | "water"
   | "trash"
-  | "sick";
+  | "sick"
+  | "basket"
+  /** Adjusting's icon; it has no Places, so there is no map pin for it */
+  | "care";
 
 export type Place = {
   id: string;
   name: string;
-  category: CategoryId;
+  category: PlaceCategoryId;
   lat: number;
   lng: number;
   /** One line: why a Newcomer would come here */
@@ -63,6 +73,8 @@ export type Place = {
   guides?: string[];
   /** Icon when there is no photo; defaults to the category's */
   icon?: IconKey;
+  /** A station: show its operator's logo instead of the icon (lib/brands.ts) */
+  brand?: Brand;
 };
 
 /** A short piece of Local Know-how anyone writes, signed with name and hometown. See CONTEXT.md. */
@@ -112,11 +124,13 @@ export type GuideFact = {
 
 export type Guide = {
   id: string;
-  category: CategoryId;
+  category: PlaceCategoryId;
   title: string;
   /** One line on the Guides list: what you'll be able to do */
   summary: string;
   icon: IconKey;
+  /** Shown instead of the icon when the Guide is about one operator's trains (lib/brands.ts) */
+  brand?: Brand;
   intro?: string;
   /** Not shown since docs/adr/0007 (Guides use illustration); kept for a Place card or a later look */
   photo?: Photo;

@@ -4,6 +4,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { MapContainer, Marker, TileLayer, Tooltip, ZoomControl, useMap, useMapEvents } from "react-leaflet";
+import { logoFor } from "@/lib/brands";
 import { placeIconKey } from "../icons";
 import type { MapStop } from "./types";
 
@@ -13,18 +14,22 @@ const PIN = 44; // px, also the tap target
 const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 
 // The pin shows its category's icon (docs/adr/0006); the icon itself is CSS.
+// A station shows its operator's logo instead, on white, ringed in the category's
+// colour (lib/brands.ts). The logo is decorative: the marker's tooltip names the station.
 // Built once per look, so Leaflet only swaps a marker's element when it changes.
 const icons = new Map<string, L.DivIcon>();
-function pinIcon(category: string, icon: string, selected: boolean) {
-  const key = `${category}:${icon}:${selected}`;
-  if (!icons.has(key)) icons.set(key, makePinIcon(category, icon, selected));
+function pinIcon(category: string, icon: string, logo: string | undefined, selected: boolean) {
+  const key = `${category}:${icon}:${logo}:${selected}`;
+  if (!icons.has(key)) icons.set(key, makePinIcon(category, icon, logo, selected));
   return icons.get(key)!;
 }
 
-function makePinIcon(category: string, icon: string, selected: boolean) {
+function makePinIcon(category: string, icon: string, logo: string | undefined, selected: boolean) {
   return L.divIcon({
     className: selected ? "map-pin is-selected" : "map-pin",
-    html: `<span class="pin" data-line="${category}" data-icon="${icon}"></span>`,
+    html: logo
+      ? `<span class="pin has-logo" data-line="${category}"><img class="brand-logo" src="${logo}" alt=""></span>`
+      : `<span class="pin" data-line="${category}" data-icon="${icon}"></span>`,
     iconSize: [PIN, PIN],
     iconAnchor: [PIN / 2, PIN / 2],
   });
@@ -148,7 +153,7 @@ function Pins({
         else markers.current.delete(place.id);
       }}
       position={positions.get(place.id) ?? [place.lat, place.lng]}
-      icon={pinIcon(place.category, placeIconKey(place), place.id === selectedId)}
+      icon={pinIcon(place.category, placeIconKey(place), logoFor(place.brand)?.src, place.id === selectedId)}
       zIndexOffset={place.id === selectedId ? 1000 : 0}
       eventHandlers={{
         click: () => onSelect(place.id),

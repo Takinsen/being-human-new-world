@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
 import { TabBar } from "@/components/TabBar";
+import { SHOW_TRANSIT_LOGOS } from "@/lib/brands";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -36,6 +37,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <p>
             ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน · <Link href="/contribute">ช่วยเติมข้อมูล</Link>
           </p>
+          {SHOW_TRANSIT_LOGOS && (
+            <p>
+              <small>โลโก้ BTS และ MRT เป็นเครื่องหมายของเจ้าของ ใช้เพื่อบอกว่าเป็นสถานีอะไรเท่านั้น เว็บนี้ไม่ได้เกี่ยวข้องกับผู้ให้บริการ</small>
+            </p>
+          )}
         </footer>
         <TabBar />
         <ChipFocus />
