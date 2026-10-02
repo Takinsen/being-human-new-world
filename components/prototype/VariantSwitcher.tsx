@@ -4,7 +4,8 @@
 // Variants on the real pages, one axis per thing being judged, kept while you click around:
 //   ?list=O|A|B|C   the map drawer's list (O = today, with the dotted path)
 //   ?guide=O|N      a Guide's head and "need to know" box (N = the new reading order)
-//   ?note=O|A1|A2   a Note card (in the Feed and on a Place card)
+//   ?note=O|A1      a Note card (in the Feed and on a Place card)
+//   ?card=O|P1|P2|P3 the Place card on the map
 // ←/→ cycle the first axis the page shows. The bar shows only when NEXT_PUBLIC_PROTOTYPE=1.
 
 import { usePathname } from "next/navigation";
@@ -23,12 +24,17 @@ export const AXES = {
   ],
   note: [
     { key: "O", name: "ตอนนี้" },
-    { key: "A1", name: "เวลาข้างชื่อ" },
-    { key: "A2", name: "เวลาข้างบ้านเกิด" },
+    { key: "A1", name: "ชื่อ • จังหวัด เวลาขวา" },
+  ],
+  card: [
+    { key: "O", name: "ตอนนี้" },
+    { key: "P1", name: "แถวข้อมูล แล้วหัวข้อ" },
+    { key: "P2", name: "แถบราคา+นำทางติดล่าง" },
+    { key: "P3", name: "โน้ตนำ" },
   ],
 } as const;
 type Axis = keyof typeof AXES;
-export const DEFAULTS: Record<Axis, string> = { list: "A", guide: "N", note: "A1" };
+export const DEFAULTS: Record<Axis, string> = { list: "A", guide: "N", note: "A1", card: "P1" };
 
 const storeKey = (axis: Axis) => `tanglak:prototype-${axis}`;
 
@@ -40,7 +46,7 @@ function apply(axis: Axis, key: string) {
 }
 
 function axesFor(path: string): Axis[] {
-  if (path === "/") return ["list", "note"];
+  if (path === "/") return ["list", "card", "note"];
   if (path.startsWith("/guides/")) return ["guide"];
   if (path.startsWith("/notes")) return ["note"];
   return [];

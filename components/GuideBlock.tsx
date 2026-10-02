@@ -18,6 +18,10 @@ import { TelText } from "./TelText";
 export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   if (!guide.facts && !guide.bring) return null;
   const source = guide.facts && priceSource(guide.facts);
+  const updated = guide.facts
+    ?.flatMap((f) => (f.price?.checked ? [f.price.checked.on] : []))
+    .sort()
+    .at(-1);
   return (
     <aside className="guide-know" aria-label="รู้ไว้ก่อน">
       {guide.facts && (
@@ -43,13 +47,14 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
               <dt>{f.label}</dt>
               <dd>
                 <RowValue fact={f} />
-                {f.note && <small className="fact-note">{f.note}</small>}
               </dd>
             </div>
           ))}
         </dl>
       )}
-      {source && <p className="guide-source">{source}</p>}
+      {source && <p className="guide-source p-guide-old">{source}</p>}
+      {/* PROTOTYPE (?guide=N): only when the prices were last updated */}
+      {updated && <p className="guide-source p-guide-new">อัปเดตล่าสุด {thaiMonthYear(updated)}</p>}
       {guide.bring && (
         <section className="guide-bring" aria-labelledby="bring">
           <h2 id="bring">พกไปด้วย</h2>

@@ -28,20 +28,21 @@ export function NoteCard({ note, placeName, compact, fresh }: { note: Note; plac
         )}
       </div>
 
-      {/* PROTOTYPE: the words, signed like a letter (?note=A1|A2) */}
+      {/* PROTOTYPE: the category small on top, the words, then "name • province" with the time at the right (?note=A1) */}
       <div className="p-note-new">
         <p className="pn-tag">
           <span className="pn-cat">{category}</span>
-          {placeName && note.placeId && (
-            <Link href={`/?place=${note.placeId}`} className="pn-place">
-              ที่{placeName}
-            </Link>
-          )}
         </p>
         <p className="note-text">{note.text}</p>
         <footer className="pn-by">
-          <span className="pn-name">{name}</span>
-          <span className="pn-home">บ้านอยู่{note.hometown}</span>
+          <span className="pn-sign">
+            <span className="pn-name">{name}</span>
+            <span className="pn-sep" aria-hidden="true">•</span>
+            <span className="pn-home">
+              <span className="visually-hidden">บ้านอยู่</span>
+              {note.hometown}
+            </span>
+          </span>
           {note.on && (
             <time className="pn-ago" dateTime={note.on} title={thaiDate(note.on)}>
               {timeAgo(note.on)}

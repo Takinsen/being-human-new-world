@@ -168,7 +168,7 @@
   margin-top: var(--space-2);
 }
 
-/* ---------- Note card: ?note=O|A1|A2 ---------- */
+/* ---------- Note card: ?note=O|A1 ---------- */
 
 [data-p-note="O"] .p-note-new,
 :root:not([data-p-note="O"]) .p-note-old {
@@ -216,15 +216,24 @@
   margin-block: -12px;
 }
 
-/* The signature, like the end of a letter: the name, then where home is */
+/* The signature on one line, "name • province", and how long ago at the right end */
 .pn-by {
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
   margin-top: var(--space-3);
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.5;
+}
+
+.pn-sign {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
 }
 
 .pn-name a,
@@ -245,30 +254,245 @@
   white-space: nowrap;
 }
 
-/* A1: the time at the right end of the name's line, home on the line below */
-[data-p-note="A1"] .pn-name {
-  grid-area: 1 / 1;
+/* ---------- Map drawer: no line under a Place's name in A, B and C (owner, round 2) ---------- */
+
+:root:not([data-p-list="O"]) .stop-group button > span > small {
+  display: none;
 }
 
-[data-p-note="A1"] .pn-ago {
-  grid-area: 1 / 2;
-  justify-self: end;
+/* ---------- Place card: ?card=O|P1|P2|P3 ---------- */
+
+.p-card-O,
+.p-card-P1,
+.p-card-P2,
+.p-card-P3 {
+  display: none;
 }
 
-[data-p-note="A1"] .pn-home {
-  grid-area: 2 / 1 / 3 / 3;
+[data-p-card="O"] .p-card-O,
+[data-p-card="P1"] .p-card-P1,
+[data-p-card="P2"] .p-card-P2,
+[data-p-card="P3"] .p-card-P3 {
+  display: block;
 }
 
-/* A2: the name alone, then home and the time on one quiet line */
-[data-p-note="A2"] .pn-name {
-  grid-area: 1 / 1 / 2 / 3;
+.pp {
+  gap: var(--space-5);
 }
 
-[data-p-note="A2"] .pn-home {
-  grid-area: 2 / 1;
+.pp-top {
+  display: grid;
+  gap: var(--space-2);
 }
 
-[data-p-note="A2"] .pn-ago {
-  grid-area: 2 / 2;
-  margin-left: var(--space-3);
+.pp-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.pp-head h2 {
+  font-size: var(--step-2);
+  line-height: 1.25;
+}
+
+.pp-head.is-big .place-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  background: none;
+  font-size: 1.75rem;
+}
+
+.pp-head.is-big h2 {
+  font-size: 1.875rem;
+}
+
+.pp-summary {
+  color: var(--ink-soft);
+}
+
+.pp-taste {
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.pp-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px var(--space-3);
+  font-weight: 700;
+}
+
+.pp-updated {
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+/* A section's name: small and quiet, the content is what's read */
+.pp-h {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  color: var(--ink-soft);
+  font: 600 var(--step--1) var(--font);
+}
+
+.pp-h svg {
+  color: var(--c);
+}
+
+.pp-actions {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.pp-rows {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+}
+
+.pp-rows > div:last-child {
+  padding-bottom: 0;
+}
+
+.pp-rows dd {
+  font-weight: 400;
+}
+
+.pp-rows .pp-price {
+  flex-direction: column;
+  gap: 0;
+}
+
+.pp-know {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.pp-know li {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.pp-know svg {
+  flex: none;
+  margin-top: 0.3em;
+  color: var(--ink-soft);
+}
+
+.pp-know .is-caution {
+  font-weight: 600;
+}
+
+.pp-dot {
+  flex: none;
+  width: 0.45em;
+  height: 0.45em;
+  margin: 0.6em 0.25em 0 0.25em;
+  border-radius: 50% 0;
+  background: var(--c);
+}
+
+.pp-guides {
+  border-top: 1px solid var(--rule);
+}
+
+.pp-guides li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.pp-guides a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pp-guides a svg:first-child {
+  color: var(--c);
+  font-size: 1.25rem;
+}
+
+.pp-guides a span {
+  flex: 1;
+}
+
+.pp-guides a svg:last-child {
+  color: var(--ink-soft);
+}
+
+.pp-empty {
+  color: var(--ink-soft);
+}
+
+/* P2: hairlines between sections, a bar stuck to the bottom of the sheet */
+.pp-2 .pp-sec {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.pp-h-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.pp-write {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  color: var(--action);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.pp-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--space-3) var(--gutter);
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+.pp-bar .pp-price {
+  flex-direction: column;
+  gap: 0;
+}
+
+.pp-bar .pp-actions .action {
+  flex: none;
+  padding-inline: var(--space-5);
+}
+
+/* P3: the Note leads, a little larger, as someone talking */
+.pp-3 .pp-price.is-inline {
+  margin-top: var(--space-1);
+}
+
+.pp-voice .note.is-compact {
+  padding: var(--space-4);
+  border-radius: var(--radius-leaf);
+}
+
+.pp-voice .note.is-compact .note-text {
+  font-size: var(--type-quote);
+}
+
+.pp-tochula {
+  margin-bottom: var(--space-2);
 }

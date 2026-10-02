@@ -17,6 +17,7 @@ import { Photo } from "../Photo";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
 import type { MapStop } from "./types";
+import { PlaceP1, PlaceP2, PlaceP3 } from "../prototype/PlaceVariants";
 
 // The selected Place (docs/adr/0006): photo, name and price, what to do next,
 // its Guides, then one line, one caution and the latest Note. The rest waits behind "อ่านเพิ่ม".
@@ -54,6 +55,12 @@ export function PlaceDetail({
   }, [posted]);
 
   return (
+    <>
+    {/* PROTOTYPE: ?card=P1|P2|P3 swap the whole card; O is today's */}
+    <div className="p-card-P1"><PlaceP1 stop={stop} /></div>
+    <div className="p-card-P2"><PlaceP2 stop={stop} /></div>
+    <div className="p-card-P3"><PlaceP3 stop={stop} /></div>
+    <div className="p-card-O">
     <article className="detail" data-line={place.category}>
       {onBack && (
         <button type="button" className="back-link detail-back" onClick={onBack}>
@@ -174,5 +181,7 @@ export function PlaceDetail({
       )}
 
     </article>
+    </div>
+    </>
   );
 }
