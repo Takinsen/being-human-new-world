@@ -116,6 +116,7 @@ export type Guide = {
   summary: string;
   icon: IconKey;
   intro?: string;
+  /** Not shown since docs/adr/0007 (Guides use illustration); kept for a Place card or a later look */
   photo?: Photo;
   /** At a glance, under the title: cost, time, when it's open. A price goes in `price` and shows like a Place's (docs/adr/0001). */
   facts?: GuideFact[];

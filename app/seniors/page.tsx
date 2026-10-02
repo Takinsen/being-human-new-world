@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, HandHeart } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
+import { Peeps } from "@/components/People";
 import { PageHead } from "@/components/PageHead";
 import { SeniorStory } from "@/components/SeniorStory";
 import { getContent } from "@/lib/content";
@@ -21,6 +22,7 @@ export default async function SeniorsPage() {
           </Link>
         }
       />
+      <Peeps className="feed-peeps inner" set="seniors" />
       <div className="inner">
         {seniors.map((s) => (
           <SeniorStory key={s.id} senior={s} />

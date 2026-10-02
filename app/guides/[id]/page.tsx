@@ -7,7 +7,6 @@ import { guides } from "@/content/guides";
 import { GuideBlock } from "@/components/GuideBlock";
 import { IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
-import { Photo } from "@/components/Photo";
 import { Price } from "@/components/Price";
 import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
@@ -56,7 +55,7 @@ export default async function GuidePage({ params }: Props) {
                   <dt>{f.label}</dt>
                   <dd>
                     {f.value && <TelText text={f.value} />}
-                    {f.price && <Price price={f.price} />}
+                    {f.price && <Price price={f.price} short />}
                     {f.note && <small>{f.note}</small>}
                   </dd>
                 </div>
@@ -67,7 +66,6 @@ export default async function GuidePage({ params }: Props) {
       </div>
       <div className="guide-body">
         <div className="inner">
-          <Photo photo={guide.photo} className="guide-photo" />
           <GuideBlock guide={guide} />
         </div>
       </div>

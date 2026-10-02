@@ -1,25 +1,34 @@
-/* ตั้งหลัก: a transit line map. Each category is a line with its own colour,
-   Places and topics are its stations, all drawn the same size (--station).
-   Full-width bands and a continuous line hold lists together; a link to go
-   next is one bordered box (.detail-guide). Only a Guide page lifts its parts
-   into white cards with shadows on a grey ground, because each card is a step
-   you act on (docs/adr/0006). Platform yellow marks prices only. Line colours
-   are dark enough for white text (≥4.5:1); on a tint, text in the line's colour
-   is darkened (--on-tint). Spacing, corners and tints come from the tokens below. */
+/* ตั้งหลัก: shade under the rain trees (docs/adr/0007). A canopy runs across the
+   top of every page, the ground is warm cream, and what you read or act on sits
+   on soft white cards. Each screen has one thing that stands out. Categories keep
+   their colours, softened; text in them stays ≥4.5:1, darkened on a tint
+   (--on-tint). Steps and first-week stations are joined by a dotted path, all
+   drawn the same size (--station). Platform yellow marks prices only. Motion is
+   small and off for reduced motion. Spacing, corners, tints and type come from
+   the tokens below. */
 
 :root {
-  --ink: #13233d;
-  --ink-soft: #56647d;
-  --paper: #ffffff;
-  --rule: #dde1e8;
-  --transport: #257f3b;
-  --food: #b85a12;
-  --living: #1f57b8;
+  --ink: #1d2733;
+  --ink-soft: #59616c;
+  --paper: #fffdf9;
+  --rule: #e9e1d3;
+  --transport: #2f7448;
+  --food: #a4512a;
+  --living: #45609d;
+  /* The canopy: leaves and the light that falls through them */
+  --leaf: #6aa178;
+  --leaf-dark: #3f7552;
+  --sun: #ffe7a3;
   --platform: #ffd100;
   --caution: #b42318;
+  /* What you press: the canopy's green, not the ink (white on it is 5.3:1) */
+  --action: var(--leaf-dark);
+  --action-press: color-mix(in srgb, var(--leaf-dark) 85%, #000);
   --c: var(--ink);
 
-  --font: "Bai Jamjuree", "Noto Sans Thai", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai Looped", "Noto Sans Thai", system-ui, sans-serif;
+  /* Headings only: Mitr's slashed zero reads oddly in numbers, so numbers stay in --font */
+  --font-head: "Mitr", "IBM Plex Sans Thai Looped", sans-serif;
 
   --step--1: 0.875rem;
   --step-0: 1rem;
@@ -46,19 +55,24 @@
   --space-6: 32px;
   --space-7: 48px;
 
-  --radius-s: 6px;
-  --radius-m: 12px;
+  /* Corners: fields and small buttons, cards, sheets; a Note is a leaf with one corner tucked in */
+  --radius-s: 10px;
+  --radius-m: 18px;
+  --radius-l: 24px;
+  --radius-leaf: 4px var(--radius-l) var(--radius-l) var(--radius-l);
   --radius-pill: 99px;
   /* A station on a line (numbered steps, map list stops, first-week ticks) and the line through it */
   --station: 2.5rem;
   --station-ring: 4px;
   --rail: 6px;
-  /* The Guide page's ground, under its white cards */
-  --ground: #f4f6f9;
+  /* How far the canopy reaches down a page (on the map it reaches a little further) */
+  --canopy: 104px;
+  /* The warm ground every page sits on, under its white cards */
+  --ground: #f7f1e6;
   /* Depth: cards you act on sit above the page, a photo a little higher */
-  --shadow-1: 0 1px 2px rgb(19 35 61 / 0.06), 0 2px 8px rgb(19 35 61 / 0.06);
-  --shadow-2: 0 2px 4px rgb(19 35 61 / 0.08), 0 8px 24px rgb(19 35 61 / 0.12);
-  /* Lines full-width bands up with the centred column */
+  --shadow-1: 0 1px 2px rgb(60 45 20 / 0.05), 0 4px 14px rgb(60 45 20 / 0.06);
+  --shadow-2: 0 2px 6px rgb(60 45 20 / 0.08), 0 14px 32px rgb(60 45 20 / 0.12);
+  /* Lines up full-width blocks with the centred column */
   --edge: max(var(--gutter), calc((100% - var(--measure)) / 2 + var(--gutter)));
 }
 
@@ -98,7 +112,7 @@ body {
   flex-direction: column;
   min-height: 100dvh;
   margin: 0;
-  background: var(--paper);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font);
   font-size: var(--step-0);
@@ -107,7 +121,11 @@ body {
 
 h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
-h1, h2, h3 { line-height: 1.2; font-weight: 700; }
+h1, h2, h3, .lede {
+  text-wrap: balance;
+}
+
+h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: 500; }
 h2 { font-size: var(--step-1); }
 h3 { font-size: var(--step-half); }
 a { color: inherit; }
@@ -136,6 +154,7 @@ svg { flex: none; }
 }
 
 .lede {
+  max-width: 32ch;
   margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step-half);
@@ -173,21 +192,17 @@ svg { flex: none; }
   align-items: center;
   min-height: 44px;
   gap: var(--space-2);
-  font-weight: 700;
+  font-family: var(--font-head);
+  font-weight: 500;
   font-size: var(--step-1);
   text-decoration: none;
 }
 
-.wordmark-lines {
-  display: inline-flex;
-  gap: 2px;
-}
-
-.wordmark-lines i {
-  width: 5px;
-  height: 20px;
-  border-radius: 2px;
-  background: var(--c);
+.wordmark-leaf {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+  fill: currentColor;
 }
 
 .tab-bar {
@@ -197,9 +212,9 @@ svg { flex: none; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--paper);
-  border-top: 1px solid var(--rule);
-  box-shadow: 0 -4px 16px -8px rgb(19 35 61 / 0.25);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -6px 24px -12px rgb(60 45 20 / 0.25);
 }
 
 .tab-bar a {
@@ -252,7 +267,7 @@ svg { flex: none; }
 }
 
 /* Progress first: the biggest thing under the title */
-.week-progress p:first-child {
+.week-progress p:first-of-type {
   font-size: var(--step-1);
   font-weight: 700;
 }
@@ -261,7 +276,7 @@ svg { flex: none; }
   font-size: var(--step-2);
 }
 
-.week-progress p:first-child span {
+.week-progress p:first-of-type span {
   color: var(--ink-soft);
   font-size: var(--step--1);
   font-weight: 500;
@@ -279,7 +294,7 @@ svg { flex: none; }
 .week-bar i {
   display: block;
   height: 100%;
-  background: var(--ink);
+  background: var(--leaf-dark);
 }
 
 .week-hint {
@@ -297,7 +312,7 @@ svg { flex: none; }
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  min-height: 48px;
+  min-height: 60px;
 }
 
 /* Rail segment from this station to the next: dark once this station is done */
@@ -307,12 +322,11 @@ svg { flex: none; }
   left: calc((44px - var(--rail)) / 2);
   top: 22px;
   bottom: -22px;
-  width: var(--rail);
-  background: var(--rule);
+  border-left: var(--rail) dotted color-mix(in srgb, var(--leaf) 45%, var(--rule));
 }
 
 .week-stops li.is-done:not(:last-child)::after {
-  background: var(--ink);
+  border-left-color: var(--leaf-dark);
 }
 
 .tick {
@@ -337,8 +351,9 @@ svg { flex: none; }
   cursor: pointer;
 }
 
+/* Done: filled with the line's colour and ticked */
 .week-stops input:checked {
-  background: var(--c);
+  background: var(--c) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23fffdf9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat;
 }
 
 .week-stops a {
@@ -362,13 +377,12 @@ svg { flex: none; }
   text-decoration: underline;
 }
 
+/* A tick and a quieter title say done; a strike through Thai marks reads as cancelled */
 .week-stops .is-done a {
   color: var(--ink-soft);
-  text-decoration: line-through;
-  text-decoration-thickness: 2px;
 }
 
-/* The next station opens up: a tinted band, its title as an item title, what it's about */
+/* The next station opens up: a tinted block, its title as an item title, what it's about */
 .week-next {
   flex: 1;
   margin-bottom: var(--space-3);
@@ -411,7 +425,7 @@ svg { flex: none; }
   display: inline-block;
   padding: 1px var(--space-2);
   border-radius: var(--radius-pill);
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
   font-size: var(--step--1);
   font-weight: 700;
@@ -449,7 +463,7 @@ svg { flex: none; }
   height: 34px;
   border: 3px solid var(--c);
   border-radius: 50%;
-  background: #fff;
+  background: var(--paper);
   box-shadow: 0 2px 4px rgb(0 0 0 / 0.3);
 }
 
@@ -472,7 +486,7 @@ svg { flex: none; }
 .map-pin.is-selected .pin::before {
   width: 24px;
   height: 24px;
-  background: #fff;
+  background: var(--paper);
 }
 
 /* Pin icons: Phosphor bold, the same icons as IconFor in components/icons.tsx */
@@ -623,14 +637,20 @@ svg { flex: none; }
   padding-top: var(--space-3);
 }
 
+/* Room at the top for the canopy (below) */
 .page-head {
-  padding-top: var(--space-3);
+  position: relative;
+  padding-top: var(--canopy);
   padding-bottom: var(--space-2);
 }
 
+/* A Senior's story is a card like a Note: the same leaf corner */
 .story {
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--rule);
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-leaf);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .story header {
@@ -645,9 +665,10 @@ svg { flex: none; }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 700;
+  background: color-mix(in srgb, var(--leaf) 22%, var(--paper));
+  color: var(--leaf-dark);
+  font-family: var(--font-head);
+  font-weight: 500;
   font-size: var(--step-1);
 }
 
@@ -660,11 +681,9 @@ svg { flex: none; }
   font-size: var(--step-half);
 }
 
-/* A Senior's words look like a Note: the same size, the same bar */
+/* A Senior's words are the size of a Note's */
 .story-body {
   margin-top: var(--space-4);
-  padding-left: var(--space-4);
-  border-left: var(--station-ring) solid var(--ink);
   font-size: var(--type-quote);
   line-height: 1.6;
 }
@@ -673,11 +692,25 @@ svg { flex: none; }
   margin-top: var(--space-3);
 }
 
+/* Help is a calm green card at the end, not an alarm */
 .help {
   margin-top: var(--space-6);
-  padding: var(--space-5) 0;
-  background: var(--ink);
-  color: #fff;
+}
+
+.help > .inner {
+  padding-block: var(--space-5);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--leaf) 16%, var(--paper));
+}
+
+@media (max-width: 40rem) {
+  .help > .inner {
+    margin-inline: var(--gutter);
+  }
+}
+
+.help h2 svg {
+  color: var(--leaf-dark);
 }
 
 .help ul {
@@ -686,7 +719,7 @@ svg { flex: none; }
 
 .help li {
   padding: var(--space-4) 0;
-  border-top: 1px solid rgb(255 255 255 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--leaf) 35%, var(--paper));
 }
 
 .help h3 {
@@ -695,7 +728,7 @@ svg { flex: none; }
 
 .help p {
   margin-top: var(--space-1);
-  opacity: 0.8;
+  color: var(--ink-soft);
 }
 
 .help-contacts {
@@ -712,10 +745,10 @@ svg { flex: none; }
   max-width: 100%;
   overflow-wrap: anywhere;
   padding: 0 var(--space-4);
-  border-radius: var(--radius-s);
-  background: #fff;
-  color: var(--ink);
-  font-size: var(--step-1);
+  border-radius: var(--radius-pill);
+  background: var(--action);
+  color: var(--paper);
+  font-size: var(--step-0);
   font-weight: 700;
   text-decoration: none;
 }
@@ -743,7 +776,7 @@ svg { flex: none; }
   padding: 0 var(--space-4);
   border: 2px solid var(--c);
   border-radius: var(--radius-pill);
-  background: #fff;
+  background: var(--paper);
   color: var(--ink);
   font: 600 var(--step--1) var(--font);
   cursor: pointer;
@@ -817,8 +850,8 @@ body:has(.explorer) .site-footer {
   overflow-y: auto;
   padding: var(--space-5) var(--space-5) var(--space-5);
   background: var(--paper);
-  border-radius: 14px;
-  box-shadow: 0 12px 32px -12px rgb(19 35 61 / 0.35), 0 0 0 1px rgb(19 35 61 / 0.06);
+  border-radius: var(--radius-l);
+  box-shadow: 0 12px 32px -12px rgb(60 45 20 / 0.35), 0 0 0 1px rgb(60 45 20 / 0.06);
 }
 
 .line-filters {
@@ -834,15 +867,16 @@ body:has(.explorer) .site-footer {
   gap: var(--space-2);
   min-height: 44px;
   padding: 0 var(--space-4);
-  border: 2px solid var(--c);
+  border: 1px solid var(--rule);
   border-radius: var(--radius-pill);
-  background: #fff;
-  color: var(--c);
+  background: var(--paper);
+  color: var(--ink);
   font: 600 var(--step--1) var(--font);
   cursor: pointer;
 }
 
 .line-chip svg {
+  color: var(--c);
   font-size: 1.15rem;
 }
 
@@ -864,15 +898,14 @@ body:has(.explorer) .site-footer {
   margin-top: var(--space-1);
 }
 
-/* The line runs through the codes */
+/* A dotted path through the places, like the steps in a Guide */
 .stop-group ul::before {
   content: "";
   position: absolute;
   left: calc(var(--space-1) + 2px + (var(--station) - var(--rail)) / 2);
   top: 22px;
   bottom: 22px;
-  width: var(--rail);
-  background: var(--c);
+  border-left: var(--rail) dotted color-mix(in srgb, var(--c) 45%, var(--paper));
 }
 
 .stop-group button {
@@ -883,7 +916,7 @@ body:has(.explorer) .site-footer {
   width: 100%;
   padding: var(--space-2) var(--space-1);
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-s);
   background: none;
   color: var(--ink);
   font: inherit;
@@ -966,11 +999,11 @@ body:has(.explorer) .site-footer {
 
 .explorer-top .line-chip {
   flex: none;
-  box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
+  box-shadow: var(--shadow-1);
 }
 
 .explorer-top .line-chip:not([aria-pressed="true"]) {
-  background: #fff;
+  background: var(--paper);
 }
 
 .explorer-sheet {
@@ -982,8 +1015,8 @@ body:has(.explorer) .site-footer {
   display: flex;
   flex-direction: column;
   background: var(--paper);
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 -8px 24px -10px rgb(19 35 61 / 0.35);
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
+  box-shadow: 0 -8px 24px -10px rgb(60 45 20 / 0.35);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1046,11 +1079,15 @@ body:has(.explorer) .site-footer {
 }
 
 /* ช่วยเติมข้อมูล (/contribute) */
+/* Each form is one card on the ground, like everything else you act on */
 .contribute-form {
   display: grid;
   gap: var(--space-4);
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--rule);
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .contribute-form h2 { margin-bottom: -10px; }
@@ -1101,11 +1138,15 @@ body:has(.explorer) .site-footer {
   padding: 0 var(--space-5);
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+}
+
+.contribute-form button:hover:not(:disabled) {
+  background: var(--action-press);
 }
 
 .contribute-form button:disabled { opacity: 0.6; cursor: progress; }
@@ -1152,16 +1193,21 @@ body:has(.explorer) .site-footer {
   gap: var(--space-2);
   min-height: 44px;
   padding: 0 var(--space-5);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--action);
   border-radius: var(--radius-pill);
-  color: var(--ink);
+  color: var(--action);
   font-weight: 700;
   text-decoration: none;
 }
 
 .action.is-primary {
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
+}
+
+.action.is-primary:hover {
+  border-color: var(--action-press);
+  background: var(--action-press);
 }
 
 /* ---------- Map bar ---------- */
@@ -1177,6 +1223,7 @@ body:has(.explorer) .site-footer {
   min-height: 44px;
 }
 
+
 .tagline {
   color: var(--ink-soft);
   font-size: var(--step--1);
@@ -1187,14 +1234,18 @@ body:has(.explorer) .site-footer {
   right: 10px;
 }
 
+/* The wordmark sits straight in the canopy's shade, as on every other page; no pill */
 .explorer-top .brand {
   justify-self: start;
   width: fit-content;
   margin-bottom: var(--space-2);
-  padding: 2px var(--space-4);
-  border-radius: var(--radius-m);
-  background: rgb(255 255 255 / 0.94);
-  box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
+  padding: 0 var(--space-2);
+  color: var(--paper);
+  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
+}
+
+.explorer-top .tagline {
+  color: var(--paper);
 }
 
 .explorer-top .brand .wordmark {
@@ -1212,9 +1263,9 @@ a.line-chip {
   gap: var(--space-2);
   margin-top: var(--space-3);
   padding-left: var(--space-4);
-  border-radius: 10px;
-  background: #eef1f6;
-  border: 2px solid var(--ink);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--sun) 55%, var(--paper));
+  box-shadow: var(--shadow-1);
 }
 
 .welcome a {
@@ -1319,20 +1370,23 @@ a.line-chip {
 
 /* ---------- Notes ---------- */
 
+/* A Note is a card like a leaf: one corner tucked in */
 .note {
-  padding: var(--space-4) 0 var(--space-4) var(--space-4);
-  border-left: 4px solid var(--c);
+  padding: var(--space-5);
+  border-radius: var(--radius-leaf);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .note.is-compact {
-  padding: var(--space-3) var(--space-3);
-  border-radius: 0 8px 8px 0;
-  background: color-mix(in srgb, var(--c) 8%, #fff);
+  padding: var(--space-3);
+  background: var(--tint);
+  box-shadow: none;
 }
 
 .note-text {
   font-size: var(--type-quote);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .note.is-compact .note-text {
@@ -1379,18 +1433,24 @@ a.line-chip {
   scroll-margin-top: 0;
 }
 
+/* A category's head: its icon in a tinted circle, then its name */
 .line-head {
   margin-top: var(--space-6);
-  padding: var(--space-4) 0;
-  background: var(--c);
-  color: var(--paper);
   font-size: var(--step-1);
+}
+
+.line-head svg {
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--on-tint);
+  font-size: 2.2rem;
 }
 
 .line-head .inner {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .guides-line .guides {
@@ -1477,7 +1537,10 @@ body:not(:has(.explorer)) main {
 }
 
 .stop-tags .price-strip {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
   font-size: var(--step--1);
+  font-weight: 600;
 }
 
 .stop-group .stop-tags small {
@@ -1518,14 +1581,25 @@ body:not(:has(.explorer)) main {
   margin: var(--space-2) 0 var(--space-4);
 }
 
+.guide-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
 .guide-list a {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   min-height: 64px;
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
   text-decoration: none;
+}
+
+.guide-list .guide-icon {
+  flex: none;
 }
 
 .guide-list b {
@@ -1546,8 +1620,22 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
 }
 
+/* Home tastes: one tinted card among the Guide cards, not loose text on the ground */
 .home-taste-list {
-  padding: var(--space-2) 0 var(--space-5);
+  margin: var(--space-3) 0 var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--tint, color-mix(in srgb, var(--food) 10%, var(--paper)));
+}
+
+.home-taste-list .guide-icon {
+  background: var(--paper);
+  color: var(--c);
+}
+
+.home-taste-list li + li {
+  padding-top: var(--space-2);
+  border-top: 1px dashed color-mix(in srgb, var(--c) 25%, var(--paper));
 }
 
 .home-taste-list h3 {
@@ -1630,8 +1718,6 @@ body:not(:has(.explorer)) main {
 
 .note.is-fresh {
   background: var(--tint);
-  border-radius: 0 8px 8px 0;
-  padding-right: var(--space-3);
 }
 
 .feed-scope-links {
@@ -1651,6 +1737,17 @@ body:not(:has(.explorer)) main {
 .note-cat {
   color: var(--on-tint);
   font-weight: 700;
+}
+
+/* The category's leaf, beside its name */
+.note-cat::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.35em;
+  border-radius: 50% 0;
+  background: var(--c);
 }
 
 @media (min-width: 1600px) {
@@ -1721,7 +1818,7 @@ body:not(:has(.explorer)) main {
   display: flex;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
-  border-radius: 10px;
+  border-radius: var(--radius-s);
   background: var(--tint);
 }
 
@@ -1765,8 +1862,9 @@ body:not(:has(.explorer)) main {
   gap: var(--space-3);
   min-height: 56px;
   padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--rule);
   border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
   font-weight: 700;
   text-decoration: none;
 }
@@ -1841,7 +1939,7 @@ body:not(:has(.explorer)) main {
 }
 
 .feed .note + .note {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 /* Links to the forms further down: plain links, not filter chips */
@@ -1937,6 +2035,7 @@ h2 {
 .line-chip[aria-pressed="true"],
 .line-chip[aria-current="page"],
 .explorer-top .line-chip[aria-pressed="true"] {
+  border-color: transparent;
   background: var(--tint);
   color: var(--on-tint);
 }
@@ -1983,10 +2082,6 @@ h2 {
   white-space: nowrap;
 }
 
-.contribute-form:last-child {
-  border-bottom: 0;
-}
-
 .feed-posted {
   margin: 0 0 var(--space-4);
 }
@@ -2021,50 +2116,39 @@ h2 {
   }
 }
 
-/* ---------- Guide page: a tinted head, then steps as stations on the line ---------- */
+/* ---------- Guide page: facts on one card, then steps as stations on a dotted path ---------- */
 
-/* The grey ground runs on under the footer, so the page doesn't end in a seam */
-body:has(.guide-page) {
-  background: var(--ground);
-}
-
+/* The Guide's cards run straight on into the footer, with no line between */
 body:has(.guide-page) .site-footer {
   border-top: 0;
 }
 
 .guide-hero {
-  padding-bottom: var(--space-6);
-  background: var(--tint);
-}
-
-/* The photo overlaps the head's lower edge */
-.guide-page:has(.guide-photo) .guide-hero {
-  padding-bottom: calc(var(--space-7) + var(--space-5));
-}
-
-/* Without a photo, the line closes the head; a pale tint alone barely shows on the grey */
-.guide-page:not(:has(.guide-photo)) .guide-hero {
-  border-bottom: var(--rail) solid var(--c);
+  padding-bottom: var(--space-2);
 }
 
 .guide-hero .lede {
   color: var(--ink);
 }
 
-/* Facts at a glance: as many to a row as fit, a last one on its own fills the row */
+/* Facts at a glance, together on one card: as many to a row as fit */
 .guide-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
   margin: var(--space-4) 0 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .guide-facts > div {
   flex: 1 1 10rem;
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-m);
-  background: var(--paper);
-  box-shadow: var(--shadow-1);
+}
+
+.guide-facts > div + div {
+  border-left: 1px dashed var(--rule);
 }
 
 .guide-facts dt {
@@ -2109,17 +2193,6 @@ body:has(.guide-page) .site-footer {
 .guide-body {
   flex: 1;
   padding-bottom: var(--space-7);
-  background: var(--ground);
-}
-
-/* Capped, so the first step still shows on a laptop's first screen */
-.guide-body .guide-photo {
-  position: relative;
-  width: 100%;
-  max-height: 240px;
-  margin-top: calc(-1 * var(--space-7));
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-2);
 }
 
 .guide {
@@ -2141,7 +2214,7 @@ body:has(.guide-page) .site-footer {
 
 .guide-card {
   padding: var(--space-4);
-  border: 1px solid var(--rule);
+  border: 0;
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -2161,7 +2234,9 @@ body:has(.guide-page) .site-footer {
 
 .guide-bring {
   margin-top: var(--space-5);
-  border-left: var(--station-ring) solid var(--c);
+  border: 0;
+  background: var(--tint);
+  box-shadow: none;
 }
 
 /* A section heading, the same size as "ทำตามนี้", above the steps' h3 */
@@ -2237,8 +2312,7 @@ body:has(.guide-page) .site-footer {
   top: var(--space-3);
   bottom: calc(-1 * var(--space-4) - var(--space-3));
   left: calc((var(--station) - var(--rail)) / 2);
-  width: var(--rail);
-  background: var(--c);
+  border-left: var(--rail) dotted var(--c);
 }
 
 .step-no {
@@ -2250,7 +2324,7 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-2);
   border: var(--station-ring) solid var(--c);
   border-radius: 50%;
-  background: var(--paper);
+  background: var(--tint);
   color: var(--ink);
   font-weight: 700;
   line-height: 1;
@@ -2302,7 +2376,7 @@ body:has(.guide-page) .site-footer {
 /* Words to say: a speech bubble in the line's colour */
 .step-say {
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-s) var(--radius-m) var(--radius-m) var(--radius-m);
+  border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
   background: var(--tint);
 }
 
@@ -2344,12 +2418,165 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-5);
 }
 
-/* The site's one link card, on white so it stands on the grey */
+/* The site's one link card, with room above it at the end of a Guide */
 .guide-next {
   margin-top: var(--space-6);
-  background: var(--paper);
 }
 
 .guide-next > svg:last-child {
   color: var(--c);
+}
+
+/* ---------- The canopy (docs/adr/0007) ---------- */
+
+/* Across the top of every page; the wordmark sits in its shade, light falls through */
+.canopy {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: var(--canopy);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.canopy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* A halo of the dark leaves keeps the wordmark at 4.5:1 wherever a light spot or a pale crown falls */
+.page-head > .wordmark {
+  position: absolute;
+  top: var(--space-3);
+  z-index: 1;
+  color: var(--paper);
+  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
+}
+
+/* On a laptop or projector the canopy reaches further down, and the wordmark grows with it */
+@media (min-width: 64rem) {
+  :root {
+    --canopy: 144px;
+  }
+
+  .page-head > .wordmark {
+    top: var(--space-4);
+    font-size: var(--step-2);
+  }
+}
+
+.page-head > :not(.canopy, .wordmark) {
+  position: relative;
+}
+
+.page-head > .back-link {
+  margin-top: var(--space-2);
+}
+
+/* On the map: the same canopy along the top edge, the brand pill in front of it */
+.explorer > .canopy {
+  left: 0;
+  z-index: 400;
+  width: 100%;
+  height: calc(var(--canopy) + var(--space-4));
+  transform: none;
+}
+
+/* People from Open Peeps, where the site is about people */
+.peeps {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.peeps img {
+  height: 124px;
+  margin-left: -28px;
+}
+
+.peeps img:first-child {
+  margin-left: 0;
+}
+
+.feed-peeps {
+  margin-top: var(--space-3);
+}
+
+/* All seven done: the progress becomes a sunny card with the people in it */
+.week-progress.is-complete {
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--sun) 60%, var(--paper));
+  box-shadow: var(--shadow-1);
+  text-align: center;
+}
+
+.week-progress.is-complete p:first-of-type {
+  font-family: var(--font-head);
+  font-size: var(--step-2);
+  font-weight: 500;
+}
+
+.week-progress.is-complete .week-bar {
+  background: color-mix(in srgb, var(--leaf) 25%, var(--paper));
+}
+
+.week-cheer {
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- Motion: soft and small, off for anyone who asks for less ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: rise-in 0.35s ease-out both;
+  }
+
+  :is(.feed .note, .guide-card, .guide-list li, .week-stops li) {
+    animation: rise-up 0.4s ease-out both;
+  }
+
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(2) { animation-delay: 0.05s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(3) { animation-delay: 0.1s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(4) { animation-delay: 0.15s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(n + 5) { animation-delay: 0.2s; }
+
+  .detail {
+    animation: rise-up 0.3s ease-out both;
+  }
+
+  :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a) {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a):active {
+    transform: scale(0.97);
+  }
+
+  .week-stops input:checked {
+    animation: pop 0.35s ease-out;
+  }
+
+  .canopy-leaves {
+    transform-origin: top center;
+    animation: sway 9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; }
+}
+
+@keyframes rise-up {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes pop {
+  50% { transform: scale(1.18); }
+}
+
+@keyframes sway {
+  to { transform: scaleY(1.04) translateX(-4px); }
 }
