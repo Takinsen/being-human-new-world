@@ -22,6 +22,9 @@ export default async function NotesPage({ searchParams }: Props) {
   const active = line && isCategory(line) ? line : undefined;
   const notes = content.notes.filter((n) => (place ? n.placeId === place.id : !active || n.category === active));
   const activeName = categories.find((c) => c.id === active)?.name;
+  const writeHref = place ? `/notes/new?place=${place.id}` : active ? `/notes/new?line=${active}` : "/notes/new";
+  // A space only before a name in Latin letters ("BTS สยาม"); Thai runs straight on
+  const prompt = place ? `อยากบอกอะไรเกี่ยวกับ${/^[A-Za-z0-9]/.test(place.name) ? " " : ""}${place.name}…` : activeName ? `อยากบอกอะไรเรื่อง${activeName}…` : "อยากบอกอะไรคนมาใหม่…";
   const placeName = (id?: string) => content.places.find((p) => p.id === id)?.name;
 
   return (
@@ -35,14 +38,6 @@ export default async function NotesPage({ searchParams }: Props) {
               <ArrowLeft weight="bold" aria-hidden="true" /> กลับไปที่แผนที่
             </Link>
           )
-        }
-        action={
-          <Link
-            href={place ? `/notes/new?place=${place.id}` : active ? `/notes/new?line=${active}` : "/notes/new"}
-            className="action is-primary head-action"
-          >
-            <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
-          </Link>
         }
       />
       {!place && <Peeps className="feed-peeps inner" />}
@@ -74,6 +69,13 @@ export default async function NotesPage({ searchParams }: Props) {
             <ChipInView key={active ?? "all"} />
           </nav>
         )}
+        {/* The way to write sits where the Notes start, not as a button in the head (ADR 0006, amended) */}
+        <Link href={writeHref} className="composer">
+          <span className="composer-pen" aria-hidden="true">
+            <PencilSimpleLine weight="bold" />
+          </span>
+          <span className="composer-prompt">{prompt}</span>
+        </Link>
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
           <PostedStatus className="form-status feed-posted" id="fresh">

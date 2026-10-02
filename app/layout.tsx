@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
+import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
 import "./globals.css";
 
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         <TabBar />
         <ChipFocus />
+        <SwipeTabs />
       </body>
     </html>
   );

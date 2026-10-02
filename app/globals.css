@@ -2775,3 +2775,107 @@ body:has(.guide-page) .site-footer {
     left: max(calc((100% - 64rem) / 2 + var(--gutter)), calc((100% - 100vw) / 2 + var(--gutter)));
   }
 }
+
+/* ---------- Feed composer: the way to write, where the Notes start (docs/adr/0006) ---------- */
+
+/* Looks like somewhere to write, but it's one link to the Note form; nothing pretends to type */
+.composer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 56px;
+  margin: var(--space-2) 0 var(--space-4);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.composer:hover {
+  border-color: color-mix(in srgb, var(--leaf) 45%, var(--rule));
+  box-shadow: var(--shadow-2);
+}
+
+/* The card's own shadow would replace the dark half of the site's focus ring */
+.composer:focus-visible {
+  box-shadow: 0 0 0 5px var(--ink);
+}
+
+/* The writer's side: a pen in the canopy's green */
+.composer-pen {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--leaf) 18%, var(--paper));
+  color: var(--leaf-dark);
+  font-size: 1.15rem;
+}
+
+.composer-prompt {
+  min-width: 0;
+  font-size: var(--step-half);
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .composer {
+    transition: box-shadow 0.12s ease, border-color 0.12s ease;
+  }
+}
+
+/* ---------- Tab bar: slides away while reading (components/TabBar.tsx) ---------- */
+
+/* Down past its own shadow too, so no grey edge is left at the bottom */
+.tab-bar[data-hidden] {
+  transform: translateY(calc(100% + 24px));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tab-bar {
+    transition: transform 0.2s ease;
+  }
+}
+
+/* ---------- Swiping between tabs (components/SwipeTabs.tsx) ---------- */
+
+/* The page slides; the tab bar stays where it is */
+html[data-swipe] .tab-bar {
+  view-transition-name: tab-bar;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(tab-bar) {
+    animation-duration: 180ms;
+    animation-timing-function: ease-out;
+  }
+
+  /* Finger to the left: this page leaves to the left, the next comes in from the right */
+  html[data-swipe="left"]::view-transition-old(root) { animation-name: swipe-out-left; }
+  html[data-swipe="left"]::view-transition-new(root) { animation-name: swipe-in-right; }
+  html[data-swipe="right"]::view-transition-old(root) { animation-name: swipe-out-right; }
+  html[data-swipe="right"]::view-transition-new(root) { animation-name: swipe-in-left; }
+}
+
+@keyframes swipe-out-left {
+  to { opacity: 0; transform: translateX(-30%); }
+}
+
+@keyframes swipe-out-right {
+  to { opacity: 0; transform: translateX(30%); }
+}
+
+@keyframes swipe-in-right {
+  from { opacity: 0; transform: translateX(30%); }
+}
+
+@keyframes swipe-in-left {
+  from { opacity: 0; transform: translateX(-30%); }
+}
