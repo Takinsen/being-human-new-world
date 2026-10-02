@@ -6,13 +6,10 @@ export function PageHead({
   title,
   lede,
   back,
-  action,
   children,
 }: {
   title: React.ReactNode;
   lede?: string;
-  /** The page's one action, beside the title so it doesn't push the content down */
-  action?: React.ReactNode;
   /** A link back up, shown above the title */
   back?: React.ReactNode;
   children?: React.ReactNode;
@@ -22,14 +19,7 @@ export function PageHead({
       <Canopy />
       <Wordmark />
       {back}
-      {action ? (
-        <div className="page-title-row">
-          <h1>{title}</h1>
-          {action}
-        </div>
-      ) : (
-        <h1>{title}</h1>
-      )}
+      <h1>{title}</h1>
       {lede && <p className="lede">{lede}</p>}
       {children}
     </header>
