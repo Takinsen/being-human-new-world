@@ -19,7 +19,7 @@ export function WeekRoute() {
     <section className="week">
       {/* All seven: the progress turns into a sunny card and the people come out to cheer */}
       <div className={complete ? "week-progress is-complete" : "week-progress"}>
-        {complete && <Peeps className="week-cheer" />}
+        {complete && <Peeps className="week-cheer" set="cheer" />}
         <p aria-live="polite">
           {complete ? (
             "ครบแล้ว ตั้งหลักได้แล้ว"

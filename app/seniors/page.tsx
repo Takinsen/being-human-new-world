@@ -22,7 +22,7 @@ export default async function SeniorsPage() {
           </Link>
         }
       />
-      <Peeps className="feed-peeps inner" />
+      <Peeps className="feed-peeps inner" set="seniors" />
       <div className="inner">
         {seniors.map((s) => (
           <SeniorStory key={s.id} senior={s} />
