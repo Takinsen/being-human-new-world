@@ -15,7 +15,7 @@ export function Price({ price }: { price: PriceData }) {
       </mark>
       <span className="price-check">
         {price.checked.how === "web"
-          ? `ข้อมูลจากเว็บ ${thaiMonthYear(price.checked.on)} ยังไม่มีใครไปดูราคาจริง`
+          ? <>ข้อมูลจากเว็บ {thaiMonthYear(price.checked.on)}<span className="price-check-more"> ยังไม่มีใครไปดูราคาจริง</span></>
           : `ตรวจ ${thaiMonthYear(price.checked.on)} โดย${checkedBy(price.checked)}`}
       </span>
     </p>

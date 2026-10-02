@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Scenery } from "./prototype/Scenery";
 
 /** Top of every page but the map: the wordmark, then the page's own heading. */
 export function PageHead({
@@ -18,6 +19,7 @@ export function PageHead({
 }) {
   return (
     <header className="page-head inner">
+      <Scenery where="head" />
       <Wordmark />
       {back}
       {action ? (

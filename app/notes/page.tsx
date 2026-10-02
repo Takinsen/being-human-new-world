@@ -6,6 +6,7 @@ import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
 import { PageHead } from "@/components/PageHead";
 import { PostedStatus } from "@/components/PostedStatus";
+import { Peeps } from "@/components/prototype/Scenery";
 import { getContent, isCategory } from "@/lib/content";
 
 export const metadata: Metadata = { title: "โน้ต | ตั้งหลัก" };
@@ -40,6 +41,7 @@ export default async function NotesPage({ searchParams }: Props) {
           </Link>
         }
       />
+      {!place && <Peeps className="feed-peeps inner" />}
       <div className="inner">
         {place ? (
           <p className="feed-scope">

@@ -1,0 +1,604 @@
+/* PROTOTYPE (look-and-feel), throwaway: lives only on the prototype/look-and-feel branch.
+   html[data-look] picks a look: O = today, A = the transit theme as a trace, B = ใต้ร่มจามจุรี.
+   Everything here only overrides globals.css; deleting this file brings back O. */
+
+/* ---------- Pictures: hidden unless their look is on ---------- */
+
+.scenery,
+.peeps,
+.look-a-only,
+.look-b-only {
+  display: none;
+}
+
+html[data-look="A"] .look-a-only,
+html[data-look="B"] .look-b-only {
+  display: block;
+}
+
+html:is([data-look="A"], [data-look="B"]) .scenery,
+html:is([data-look="A"], [data-look="B"]) .peeps {
+  display: block;
+}
+
+/* ---------- Shared by A and B: warm ground, softer colours, new type, room to breathe ---------- */
+
+html:is([data-look="A"], [data-look="B"]) {
+  --ink: #1d2733;
+  --ink-soft: #59616c;
+  --paper: #fffdf9;
+  --ground: #f7f1e6;
+  --rule: #e9e1d3;
+  --font: "IBM Plex Sans Thai Looped", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "Mitr", "IBM Plex Sans Thai Looped", sans-serif;
+  --radius-m: 18px;
+  --shadow-1: 0 1px 2px rgb(60 45 20 / 0.05), 0 4px 14px rgb(60 45 20 / 0.06);
+  --shadow-2: 0 2px 6px rgb(60 45 20 / 0.08), 0 14px 32px rgb(60 45 20 / 0.12);
+  font-size: 0.97rem;
+}
+
+html[data-look="A"] {
+  --transport: #2b7a4b;
+  --food: #ad5726;
+  --living: #3b61ab;
+}
+
+html[data-look="B"] {
+  --transport: #2f7448;
+  --food: #a4512a;
+  --living: #45609d;
+  --leaf: #6aa178;
+  --leaf-dark: #3f7552;
+  --sun: #ffe7a3;
+}
+
+html:is([data-look="A"], [data-look="B"]) body {
+  background: var(--ground);
+  line-height: 1.6;
+}
+
+html:is([data-look="A"], [data-look="B"]) :is(h1, h2, h3, .wordmark, .line-head, .guide-section-title, .week-progress b) {
+  font-family: var(--font-head);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+html:is([data-look="A"], [data-look="B"]) h1 {
+  line-height: 1.25;
+}
+
+html:is([data-look="A"], [data-look="B"]) .lede {
+  max-width: 32ch;
+}
+
+/* Bars and sheets float as soft rounded panels */
+html:is([data-look="A"], [data-look="B"]) .tab-bar {
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-top: 0;
+  box-shadow: 0 -6px 24px -12px rgb(60 45 20 / 0.25);
+}
+
+html:is([data-look="A"], [data-look="B"]) .explorer-sheet {
+  border-radius: 24px 24px 0 0;
+}
+
+html:is([data-look="A"], [data-look="B"]) .explorer-panel {
+  border-radius: 24px;
+}
+
+html:is([data-look="A"], [data-look="B"]) .explorer-top .brand {
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+}
+
+/* Chips: quiet pills, colour only once chosen */
+html:is([data-look="A"], [data-look="B"]) .line-chip {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+}
+
+html:is([data-look="A"], [data-look="B"]) .line-chip svg {
+  color: var(--c);
+}
+
+html:is([data-look="A"], [data-look="B"]) .line-chip:is([aria-pressed="true"], [aria-current="page"]) {
+  border-color: transparent;
+  background: var(--tint);
+  color: var(--on-tint);
+}
+
+html:is([data-look="A"], [data-look="B"]) .action {
+  border-radius: var(--radius-pill);
+}
+
+/* Link cards and every list become soft cards on the warm ground */
+html:is([data-look="A"], [data-look="B"]) :is(.detail-guide, .feed-more a) {
+  border: 0;
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-list li a,
+html:is([data-look="A"], [data-look="B"]) .guide-list a {
+  border-radius: var(--radius-m);
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-list li {
+  border: 0;
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-list li + li {
+  margin-top: var(--space-2);
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-list li > a {
+  padding: var(--space-3) var(--space-4);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+/* Notes: one card each in B; A keeps them open, with room between */
+html[data-look="B"] .note {
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+html:is([data-look="A"], [data-look="B"]) .feed .note + .note {
+  margin-top: var(--space-4);
+}
+
+html:is([data-look="A"], [data-look="B"]) .note.is-compact {
+  background: var(--tint);
+  box-shadow: none;
+}
+
+html:is([data-look="A"], [data-look="B"]) .note-text {
+  line-height: 1.65;
+}
+
+/* Guide page: cream head instead of a tint, cards a little rounder */
+html:is([data-look="A"], [data-look="B"]) .guide-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--ground);
+  border-bottom: 0;
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-body {
+  background: var(--ground);
+}
+
+html:is([data-look="A"], [data-look="B"]) .guide-card {
+  border: 0;
+}
+
+/* The people on the Feed */
+html:is([data-look="A"], [data-look="B"]) .peeps {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0;
+  pointer-events: none;
+}
+
+html:is([data-look="A"], [data-look="B"]) .peeps img {
+  height: 120px;
+  margin-left: -28px;
+}
+
+/* ---------- A: the transit map, kept as a trace ---------- */
+
+html[data-look="A"] .page-head {
+  position: relative;
+}
+
+html[data-look="A"] .scenery-head {
+  position: absolute;
+  top: 8px;
+  right: calc(-1 * var(--gutter));
+  width: 55%;
+  max-width: 320px;
+  height: 64px;
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+html[data-look="A"] .scenery-head svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Category heads: no solid band, the name in its colour over a thin line */
+html[data-look="A"] .line-head {
+  margin-top: var(--space-7);
+  padding: 0 0 var(--space-2);
+  background: none;
+  color: var(--on-tint);
+  font-size: var(--step-1);
+}
+
+html[data-look="A"] .line-head .inner {
+  padding-bottom: var(--space-2);
+  border-bottom: 3px solid var(--c);
+}
+
+/* Feed: people sit on the head's edge, the first Note right under them */
+html[data-look="A"] .feed-peeps {
+  justify-content: flex-start;
+  margin-top: var(--space-2);
+}
+
+html[data-look="A"] .feed-peeps img {
+  height: 84px;
+  margin-left: -18px;
+}
+
+html[data-look="A"] .feed-peeps img:first-child {
+  margin-left: 0;
+}
+
+html[data-look="A"] .note {
+  padding: 0 0 0 var(--space-5);
+  border-left: 3px solid var(--c);
+}
+
+html[data-look="A"] .feed .note + .note {
+  margin-top: var(--space-6);
+}
+
+html[data-look="A"] .note-text {
+  font-size: var(--step-1);
+}
+
+/* ---------- B: under the rain trees ---------- */
+
+/* The canopy runs across the top of every page; the wordmark sits in its shade */
+html[data-look="B"] .page-head {
+  position: relative;
+  padding-top: 104px;
+}
+
+html[data-look="B"] .scenery-head {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 150px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+html[data-look="B"] .scenery-head svg {
+  display: block;
+  width: 100%;
+}
+
+html[data-look="B"] .scenery-canopy {
+  height: 104px;
+}
+
+html[data-look="B"] .scenery-dapple {
+  height: 40px;
+}
+
+html[data-look="B"] .page-head > .wordmark {
+  position: absolute;
+  top: 12px;
+  z-index: 1;
+  color: var(--paper);
+}
+
+html[data-look="B"] .page-head > :not(.scenery, .wordmark) {
+  position: relative;
+}
+
+html[data-look="B"] .back-link {
+  margin-top: var(--space-2);
+}
+
+/* Map: the same canopy along the top edge, the brand pill in front of it */
+html[data-look="B"] .scenery-map {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 400;
+  height: 120px;
+  pointer-events: none;
+}
+
+html[data-look="B"] .scenery-map svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Category heads: a rounded leaf-coloured label, not a full-width band */
+html[data-look="B"] .line-head {
+  margin-top: var(--space-6);
+  padding: 0;
+  background: none;
+  color: var(--ink);
+  font-size: var(--step-1);
+}
+
+html[data-look="B"] .line-head .inner > span,
+html[data-look="B"] .line-head .inner {
+  gap: var(--space-2);
+}
+
+html[data-look="B"] .line-head svg {
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--on-tint);
+  font-size: 2.2rem;
+}
+
+/* Notes: like leaves, one rounded corner tucked in, the category as a dot */
+html[data-look="B"] .note {
+  border-left: 0;
+  border-radius: 6px var(--radius-m) var(--radius-m) var(--radius-m);
+}
+
+html[data-look="B"] .note-cat::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.35em;
+  border-radius: 50% 0;
+  background: var(--c);
+}
+
+/* Feed: the three people stand together under the trees */
+html[data-look="B"] .feed-peeps {
+  justify-content: center;
+  margin-top: var(--space-3);
+  padding: var(--space-4) 0 0;
+  border-radius: var(--radius-m);
+}
+
+html[data-look="B"] .feed-peeps img {
+  height: 124px;
+}
+
+/* Steps: a soft path instead of a rail */
+html[data-look="B"] .step-line li::before {
+  width: 0;
+  left: calc(var(--station) / 2 - 2px);
+  background: none;
+  border-left: 4px dotted var(--c);
+}
+
+html[data-look="B"] .step-no {
+  border-width: 3px;
+  background: var(--tint);
+}
+
+html[data-look="B"] .week-stops li:not(:last-child)::after {
+  width: 0;
+  background: none;
+  border-left: 4px dotted var(--rule);
+}
+
+html[data-look="B"] .week-stops li.is-done:not(:last-child)::after {
+  border-left-color: var(--leaf-dark);
+}
+
+/* ---------- Motion: soft and small, off for anyone who asks for less ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html:is([data-look="A"], [data-look="B"]) main {
+    animation: look-in 0.35s ease-out both;
+  }
+
+  html:is([data-look="A"], [data-look="B"]) :is(.feed .note, .guide-card, .guide-list li, .week-stops li) {
+    animation: look-up 0.4s ease-out both;
+  }
+
+  html:is([data-look="A"], [data-look="B"]) :is(.feed .note, .guide-list li, .week-stops li, .step-line li):nth-child(2) { animation-delay: 0.05s; }
+  html:is([data-look="A"], [data-look="B"]) :is(.feed .note, .guide-list li, .week-stops li, .step-line li):nth-child(3) { animation-delay: 0.1s; }
+  html:is([data-look="A"], [data-look="B"]) :is(.feed .note, .guide-list li, .week-stops li, .step-line li):nth-child(4) { animation-delay: 0.15s; }
+  html:is([data-look="A"], [data-look="B"]) :is(.feed .note, .guide-list li, .week-stops li, .step-line li):nth-child(n + 5) { animation-delay: 0.2s; }
+
+  html:is([data-look="A"], [data-look="B"]) .detail {
+    animation: look-up 0.3s ease-out both;
+  }
+
+  html:is([data-look="A"], [data-look="B"]) :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a) {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  html:is([data-look="A"], [data-look="B"]) :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a):active {
+    transform: scale(0.97);
+  }
+
+  html:is([data-look="A"], [data-look="B"]) .week-stops input:checked {
+    animation: look-pop 0.35s ease-out;
+  }
+
+  html[data-look="B"] .scenery-canopy {
+    transform-origin: top center;
+    animation: look-sway 9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes look-in {
+  from { opacity: 0; }
+}
+
+@keyframes look-up {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes look-pop {
+  50% { transform: scale(1.18); }
+}
+
+@keyframes look-sway {
+  to { transform: scaleY(1.04) translateX(-4px); }
+}
+
+/* ---------- The prototype's own switcher: deliberately not part of the design ---------- */
+
+.look-switcher {
+  position: fixed;
+  left: 50%;
+  bottom: 84px;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 99px;
+  background: #111;
+  color: #fff;
+  font: 600 13px/1 system-ui, sans-serif;
+  box-shadow: 0 6px 20px rgb(0 0 0 / 0.35);
+  transform: translateX(-50%);
+}
+
+.look-switcher span {
+  padding: 0 10px;
+  white-space: nowrap;
+}
+
+.look-switcher button {
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 50%;
+  background: #333;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* ---------- Both: the web-price label shortened to its date; the full words stay for screen readers ---------- */
+
+html:is([data-look="A"], [data-look="B"]) .price-check-more {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- A: no boxes. Room, a thin line and big numbers hold things together ---------- */
+
+html[data-look="A"] .guide-facts {
+  gap: var(--space-3) var(--space-6);
+  margin-top: var(--space-5);
+}
+
+html[data-look="A"] .guide-facts > div {
+  flex: 0 1 auto;
+  padding: 0 var(--space-5) 0 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+
+
+html[data-look="A"] :is(.guide-card, .guide-bring) {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html[data-look="A"] .guide-bring {
+  margin-top: var(--space-6);
+}
+
+html[data-look="A"] .step-line {
+  gap: var(--space-6);
+}
+
+html[data-look="A"] .step-line li::before {
+  width: 2px;
+  left: calc(var(--station) / 2 - 1px);
+}
+
+html[data-look="A"] .step-no {
+  border: 0;
+  background: var(--ground);
+  color: var(--c);
+  font-family: var(--font-head);
+  font-size: var(--step-2);
+  font-weight: 500;
+}
+
+html[data-look="A"] .step-end .step-no {
+  border-radius: 50%;
+  background: var(--c);
+  color: var(--paper);
+  font-size: var(--step-0);
+}
+
+html[data-look="A"] .option-cards {
+  gap: 0;
+}
+
+html[data-look="A"] .option-cards .guide-card {
+  padding: var(--space-5) 0;
+  background: none;
+  border-top: 1px solid var(--rule);
+}
+
+html[data-look="A"] .step-say {
+  background: none;
+  padding: 0;
+}
+
+html[data-look="A"] .guide-body .guide-photo {
+  margin-top: 0;
+  box-shadow: none;
+}
+
+html[data-look="A"] .guide-page:has(.guide-photo) .guide-hero {
+  padding-bottom: var(--space-5);
+}
+
+html[data-look="A"] .guide-list li > a {
+  padding-inline: 0;
+  background: none;
+  box-shadow: none;
+}
+
+html[data-look="A"] .guide-list li + li {
+  margin-top: 0;
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- B: soft blocks. Facts sit together in one tinted panel ---------- */
+
+html[data-look="B"] .guide-facts {
+  gap: 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+html[data-look="B"] .guide-facts > div {
+  background: none;
+  box-shadow: none;
+}
+
+html[data-look="B"] .guide-facts > div + div {
+  border-left: 1px dashed var(--rule);
+}
+
+html[data-look="B"] .guide-bring {
+  border-left: 0;
+  background: var(--tint);
+  box-shadow: none;
+}

@@ -9,6 +9,7 @@ import type { Category } from "@/content/categories";
 import type { CategoryId } from "@/content/types";
 import { CategoryIcon, PlaceIcon } from "../icons";
 import { Wordmark } from "../PageHead";
+import { Scenery } from "../prototype/Scenery";
 import { PlaceDetail } from "./PlaceDetail";
 import type { MapStop } from "./types";
 
@@ -329,6 +330,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   // The panel comes before the map in the page, so Tab reaches the filters before the pins.
   return (
     <div className="explorer" ref={explorer}>
+      <Scenery where="map" />
       {wide ? (
         <aside className="explorer-panel" aria-label="แผงแผนที่" style={{ width: sidebar }}>
           {brand}
