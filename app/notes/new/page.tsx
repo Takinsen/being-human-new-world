@@ -3,27 +3,29 @@ import Link from "next/link";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { PageHead } from "@/components/PageHead";
-import { getContent } from "@/lib/content";
+import { getContent, isCategory } from "@/lib/content";
 import { provincesByRegion } from "@/lib/provinces";
 import { sheetConfigured } from "@/lib/sheet";
 import { NoteForm } from "./NoteForm";
 
 export const metadata: Metadata = { title: "เขียนโน้ต | ตั้งหลัก" };
 
-type Props = { searchParams: Promise<{ place?: string }> };
+type Props = { searchParams: Promise<{ place?: string; line?: string }> };
 
 export default async function NewNotePage({ searchParams }: Props) {
-  const { place } = await searchParams;
+  const { place, line } = await searchParams;
   const content = await getContent();
   const from = content.places.find((p) => p.id === place);
+  // Came from a filtered Feed: keep that category through the form and back (UX audit 7, U10).
+  const fromLine = !from && line && isCategory(line) ? categories.find((c) => c.id === line) : undefined;
   return (
     <>
       <PageHead
         title="เขียนโน้ต"
         lede="สิ่งที่อยากให้คนมาใหม่รู้ สั้นๆ ในคำพูดของเราเอง"
         back={
-          <Link href={from ? `/?place=${from.id}` : "/notes"} className="back-link">
-            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : "โน้ต"}
+          <Link href={from ? `/?place=${from.id}` : fromLine ? `/notes?line=${fromLine.id}` : "/notes"} className="back-link">
+            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : fromLine ? `โน้ต · ${fromLine.name}` : "โน้ต"}
           </Link>
         }
       />
@@ -35,7 +37,8 @@ export default async function NewNotePage({ searchParams }: Props) {
           lines={categories.map((c) => ({ id: c.id, name: c.name }))}
           places={content.places.map((p) => ({ id: p.id, name: p.name, category: p.category }))}
           provinces={provincesByRegion}
-          initialPlace={content.places.some((p) => p.id === place) ? place : undefined}
+          initialPlace={from?.id}
+          initialLine={fromLine?.id}
         />
       </div>
     </>

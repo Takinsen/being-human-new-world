@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
+import { ProvinceSelect } from "@/components/ProvinceSelect";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
 
@@ -21,21 +22,23 @@ export function NoteForm({
   places,
   provinces,
   initialPlace,
+  initialLine,
 }: {
   lines: Line[];
   places: PlaceOption[];
   provinces: Record<Region, string[]>;
   initialPlace?: string;
+  /** The Feed category the writer came from; picked already, and kept after posting */
+  initialLine?: CategoryId;
 }) {
   const [state, action, pending] = useActionState(saveNote, null);
   const [placeId, setPlaceId] = useState(initialPlace ?? "");
   const [length, setLength] = useState(0);
   const place = places.find((p) => p.id === placeId);
-  // Bangkok first: the list is long and many writers live here already.
-  const regionsFirst = (Object.keys(provinces) as Region[]).sort((a, b) => Number(b === "กลาง") - Number(a === "กลาง"));
 
   return (
     <form action={action} className="contribute-form" onInvalidCapture={thaiValidity(noteMessages)} onInput={clearValidity}>
+      {initialLine && <input type="hidden" name="from" value={initialLine} />}
       <label>
         โน้ต
         <textarea
@@ -76,7 +79,7 @@ export function NoteForm({
           <legend>เรื่องหมวดไหน</legend>
           {lines.map((l) => (
             <label key={l.id} className="check" data-line={l.id}>
-              <input type="radio" name="category" value={l.id} required />
+              <input type="radio" name="category" value={l.id} required defaultChecked={l.id === initialLine} />
               {l.name}
             </label>
           ))}
@@ -93,29 +96,18 @@ export function NoteForm({
           ชื่อ
           <input name="name" placeholder="ชื่อเล่นก็ได้ เช่น ต้น" required maxLength={60} autoComplete="nickname" />
         </label>
-        <label>
-          บ้านเกิด
-          <select name="hometown" required defaultValue="">
-            <option value="" disabled>
-              เลือกจังหวัด
-            </option>
-            {regionsFirst.map((r) => (
-              <optgroup key={r} label={`ภาค${r}`}>
-                {[...provinces[r]].sort((a, b) => Number(b === "กรุงเทพมหานคร") - Number(a === "กรุงเทพมหานคร")).map((p) => (
-                  <option key={p}>{p}</option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
+        <ProvinceSelect provinces={provinces} />
       </div>
       <p className="form-status is-error" role="alert" hidden={!state}>
         {state?.message}
       </p>
-      <button type="submit" disabled={pending}>
+      {/* Say it before they press: there's no edit or delete on the site (docs/adr/0005) */}
+      <p className="status-note" id="note-public">
+        โน้ตจะขึ้นทันที พร้อมชื่อและจังหวัดที่ใส่ แก้หรือลบเองไม่ได้
+      </p>
+      <button type="submit" disabled={pending} aria-describedby="note-public">
         {pending ? "กำลังบันทึก" : "ลงโน้ต"}
       </button>
     </form>
   );
 }
-

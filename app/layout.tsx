@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
 import { TabBar } from "@/components/TabBar";
 import "./globals.css";
@@ -32,7 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <main id="main">{children}</main>
         <footer className="site-footer">
-          <p>ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน</p>
+          <p>
+            ข้อมูลแถวจุฬาฯ เขียนโดยทีมตั้งหลักและรุ่นพี่ที่เคยมาใหม่เหมือนกัน · <Link href="/contribute">ช่วยเติมข้อมูล</Link>
+          </p>
         </footer>
         <TabBar />
         <ChipFocus />

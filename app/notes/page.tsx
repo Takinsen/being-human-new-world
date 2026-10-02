@@ -36,7 +36,10 @@ export default async function NotesPage({ searchParams }: Props) {
           )
         }
         action={
-          <Link href={place ? `/notes/new?place=${place.id}` : "/notes/new"} className="action is-primary head-action">
+          <Link
+            href={place ? `/notes/new?place=${place.id}` : active ? `/notes/new?line=${active}` : "/notes/new"}
+            className="action is-primary head-action"
+          >
             <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
           </Link>
         }

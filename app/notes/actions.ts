@@ -37,6 +37,8 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
     return { message: "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง" };
   }
   updateTag(SHEET_TAG);
-  // The writer sees their Note where it landed (docs/adr/0006).
-  redirect(place ? `/?place=${place.id}&posted=1` : "/notes?posted=1#fresh");
+  // The writer sees their Note where it landed (docs/adr/0006); one who came from a
+  // filtered Feed goes back to it, filtered to the Note's own category so it shows (UX audit 7, U10).
+  if (place) redirect(`/?place=${place.id}&posted=1`);
+  redirect(isCategory(text(form, "from", 20)) ? `/notes?line=${category}&posted=1#fresh` : "/notes?posted=1#fresh");
 }
