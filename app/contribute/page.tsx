@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { categories } from "@/content/categories";
+import { placeCategories } from "@/content/categories";
 import { getContent } from "@/lib/content";
 import { provincesByRegion } from "@/lib/provinces";
 import { sheetConfigured } from "@/lib/sheet";
@@ -30,7 +30,8 @@ export default async function ContributePage({ searchParams }: Props) {
         <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet (ตั้งค่า SHEET_API_URL) ฟอร์มจะยังบันทึกไม่ได้</p>
       )}
       <ContributeForms
-        lines={categories.map((c) => ({ id: c.id, name: c.name }))}
+        // Places and Guides only: Adjusting has neither (docs/adr/0008)
+        lines={placeCategories.map((c) => ({ id: c.id, name: c.name }))}
         places={content.places.map((p) => ({ id: p.id, name: p.name, category: p.category, per: p.price?.per }))}
         guides={guidesToConfirm ? content.guides.map((g) => ({ id: g.id, title: g.title, category: g.category, checked: g.checked })) : []}
         provinces={provincesByRegion}

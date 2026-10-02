@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BowlSteam, CaretRight } from "@phosphor-icons/react/dist/ssr";
-import { categories } from "@/content/categories";
-import { CategoryIcon, IconFor } from "@/components/icons";
+import { placeCategories } from "@/content/categories";
+import { BrandLogo, CategoryIcon, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { type Content, getContent, guidesIn } from "@/lib/content";
 import { OldGuideLinks } from "./OldGuideLinks";
@@ -10,6 +10,7 @@ import { OldGuideLinks } from "./OldGuideLinks";
 export const metadata: Metadata = { title: "วิธี | ตั้งหลัก" };
 
 // Every Guide as one line, grouped by category; the steps are on /guides/<id> (docs/adr/0006).
+// Adjusting has no Guides, so it has no section here (docs/adr/0008).
 export default async function GuidesPage() {
   const content = await getContent();
   return (
@@ -17,7 +18,7 @@ export default async function GuidesPage() {
       <OldGuideLinks ids={content.guides.map((g) => g.id)} />
       <PageHead title="วิธี" lede="ทำเรื่องที่เคยมีคนทำให้ ด้วยตัวเอง ทีละขั้น">
         <nav className="line-filters" aria-label="ไปที่หมวด">
-          {categories.map((c) => (
+          {placeCategories.map((c) => (
             <a key={c.id} href={`#${c.id}`} className="line-chip" data-line={c.id}>
               <CategoryIcon id={c.id} />
               {c.name}
@@ -25,7 +26,7 @@ export default async function GuidesPage() {
           ))}
         </nav>
       </PageHead>
-      {categories.map((c) => (
+      {placeCategories.map((c) => (
         <section key={c.id} id={c.id} className="guides-line" data-line={c.id}>
           <h2 className="line-head">
             <span className="inner">
@@ -38,7 +39,7 @@ export default async function GuidesPage() {
                 <li key={g.id}>
                   <Link href={`/guides/${g.id}`}>
                     <span className="guide-icon">
-                      <IconFor name={g.icon} />
+                      <BrandLogo brand={g.brand} fallback={<IconFor name={g.icon} />} />
                     </span>
                     <span>
                       <b>{g.title}</b>

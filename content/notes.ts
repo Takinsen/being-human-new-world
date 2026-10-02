@@ -31,16 +31,7 @@ export const seedNotes: Note[] = [
     name: "พี่บอส",
     hometown: "สุราษฎร์ธานี",
     region: "ใต้",
-    category: "living",
-    seniorId: "boss",
-  },
-  {
-    id: "seed-boss-explore",
-    text: "มาแรกๆ สำรวจแถวที่พักค่อนข้างยาก เสียเวลาเสียตังค์เยอะ อยากได้อะไรที่บอกจุดต่างๆ ชัดๆ เช่น ร้านข้าว ที่ซักผ้า การเดินทาง",
-    name: "พี่บอส",
-    hometown: "สุราษฎร์ธานี",
-    region: "ใต้",
-    category: "living",
+    category: "adjusting",
     seniorId: "boss",
   },
   {
@@ -67,7 +58,7 @@ export const seedNotes: Note[] = [
     name: "พี่แทน",
     hometown: "อำนาจเจริญ",
     region: "อีสาน",
-    category: "food",
+    category: "adjusting",
     seniorId: "tan",
   },
   {
@@ -76,7 +67,7 @@ export const seedNotes: Note[] = [
     name: "พี่แทน",
     hometown: "อำนาจเจริญ",
     region: "อีสาน",
-    category: "living",
+    category: "adjusting",
     seniorId: "tan",
   },
 ];

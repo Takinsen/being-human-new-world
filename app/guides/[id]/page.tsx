@@ -5,7 +5,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { guides } from "@/content/guides";
 import { GuideBlock } from "@/components/GuideBlock";
-import { IconFor } from "@/components/icons";
+import { BrandLogo, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { Price } from "@/components/Price";
 import { TelText } from "@/components/TelText";
@@ -36,7 +36,7 @@ export default async function GuidePage({ params }: Props) {
           title={
             <span className="title-with-icon">
               <span className="guide-icon">
-                <IconFor name={guide.icon} />
+                <BrandLogo brand={guide.brand} fallback={<IconFor name={guide.icon} />} />
               </span>
               {guide.title}
             </span>

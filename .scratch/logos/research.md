@@ -97,3 +97,10 @@ Status: needs-triage
 `/tmp/claude-0/-home-user-being-human-new-world/e496bc1a-4965-5512-900e-626d12ecacad/scratchpad/logos/`
 - `bts-logo.commons-mirror.svg` — SVG (Inkscape), 8,385 bytes, 201.76 × 241.63, sha256 `a6aafbe4…ff31` — จาก https://raw.githubusercontent.com/CazadorHT/realestate-crm/HEAD/public/images/transit/BTS-Logo.svg
 - `mrt-bangkok-logo.commons-mirror.svg` — SVG, 550 bytes, 256 × 222.6, sha256 `90cc3151…8713` — จาก https://raw.githubusercontent.com/CazadorHT/realestate-crm/HEAD/public/images/transit/MRT_(Bangkok)_logo.svg
+
+## Done (2026-10-02)
+
+- `public/logos/bts.svg` and `public/logos/mrt.svg` are the two mirror files above, **byte for byte** (sha256 `a6aafbe487dbd267924f8af506fc9b1783192c38c8a5086f65f3e218ec76ff31` and `90cc3151dfa36b2d29bb7aee90d73cd96ec7c903bb69b4157bd1c7e359348713`). Inkscape metadata was left in: browsers scale both files fine without a `viewBox`.
+- Shown on: the map pins of MRT สามย่าน, BTS สยาม and BTS สนามกีฬาแห่งชาติ (logo on the white disc, ringed in the transport colour), those Places' cards and list rows, and the Guides `rabbit` (BTS) and `mrt` (MRT), on `/guides` and on their own pages. Always on white, never recoloured. Rabbit and CU Pop Bus keep our own icons; no Phra Kiao anywhere.
+- One switch turns them all off: `NEXT_PUBLIC_TRANSIT_LOGOS=off` at build time (`lib/brands.ts`). The footer line saying the marks are their owners' shows only while logos are on. The map page has no footer, so the line shows on every other page.
+- **Before the pitch:** on a machine with an open network, download `File:BTS-Logo.svg` and `File:MRT_(Bangkok)_logo.svg` from upload.wikimedia.org, run `sha256sum` on them and on `public/logos/*.svg`, and check the hashes match. If they don't, diff the paths, and confirm the licence templates on both Commons pages (step 1 of the risks above).

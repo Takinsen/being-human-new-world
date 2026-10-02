@@ -7,8 +7,8 @@ export const firstWeek: ChecklistItem[] = [
   { id: "rabbit", title: "ทำบัตร Rabbit (ถ้านั่ง BTS ทุกวัน)", href: "/guides/rabbit", category: "transport" },
   { id: "bus", title: "ขึ้นรถป๊อปฟรีของจุฬาฯ เป็น", href: "/guides/pop-bus", category: "transport" },
   { id: "normal-price", title: "รู้ว่าข้าวจานเดียวแถวนี้ราคาปกติเท่าไหร่", href: "/guides/eat-cheap", category: "food" },
-  { id: "laundry", title: "ซักผ้าหยอดเหรียญเองได้ 1 รอบ", href: "/guides/coin-laundry", category: "living" },
-  { id: "water", title: "ตัดสินใจเรื่องน้ำดื่ม", href: "/guides/drinking-water", category: "living" },
-  { id: "sick", title: "รู้ว่าถ้าป่วยต้องไปที่ไหน", href: "/guides/sick", category: "living" },
-  { id: "senior-story", title: "อ่านเรื่องของรุ่นพี่อย่างน้อย 1 เรื่อง", href: "/seniors" },
+  { id: "laundry", title: "ซักผ้าหยอดเหรียญเองได้ 1 รอบ", href: "/guides/coin-laundry", category: "household" },
+  { id: "water", title: "ตัดสินใจเรื่องน้ำดื่ม", href: "/guides/drinking-water", category: "household" },
+  { id: "sick", title: "รู้ว่าถ้าป่วยต้องไปที่ไหน", href: "/guides/sick", category: "health" },
+  { id: "senior-story", title: "อ่านเรื่องของรุ่นพี่อย่างน้อย 1 เรื่อง", href: "/seniors", category: "adjusting" },
 ];

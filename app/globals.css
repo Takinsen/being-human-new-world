@@ -14,7 +14,10 @@
   --rule: #e9e1d3;
   --transport: #2f7448;
   --food: #a4512a;
-  --living: #45609d;
+  /* Each ≥4.5:1 as text on --paper, as --on-tint on its --tint, and with white on it (docs/adr/0008) */
+  --health: #a3426e;
+  --household: #45609d;
+  --adjusting: #7b4f8f;
   /* The canopy: leaves and the light that falls through them */
   --leaf: #6aa178;
   --leaf-dark: #3f7552;
@@ -80,7 +83,11 @@
 
 [data-line="transport"] { --c: var(--transport); }
 [data-line="food"] { --c: var(--food); }
-[data-line="living"] { --c: var(--living); }
+[data-line="health"] { --c: var(--health); }
+[data-line="household"] { --c: var(--household); }
+[data-line="adjusting"] { --c: var(--adjusting); }
+/* Living Alone split in two; old Sheet rows show under Household until re-filed (docs/adr/0008) */
+[data-line="living"] { --c: var(--household); }
 [data-line="general"] { --c: var(--ink); }
 
 /* A light wash of the line's colour, and the line's colour darkened to stay ≥4.5:1 on it */
@@ -506,6 +513,72 @@ svg { flex: none; }
 .map-pin .pin[data-icon="food"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M224%2C100h-4.78a92%2C92%2C0%2C0%2C0-182.44%2C0H32a12%2C12%2C0%2C0%2C0-12%2C12%2C108.38%2C108.38%2C0%2C0%2C0%2C56%2C94.68V208a20%2C20%2C0%2C0%2C0%2C20%2C20h64a20%2C20%2C0%2C0%2C0%2C20-20v-1.32A108.38%2C108.38%2C0%2C0%2C0%2C236%2C112%2C12%2C12%2C0%2C0%2C0%2C224%2C100ZM170.29%2C60.06A92%2C92%2C0%2C0%2C0%2C127.19%2C100H106a68.27%2C68.27%2C0%2C0%2C1%2C62-40C168.76%2C60%2C169.52%2C60%2C170.29%2C60.06Zm17.22%2C19.08A67.66%2C67.66%2C0%2C0%2C1%2C194.92%2C100H156.13A67.91%2C67.91%2C0%2C0%2C1%2C187.51%2C79.14ZM128%2C44c.83%2C0%2C1.65%2C0%2C2.48.06A92.3%2C92.3%2C0%2C0%2C0%2C80.37%2C100H61.08A68.1%2C68.1%2C0%2C0%2C1%2C128%2C44Zm35%2C144.39a12%2C12%2C0%2C0%2C0-7%2C10.91V204H100v-4.7a12%2C12%2C0%2C0%2C0-7-10.91A84.32%2C84.32%2C0%2C0%2C1%2C44.87%2C124H211.13A84.32%2C84.32%2C0%2C0%2C1%2C163%2C188.39Z%22%2F%3E%3C%2Fsvg%3E"); }
 .map-pin .pin[data-icon="laundry"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M160%2C80a16%2C16%2C0%2C1%2C1%2C16%2C16A16%2C16%2C0%2C0%2C1%2C160%2C80Zm72-36V212a20%2C20%2C0%2C0%2C1-20%2C20H44a20%2C20%2C0%2C0%2C1-20-20V44A20%2C20%2C0%2C0%2C1%2C44%2C24H212A20%2C20%2C0%2C0%2C1%2C232%2C44Zm-24%2C4H48V208H208Zm-68.49%2C75.51-16%2C16a12%2C12%2C0%2C0%2C0%2C17%2C17l16-16a12%2C12%2C0%2C1%2C0-17-17Zm-15-16a12%2C12%2C0%2C0%2C0-17%2C0l-8%2C8a12%2C12%2C0%2C0%2C0%2C17%2C17l8-8A12%2C12%2C0%2C0%2C0%2C124.49%2C107.51ZM128%2C196a68.05%2C68.05%2C0%2C0%2C0%2C67.19-78.52%2C12%2C12%2C0%2C0%2C0-23.72%2C3.69%2C44%2C44%2C0%2C1%2C1-36.64-36.64%2C12%2C12%2C0%2C0%2C0%2C3.69-23.72A68%2C68%2C0%2C1%2C0%2C128%2C196Z%22%2F%3E%3C%2Fsvg%3E"); }
 .map-pin .pin[data-icon="sick"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M216%2C52H180V44a28%2C28%2C0%2C0%2C0-28-28H104A28%2C28%2C0%2C0%2C0%2C76%2C44v8H40A20%2C20%2C0%2C0%2C0%2C20%2C72V200a20%2C20%2C0%2C0%2C0%2C20%2C20H216a20%2C20%2C0%2C0%2C0%2C20-20V72A20%2C20%2C0%2C0%2C0%2C216%2C52ZM100%2C44a4%2C4%2C0%2C0%2C1%2C4-4h48a4%2C4%2C0%2C0%2C1%2C4%2C4v8H100ZM212%2C196H44V76H212Zm-48-60a12%2C12%2C0%2C0%2C1-12%2C12H140v12a12%2C12%2C0%2C0%2C1-24%2C0V148H104a12%2C12%2C0%2C0%2C1%2C0-24h12V112a12%2C12%2C0%2C0%2C1%2C24%2C0v12h12A12%2C12%2C0%2C0%2C1%2C164%2C136Z%22%2F%3E%3C%2Fsvg%3E"); }
+.map-pin .pin[data-icon="basket"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M140%2C128v40a12%2C12%2C0%2C0%2C1-24%2C0V128a12%2C12%2C0%2C0%2C1%2C24%2C0Zm28.06-1.19-4%2C40a12%2C12%2C0%2C0%2C0%2C10.75%2C13.13c.4%2C0%2C.81.06%2C1.2.06a12%2C12%2C0%2C0%2C0%2C11.93-10.81l4-40a12%2C12%2C0%2C0%2C0-23.88-2.38Zm-80.12%2C0a12%2C12%2C0%2C0%2C0-23.88%2C2.38l4%2C40A12%2C12%2C0%2C0%2C0%2C80%2C180c.39%2C0%2C.8%2C0%2C1.2-.06a12%2C12%2C0%2C0%2C0%2C10.75-13.13Zm156-37.22-15.07%2C113A20.06%2C20.06%2C0%2C0%2C1%2C209%2C220H47a20.06%2C20.06%2C0%2C0%2C1-19.82-17.36l-15.07-113A12%2C12%2C0%2C0%2C1%2C24%2C76H66.55L119%2C16.1a12%2C12%2C0%2C0%2C1%2C18.06%2C0L189.45%2C76H232a12%2C12%2C0%2C0%2C1%2C11.89%2C13.59ZM98.45%2C76h59.1L128%2C42.22Zm119.84%2C24H37.71l12.8%2C96h155Z%22%2F%3E%3C%2Fsvg%3E"); }
+
+/* Transit logos (lib/brands.ts): BTS and MRT exactly as their owners drew them, never
+   recoloured or stretched, always on white. Where a logo stands in for an icon, the
+   category's colour stays as the ring, so the category still reads. */
+.brand-logo {
+  display: block;
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+/* A station's pin: the logo on the white disc instead of the icon; selected, it grows but stays white */
+.map-pin .pin.has-logo::before {
+  content: none;
+}
+
+.map-pin.is-selected .pin.has-logo {
+  background: var(--paper);
+  border: 4px solid var(--c);
+  box-shadow: 0 0 0 2px #fff, 0 2px 6px rgb(0 0 0 / 0.35);
+}
+
+.map-pin.is-selected .pin.has-logo .brand-logo {
+  width: 26px;
+  height: 26px;
+}
+
+.place-icon .brand-logo {
+  width: 24px;
+  height: 24px;
+}
+
+/* On a Place's card the logo is the one picture of the station, so it is a little larger */
+.detail-title .place-icon:has(.brand-logo) {
+  width: 3rem;
+  height: 3rem;
+}
+
+.detail-title .place-icon .brand-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* A Guide's icon is a filled disc; with a logo it turns white, ringed in the category's colour */
+.guide-icon:has(.brand-logo) {
+  width: 48px;
+  height: 48px;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 3px var(--c);
+}
+
+.guide-icon .brand-logo {
+  width: 30px;
+  height: 30px;
+}
+
+.title-with-icon .guide-icon:has(.brand-logo) {
+  width: 64px;
+  height: 64px;
+}
+
+.title-with-icon .guide-icon .brand-logo {
+  width: 42px;
+  height: 42px;
+}
 
 .map-loading {
   display: grid;

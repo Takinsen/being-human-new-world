@@ -22,7 +22,7 @@ export type Content = {
 };
 
 const regions: Region[] = ["เหนือ", "อีสาน", "กลาง", "ใต้", "ตะวันออก", "ตะวันตก"];
-const categoryIds: CategoryId[] = ["transport", "food", "living"];
+const categoryIds: CategoryId[] = ["transport", "food", "health", "household", "adjusting"];
 
 export function isRegion(value: string): value is Region {
   return (regions as string[]).includes(value);
@@ -30,6 +30,14 @@ export function isRegion(value: string): value is Region {
 
 export function isCategory(value: string): value is CategoryId {
   return (categoryIds as string[]).includes(value);
+}
+
+/** A Note's category from the Sheet. Rows written before Living Alone split in two
+ * still say "living"; they show under Household until the team re-files them by
+ * hand (docs/adr/0008, .scratch/categories/migrate-living.md). */
+function noteCategory(value: string): CategoryId | undefined {
+  if (value === "living") return "household";
+  return isCategory(value) ? value : undefined;
 }
 
 export async function getContent(): Promise<Content> {
@@ -79,7 +87,7 @@ function merge(rows: SheetRows): Content {
     const name = row.name?.trim();
     const hometown = row.hometown?.trim();
     const p = row.placeId ? place(row.placeId) : undefined;
-    const category = p?.category ?? (isCategory(row.category) ? row.category : undefined);
+    const category = p?.category ?? noteCategory(row.category);
     if (!text || !name || !hometown || !category) return;
     const senior = seniors.find((s) => s.name === name && s.hometown === hometown);
     written.push({
