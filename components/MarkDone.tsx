@@ -6,7 +6,8 @@ import { firstWeek } from "@/content/checklist";
 import { useChecklist } from "@/lib/useChecklist";
 
 // Lets a Newcomer tick the matching first-week station right after reading a Guide,
-// then carries on to the next one (UX audit 7, U5).
+// then carries on to the next one (UX audit 7, U5). Once ticked, that next station is
+// the page's one "next" card; the Guide's own "ต่อจากนี้" steps aside (audit 8, R4).
 export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
   const { done, toggle } = useChecklist();
   const isDone = done.includes(itemId);
@@ -20,8 +21,11 @@ export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
         <span className="visually-hidden">ทำแล้ว: {title}</span>
       </button>
       {isDone && (
-        <Link href={next ? next.href : "/checklist"} className="related-link mark-next">
-          {next ? `ข้อถัดไป: ${next.title}` : "ครบแล้ว ดูสัปดาห์แรก"}
+        <Link href={next ? next.href : "/checklist"} className="detail-guide guide-next mark-next">
+          <span>
+            <small>{next ? "ถัดไปในสัปดาห์แรก" : "ครบแล้ว"}</small>
+            {next ? next.title : "ดูสัปดาห์แรก"}
+          </span>
           <ArrowRight weight="bold" aria-hidden="true" />
         </Link>
       )}

@@ -26,7 +26,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       {guide.jumps && (
         <nav className="jump-links guide-jumps" aria-label="ไปที่ทางเลือก">
           {guide.jumps.map((j) => (
-            <a key={j.to} href={`#${j.to}`}>
+            <a key={j.to} href={`#${j.to}`} data-urgent={guide.steps.find((s) => s.id === j.to)?.urgent || undefined}>
               {j.label}
             </a>
           ))}

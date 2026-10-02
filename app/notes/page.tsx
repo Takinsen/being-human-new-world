@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpenText, ChatCenteredText, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
+import { ChipInView } from "@/components/ChipFocus";
 import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
 import { PageHead } from "@/components/PageHead";
@@ -70,6 +71,7 @@ export default async function NotesPage({ searchParams }: Props) {
                 {c.name}
               </Link>
             ))}
+            <ChipInView key={active ?? "all"} />
           </nav>
         )}
         {posted && (

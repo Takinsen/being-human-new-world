@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, HandHeart } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, ArrowRight, HandHeart, PencilSimpleLine } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
 import { Peeps } from "@/components/People";
 import { PageHead } from "@/components/PageHead";
@@ -27,11 +27,15 @@ export default async function SeniorsPage() {
         {seniors.map((s) => (
           <SeniorStory key={s.id} senior={s} />
         ))}
-        <p>
-          <Link href="/contribute#senior" className="related-link">
-            เคยเป็นคนมาใหม่เหมือนกัน? เล่าเรื่องปีแรกของเรา <ArrowRight weight="bold" aria-hidden="true" />
-          </Link>
-        </p>
+        <ul className="feed-more seniors-more">
+          <li>
+            <Link href="/contribute#senior">
+              <PencilSimpleLine weight="bold" aria-hidden="true" />
+              <span>เคยเป็นคนมาใหม่เหมือนกัน? เล่าเรื่องปีแรกของเรา</span>
+              <ArrowRight weight="bold" aria-hidden="true" />
+            </Link>
+          </li>
+        </ul>
       </div>
       <section className="help" id="help">
         <div className="inner">

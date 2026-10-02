@@ -15,3 +15,11 @@ export function ChipFocus() {
   }, []);
   return null;
 }
+
+/** Put inside a chip row, keyed by the current filter: the chip for the page you're on starts in view (audit 8, R7) */
+export function ChipInView() {
+  useEffect(() => {
+    document.querySelector(".line-filters [aria-current='page']")?.scrollIntoView({ inline: "center", block: "nearest" });
+  }, []);
+  return null;
+}

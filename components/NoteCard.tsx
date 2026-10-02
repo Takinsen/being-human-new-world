@@ -15,7 +15,7 @@ export function NoteCard({ note, placeName, compact, fresh }: { note: Note; plac
         {" · "}
         {note.seniorId ? <Link href={`/seniors#${note.seniorId}`}>{note.name}</Link> : <b>{note.name}</b>}
         <span> บ้านอยู่{note.hometown}</span>
-        {note.on && <span> · {thaiDate(note.on)}</span>}
+        {note.on && <span className="nb"> · {thaiDate(note.on)}</span>}
       </footer>
       {placeName && note.placeId && (
         <Link href={`/?place=${note.placeId}`} className="note-place">

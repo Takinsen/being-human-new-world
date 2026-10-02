@@ -121,8 +121,18 @@ body {
 
 h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
-h1, h2, h3, .lede {
+h1, h2, h3 {
   text-wrap: balance;
+}
+
+/* Balance on a paragraph breaks Thai words more often; pretty only avoids a lone last word */
+.lede {
+  text-wrap: pretty;
+}
+
+/* Names and short phrases that must not break across lines */
+.nb {
+  white-space: nowrap;
 }
 
 h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: 500; }
@@ -545,7 +555,7 @@ svg { flex: none; }
   align-items: baseline;
   gap: 0.4em;
   padding: 0.1em 0.55em;
-  border-radius: 3px;
+  border-radius: var(--radius-s);
   background: var(--platform);
   color: var(--ink);
   font-weight: 700;
@@ -668,8 +678,7 @@ svg { flex: none; }
   border-radius: 50%;
   background: color-mix(in srgb, var(--leaf) 22%, var(--paper));
   color: var(--leaf-dark);
-  font-family: var(--font-head);
-  font-weight: 500;
+  font-weight: 700;
   font-size: var(--step-1);
 }
 
@@ -704,9 +713,16 @@ svg { flex: none; }
   background: color-mix(in srgb, var(--leaf) 16%, var(--paper));
 }
 
+/* On a phone the card keeps the gutter; wider, it lines up with the story cards */
 @media (max-width: 40rem) {
   .help > .inner {
     margin-inline: var(--gutter);
+  }
+}
+
+@media (min-width: 40.01rem) {
+  .help > .inner {
+    max-width: calc(var(--measure) - 2 * var(--gutter));
   }
 }
 
@@ -1955,19 +1971,51 @@ body:not(:has(.explorer)) main {
   margin-top: var(--space-4);
 }
 
-/* Links to the forms further down: plain links, not filter chips */
+/* Shortcuts further down the page: small paper pills with an arrow down, so they
+   read as "go to" rather than as filters (filters carry an icon and a tint) */
 .jump-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--space-4);
-  margin-top: var(--space-2);
-  font-weight: 600;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
 }
 
 .jump-links a {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
+  gap: var(--space-1);
+  min-height: 36px;
+  padding: 0 var(--space-3);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.jump-links a::before {
+  content: "↓";
+  color: var(--ink-soft);
+}
+
+/* The full 44px to tap, without spacing the pills apart */
+.jump-links a::after {
+  content: "";
+  position: absolute;
+  inset: -4px 0;
+}
+
+/* An emergency shortcut in the caution colour, like the option it goes to */
+.jump-links a[data-urgent] {
+  border-color: var(--caution);
+  background: color-mix(in srgb, var(--caution) 8%, var(--paper));
+  color: var(--caution);
+}
+
+.jump-links a[data-urgent]::before {
+  color: inherit;
 }
 
 .contribute-form h2 {
@@ -2145,22 +2193,23 @@ body:has(.guide-page) .site-footer {
 }
 
 /* Facts at a glance, together on one card: as many to a row as fit */
+/* Every fact has a dashed line on its left, pulled 1px out and clipped, so a fact
+   that wraps to start a new row has no line dangling at the card's edge */
 .guide-facts {
   display: flex;
   flex-wrap: wrap;
   margin: var(--space-4) 0 0;
-  padding: var(--space-2);
+  padding-block: var(--space-2);
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
+  overflow: hidden;
 }
 
 .guide-facts > div {
   flex: 1 1 10rem;
-  padding: var(--space-2) var(--space-3);
-}
-
-.guide-facts > div + div {
+  margin-left: -1px;
+  padding: var(--space-2) var(--space-4);
   border-left: 1px dashed var(--rule);
 }
 
@@ -2189,13 +2238,15 @@ body:has(.guide-page) .site-footer {
 }
 
 .guide-facts .price-strip {
-  flex-wrap: wrap;
   font-size: var(--step-1);
   white-space: nowrap;
 }
 
-.guide-facts .price-strip small {
-  white-space: normal;
+/* The unit stays on the yellow and in ink: dd small would make it grey at 4.29:1 */
+.guide-facts dd .price-strip small {
+  display: inline;
+  color: var(--ink);
+  font-weight: 600;
 }
 
 .guide-facts .price-check {
@@ -2479,13 +2530,16 @@ body:has(.guide-page) .site-footer {
   height: 100%;
 }
 
-/* A halo of the dark leaves keeps the wordmark at 4.5:1 wherever a light spot or a pale crown falls */
+/* A backing in the dark leaves' own colour, so no spot of light lands on the letters (5.3:1) */
 .page-head > .wordmark {
   position: absolute;
   top: var(--space-3);
   z-index: 1;
+  margin-inline: calc(-1 * var(--space-3));
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--leaf-dark);
   color: var(--paper);
-  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
 }
 
 /* On a laptop or projector the canopy reaches further down, and the wordmark grows with it */
@@ -2630,8 +2684,12 @@ body:has(.guide-page) .site-footer {
 
 /* Guide page: on to the next first-week item once this one is ticked */
 .mark-next {
-  display: flex;
-  width: fit-content;
+  margin-top: var(--space-4);
+}
+
+/* Once ticked, the next first-week station is the page's one "next" card */
+.guide:has(.mark-next) > .guide-next:not(.mark-next) {
+  display: none;
 }
 
 /* A finished first week: what to do next, in the sunny card */
@@ -2641,4 +2699,78 @@ body:has(.guide-page) .site-footer {
   justify-content: center;
   gap: var(--space-3);
   margin-top: var(--space-4);
+}
+
+/* ---------- Laptop and projector (audit 8, R5) ---------- */
+
+/* Lists use the width: Guides and Notes in two columns, the first week beside its progress.
+   A Guide itself stays one column, for reading. */
+@media (min-width: 64rem) {
+  body:has(.guide-list, .feed, .week) {
+    --measure: 64rem;
+  }
+
+  .guide-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .guide-list a {
+    height: 100%;
+  }
+
+  /* Notes run down two columns, like a board, so a short one doesn't leave a hole */
+  .feed {
+    columns: 2;
+    column-gap: var(--space-4);
+  }
+
+  .feed .note {
+    break-inside: avoid;
+    margin-bottom: var(--space-4);
+  }
+
+  .feed .note + .note {
+    margin-top: 0;
+  }
+
+  .feed-more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* People beside the lede rather than on a row of their own */
+  /* Tucked under the head's action, never on top of it */
+  .feed-peeps {
+    justify-content: flex-end;
+    margin-top: -56px;
+  }
+
+  .feed-peeps img {
+    height: 96px;
+  }
+
+  .page-head .lede {
+    max-width: 40ch;
+  }
+
+  /* First week: progress stays in view on the left, the stations run down the right */
+  .week {
+    display: grid;
+    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-7);
+  }
+
+  .week-progress {
+    position: sticky;
+    top: var(--space-5);
+    padding: var(--space-5);
+    border-radius: var(--radius-m);
+    background: var(--paper);
+    box-shadow: var(--shadow-1);
+  }
+
+  .week-stops {
+    margin-top: 0;
+  }
 }
