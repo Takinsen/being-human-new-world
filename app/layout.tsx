@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี <Link href="/contribute">ช่วยเติมได้เลย</Link>
           </p>
           {SHOW_TRANSIT_LOGOS && (
-            <p>
+            <p className="logo-notice">
               <small>{LOGO_NOTICE}</small>
             </p>
           )}

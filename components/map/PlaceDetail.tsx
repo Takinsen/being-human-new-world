@@ -71,6 +71,8 @@ export function PlaceDetail({
             {place.name}
           </h2>
         </div>
+        {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
+        <p className="stop-summary">{place.summary}</p>
         {place.homeTaste && (
           <p className="home-taste-tag">
             <BowlSteam weight="bold" aria-hidden="true" />{" "}
@@ -85,8 +87,8 @@ export function PlaceDetail({
             {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
             <Link href={`/contribute?place=${place.id}#price`} className="related-link price-fix">
               {place.price.checked && place.price.checked.how !== "web"
-                ? "ไปมาแล้วราคาไม่ตรง บอกเราหน่อย"
-                : "ไปมาแล้วเจอราคาเท่าไหร่ บอกเราหน่อย"}
+                ? "ไปมาแล้วราคาไม่ตรง บอกราคาที่เห็นได้เลย"
+                : "ไปมาแล้วเห็นราคาเท่าไหร่ บอกราคาที่เห็นได้เลย"}
             </Link>
           </>
         )}
@@ -131,9 +133,8 @@ export function PlaceDetail({
         </Link>
       ))}
 
-      <div className="detail-body">
-        <p className="stop-summary">{place.summary}</p>
-        {caution && (
+      {caution && (
+        <div className="detail-body">
           <p className="caution">
             <Warning weight="bold" aria-hidden="true" />
             <span>
@@ -141,8 +142,8 @@ export function PlaceDetail({
               <TelText text={caution} />
             </span>
           </p>
-        )}
-      </div>
+        </div>
+      )}
 
       {latest && (
         <div className="detail-notes" ref={noteBox}>

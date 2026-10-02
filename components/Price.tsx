@@ -21,7 +21,7 @@ export function Price({ price, short }: { price: PriceData; short?: boolean }) {
               ดูจากเว็บเมื่อ {thaiMonthYear(price.checked.on)}
               <span className={short ? "visually-hidden" : undefined}> ยังไม่มีใครไปเช็กเอง</span>
             </>
-          : `${checkedBy(price.checked)}ไปดูมาเมื่อ ${thaiMonthYear(price.checked.on)}`}
+          : `${checkedBy(price.checked)} ไปดูมาเมื่อ ${thaiMonthYear(price.checked.on)}`}
       </span>
     </p>
   );

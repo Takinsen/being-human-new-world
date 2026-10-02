@@ -54,7 +54,7 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
 function FactValue({ fact }: { fact: GuideFact }) {
   if (fact.value) return <TelText text={fact.value} />;
   if (!fact.price) return null;
-  if (!fact.price.checked) return <span className="fact-pending">รอตรวจราคา</span>;
+  if (!fact.price.checked) return <span className="fact-pending">ยังไม่รู้ราคาจริง รอคนไปดู</span>;
   const { min, max, per } = fact.price;
   return (
     <>
@@ -68,13 +68,13 @@ function FactValue({ fact }: { fact: GuideFact }) {
 function priceSource(facts: GuideFact[]): string | null {
   const checks = facts.flatMap((f) => (f.price?.checked ? [{ label: f.label, check: f.price.checked }] : []));
   if (!checks.length) return null;
-  const months = (on: string[]) => [...new Set(on)].sort().map(thaiMonthYear).join(" และ ");
+  const months = (on: string[]) => [...new Set(on)].sort().map(thaiMonthYear).join(" กับ ");
   const web = checks.filter((c) => c.check.how === "web");
   const spot = checks.filter((c) => c.check.how !== "web");
-  const lines = spot.map((c) => `ราคา${c.label} ตรวจ ${thaiMonthYear(c.check.on)} โดย${checkedBy(c.check)}`);
+  const lines = spot.map((c) => `ราคา${c.label} ${checkedBy(c.check)} ไปดูมาเมื่อ ${thaiMonthYear(c.check.on)}`);
   if (web.length) {
     const what = spot.length ? `ราคา${web.map((c) => c.label).join(" ")}` : "ราคา";
-    lines.push(`${what}ข้อมูลจากเว็บ ${months(web.map((c) => c.check.on))} ยังไม่มีใครไปดูราคาจริง`);
+    lines.push(`${what}ดูจากเว็บเมื่อ ${months(web.map((c) => c.check.on))} ยังไม่มีใครไปเช็กเอง`);
   }
   return lines.join(" ส่วน");
 }

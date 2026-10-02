@@ -1906,6 +1906,16 @@ body:not(:has(.explorer)) main {
   margin-top: 0;
 }
 
+/* On a Place card a caution is a heads-up from someone who's been there, not an alarm:
+   ink, not red. Red stays for the warnings in a Guide (audit 12, F5). */
+.detail .caution {
+  color: var(--ink);
+}
+
+.detail .caution svg {
+  color: var(--ink-soft);
+}
+
 .detail .more summary {
   padding: 0;
   border: 0;
@@ -1998,8 +2008,8 @@ body:not(:has(.explorer)) main {
   margin-top: var(--space-4);
 }
 
-/* Shortcuts further down the page: small paper pills with an arrow down, so they
-   read as "go to" rather than as filters (filters carry an icon and a tint) */
+/* Shortcuts further down the page: small paper pills, plainer than the filter chips
+   (which carry an icon and a tint) */
 .jump-links {
   display: flex;
   flex-wrap: wrap;
@@ -2022,11 +2032,6 @@ body:not(:has(.explorer)) main {
   text-decoration: none;
 }
 
-.jump-links a::before {
-  content: "↓";
-  color: var(--ink-soft);
-}
-
 /* The full 44px to tap, without spacing the pills apart */
 .jump-links a::after {
   content: "";
@@ -2041,9 +2046,6 @@ body:not(:has(.explorer)) main {
   color: var(--caution);
 }
 
-.jump-links a[data-urgent]::before {
-  color: inherit;
-}
 
 .contribute-form h2 {
   scroll-margin-top: var(--space-4);
@@ -2730,7 +2732,8 @@ body:has(.guide-page) .site-footer {
     grid-row: 1;
     align-self: start;
     max-width: 18rem;
-    margin-inline: var(--space-5) var(--gutter);
+    /* Room on the right too, so the box doesn't lean on the screen's edge at 1280 */
+    margin-inline: var(--space-5) var(--space-6);
   }
 }
 
@@ -3208,4 +3211,9 @@ html[data-swipe] .tab-bar {
 
 .splash-name {
   display: block;
+}
+
+/* The trademark notice only where a BTS or MRT logo is on the page (audit 12, F16) */
+body:not(:has(.brand-logo)) .logo-notice {
+  display: none;
 }

@@ -83,7 +83,7 @@ export default async function NotesPage({ searchParams }: Props) {
           </PostedStatus>
         )}
         <div className="feed">
-          {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนเลย เป็นคนแรกไหม</p>}
+          {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย</p>}
           {notes.map((n, i) => (
             <NoteCard key={n.id} note={n} placeName={place ? undefined : placeName(n.placeId)} fresh={Boolean(posted) && i === 0} />
           ))}
