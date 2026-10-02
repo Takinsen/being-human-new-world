@@ -5,7 +5,9 @@ import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
+import { setVariantsScript, VariantSwitcher } from "@/components/prototype/VariantSwitcher";
 import "./globals.css";
+import "./prototype-readable.css";
 
 export const metadata: Metadata = {
   title: "ตั้งหลัก",
@@ -18,7 +20,7 @@ export const viewport: Viewport = { // The phone's bar takes the canopy's dark l
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // Next turns smooth scrolling off while changing pages only when told (it opened pages half-scrolled).
-    <html lang="th" data-scroll-behavior="smooth">
+    <html lang="th" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -28,6 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
+        {/* PROTOTYPE: set the variants before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: setVariantsScript }} />
+        <VariantSwitcher />
         <Splash />
         <a href="#main" className="skip-link">
           ข้ามไปเนื้อหา

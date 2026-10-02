@@ -7,6 +7,7 @@ import { guides } from "@/content/guides";
 import { GuideBlock, GuideNeedToKnow } from "@/components/GuideBlock";
 import { BrandLogo, CategoryIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
+import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
 type Props = { params: Promise<{ id: string }> };
@@ -44,7 +45,13 @@ export default async function GuidePage({ params }: Props) {
             </span>
           </div>
         }
-        lede={guide.summary}
+        lede={
+          <>
+            {/* PROTOTYPE: today the summary (?guide=O); N leads with the intro, the gist */}
+            <span className="p-guide-old">{guide.summary}</span>
+            <span className="p-guide-new">{guide.intro ? <TelText text={guide.intro} /> : guide.summary}</span>
+          </>
+        }
       />
       <div className="guide-body">
         <GuideNeedToKnow guide={guide} />

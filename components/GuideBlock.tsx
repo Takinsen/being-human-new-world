@@ -21,7 +21,7 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   return (
     <aside className="guide-know" aria-label="รู้ไว้ก่อน">
       {guide.facts && (
-        <dl className="guide-facts">
+        <dl className="guide-facts p-guide-old">
           {guide.facts.map((f) => (
             <div key={f.label}>
               <dt>{f.label}</dt>
@@ -29,6 +29,20 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
                 <span className="fact-value">
                   <FactValue fact={f} />
                 </span>
+                {f.note && <small className="fact-note">{f.note}</small>}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      )}
+      {/* PROTOTYPE (?guide=N): one fact per row, the name left and the value beside it */}
+      {guide.facts && (
+        <dl className="pn-facts p-guide-new">
+          {guide.facts.map((f) => (
+            <div key={f.label}>
+              <dt>{f.label}</dt>
+              <dd>
+                <RowValue fact={f} />
                 {f.note && <small className="fact-note">{f.note}</small>}
               </dd>
             </div>
@@ -64,6 +78,23 @@ function FactValue({ fact }: { fact: GuideFact }) {
   );
 }
 
+/** PROTOTYPE: a price in a row, at body size, its unit joined on: "17–44 บาท/เที่ยว" */
+function RowValue({ fact }: { fact: GuideFact }) {
+  if (fact.value) return <TelText text={fact.value} />;
+  if (!fact.price) return null;
+  if (!fact.price.checked) return <span className="fact-pending">ยังไม่รู้ราคาจริง รอคนไปดู</span>;
+  const { min, max, per } = fact.price;
+  const unit = per.replace(/^ต่อ/, "/").replace(/ ต่อ/, "/");
+  return (
+    <>
+      <span className="visually-hidden">ราคาปกติ </span>
+      <mark className="pn-price">
+        {min === max ? min : `${min}–${max}`} บาท{unit.startsWith("/") ? unit : ` ${unit}`}
+      </mark>
+    </>
+  );
+}
+
 /** Where the box's prices come from, said once, in the words a Place card uses (docs/adr/0001) */
 function priceSource(facts: GuideFact[]): string | null {
   const checks = facts.flatMap((f) => (f.price?.checked ? [{ label: f.label, check: f.price.checked }] : []));
@@ -87,7 +118,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
     <article className="guide" data-line={guide.category}>
       {!guide.checked && <p className="draft-tag">ร่าง</p>}
       {guide.intro && (
-        <p className="guide-intro">
+        <p className="guide-intro p-guide-old">
           <TelText text={guide.intro} />
         </p>
       )}

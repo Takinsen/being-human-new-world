@@ -9,7 +9,7 @@ export function PageHead({
   children,
 }: {
   title: React.ReactNode;
-  lede?: string;
+  lede?: React.ReactNode;
   /** A link back up, shown above the title */
   back?: React.ReactNode;
   children?: React.ReactNode;

@@ -103,7 +103,7 @@ function merge(rows: SheetRows): Content {
       on: row.timestamp,
     });
   });
-  const notes = [...written.reverse(), ...seedNotes];
+  const notes = [...written.reverse(), ...(process.env.NEXT_PUBLIC_PROTOTYPE === "1" ? prototypeSeeds() : seedNotes)];
 
   const guides = baseGuides.map((g) =>
     rows.guides.some((row) => row.guideId === g.id) ? { ...g, checked: true } : g,
@@ -132,4 +132,12 @@ export function guidesIn(content: Content, category: CategoryId): Guide[] {
 
 export function notesOn(content: Content, placeId: string): Note[] {
   return content.notes.filter((n) => n.placeId === placeId);
+}
+
+// PROTOTYPE (readable-pages), throwaway: seed Notes have no time and no Place, so give them
+// made-up ones to show "… ที่แล้ว" and "ที่<Place>" on the cards.
+function prototypeSeeds(): Note[] {
+  const ago = [3 * 60, 2 * 3600, 26 * 3600, 4 * 86400, 15 * 86400, 150 * 86400, 400 * 86400];
+  const pins: Record<string, string> = { "seed-boss-food": "samyan-market", "seed-boss-time": "bts-siam", "seed-tan-maps": "mrt-samyan" };
+  return seedNotes.map((n, i) => ({ ...n, on: new Date(Date.now() - ago[i % ago.length] * 1000).toISOString(), placeId: pins[n.id] ?? n.placeId }));
 }
