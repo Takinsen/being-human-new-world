@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
+import { FormStatus } from "@/components/FormStatus";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
@@ -98,9 +99,11 @@ export function NoteForm({
         </label>
         <ProvinceSelect provinces={provinces} />
       </div>
-      <p className="form-status is-error" role="alert" hidden={!state}>
-        {state?.message}
-      </p>
+      {state && (
+        <FormStatus error signal={state}>
+          {state.message}
+        </FormStatus>
+      )}
       {/* Say it before they press: there's no edit or delete on the site (docs/adr/0005) */}
       <p className="status-note" id="note-public">
         โน้ตจะขึ้นทันที พร้อมชื่อและจังหวัดที่ใส่ แก้หรือลบเองไม่ได้

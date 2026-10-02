@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type FormEvent, useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
+import { FormStatus } from "@/components/FormStatus";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { type FormState, saveGuideCheck, savePrice, saveSenior } from "./actions";
@@ -14,7 +15,7 @@ type GuideOption = { id: string; title: string; category: CategoryId; checked: b
 function Status({ state }: { state: FormState }) {
   if (!state) return null;
   return (
-    <p className={state.ok ? "form-status" : "form-status is-error"} role="status">
+    <FormStatus error={!state.ok} signal={state}>
       {state.message}
       {state.href && (
         <>
@@ -22,7 +23,7 @@ function Status({ state }: { state: FormState }) {
           <Link href={state.href}>{state.link ?? "ดูบนเว็บ"}</Link>
         </>
       )}
-    </p>
+    </FormStatus>
   );
 }
 
