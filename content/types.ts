@@ -95,7 +95,16 @@ export type GuideStep = {
   say?: string;
   /** A trap to avoid or a shortcut that saves time */
   tip?: string;
+  /** A link out, e.g. walking directions; opens in a new tab */
+  link?: { label: string; href: string };
 };
+
+/** One card in a Guide's head. A price goes in `price`, never typed into `value`, so it shows like a Place's (docs/adr/0001). */
+export type GuideFact = {
+  label: string;
+  /** Where the value comes from, or a word about the price */
+  note?: string;
+} & ({ value: string; price?: never } | { price: Price; value?: never });
 
 export type Guide = {
   id: string;
@@ -106,8 +115,8 @@ export type Guide = {
   icon: IconKey;
   intro?: string;
   photo?: Photo;
-  /** At a glance, under the title: cost, time, when it's open. A price found online says so in `note` (docs/adr/0001). */
-  facts?: { label: string; value: string; note?: string }[];
+  /** At a glance, under the title: cost, time, when it's open. A price goes in `price` and shows like a Place's (docs/adr/0001). */
+  facts?: GuideFact[];
   /** What to have with you before the first step */
   bring?: string[];
   /** "options" lists alternatives to choose from; default is ordered steps */

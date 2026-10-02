@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Backpack, ChatCircleText, Check, Lightbulb } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Backpack, ChatCircleText, Check, Lightbulb, MapPin } from "@phosphor-icons/react/dist/ssr";
 import { firstWeek } from "@/content/checklist";
 import type { Guide, GuideStep } from "@/content/types";
 import { MarkDone } from "./MarkDone";
@@ -43,7 +43,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       </h2>
 
       {options ? (
-        <ul className="option-cards" aria-labelledby="steps">
+        <ul className="option-cards" role="list" aria-labelledby="steps">
           {guide.steps.map((s) => (
             <li key={s.do} className="guide-card">
               <StepHeading step={s} />
@@ -53,7 +53,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
         </ul>
       ) : (
         <>
-          <ol className="step-line" aria-labelledby="steps">
+          <ol className="step-line" role="list" aria-labelledby="steps">
             {guide.steps.map((s, i) => (
               <li key={s.do}>
                 <span className="step-no" aria-hidden="true">
@@ -97,7 +97,12 @@ function StepHeading({ step, number }: { step: GuideStep; number?: number }) {
   return (
     <h3>
       {number && <span className="visually-hidden">ขั้นที่ {number}: </span>}
-      {step.when && <small className="step-when">{step.when}</small>}
+      {step.when && (
+        <small className="step-when">
+          {step.when}
+          <span className="visually-hidden">: </span>
+        </small>
+      )}
       <TelText text={step.do} />
     </h3>
   );
@@ -110,6 +115,13 @@ function StepBody({ step }: { step: GuideStep }) {
         <p className="step-how">
           <TelText text={step.how} />
         </p>
+      )}
+      {step.link && (
+        <a className="related-link" href={step.link.href} target="_blank" rel="noreferrer">
+          <MapPin weight="bold" aria-hidden="true" />
+          {step.link.label}
+          <span className="visually-hidden"> (เปิดแท็บใหม่)</span>
+        </a>
       )}
       {step.say && (
         <p className="step-say">

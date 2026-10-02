@@ -8,6 +8,7 @@ import { GuideBlock } from "@/components/GuideBlock";
 import { IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { Photo } from "@/components/Photo";
+import { Price } from "@/components/Price";
 import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
@@ -54,7 +55,8 @@ export default async function GuidePage({ params }: Props) {
                 <div key={f.label}>
                   <dt>{f.label}</dt>
                   <dd>
-                    <TelText text={f.value} />
+                    {f.value && <TelText text={f.value} />}
+                    {f.price && <Price price={f.price} />}
                     {f.note && <small>{f.note}</small>}
                   </dd>
                 </div>

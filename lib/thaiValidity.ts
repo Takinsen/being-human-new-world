@@ -5,7 +5,12 @@ import type { FormEvent } from "react";
 export function thaiValidity(messages: Record<string, string>) {
   return (e: FormEvent<HTMLFormElement>) => {
     const field = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-    if (field.validity.valueMissing) field.setCustomValidity(messages[field.name] ?? "กรอกช่องนี้ก่อน");
+    const v = field.validity;
+    if (v.valueMissing) field.setCustomValidity(messages[field.name] ?? "กรอกช่องนี้ก่อน");
+    // Number fields: the browser's own messages are English
+    else if (v.badInput || v.stepMismatch) field.setCustomValidity("ใส่เป็นตัวเลขเต็ม ไม่มีจุดทศนิยม");
+    else if (v.rangeUnderflow && "min" in field) field.setCustomValidity(`ใส่ตั้งแต่ ${field.min} ขึ้นไป`);
+    else if (v.rangeOverflow && "max" in field) field.setCustomValidity(`ใส่ไม่เกิน ${field.max}`);
   };
 }
 

@@ -21,8 +21,10 @@ const ExplorerMap = dynamic(() => import("./ExplorerMap"), {
 // px, wide screens; wider on projector-size screens where the text is larger
 const sidebarWidth = (vw: number) => (vw >= 1600 ? 460 : 380);
 const SHEET_CLOSED = 60; // px: just the handle
-// Share of the map the sheet covers on phones; less on short screens so the map stays usable.
-const sheetShare = (areaHeight: number, full: boolean) => (full ? 0.94 : areaHeight < 620 ? 0.42 : 0.5);
+// Share of the map the sheet covers on phones; less on short screens so the map stays usable,
+// but more on the shortest (large text), where a smaller half sheet can't fit one list row.
+const sheetShare = (areaHeight: number, full: boolean) =>
+  full ? 0.94 : areaHeight < 480 ? 0.6 : areaHeight < 620 ? 0.42 : 0.5;
 
 function useViewport() {
   const [size, setSize] = useState({ w: 390, h: 800 });
@@ -195,6 +197,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     update({ line: next, place: hidesSelected ? null : undefined });
   };
 
+  const covered = !wide && sheetOpen && sheetFull;
   const sheetHeight = sheetOpen ? Math.round(area.h * sheetShare(area.h, sheetFull)) : SHEET_CLOSED;
   const inset = wide ? { left: sidebar + 16, top: 16, bottom: 0 } : { left: 0, top: area.top, bottom: sheetHeight };
 
@@ -334,7 +337,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
         </aside>
       ) : (
         <>
-          <div className="explorer-top" ref={top}>
+          {/* A full sheet covers these; keep them out of the Tab order while it does */}
+          <div className="explorer-top" ref={top} inert={covered}>
             {brand}
             {filters}
           </div>
@@ -373,7 +377,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
           </section>
         </>
       )}
-      <ExplorerMap stops={visible} selectedId={selectedId} onSelect={select} inset={inset} />
+      <ExplorerMap stops={visible} selectedId={selectedId} onSelect={select} inset={inset} covered={covered} />
     </div>
   );
 }

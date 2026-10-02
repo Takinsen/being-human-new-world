@@ -165,16 +165,27 @@ function Pins({
   ));
 }
 
+function Inert({ when }: { when: boolean }) {
+  const map = useMap();
+  useEffect(() => {
+    map.getContainer().toggleAttribute("inert", when);
+  }, [map, when]);
+  return null;
+}
+
 export default function ExplorerMap({
   stops,
   selectedId,
   onSelect,
   inset,
+  covered = false,
 }: {
   stops: MapStop[];
   selectedId?: string;
   onSelect: (id: string) => void;
   inset: Inset;
+  /** A full sheet hides the map, so its pins and links leave the Tab order */
+  covered?: boolean;
 }) {
   const animate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const selected = stops.find((s) => s.place.id === selectedId);
@@ -196,6 +207,7 @@ export default function ExplorerMap({
       <ZoomControl position="topright" zoomInTitle="ขยายแผนที่" zoomOutTitle="ย่อแผนที่" />
       <Camera stops={stops} selected={selected} inset={inset} animate={animate} />
       <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} inset={inset} />
+      <Inert when={covered} />
     </MapContainer>
   );
 }

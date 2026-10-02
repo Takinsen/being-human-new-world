@@ -5,6 +5,7 @@ import { categories } from "@/content/categories";
 import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
 import { PageHead } from "@/components/PageHead";
+import { PostedStatus } from "@/components/PostedStatus";
 import { getContent, isCategory } from "@/lib/content";
 
 export const metadata: Metadata = { title: "โน้ต | ตั้งหลัก" };
@@ -66,9 +67,9 @@ export default async function NotesPage({ searchParams }: Props) {
         )}
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
-          <p className="form-status feed-posted" role="status" id="fresh" tabIndex={-1}>
+          <PostedStatus className="form-status feed-posted" id="fresh">
             <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว อยู่ข้างล่างนี้
-          </p>
+          </PostedStatus>
         )}
         <div className="feed">
           {notes.length === 0 && <p className="status-note">ยังไม่มีโน้ตตรงนี้ เขียนโน้ตแรกได้เลย</p>}

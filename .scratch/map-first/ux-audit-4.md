@@ -1,6 +1,6 @@
 # UX/UI audit 4: after the Guide page redesign (2026-09-27)
 
-Status: ready-for-agent (owner answered 2026-10-02)
+Status: done (2026-10-02), except the gaps listed at the end
 
 Three agents tested a production build of `ae378a8` (same as main) in Chromium against the stand-in Sheet:
 
@@ -90,3 +90,47 @@ Decided with the owner: Q1 a, Q2 a, Q3 a, Q4 a, Q5 b, all as recommended.
 - Q3: photo capped at ~240px (object-fit: cover) on wide screens; intros that repeat the summary are cut (G7).
 - Q4: a background research agent looks for the Rabbit card fee, top-up and student discount; wash and dry times; the Chula hospital ER entrance and cost; a pharmacy open late. Results go in `content-research-3.md`, web data labelled, unconfirmed items left out. "ถ้าป่วย" gets an after-hours non-emergency option, a bring list and what to say when calling 1669.
 - Q5: replace คณะอักษรฯ as the reference point with a landmark everyone knows, only if the research confirms the route.
+
+## Done (2026-10-02)
+
+Fixed on `claude/happy-pasteur-u77w5i` and reviewed with `/code-review` (Standards + Spec):
+- **Q1a:**
+  - cards and shadows stay on Guide pages only;
+  - one link card (`.detail-guide` and `.feed-more a`);
+  - one station size (`--station`) for Guide steps, the map list and first-week ticks;
+  - the globals.css header comment is updated.
+- **Q2a:**
+  - `GuideFact` takes either `value` or `price`, and `price` renders through `Price`;
+  - web prices are labelled through `Price` the same way as on Places.
+- **Q3a:**
+  - the photo is capped at 240px;
+  - the pop-bus and rabbit intros now add a fact instead of repeating the summary;
+  - the sick intro is gone.
+- **Q4a/Q5b:** content uses [สูง]/[กลาง] facts from `content-research-3.md` only.
+  - rabbit: card fee, top-up, MRT exception, shortfall at the exit, THE SKYTRAINs;
+  - sick: bring list, the Chuan Chom night room, 1669 call points, ER location, UCEP, the lunch break, บัตรทอง wording;
+  - laundry: "40 บาทขึ้นไป", no QR;
+  - to-chula: ศาลาพระเกี้ยว as the reference point, BTS Siam exit 2 to the "ลิโด้" stop, the Saturday line 4 warning, a walking link from MRT สามย่าน, a link to the Pop Bus Guide.
+- **A1–A12:** each one is done.
+  - A1: `inert` while the sheet is full.
+  - A2: `PostedStatus` takes focus.
+  - A3: tel padding.
+  - A4: `ChipFocus`.
+  - A5: the half sheet is 0.6 high on very short screens.
+  - A6: Thai number-field messages.
+  - A7: stations sized in rem.
+  - A8: `nowrap`.
+  - A9: hidden ":".
+  - A10: a fixed name plus `aria-pressed`.
+  - A11: `role="list"`.
+  - A12: target sizes.
+- **Design and content:** D5–D7, D10–D15, G4, G6 (options), G7, G8 and P6 are done.
+
+Gaps left on purpose, because no source rated above [ต่ำ]:
+- wash and dry times, and which machine washes or dries (G5);
+- where each faculty canteen is and what it costs (G6);
+- a late-night pharmacy;
+- what a non-emergency night visit to the ER costs;
+- walking minutes from the stations.
+
+A5 is only partly fixed: at 320@200 a 360px-tall list row still doesn't fit the half sheet. Re-open the [สูง] sources on the real web before the pitch, since the research could only read search snippets.
