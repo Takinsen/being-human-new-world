@@ -56,7 +56,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       {options ? (
         <ul className="option-cards" role="list" aria-labelledby="steps">
           {guide.steps.map((s) => (
-            <li key={s.do} id={s.id} className="guide-card">
+            <li key={s.do} id={s.id} className="guide-card" data-urgent={s.urgent || undefined}>
               <StepHeading step={s} />
               <StepBody step={s} />
             </li>

@@ -2425,6 +2425,26 @@ body:has(.guide-page) .site-footer {
     var(--paper);
 }
 
+/* Emergency options stand apart: the caution colour, a thicker bar, a faint wash */
+.option-cards .guide-card[data-urgent] {
+  --c: var(--caution);
+  --on-tint: var(--caution);
+  --tint: color-mix(in srgb, var(--caution) 8%, var(--paper));
+  padding-top: calc(var(--space-4) + var(--rail));
+  background:
+    linear-gradient(var(--c), var(--c)) top / 100% var(--rail) no-repeat,
+    color-mix(in srgb, var(--caution) 5%, var(--paper));
+}
+
+/* Room above the option a jump link lands on */
+.option-cards > li[id] {
+  scroll-margin-top: var(--space-4);
+}
+
+.guide-jumps {
+  margin-top: var(--space-3);
+}
+
 .guide > .mark-done {
   display: flex;
   width: fit-content;
@@ -2592,4 +2612,33 @@ body:has(.guide-page) .site-footer {
 
 @keyframes sway {
   to { transform: scaleY(1.04) translateX(-4px); }
+}
+
+/* ---------- Audit 7: links back into the flow ---------- */
+
+/* Place card: the "check this price" link under the price */
+.detail-head .price-fix {
+  margin-top: 0;
+  justify-self: start;
+  font-size: var(--step--1);
+}
+
+/* Map list: the two help links side by side */
+.list-help + .list-help {
+  margin-left: var(--space-4);
+}
+
+/* Guide page: on to the next first-week item once this one is ticked */
+.mark-next {
+  display: flex;
+  width: fit-content;
+}
+
+/* A finished first week: what to do next, in the sunny card */
+.week-after {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
 }

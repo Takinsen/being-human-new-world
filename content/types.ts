@@ -99,6 +99,8 @@ export type GuideStep = {
   link?: { label: string; href: string };
   /** Anchor for an option card, so `jumps` can point at it */
   id?: string;
+  /** An emergency option: drawn in the caution colour so it can't be mistaken for a mild one */
+  urgent?: boolean;
 };
 
 /** One card in a Guide's head. A price goes in `price`, never typed into `value`, so it shows like a Place's (docs/adr/0001). */
