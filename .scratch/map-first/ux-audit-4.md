@@ -134,3 +134,15 @@ Gaps left on purpose, because no source rated above [ต่ำ]:
 - walking minutes from the stations.
 
 A5 is only partly fixed: at 320@200 a 360px-tall list row still doesn't fit the half sheet. Re-open the [สูง] sources on the real web before the pitch, since the research could only read search snippets.
+
+## Owner's answers (2026-10-02)
+
+The owner answered the open questions. The answers came from web search and asking an AI, so prices keep the web label and the content counts as web data, not an on-the-spot check (ADR 0001). Added:
+- Otteri at I'm Park is open; washing takes 30–40 min and drying 25–40 min; payment is by coin or QR scan; how to tell a washer from a dryer.
+- Canteens: iCanteen and the อาคารมหิตลาธิเบศร canteen, 30–40 baht a plate.
+- B&W Drugs, ซอยจุฬาฯ 16, is open daily 15:00–23:00.
+- The ชวนชม first-aid room takes every Chula student.
+- MRT สามย่าน exit 2 to ศาลาพระเกี้ยว is a 5–10 min walk.
+- A Rabbit card costs 200 baht: 100 for the card and 100 in value. This overrides research 3's "about 120", by the owner's choice.
+
+Left out: the cost of the ER at night (100–300 baht from an AI answer), because a wrong medical cost does more harm than none. The owner also confirmed that both lines 1 and 4 stop at "ลิโด้"; the page already said so.
