@@ -1,6 +1,6 @@
 # UX/UI audit 4: after the Guide page redesign (2026-09-27)
 
-Status: needs-info (waiting on the owner's answers to Q1–Q5)
+Status: ready-for-agent (owner answered 2026-10-02)
 
 Three agents tested a production build of `ae378a8` (same as main) in Chromium against the stand-in Sheet:
 
@@ -81,3 +81,12 @@ Previous: `ux-audit.md`, `ux-audit-2.md`, `ux-audit-3.md`.
   - c) split by faculty zone.
 
 To be fixed without asking, since each has only one correct answer: A1–A12, D5–D7, D10–D15, G4, G6–G8, P6 (plain bullets instead of boxes), and the links from to-chula to the Pop Bus Guide.
+
+## Status (2026-10-02)
+
+Decided with the owner: Q1 a, Q2 a, Q3 a, Q4 a, Q5 b, all as recommended.
+- Q1: cards and shadows only on Guide pages; one "go next" link-card style and one station size across the site; update the globals.css header comment. ADR 0006 amended.
+- Q2: Guide fact prices use the `Price` component (yellow strip, agreed web label). ADR 0001 amended, so `facts` needs a structured price, not a typed label.
+- Q3: photo capped at ~240px (object-fit: cover) on wide screens; intros that repeat the summary are cut (G7).
+- Q4: a background research agent looks for the Rabbit card fee, top-up and student discount; wash and dry times; the Chula hospital ER entrance and cost; a pharmacy open late. Results go in `content-research-3.md`, web data labelled, unconfirmed items left out. "ถ้าป่วย" gets an after-hours non-emergency option, a bring list and what to say when calling 1669.
+- Q5: replace คณะอักษรฯ as the reference point with a landmark everyone knows, only if the research confirms the route.
