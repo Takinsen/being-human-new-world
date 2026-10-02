@@ -7,7 +7,7 @@ import { useChecklist } from "@/lib/useChecklist";
 
 // Lets a Newcomer tick the matching first-week station right after reading a Guide,
 // then carries on to the next one (UX audit 7, U5). Once ticked, that next station is
-// the page's one "next" card; the Guide's own "ต่อจากนี้" steps aside (audit 8, R4).
+// the page's one "next" card; the Guide's own "อ่านต่อ" steps aside (audit 8, R4).
 export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
   const { done, toggle } = useChecklist();
   const isDone = done.includes(itemId);
@@ -17,7 +17,7 @@ export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
       <button type="button" className={isDone ? "mark-done is-done" : "mark-done"} aria-pressed={isDone} onClick={() => toggle(itemId)}>
         {isDone ? <CheckCircle weight="fill" aria-hidden="true" /> : <Circle weight="bold" aria-hidden="true" />}
         {/* aria-pressed carries the state, so the name stays the same either way */}
-        <span aria-hidden="true">{isDone ? "ทำแล้ว (สัปดาห์แรก)" : "ทำแล้ว ติ๊กในสัปดาห์แรก"}</span>
+        <span aria-hidden="true">{isDone ? "ติ๊กแล้วในสัปดาห์แรก" : "ทำแล้ว ติ๊กไว้ในสัปดาห์แรก"}</span>
         <span className="visually-hidden">ทำแล้ว: {title}</span>
       </button>
       {isDone && (

@@ -570,16 +570,6 @@ svg { flex: none; }
   height: 30px;
 }
 
-.title-with-icon .guide-icon:has(.brand-logo) {
-  width: 64px;
-  height: 64px;
-}
-
-.title-with-icon .guide-icon .brand-logo {
-  width: 42px;
-  height: 42px;
-}
-
 .map-loading {
   display: grid;
   place-items: center;
@@ -1739,7 +1729,7 @@ body:not(:has(.explorer)) main {
 
 /* Numbers inside a sentence: a 44px tap area without stretching the line */
 .guide .tel,
-.guide-facts .tel,
+.guide-know .tel,
 .detail .tel {
   display: inline-block;
   min-width: 44px;
@@ -2115,15 +2105,10 @@ h2 {
   overflow-wrap: anywhere;
 }
 
-.title-with-icon,
 .detail-title {
   display: flex;
   align-items: center;
   gap: var(--space-3);
-}
-
-.title-with-icon .guide-icon {
-  flex: none;
 }
 
 .detail-title h2 {
@@ -2219,148 +2204,210 @@ h2 {
   }
 }
 
-/* ---------- Guide page: facts on one card, then steps as stations on a dotted path ---------- */
+/* ---------- Guide page: an article to read, with a "need to know" box (docs/adr/0007) ---------- */
 
-/* The Guide's cards run straight on into the footer, with no line between */
+/* Read like Medium: one comfortable column, a big title, a calm lede, generous rhythm.
+   What you need at a glance (cost, hours, numbers to call, what to bring) sits in one
+   box: above the article on a phone, beside it on a wide screen. Steps are stations on
+   the dotted path, not cards; options sit between thin rules. */
+.guide-page {
+  --read: 1.0625rem;
+  --hairline: color-mix(in srgb, var(--ink) 14%, transparent);
+}
+
+@media (min-width: 40rem) {
+  .guide-page {
+    --read: 1.125rem;
+  }
+}
+
+/* The root size grows on a laptop or projector; a slightly narrower measure keeps
+   about the same line length and leaves room for the box beside it */
+@media (min-width: 64rem) {
+  .guide-page {
+    --measure: 38rem;
+  }
+}
+
+/* The Guide runs straight on into the footer, with no line between */
 body:has(.guide-page) .site-footer {
   border-top: 0;
 }
 
-.guide-hero {
-  padding-bottom: var(--space-2);
+/* Back to the list, then the category: its icon, or a BTS or MRT logo on white */
+.guide-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-3);
+  margin-top: var(--space-2);
 }
 
-.guide-hero .lede {
-  color: var(--ink);
+.guide-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--hairline);
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  font-weight: 700;
+  line-height: 1.6;
 }
 
-/* Facts at a glance, together on one card: as many to a row as fit */
-/* Every fact has a dashed line on its left, pulled 1px out and clipped, so a fact
-   that wraps to start a new row has no line dangling at the card's edge */
+.guide-eyebrow svg {
+  font-size: 1.15rem;
+  color: var(--c);
+}
+
+/* Logos are shown unaltered on white (lib/brands.ts) */
+.guide-eyebrow .brand-logo {
+  box-sizing: content-box;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 3px;
+  border-radius: 6px;
+  background: #fff;
+  object-fit: contain;
+}
+
+.guide-page .page-head h1 {
+  margin-top: var(--space-1);
+  font-size: clamp(2rem, 7.5vw, 3rem);
+  line-height: 1.2;
+}
+
+.guide-page .page-head .lede {
+  max-width: none;
+  margin-top: var(--space-3);
+  font-size: calc(var(--read) * 1.12);
+  line-height: 1.6;
+}
+
+.guide-body {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: var(--space-5) var(--gutter) var(--space-7);
+}
+
+/* The "need to know" box: a plain paper card, a hairline round it, no shadow */
+.guide-know {
+  padding: var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+}
+
 .guide-facts {
   display: flex;
   flex-wrap: wrap;
-  margin: var(--space-4) 0 0;
-  padding-block: var(--space-2);
-  border-radius: var(--radius-m);
-  background: var(--paper);
-  box-shadow: var(--shadow-1);
-  overflow: hidden;
+  gap: var(--space-4) var(--space-5);
+  margin: 0;
 }
 
+/* Side by side when they fit; a long note wraps under its own value */
 .guide-facts > div {
-  flex: 1 1 10rem;
-  margin-left: -1px;
-  padding: var(--space-2) var(--space-4);
-  border-left: 1px dashed var(--rule);
+  flex: 1 1 8.5rem;
+  min-width: 0;
 }
 
 .guide-facts dt {
   color: var(--ink-soft);
   font-size: var(--step--1);
+  font-weight: 600;
 }
 
 .guide-facts dd {
   margin: 0;
+}
+
+/* Words at a readable size; a price figure and a number to call bigger (below) */
+.fact-value {
+  display: block;
+  margin-top: 2px;
   font-size: var(--step-1);
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.35;
 }
 
-.guide-facts dd small {
-  display: block;
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-  font-weight: 500;
+.fact-value:has(.fact-price) {
+  font-size: var(--step-2);
 }
 
-/* A price in a fact is the same Price as on a Place card, a little tighter */
-.guide-facts .price {
-  margin-top: var(--space-1);
-}
-
-.guide-facts .price-strip {
-  font-size: var(--step-1);
+/* Platform yellow on the price figure only (docs/adr/0001); Thai fonts' tall line box
+   would make a plain inline background a thick block, so it hugs the figures */
+.fact-price {
+  display: inline-block;
+  padding: 0.1em 0.3em 0.02em;
+  border-radius: 6px;
+  background: var(--platform);
+  color: var(--ink);
+  line-height: 1.15;
   white-space: nowrap;
 }
 
-/* The unit stays on the yellow and in ink: dd small would make it grey at 4.29:1 */
-.guide-facts dd .price-strip small {
-  display: inline;
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.guide-facts .price-check {
-  font-weight: 500;
-  line-height: 1.4;
-}
-
-.guide-body {
-  flex: 1;
-  padding-bottom: var(--space-7);
-}
-
-.guide {
-  padding-top: var(--space-5);
-}
-
-/* Whatever comes first sits right under the photo or head */
-.guide > :is(.guide-bring, .guide-section-title):first-child,
-.guide > .draft-tag + :is(.guide-bring, .guide-section-title) {
-  margin-top: 0;
-}
-
-.guide-page .guide-intro {
-  margin: 0;
-  color: var(--ink);
-  font-size: var(--step-0);
-  line-height: 1.6;
-}
-
-.guide-card {
-  padding: var(--space-4);
-  border: 0;
-  border-radius: var(--radius-m);
-  background: var(--paper);
-  box-shadow: var(--shadow-1);
-}
-
-.guide-card h3 {
-  font-size: var(--step-0);
-  line-height: 1.45;
-}
-
-.step-when {
-  display: block;
-  color: var(--on-tint);
+.fact-per {
+  color: var(--ink-soft);
   font-size: var(--step--1);
-  font-weight: 700;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.fact-pending {
+  color: var(--ink-soft);
+  font-size: var(--step-0);
+}
+
+.fact-note {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+/* A number to call is the biggest thing in the box, and plainly a link */
+.fact-value:has(.tel) {
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.fact-value .tel {
+  color: var(--on-tint);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.15em;
+}
+
+/* Where the prices come from: one fine line under the facts */
+.guide-source {
+  margin-top: var(--space-3);
+  color: var(--ink-soft);
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .guide-bring {
-  margin-top: var(--space-5);
-  border: 0;
-  background: var(--tint);
-  box-shadow: none;
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
 }
 
-/* A section heading, the same size as "ทำตามนี้", above the steps' h3 */
+.guide-know > .guide-bring:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
 .guide-bring h2 {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--step-1);
-}
-
-.guide-bring h2 svg {
-  color: var(--c);
+  color: var(--ink-soft);
+  font: 600 var(--step--1) / 1.5 var(--font);
 }
 
 .guide-bring ul {
   display: grid;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  line-height: 1.55;
 }
 
 .guide-bring li {
@@ -2372,170 +2419,246 @@ body:has(.guide-page) .site-footer {
 .guide-bring li::before {
   content: "";
   flex: none;
-  width: 0.5rem;
-  height: 0.5rem;
-  margin-top: 0.6rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: 0.62em;
   border-radius: 50%;
   background: var(--c);
 }
 
-.guide-section-title {
-  display: flex;
-  align-items: baseline;
-  gap: var(--space-2);
+/* The article */
+.guide {
   margin-top: var(--space-6);
-  font-size: var(--step-1);
+  font-size: var(--read);
+  line-height: 1.7;
 }
 
-.guide-section-title small {
-  padding: 0 var(--space-2);
-  border-radius: var(--radius-pill);
-  background: var(--c);
-  color: var(--paper);
-  font-size: var(--step--1);
-  font-weight: 600;
+.guide-body > .guide:first-child {
+  margin-top: 0;
 }
 
-/* Steps: numbered stations joined by the category's line.
-   Sized in rem, so the station grows with the text. */
-.step-line {
-  display: grid;
-  gap: var(--space-4);
+.guide-page .guide-intro {
+  margin: 0;
+  color: var(--ink);
+}
+
+.guide > .draft-tag + * {
+  margin-top: var(--space-3);
+}
+
+.guide-jumps {
   margin-top: var(--space-4);
+  line-height: 1.4;
 }
 
-.step-line li,
-.step-end {
+.guide-steps-title {
+  margin-top: var(--space-7);
+  font-size: var(--step-2);
+}
+
+.guide > .guide-steps-title:first-child {
+  margin-top: 0;
+}
+
+.guide-jumps + .guide-steps-title {
+  margin-top: var(--space-6);
+}
+
+/* Steps: numbered stations joined by the category's dotted path.
+   Sized in rem, so the station grows with the text. */
+.guide-steps {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.guide-steps > li,
+.guide-end {
   position: relative;
   display: grid;
   grid-template-columns: var(--station) minmax(0, 1fr);
-  gap: var(--space-3);
+  column-gap: var(--space-4);
 }
 
-.step-line li::before {
+.guide-steps > li::before {
   content: "";
   position: absolute;
-  top: var(--space-3);
-  bottom: calc(-1 * var(--space-4) - var(--space-3));
+  top: var(--station);
+  bottom: calc(-1 * var(--space-6));
   left: calc((var(--station) - var(--rail)) / 2);
   border-left: var(--rail) dotted var(--c);
 }
 
-.step-no {
+.station {
   position: relative;
   display: grid;
   place-items: center;
   width: var(--station);
   height: var(--station);
-  margin-top: var(--space-2);
   border: var(--station-ring) solid var(--c);
   border-radius: 50%;
   background: var(--tint);
   color: var(--ink);
-  font-weight: 700;
-  line-height: 1;
+  font: 700 var(--step-0) / 1 var(--font);
 }
 
-.step-end {
-  margin-top: var(--space-4);
+/* The one bold action line, level with its station */
+.step-do {
+  font-size: var(--step-1);
+  line-height: 1.4;
+}
+
+.guide-steps .step-do {
+  min-height: var(--station);
+  padding-top: max(0px, calc((var(--station) - 1.4em) / 2));
+}
+
+.step-when {
+  display: block;
+  color: var(--on-tint);
+  font: 700 var(--step--1) / 1.5 var(--font);
+}
+
+/* How, as short plain lines, each led by a short dash in the line's colour */
+.step-points {
+  display: grid;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+
+.step-points li {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.step-points li::before {
+  content: "";
+  flex: none;
+  width: 0.55em;
+  height: 2px;
+  margin-top: 0.82em;
+  border-radius: 2px;
+  background: var(--c);
+}
+
+.step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  margin-top: var(--space-1);
+  color: var(--on-tint);
+  font-weight: 600;
+}
+
+/* Words to say: a speech bubble in the line's colour, the words in Mitr */
+.step-say {
+  width: fit-content;
+  max-width: 100%;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4) var(--space-3);
+  border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
+  background: var(--tint);
+  line-height: 1.5;
+}
+
+.step-say b {
+  display: block;
+  color: var(--on-tint);
+  font-size: var(--step--1);
+}
+
+.step-say q {
+  font-family: var(--font-head);
+  font-size: 1.1em;
+}
+
+/* A real trap or emergency criteria: the page's one callout, used sparingly */
+.step-warn {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--caution) 7%, var(--paper));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--caution) 35%, transparent);
+  line-height: 1.6;
+}
+
+.step-warn svg {
+  margin-top: 0.15em;
+  color: var(--caution);
+  font-size: 1.35em;
+}
+
+/* A tip is a quiet sentence */
+.step-tip {
+  margin-top: var(--space-3);
+  color: var(--ink-soft);
+  font-size: 0.94em;
+  line-height: 1.65;
+}
+
+.step-do + .step-tip {
+  margin-top: var(--space-2);
+}
+
+/* The path ends at a done station that carries the Starter Checklist tick */
+.guide-end {
+  margin-top: var(--space-6);
   align-items: start;
 }
 
-.step-end .step-no {
-  margin-top: 0;
+.guide-end .station {
   background: var(--c);
   color: var(--paper);
   font-size: var(--step-1);
 }
 
-.step-end p {
-  min-height: var(--station);
+.guide-end p {
   display: flex;
   align-items: center;
-  font-weight: 700;
+  min-height: var(--station);
+  font-family: var(--font-head);
+  font-size: var(--step-1);
+  font-weight: 500;
 }
 
-.step-end .mark-done {
+.guide-end .mark-done {
   margin-top: var(--space-2);
 }
 
-.step-how {
-  margin-top: var(--space-1);
-  line-height: 1.6;
-}
-
-.step-say,
-.step-tip {
-  display: flex;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-  line-height: 1.5;
-}
-
-.step-say svg,
-.step-tip svg {
-  flex: none;
-  margin-top: 0.2rem;
-  font-size: var(--step-1);
-}
-
-/* Words to say: a speech bubble in the line's colour */
-.step-say {
-  padding: var(--space-2) var(--space-3);
-  border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
-  background: var(--tint);
-}
-
-.step-say svg,
-.step-say b {
-  color: var(--on-tint);
-}
-
-.step-tip {
-  padding-top: var(--space-3);
-  border-top: 1px dashed var(--rule);
-  color: var(--ink-soft);
-}
-
-/* A tip straight under the heading needs no divider */
-.guide-card h3 + .step-tip {
-  margin-top: var(--space-1);
-  padding-top: 0;
-  border-top: 0;
-}
-
-/* Options: cards to choose from, each topped with a straight bar of the line */
-.option-cards {
-  display: grid;
-  gap: var(--space-3);
+/* Options: one after another between thin rules, no cards */
+.guide-options {
   margin-top: var(--space-4);
 }
 
-.option-cards .guide-card {
-  padding-top: calc(var(--space-4) + var(--station-ring));
-  background:
-    linear-gradient(var(--c), var(--c)) top / 100% var(--station-ring) no-repeat,
-    var(--paper);
-}
-
-/* Emergency options stand apart: the caution colour, a thicker bar, a faint wash */
-.option-cards .guide-card[data-urgent] {
-  --c: var(--caution);
-  --on-tint: var(--caution);
-  --tint: color-mix(in srgb, var(--caution) 8%, var(--paper));
-  padding-top: calc(var(--space-4) + var(--rail));
-  background:
-    linear-gradient(var(--c), var(--c)) top / 100% var(--rail) no-repeat,
-    color-mix(in srgb, var(--caution) 5%, var(--paper));
-}
-
-/* Room above the option a jump link lands on */
-.option-cards > li[id] {
+.guide-options > li {
+  padding-block: var(--space-5);
+  border-top: 1px solid var(--hairline);
   scroll-margin-top: var(--space-4);
 }
 
-.guide-jumps {
-  margin-top: var(--space-3);
+.guide-options > li:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* Emergency options keep a faint red wash, so they can't be mistaken for a mild one */
+.guide-options > li[data-urgent] {
+  --c: var(--caution);
+  --on-tint: var(--caution);
+  --tint: color-mix(in srgb, var(--caution) 8%, var(--paper));
+  margin-inline: calc(-1 * var(--space-4));
+  padding-inline: var(--space-4);
+  background: color-mix(in srgb, var(--caution) 5%, var(--ground));
+}
+
+.guide-options > li[data-urgent] .step-do {
+  color: var(--caution);
+}
+
+.guide-options > li[data-urgent] .step-warn {
+  background: var(--paper);
 }
 
 .guide > .mark-done {
@@ -2544,13 +2667,76 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-5);
 }
 
-/* The site's one link card, with room above it at the end of a Guide */
-.guide-next {
+/* "อ่านต่อ", and once ticked "ถัดไปในสัปดาห์แรก": a quiet line, the whole line the link */
+.guide-next,
+.guide .mark-next {
+  position: relative;
+  display: block;
   margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--hairline);
 }
 
-.guide-next > svg:last-child {
-  color: var(--c);
+.guide .mark-next {
+  min-height: 0;
+  margin-top: var(--space-5);
+  padding-inline: 0;
+  padding-bottom: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--on-tint);
+  font: 500 var(--step-1) / 1.4 var(--font-head);
+}
+
+.guide .mark-next > svg {
+  display: none;
+}
+
+.guide-next small,
+.guide .mark-next small {
+  display: block;
+  color: var(--ink-soft);
+  font: 600 var(--step--1) / 1.5 var(--font);
+}
+
+.guide-next a {
+  color: var(--on-tint);
+  font: 500 var(--step-1) / 1.4 var(--font-head);
+  text-decoration: none;
+}
+
+.guide-next a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* A wide screen: the reading column stays centred and the box sits beside it, in view */
+@media (min-width: 78rem) {
+  .guide-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--measure)) minmax(0, 1fr);
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  .guide-body > .guide {
+    grid-column: 2;
+    grid-row: 1;
+    margin-top: 0;
+    padding-inline: var(--gutter);
+  }
+
+  .guide-know {
+    position: sticky;
+    top: var(--space-5);
+    grid-column: 3;
+    grid-row: 1;
+    align-self: start;
+    max-width: 18rem;
+    margin-inline: var(--space-5) var(--gutter);
+  }
 }
 
 /* ---------- The canopy (docs/adr/0007) ---------- */
@@ -2663,7 +2849,7 @@ body:has(.guide-page) .site-footer {
     animation: rise-in 0.35s ease-out both;
   }
 
-  :is(.feed .note, .guide-card, .guide-list li, .week-stops li) {
+  :is(.feed .note, .guide-list li, .week-stops li) {
     animation: rise-up 0.4s ease-out both;
   }
 
