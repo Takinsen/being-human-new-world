@@ -56,7 +56,7 @@ _Avoid_: Testimonial, review
 ### Categories
 
 **Category** (หมวด):
-One of the kinds of Local Know-how below. Every Place, Guide and Note belongs to exactly one.
+One of the kinds of Local Know-how below. Every Note belongs to exactly one. Every Place and Guide belongs to exactly one of the categories that have things on the ground: everything except Adjusting.
 _Avoid_: สาย, line (reads as a train line)
 
 **Transportation** (การเดินทาง):
@@ -71,6 +71,10 @@ Know-how for falling sick or feeling low: where to go and when, from a pharmacy 
 **Household** (งานบ้าน):
 Know-how for the household tasks a Newcomer used to have done for them: laundry, drinking water, rubbish, everyday supplies.
 _Avoid_: Living Alone (อยู่คนเดียว: it held both of the above, and a Newcomer who is sick at night doesn't look under it), Daily Life (reads as a place list)
+
+**Adjusting** (ปรับตัว):
+Know-how about the first months themselves: feeling lonely, missing home, making friends, getting used to the cost of living. It has Notes and Senior Stories, but no Places or Guides.
+_Avoid_: Mental health (that is Health), Feelings
 
 **Home Taste** (รสชาติบ้าน):
 A place in the Campus Area serving authentic food from a Thai region, vouched for in a Note by someone whose hometown is in that region. Until someone vouches for it, a place the team found is shown as a team pick.
