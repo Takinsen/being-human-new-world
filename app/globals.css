@@ -321,7 +321,7 @@ svg { flex: none; }
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: var(--space-2);
+  gap: var(--space-3);
   min-height: 60px;
 }
 
@@ -412,7 +412,7 @@ svg { flex: none; }
 .week-next a::after {
   content: "";
   position: absolute;
-  inset: 0 0 var(--space-3) 52px;
+  inset: 0 0 var(--space-3) 56px;
 }
 
 .week-next p {
@@ -2742,11 +2742,14 @@ body:has(.guide-page) .site-footer {
   /* Tucked under the head's action, never on top of it */
   .feed-peeps {
     justify-content: flex-end;
-    margin-top: -56px;
+    margin-top: -40px;
   }
 
+  /* Fading out at the waist, rather than cut off straight above the chips */
   .feed-peeps img {
-    height: 96px;
+    height: 88px;
+    -webkit-mask-image: linear-gradient(#000 70%, transparent);
+    mask-image: linear-gradient(#000 70%, transparent);
   }
 
   .page-head .lede {
@@ -2756,7 +2759,7 @@ body:has(.guide-page) .site-footer {
   /* First week: progress stays in view on the left, the stations run down the right */
   .week {
     display: grid;
-    grid-template-columns: minmax(0, 20rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     align-items: start;
     gap: var(--space-7);
   }
@@ -2772,5 +2775,17 @@ body:has(.guide-page) .site-footer {
 
   .week-stops {
     margin-top: 0;
+  }
+
+  /* The finished card's two actions, one above the other at the same width */
+  .week-after .action {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+
+  /* Every page's wordmark at the same spot, lined up with the widest pages,
+     so it doesn't jump when you switch tabs (audit 9, N5) */
+  .page-head > .wordmark {
+    left: max(calc((100% - 64rem) / 2 + var(--gutter)), calc((100% - 100vw) / 2 + var(--gutter)));
   }
 }

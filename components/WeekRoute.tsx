@@ -37,7 +37,7 @@ export function WeekRoute() {
         {complete && (
           <div className="week-after">
             <Link href="/notes/new" className="action is-primary">
-              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตบอกคนมาใหม่รุ่นถัดไป
+              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตให้รุ่นถัดไป
             </Link>
             <Link href="/contribute#price" className="action">
               <Receipt weight="bold" aria-hidden="true" /> ไปมาแล้ว ช่วยตรวจราคา
