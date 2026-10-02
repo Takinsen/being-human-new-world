@@ -31,7 +31,7 @@ A spot in the Campus Area shown as a pin on the map and a know-how card (normal 
 _Avoid_: POI, listing, shop (a Place can be a station or a clinic)
 
 **Price Check**:
-The date and the person who last confirmed a price on the spot. A price without a Price Check is never shown as a number. For the demo, a price the team found online is shown with its source and month ("ข้อมูลจากเว็บ") instead, never as "ตรวจ", until someone checks it on the spot.
+The date and the person who last confirmed a price, and how: on the spot, or (for the demo) found online by the team. A price without a Price Check is never shown as a number. Readers see only when the price was last updated ("อัปเดตล่าสุด"), not who checked it or how.
 _Avoid_: Price source, verified price
 
 **Guide** (วิธี):
