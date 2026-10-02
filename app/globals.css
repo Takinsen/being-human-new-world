@@ -553,6 +553,7 @@ svg { flex: none; }
 }
 
 .price-strip small {
+  color: var(--ink);
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -1602,6 +1603,12 @@ body:not(:has(.explorer)) main {
   flex: none;
 }
 
+/* Text may shrink and wrap, so the card never pushes past a narrow, zoomed screen */
+.guide-list a > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .guide-list b {
   display: block;
   font-weight: 700;
@@ -1661,7 +1668,11 @@ body:not(:has(.explorer)) main {
 .guide .tel,
 .guide-facts .tel,
 .detail .tel {
+  display: inline-block;
+  min-width: 44px;
   padding-block: 12px;
+  margin-block: -12px;
+  text-align: center;
 }
 
 /* Note form: the counter sits outside the label */
@@ -1730,6 +1741,7 @@ body:not(:has(.explorer)) main {
 /* A 44px tap area that doesn't push the Note's bar down */
 .note-by a {
   display: inline-block;
+  min-width: 44px;
   padding-block: 12px;
   margin-block: -12px;
 }
@@ -1915,7 +1927,8 @@ body:not(:has(.explorer)) main {
   flex-wrap: nowrap;
   overflow-x: auto;
   margin-inline: calc(-1 * var(--gutter));
-  padding: 2px var(--gutter) var(--space-1);
+  /* Room for each chip's 44px tap area, which the scroller would otherwise clip */
+  padding: var(--space-1) var(--gutter);
   scrollbar-width: none;
 }
 
