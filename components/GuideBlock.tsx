@@ -2,22 +2,25 @@ import Link from "next/link";
 import { Check, MapPin, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { firstWeek } from "@/content/checklist";
 import type { Guide, GuideFact, GuideStep } from "@/content/types";
-import { checkedBy, thaiMonthYear } from "@/lib/format";
+import { priceFigure, thaiMonthYear } from "@/lib/format";
 import { MarkDone } from "./MarkDone";
 import { TelText } from "./TelText";
 
 // A Guide reads like an article (docs/adr/0007, amended 2026-10-02): a calm reading
 // column, with what you need at a glance pulled out into one "need to know" box.
-// Its page supplies the title and lede (docs/adr/0006).
+// Its page supplies the title and the lede, which is the Guide's gist (its intro).
 
 /**
- * The "need to know" box: facts at a glance (cost, hours, a number to call), where the
- * prices come from in one fine line, and what to bring. Above the article on a phone;
- * beside it, sticky, on a wide screen.
+ * The "need to know" box: one fact per row (cost, hours, a number to call), the name on the
+ * left and the value beside it; one fine line for when the prices were last updated; then
+ * what to bring. Above the article on a phone; beside it, sticky, on a wide screen.
  */
 export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   if (!guide.facts && !guide.bring) return null;
-  const source = guide.facts && priceSource(guide.facts);
+  const updated = guide.facts
+    ?.flatMap((f) => (f.price?.checked ? [f.price.checked.on] : []))
+    .sort()
+    .at(-1);
   return (
     <aside className="guide-know" aria-label="รู้ไว้ก่อน">
       {guide.facts && (
@@ -26,16 +29,14 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
             <div key={f.label}>
               <dt>{f.label}</dt>
               <dd>
-                <span className="fact-value">
-                  <FactValue fact={f} />
-                </span>
-                {f.note && <small className="fact-note">{f.note}</small>}
+                <FactValue fact={f} />
               </dd>
             </div>
           ))}
         </dl>
       )}
-      {source && <p className="guide-source">{source}</p>}
+      {/* When, not who or how (docs/adr/0001, amended 2026-10-02) */}
+      {updated && <p className="guide-source">อัปเดตล่าสุด {thaiMonthYear(updated)}</p>}
       {guide.bring && (
         <section className="guide-bring" aria-labelledby="bring">
           <h2 id="bring">พกไปด้วย</h2>
@@ -50,48 +51,26 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   );
 }
 
-/** A price shows as a number only with a Price Check, the figure on platform yellow (docs/adr/0001) */
+/** A price shows as a number only with a Price Check, on platform yellow, its unit joined on (docs/adr/0001) */
 function FactValue({ fact }: { fact: GuideFact }) {
   if (fact.value) return <TelText text={fact.value} />;
   if (!fact.price) return null;
   if (!fact.price.checked) return <span className="fact-pending">ยังไม่รู้ราคาจริง รอคนไปดู</span>;
-  const { min, max, per } = fact.price;
   return (
     <>
       <span className="visually-hidden">ราคาปกติ </span>
-      <mark className="fact-price">{min === max ? min : `${min}–${max}`} บาท</mark> <small className="fact-per">{per}</small>
+      <mark className="fact-price">{priceFigure(fact.price)}</mark>
     </>
   );
 }
 
-/** Where the box's prices come from, said once, in the words a Place card uses (docs/adr/0001) */
-function priceSource(facts: GuideFact[]): string | null {
-  const checks = facts.flatMap((f) => (f.price?.checked ? [{ label: f.label, check: f.price.checked }] : []));
-  if (!checks.length) return null;
-  const months = (on: string[]) => [...new Set(on)].sort().map(thaiMonthYear).join(" กับ ");
-  const web = checks.filter((c) => c.check.how === "web");
-  const spot = checks.filter((c) => c.check.how !== "web");
-  const lines = spot.map((c) => `ราคา${c.label} ${checkedBy(c.check)} ไปดูมาเมื่อ ${thaiMonthYear(c.check.on)}`);
-  if (web.length) {
-    const what = spot.length ? `ราคา${web.map((c) => c.label).join(" ")}` : "ราคา";
-    lines.push(`${what}ดูจากเว็บเมื่อ ${months(web.map((c) => c.check.on))} ยังไม่มีใครไปเช็กเอง`);
-  }
-  return lines.join(" ส่วน");
-}
-
-/** The article: intro, the steps along the dotted path (or options between thin rules), then where to read on. */
+/** The article: the steps along the dotted path (or options between thin rules), then where to read on. The intro is the page's lede. */
 export function GuideBlock({ guide }: { guide: Guide }) {
   const checklistItem = firstWeek.find((i) => i.href === `/guides/${guide.id}`);
   const options = guide.kind === "options";
   return (
     <article className="guide" data-line={guide.category}>
       {!guide.checked && <p className="draft-tag">ร่าง</p>}
-      {guide.intro && (
-        <p className="guide-intro">
-          <TelText text={guide.intro} />
-        </p>
-      )}
-
       {/* Long options: the urgent ones a tap away, before the list (UX audit 7, U2) */}
       {guide.jumps && (
         <nav className="jump-links guide-jumps" aria-label="ไปที่ทางเลือก">

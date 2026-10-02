@@ -535,8 +535,8 @@ svg { flex: none; }
 
 /* On a Place's card the logo is the one picture of the station, so it is a little larger */
 .detail-title .place-icon:has(.brand-logo) {
-  width: 3rem;
-  height: 3rem;
+  width: 2.25rem;
+  height: 2.25rem;
 }
 
 .detail-title .place-icon .brand-logo {
@@ -593,38 +593,25 @@ svg { flex: none; }
   text-decoration: none;
 }
 
-.stop-summary {
-  color: var(--ink-soft);
-  font-size: 0.95rem;
-}
-
 .price {
   margin-top: var(--space-3);
 }
 
+/* Platform yellow on the figure, at the text's own size (docs/adr/0001) */
 .price-strip {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4em;
-  padding: 0.1em 0.55em;
-  border-radius: var(--radius-s);
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
   background: var(--platform);
   color: var(--ink);
   font-weight: 700;
-  font-size: 1.3rem;
+  white-space: nowrap;
 }
 
-.price-strip small {
-  color: var(--ink);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.price-check {
+/* When the price was last updated, and nothing about who or how (docs/adr/0001) */
+.price-updated {
   display: block;
-  margin-top: 2px;
   color: var(--ink-soft);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
 }
 
 .price-pending {
@@ -636,33 +623,6 @@ svg { flex: none; }
   font-weight: 600;
   color: var(--ink-soft);
   font-size: var(--step--1);
-}
-
-.knowhow {
-  display: grid;
-  gap: var(--space-2);
-  margin-top: var(--space-3);
-}
-
-.knowhow li,
-.caution {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.knowhow svg {
-  margin-top: 0.3em;
-  color: var(--c);
-}
-
-.caution {
-  margin-top: var(--space-2);
-  color: var(--caution);
-  font-weight: 500;
-}
-
-.caution svg {
-  margin-top: 0.25em;
 }
 
 .help h2 {
@@ -969,19 +929,14 @@ body:has(.explorer) .site-footer {
   font: 500 var(--step--1) var(--font);
 }
 
+/* Plain rows split by hairlines: the Places in a category have no order, so no dotted path
+   (docs/adr/0007, amended 2026-10-02) */
 .stop-group ul {
-  position: relative;
   margin-top: var(--space-1);
 }
 
-/* A dotted path through the places, like the steps in a Guide */
-.stop-group ul::before {
-  content: "";
-  position: absolute;
-  left: calc(var(--space-1) + 2px + (var(--station) - var(--rail)) / 2);
-  top: 22px;
-  bottom: 22px;
-  border-left: var(--rail) dotted color-mix(in srgb, var(--c) 45%, var(--paper));
+.stop-group li + li {
+  border-top: 1px solid var(--rule);
 }
 
 .stop-group button {
@@ -990,9 +945,9 @@ body:has(.explorer) .site-footer {
   align-items: flex-start;
   gap: var(--space-3);
   width: 100%;
-  padding: var(--space-2) var(--space-1);
+  padding: var(--space-3) var(--space-1);
   border: 0;
-  border-radius: var(--radius-s);
+  border-radius: 0;
   background: none;
   color: var(--ink);
   font: inherit;
@@ -1004,9 +959,18 @@ body:has(.explorer) .site-footer {
   background: var(--tint);
 }
 
+/* A small icon with no ring */
 .stop-group .place-icon {
-  position: relative;
-  margin-left: 2px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  background: none;
+  font-size: 1.375rem;
+}
+
+.stop-group .place-icon .brand-logo {
+  width: 26px;
+  height: 26px;
 }
 
 .stop-group b {
@@ -1044,10 +1008,6 @@ body:has(.explorer) .site-footer {
 
 .detail-head h2 {
   font-size: var(--step-1);
-}
-
-.detail .stop-summary {
-  margin-top: var(--space-1);
 }
 
 /* Phones: filters float on top, a bottom sheet holds the list */
@@ -1358,79 +1318,11 @@ a.line-chip {
   font-weight: 600;
 }
 
-/* ---------- Place details (short) ---------- */
-
-.detail .price {
-  margin-top: var(--space-2);
-}
-
-.detail-notes {
-  margin-top: var(--space-4);
-}
-
-.more {
-  margin-top: var(--space-3);
-}
-
-.more summary {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  min-height: 44px;
-  padding: 0 var(--space-4);
-  border: 2px solid var(--rule);
-  border-radius: var(--radius-pill);
-  font-weight: 700;
-  list-style: none;
-  cursor: pointer;
-}
-
-.more summary::-webkit-details-marker {
-  display: none;
-}
-
-/* A caret that turns when open, since display: inline-flex drops the marker */
-.more summary::after {
-  content: "";
-  width: 0.5em;
-  height: 0.5em;
-  margin-top: -0.2em;
-  border-right: 2.5px solid currentColor;
-  border-bottom: 2.5px solid currentColor;
-  transform: rotate(45deg);
-}
-
-.more[open] summary::after {
-  margin-top: 0.2em;
-  transform: rotate(-135deg);
-}
-
-.more[open] summary {
-  margin-bottom: var(--space-2);
-}
-
-.more .knowhow {
-  margin-top: 0;
-  padding-left: 1.2rem;
-  list-style: disc;
-}
-
-.more .knowhow li {
-  display: list-item;
-}
-
-.detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-4);
-}
-
 /* ---------- Notes ---------- */
 
 /* A Note is a card like a leaf: one corner tucked in */
 .note {
-  padding: var(--space-5);
+  padding: var(--space-4) var(--space-5);
   border-radius: var(--radius-leaf);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -1451,31 +1343,36 @@ a.line-chip {
   font-size: var(--step-0);
 }
 
+/* The signature on one line, "name • province", and how long ago at the right end */
 .note-by {
-  margin-top: var(--space-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 var(--space-3);
+  margin-top: var(--space-3);
   color: var(--ink-soft);
   font-size: var(--step--1);
+  line-height: 1.5;
 }
 
-.note-by a,
-.note-by b {
+.note-sign {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--space-2);
+}
+
+.note-name a,
+.note-name b {
   color: var(--ink);
+  font-size: var(--step-0);
   font-weight: 700;
 }
 
-.note-date {
-  display: block;
-  margin-top: var(--space-1);
-  font-size: var(--step--1);
-}
-
-.note-place {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: var(--c);
-  font-size: var(--step--1);
-  font-weight: 600;
+.note-home,
+.note-ago {
+  white-space: nowrap;
 }
 
 .feed-filters {
@@ -1619,10 +1516,6 @@ body:not(:has(.explorer)) main {
   gap: var(--space-1);
   color: var(--food);
   font-weight: 600;
-}
-
-.detail .home-taste-tag {
-  margin-top: var(--space-2);
 }
 
 .detail-head h2:focus {
@@ -1790,16 +1683,19 @@ body:not(:has(.explorer)) main {
   font-weight: 600;
 }
 
-/* A 44px tap area that doesn't push the Note's bar down */
-.note-by a {
+/* A 44px tap area that doesn't push the signature down */
+.note-name a {
   display: inline-block;
   min-width: 44px;
   padding-block: 12px;
   margin-block: -12px;
 }
 
+/* The category, small above the words */
 .note-cat {
+  margin-bottom: var(--space-2);
   color: var(--on-tint);
+  font-size: var(--step--1);
   font-weight: 700;
 }
 
@@ -1809,7 +1705,7 @@ body:not(:has(.explorer)) main {
   display: inline-block;
   width: 0.6em;
   height: 0.6em;
-  margin-right: 0.35em;
+  margin-right: 0.4em;
   border-radius: 50% 0;
   background: var(--c);
 }
@@ -1858,82 +1754,192 @@ body:not(:has(.explorer)) main {
   font-size: var(--step-2);
 }
 
-.detail-head .price,
-.detail-head .home-taste-tag {
-  margin-top: 0;
-}
-
 .detail-head h2:focus-visible {
   outline: none;
   text-decoration: underline 3px var(--platform);
   text-underline-offset: 6px;
 }
 
-.detail-actions {
-  margin-top: 0;
+/* The name large, the Place's icon plain beside it (docs/adr/0006, amended 2026-10-02) */
+.detail-title .place-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 0;
+  background: none;
+  font-size: 1.75rem;
 }
 
-.detail-actions .action {
-  flex: 1;
-  justify-content: center;
+.detail-head h2 {
+  font-size: 1.875rem;
+  line-height: 1.25;
 }
 
-.to-chula {
+.detail-summary {
+  color: var(--ink-soft);
+}
+
+.detail-taste {
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+/* Each section under a hairline, with a quiet heading: the content is what's read */
+.detail-section {
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--rule);
+}
+
+.detail-h {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  color: var(--ink-soft);
+  font: 600 var(--step--1) / 1.5 var(--font);
+}
+
+.detail-h svg {
+  color: var(--c);
+}
+
+.detail-h-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.detail-write {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  color: var(--action);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.detail-notes .form-status {
+  margin: 0 0 var(--space-3);
+}
+
+.detail-notes .related-link {
+  margin-top: var(--space-2);
+}
+
+.detail-empty {
+  color: var(--ink-soft);
+}
+
+/* Every caution, then every line of know-how. A caution is a heads-up from someone who's
+   been there, not an alarm: ink, not red. Red stays for the warnings in a Guide (audit 12, F5). */
+.detail-know {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.detail-know li {
   display: flex;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  border-radius: var(--radius-s);
-  background: var(--tint);
 }
 
-.to-chula svg {
-  margin-top: 0.25em;
+.detail-know .is-caution {
+  font-weight: 600;
+}
+
+.detail-know svg {
+  flex: none;
+  margin-top: 0.3em;
+  color: var(--ink-soft);
+}
+
+/* The category's leaf as the bullet */
+.detail-leaf {
+  flex: none;
+  width: 0.45em;
+  height: 0.45em;
+  margin: 0.6em 0.25em 0;
+  border-radius: 50% 0;
+  background: var(--c);
+}
+
+.detail-guides li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.detail-guides li:first-child {
+  border-top: 1px solid var(--rule);
+}
+
+.detail-guides a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 52px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.detail-guides a span {
+  flex: 1;
+}
+
+.detail-guides a svg:first-child {
   color: var(--c);
   font-size: 1.25rem;
 }
 
-.to-chula-head {
-  display: block;
-  color: var(--on-tint);
-}
-
-.detail-body {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.detail-body .caution {
-  margin-top: 0;
-}
-
-/* On a Place card a caution is a heads-up from someone who's been there, not an alarm:
-   ink, not red. Red stays for the warnings in a Guide (audit 12, F5). */
-.detail .caution {
-  color: var(--ink);
-}
-
-.detail .caution svg {
+.detail-guides a svg:last-child {
   color: var(--ink-soft);
 }
 
-.detail .more summary {
-  padding: 0;
-  border: 0;
+/* What it costs and the way there, stuck to the bottom of the sheet or panel while the card scrolls */
+.detail-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-inline: calc(-1 * var(--gutter));
+  padding: var(--space-3) var(--gutter);
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+
+/* Down over the scroll area's own bottom padding, so nothing shows under the bar */
+.sheet-body .detail-bar {
+  bottom: calc(-1 * var(--space-5));
+  margin-bottom: calc(-1 * var(--space-5));
+  padding-bottom: calc(var(--space-3) + var(--space-5));
+}
+
+.explorer-panel .detail-bar {
+  bottom: calc(-1 * var(--space-5));
+  margin: 0 calc(-1 * var(--space-5)) calc(-1 * var(--space-5));
+  padding: var(--space-3) var(--space-5) var(--space-5);
+}
+
+.detail-bar .price {
+  margin: 0;
+}
+
+.detail-bar .action {
+  flex: none;
+}
+
+/* "ราคาไม่ตรง?": the way to report a price from where it's checked (docs/adr/0001) */
+.price-report {
+  display: inline-block;
+  padding-block: 12px;
+  margin-block: -12px;
   color: var(--ink);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  font-weight: 600;
 }
 
-.detail .more[open] summary {
-  margin-bottom: var(--space-2);
-}
-
-.detail .more .knowhow {
-  display: grid;
-  gap: var(--space-2);
-}
-
-/* The one "go next" link card: on a Place card, at the end of the Feed, at the end of a Guide */
+/* The one "go next" link card: at the end of the Feed, at the end of a Guide */
 .detail-guide,
 .feed-more a {
   display: flex;
@@ -2274,9 +2280,11 @@ body:has(.guide-page) .site-footer {
   line-height: 1.2;
 }
 
+/* The lede is the Guide's gist, read first: ink, not grey (docs/adr/0007, amended 2026-10-02) */
 .guide-page .page-head .lede {
   max-width: none;
   margin-top: var(--space-3);
+  color: var(--ink);
   font-size: calc(var(--read) * 1.12);
   line-height: 1.6;
 }
@@ -2295,87 +2303,68 @@ body:has(.guide-page) .site-footer {
   background: var(--paper);
 }
 
+/* One fact per row: the name on the left, the value beside it, hairlines between
+   (docs/adr/0007, amended 2026-10-02) */
 .guide-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4) var(--space-5);
   margin: 0;
 }
 
-/* Side by side when they fit; a long note wraps under its own value */
 .guide-facts > div {
-  flex: 1 1 8.5rem;
-  min-width: 0;
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+
+.guide-facts > div:first-child {
+  padding-top: 0;
+}
+
+.guide-facts > div + div {
+  border-top: 1px solid var(--rule);
 }
 
 .guide-facts dt {
   color: var(--ink-soft);
-  font-size: var(--step--1);
   font-weight: 600;
+  line-height: 1.45;
 }
 
 .guide-facts dd {
   margin: 0;
-}
-
-/* Words at a readable size; a price figure and a number to call bigger (below) */
-.fact-value {
-  display: block;
-  margin-top: 2px;
-  font-size: var(--step-1);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.45;
 }
 
-.fact-value:has(.fact-price) {
-  font-size: var(--step-2);
-}
-
-/* Platform yellow on the price figure only (docs/adr/0001); Thai fonts' tall line box
-   would make a plain inline background a thick block, so it hugs the figures */
+/* Platform yellow on the price figure, at the text's own size (docs/adr/0001); Thai fonts'
+   tall line box would make a plain inline background a thick block, so it hugs the figures */
 .fact-price {
-  display: inline-block;
-  padding: 0.1em 0.3em 0.02em;
-  border-radius: 6px;
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
   background: var(--platform);
   color: var(--ink);
-  line-height: 1.15;
-  white-space: nowrap;
-}
-
-.fact-per {
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-  font-weight: 600;
   white-space: nowrap;
 }
 
 .fact-pending {
   color: var(--ink-soft);
-  font-size: var(--step-0);
+  font-weight: 400;
 }
 
-.fact-note {
-  display: block;
-  margin-top: 2px;
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-  line-height: 1.5;
-}
-
-/* A number to call is the biggest thing in the box, and plainly a link */
-.fact-value:has(.tel) {
-  font-size: 2rem;
+/* A number to call stays the biggest thing in the box, and plainly a link */
+.guide-facts dd:has(.tel) {
+  font-size: 1.75rem;
   line-height: 1.2;
 }
 
-.fact-value .tel {
+.guide-facts .tel {
   color: var(--on-tint);
   text-decoration-thickness: 2px;
   text-underline-offset: 0.15em;
 }
 
-/* Where the prices come from: one fine line under the facts */
+/* When the prices were last updated: one fine line under the facts */
 .guide-source {
   margin-top: var(--space-3);
   color: var(--ink-soft);
@@ -2432,11 +2421,6 @@ body:has(.guide-page) .site-footer {
 
 .guide-body > .guide:first-child {
   margin-top: 0;
-}
-
-.guide-page .guide-intro {
-  margin: 0;
-  color: var(--ink);
 }
 
 .guide > .draft-tag + * {
@@ -2895,13 +2879,6 @@ body:has(.guide-page) .site-footer {
 }
 
 /* ---------- Audit 7: links back into the flow ---------- */
-
-/* Place card: the "check this price" link under the price */
-.detail-head .price-fix {
-  margin-top: 0;
-  justify-self: start;
-  font-size: var(--step--1);
-}
 
 /* Map list: the two help links side by side */
 .list-help + .list-help {

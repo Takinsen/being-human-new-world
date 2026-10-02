@@ -1,6 +1,6 @@
 # Readable pages: the map list, a Guide's head and the Note card
 
-Status: needs-info (2026-10-02). Waiting on the owner's verdict on round 2 of the prototype.
+Status: done (2026-10-02), except that the owner still has to read the rewritten ledes (below).
 
 ## What the owner said
 
@@ -34,12 +34,22 @@ Status: needs-info (2026-10-02). Waiting on the owner's verdict on round 2 of th
 - **Prices on a Place card:** only "อัปเดตล่าสุด <month>"; no "ไปมาแล้วเห็นราคา… บอกราคาที่เห็นได้เลย" link.
 - **Place card:** there's a better layout; prototype it. Round 2 has P1 (facts as rows, then sections), P2 (sections, the price and นำทาง in a bar stuck to the bottom) and P3 (the latest Note first).
 
-## Open
+## Verdict on round 2 (2026-10-02)
 
-- "อัปเดตล่าสุด" for every price no longer tells a price someone checked on the spot from one found online, which ADR 0001 and the Price Check entry in CONTEXT.md require. Amend ADR 0001, or keep the difference some other way?
-- Without the link on the Place card, the only way to report a price is /contribute#price from the first week. Keep a way in from the Place?
-- The facts' notes carried know-how ("ไม่มีมัดจำ", "โทรได้ 24 ชม."): move it into the steps, or drop it?
-- The signature dropped "บ้านอยู่" ("พี่บอส • สุราษฎร์ธานี"); confirm.
+- **Q10, map list:** A, plain rows with a small icon, no line under the name.
+- **Q11, Place card:** P2.
+- **Q12, price labels:** "อัปเดตล่าสุด <month>" for every price; ADR 0001 and the Price Check entry in CONTEXT.md amended. (Recommended keeping "<name> ไปดูมา" for prices checked on the spot; not taken.)
+- **Q13:** a short "ราคาไม่ตรง?" beside the date on a Place card goes to the price form.
+- **Q14:** what sat under a fact moved into the steps ("ไม่มีมัดจำ" into the Rabbit top-up step); "ตามเว็บจุฬาฯ" and "โทรได้ 24 ชม." were already said in the steps, so they went.
+- **Q15:** "พี่บอส • สุราษฎร์ธานี".
+- **Q16:** a number to call stays large in the box; every Guide's lede is its gist.
+
+## Built (2026-10-02)
+
+- ADRs 0001, 0006 and 0007 amended; CONTEXT.md's Price Check updated.
+- Code on `claude/youthful-newton-2zia7g`, written fresh, not copied from the prototype.
+- Ledes rewritten for the owner to read: ขึ้น MRT, ซักผ้าหยอดเหรียญ, น้ำดื่มในห้อง and กินให้อิ่มในงบนิสิต (new intro). The rest keep their intro (Rabbit, รถป๊อป, เข้าจุฬาฯ) or summary as the lede.
+- Not seen working here: a Note's "… ที่แล้ว" on the live Sheet (seed Notes have no time; the prototype showed it with made-up times), and photos on the Place card (Wikimedia is blocked in the agent's session).
 
 ## Found while building
 

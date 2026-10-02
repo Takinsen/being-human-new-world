@@ -270,10 +270,10 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                         <span className="place-icon">
                           <PlaceIcon place={place} />
                         </span>
+                        {/* Name and tags only: what a Place is waits on its card (docs/adr/0007, amended 2026-10-02) */}
                         <span>
                           <b>{place.name}</b>
                           <span className="visually-hidden">: </span>
-                          <small>{place.summary}</small>
                           <span className="stop-tags">
                             {price && <b className="stop-price">{price}</b>}
                             {place.homeTaste && (

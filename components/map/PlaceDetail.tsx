@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
   BookOpenText,
-  BowlSteam,
+  CaretRight,
   CheckCircle,
   NavigationArrow,
   PencilSimpleLine,
@@ -18,8 +18,9 @@ import { Price } from "../Price";
 import { TelText } from "../TelText";
 import type { MapStop } from "./types";
 
-// The selected Place (docs/adr/0006): photo, name and price, what to do next,
-// its Guides, then one line, one caution and the latest Note. The rest waits behind "อ่านเพิ่ม".
+// The selected Place (docs/adr/0006, amended 2026-10-02): the photo, the name large and what
+// the Place is, then sections split by hairlines, each with a quiet heading; nothing waits
+// behind "อ่านเพิ่ม". The price and นำทาง sit in a bar stuck to the bottom of the card.
 export function PlaceDetail({
   stop,
   posted,
@@ -34,12 +35,12 @@ export function PlaceDetail({
   onBack?: () => void;
 }) {
   const { place, notes, guides } = stop;
-  const [caution, ...moreCautions] = place.cautions ?? [];
   const [latest] = notes;
+  const cautions = place.cautions ?? [];
   const heading = useRef<HTMLHeadingElement>(null);
 
   const status = useRef<HTMLParagraphElement>(null);
-  const noteBox = useRef<HTMLDivElement>(null);
+  const noteBox = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (focusOnOpen) heading.current?.focus({ preventScroll: true });
@@ -72,107 +73,118 @@ export function PlaceDetail({
           </h2>
         </div>
         {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
-        <p className="stop-summary">{place.summary}</p>
+        <p className="detail-summary">
+          <TelText text={place.summary} />
+        </p>
         {place.homeTaste && (
-          <p className="home-taste-tag">
-            <BowlSteam weight="bold" aria-hidden="true" />{" "}
+          <p className="detail-taste">
             {stop.homeTasteBy
               ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน`
               : `อาหาร${place.homeTaste} ทีมหามาให้ลอง ยังรอคน${place.homeTaste}มาบอกว่าใช่ไหม`}
           </p>
         )}
-        {place.price && (
-          <>
-            <Price price={place.price} />
-            {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
-            <Link href={`/contribute?place=${place.id}#price`} className="related-link price-fix">
-              {place.price.checked && place.price.checked.how !== "web"
-                ? "ไปมาแล้วราคาไม่ตรง บอกราคาที่เห็นได้เลย"
-                : "ไปมาแล้วเห็นราคาเท่าไหร่ บอกราคาที่เห็นได้เลย"}
-            </Link>
-          </>
-        )}
       </header>
 
-      <div className="detail-actions">
+      {place.toChula && (
+        <section className="detail-section" aria-labelledby="detail-to-chula">
+          <h3 id="detail-to-chula" className="detail-h">
+            <SignIn weight="bold" aria-hidden="true" /> เข้าจุฬาฯ ยังไง
+          </h3>
+          <p>{place.toChula}</p>
+        </section>
+      )}
+
+      {(cautions.length > 0 || place.knowhow.length > 0) && (
+        <section className="detail-section" aria-labelledby="detail-know">
+          <h3 id="detail-know" className="detail-h">
+            รู้ไว้ก่อนไป
+          </h3>
+          <ul className="detail-know">
+            {/* A caution is a heads-up from someone who's been there: ink, not red (audit 12, F5) */}
+            {cautions.map((c) => (
+              <li key={c} className="is-caution">
+                <Warning weight="bold" aria-hidden="true" />
+                <span>
+                  <span className="visually-hidden">ข้อควรระวัง: </span>
+                  <TelText text={c} />
+                </span>
+              </li>
+            ))}
+            {place.knowhow.map((k) => (
+              <li key={k}>
+                <span className="detail-leaf" aria-hidden="true" />
+                <span>{k}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      <section className="detail-section detail-notes" aria-labelledby="detail-notes" ref={noteBox}>
+        <div className="detail-h-row">
+          <h3 id="detail-notes" className="detail-h">
+            โน้ตจากคนที่เคยไป
+          </h3>
+          <Link href={`/notes/new?place=${place.id}`} className="detail-write">
+            <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
+          </Link>
+        </div>
+        {posted && (
+          <p className="form-status" role="status" tabIndex={-1} ref={status}>
+            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว ขอบคุณนะ
+          </p>
+        )}
+        {latest ? (
+          <>
+            <NoteCard note={latest} compact />
+            {notes.length > 1 && (
+              <Link href={`/notes?place=${place.id}`} className="related-link">
+                อ่านโน้ตที่นี่ทั้งหมด {notes.length} อัน
+              </Link>
+            )}
+          </>
+        ) : (
+          <p className="detail-empty">ยังไม่มีใครเขียนถึงที่นี่</p>
+        )}
+      </section>
+
+      {guides.length > 0 && (
+        <section className="detail-section" aria-labelledby="detail-guides">
+          <h3 id="detail-guides" className="detail-h">
+            อ่านวิธี
+          </h3>
+          <ul className="detail-guides">
+            {guides.map((guide) => (
+              <li key={guide.id}>
+                <Link href={`/guides/${guide.id}`}>
+                  <BookOpenText weight="bold" aria-hidden="true" />
+                  <span>{guide.title}</span>
+                  <CaretRight weight="bold" aria-hidden="true" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* Stuck to the bottom while the card scrolls: what it costs and the way there */}
+      <div className="detail-bar">
+        {place.price ? (
+          <Price price={place.price}>
+            {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
+            <Link href={`/contribute?place=${place.id}#price`} className="price-report">
+              {place.price.checked ? "ราคาไม่ตรง?" : "บอกราคา"}
+            </Link>
+          </Price>
+        ) : (
+          <span />
+        )}
         <a className="action" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
           <NavigationArrow weight="bold" aria-hidden="true" />
           นำทาง
           <span className="visually-hidden"> ไป{place.name} ใน Google Maps (เปิดแท็บใหม่)</span>
         </a>
-        <Link className="action is-primary" href={`/notes/new?place=${place.id}`}>
-          <PencilSimpleLine weight="bold" aria-hidden="true" />
-          เขียนโน้ต
-        </Link>
       </div>
-
-      {posted && (
-        <p className="form-status" role="status" tabIndex={-1} ref={status}>
-          <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว ขอบคุณนะ
-        </p>
-      )}
-
-      {place.toChula && (
-        <p className="to-chula">
-          <SignIn weight="bold" aria-hidden="true" />
-          <span>
-            <b className="to-chula-head">เข้าจุฬาฯ ยังไง</b>
-            {place.toChula}
-          </span>
-        </p>
-      )}
-
-      {/* Up here so a wide screen's side panel shows it without scrolling (UX audit 7, U14) */}
-      {guides.map((guide) => (
-        <Link key={guide.id} href={`/guides/${guide.id}`} className="detail-guide">
-          <BookOpenText weight="bold" aria-hidden="true" />
-          <span>
-            <small>อ่านวิธี</small>
-            {guide.title}
-          </span>
-        </Link>
-      ))}
-
-      {caution && (
-        <div className="detail-body">
-          <p className="caution">
-            <Warning weight="bold" aria-hidden="true" />
-            <span>
-              <span className="visually-hidden">ข้อควรระวัง: </span>
-              <TelText text={caution} />
-            </span>
-          </p>
-        </div>
-      )}
-
-      {latest && (
-        <div className="detail-notes" ref={noteBox}>
-          <NoteCard note={latest} compact />
-          {notes.length > 1 && (
-            <Link href={`/notes?place=${place.id}`} className="related-link">
-              อ่านโน้ตที่นี่ทั้งหมด {notes.length} อัน
-            </Link>
-          )}
-        </div>
-      )}
-
-      {(place.knowhow.length > 0 || moreCautions.length > 0) && (
-        <details className="more">
-          <summary>อ่านเพิ่ม</summary>
-          <ul className="knowhow">
-            {place.knowhow.map((k) => (
-              <li key={k}>{k}</li>
-            ))}
-          </ul>
-          {moreCautions.map((c) => (
-            <p className="caution" key={c}>
-              <Warning weight="bold" aria-hidden="true" />
-              <span>{c}</span>
-            </p>
-          ))}
-        </details>
-      )}
-
     </article>
   );
 }

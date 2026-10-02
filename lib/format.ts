@@ -1,5 +1,4 @@
-import { getSenior } from "@/content/seniors";
-import type { PriceCheck } from "@/content/types";
+import type { Price } from "@/content/types";
 
 const thaiMonths = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."];
 
@@ -17,8 +16,29 @@ export function thaiDate(iso: string): string {
   return `${local.getUTCDate()} ${thaiMonths[local.getUTCMonth()]} ${String(local.getUTCFullYear() + 543).slice(-2)}`;
 }
 
-export function checkedBy(check: PriceCheck): string {
-  return getSenior(check.by)?.name ?? check.by;
+/** How long ago, counted back all the way: "เมื่อกี้", "2 ชั่วโมงที่แล้ว", "เมื่อวาน", "2 ปีที่แล้ว" */
+export function timeAgo(iso: string, now = Date.now()): string {
+  const then = new Date(iso).getTime();
+  if (Number.isNaN(then)) return "";
+  const minutes = Math.max(0, now - then) / 60000;
+  const hours = minutes / 60;
+  const days = hours / 24;
+  if (minutes < 1) return "เมื่อกี้";
+  if (hours < 1) return `${Math.floor(minutes)} นาทีที่แล้ว`;
+  if (days < 1) return `${Math.floor(hours)} ชั่วโมงที่แล้ว`;
+  if (days < 2) return "เมื่อวาน";
+  if (days < 7) return `${Math.floor(days)} วันที่แล้ว`;
+  if (days < 30) return `${Math.floor(days / 7)} สัปดาห์ที่แล้ว`;
+  if (days < 365) return `${Math.floor(days / 30)} เดือนที่แล้ว`;
+  const years = Math.floor(days / 365);
+  return years === 1 ? "ปีที่แล้ว" : `${years} ปีที่แล้ว`;
+}
+
+/** A price with its unit joined on: "17–44 บาท/เที่ยว", "40 บาท ขึ้นไป/ครั้ง" */
+export function priceFigure(price: Price): string {
+  const range = price.min === price.max ? `${price.min}` : `${price.min}–${price.max}`;
+  const unit = price.per.replace(/^ต่อ/, "/").replace(/ ต่อ/, "/");
+  return `${range} บาท${unit.startsWith("/") ? "" : " "}${unit}`;
 }
 
 export function mapsUrl(lat: number, lng: number): string {
