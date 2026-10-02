@@ -1193,14 +1193,6 @@ body:has(.explorer) .site-footer {
   font-size: var(--step-3);
 }
 
-.head-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--space-2) var(--space-5);
-  margin-top: var(--space-4);
-}
-
 .page-head .line-filters {
   margin-top: var(--space-4);
 }
@@ -1900,16 +1892,7 @@ body:not(:has(.explorer)) main {
   font-weight: 500;
 }
 
-/* Feed head: the title with its one action beside it, then a single row of chips */
-.page-title-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2) var(--space-3);
-}
-
-/* Filters are quieter than the action and the Notes: 36px drawn, 44px to tap */
+/* Filters are quieter than the composer and the Notes: 36px drawn, 44px to tap */
 .feed-filters .line-chip,
 .page-head .line-filters .line-chip {
   position: relative;
@@ -2724,11 +2707,10 @@ body:has(.guide-page) .site-footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  /* People beside the lede rather than on a row of their own */
-  /* Tucked under the head's action, never on top of it */
+  /* People beside the title and lede rather than on a row of their own */
   .feed-peeps {
     justify-content: flex-end;
-    margin-top: -40px;
+    margin-top: -96px;
   }
 
   /* Fading out at the waist, rather than cut off straight above the chips */
