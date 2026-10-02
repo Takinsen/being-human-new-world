@@ -999,7 +999,7 @@ body:has(.explorer) .site-footer {
 
 .explorer-top .line-chip {
   flex: none;
-  box-shadow: 0 2px 8px -2px rgb(60 45 20 / 0.35);
+  box-shadow: var(--shadow-1);
 }
 
 .explorer-top .line-chip:not([aria-pressed="true"]) {
@@ -1223,10 +1223,6 @@ body:has(.explorer) .site-footer {
   min-height: 44px;
 }
 
-/* On the paper pill the leaf keeps its green; on the canopy it takes the paper text colour */
-.brand .wordmark-leaf {
-  color: var(--leaf-dark);
-}
 
 .tagline {
   color: var(--ink-soft);
@@ -1238,14 +1234,18 @@ body:has(.explorer) .site-footer {
   right: 10px;
 }
 
+/* The wordmark sits straight in the canopy's shade, as on every other page; no pill */
 .explorer-top .brand {
   justify-self: start;
   width: fit-content;
   margin-bottom: var(--space-2);
-  padding: 2px var(--space-4);
-  border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--paper) 94%, transparent);
-  box-shadow: 0 2px 8px -2px rgb(60 45 20 / 0.35);
+  padding: 0 var(--space-2);
+  color: var(--paper);
+  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
+}
+
+.explorer-top .tagline {
+  color: var(--paper);
 }
 
 .explorer-top .brand .wordmark {
@@ -1620,8 +1620,22 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
 }
 
+/* Home tastes: one tinted card among the Guide cards, not loose text on the ground */
 .home-taste-list {
-  padding: var(--space-2) 0 var(--space-5);
+  margin: var(--space-3) 0 var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--tint, color-mix(in srgb, var(--food) 10%, var(--paper)));
+}
+
+.home-taste-list .guide-icon {
+  background: var(--paper);
+  color: var(--c);
+}
+
+.home-taste-list li + li {
+  padding-top: var(--space-2);
+  border-top: 1px dashed color-mix(in srgb, var(--c) 25%, var(--paper));
 }
 
 .home-taste-list h3 {
@@ -2432,11 +2446,25 @@ body:has(.guide-page) .site-footer {
   height: 100%;
 }
 
+/* A halo of the dark leaves keeps the wordmark at 4.5:1 wherever a light spot or a pale crown falls */
 .page-head > .wordmark {
   position: absolute;
   top: var(--space-3);
   z-index: 1;
   color: var(--paper);
+  text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
+}
+
+/* On a laptop or projector the canopy reaches further down, and the wordmark grows with it */
+@media (min-width: 64rem) {
+  :root {
+    --canopy: 144px;
+  }
+
+  .page-head > .wordmark {
+    top: var(--space-4);
+    font-size: var(--step-2);
+  }
 }
 
 .page-head > :not(.canopy, .wordmark) {
