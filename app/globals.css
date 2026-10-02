@@ -64,6 +64,8 @@
   /* A station on a line (numbered steps, map list stops, first-week ticks) and the line through it */
   --station: 2.5rem;
   --station-ring: 4px;
+  /* A first-week tick's tap box: the station, never under 44px (it grows with the root size on a projector) */
+  --tick: max(44px, var(--station));
   --rail: 6px;
   /* How far the canopy reaches down a page (on the map it reaches a little further) */
   --canopy: 104px;
@@ -329,9 +331,9 @@ svg { flex: none; }
 .week-stops li:not(:last-child)::after {
   content: "";
   position: absolute;
-  left: calc((44px - var(--rail)) / 2);
-  top: 22px;
-  bottom: -22px;
+  left: calc((var(--tick) - var(--rail)) / 2);
+  top: calc(var(--tick) / 2);
+  bottom: calc(var(--tick) / -2);
   border-left: var(--rail) dotted color-mix(in srgb, var(--leaf) 45%, var(--rule));
 }
 
@@ -345,8 +347,8 @@ svg { flex: none; }
   z-index: 1;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: var(--tick);
+  height: var(--tick);
   cursor: pointer;
 }
 
@@ -412,7 +414,7 @@ svg { flex: none; }
 .week-next a::after {
   content: "";
   position: absolute;
-  inset: 0 0 var(--space-3) 56px;
+  inset: 0 0 var(--space-3) calc(var(--tick) + var(--space-3));
 }
 
 .week-next p {
