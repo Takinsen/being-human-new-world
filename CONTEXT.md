@@ -56,7 +56,7 @@ _Avoid_: Testimonial, review
 ### Categories
 
 **Category** (หมวด):
-One of the three kinds of Local Know-how below. Every Place, Guide and Note belongs to exactly one.
+One of the kinds of Local Know-how below. Every Place, Guide and Note belongs to exactly one.
 _Avoid_: สาย, line (reads as a train line)
 
 **Transportation** (การเดินทาง):
@@ -65,9 +65,12 @@ Know-how for moving around and into the Campus Area: modes, fares, transfers, ti
 **Everyday Food** (ของกิน):
 Know-how on eating affordably in the Campus Area, including Home Taste.
 
-**Living Alone** (อยู่คนเดียว):
-Know-how for the household and health tasks a Newcomer used to have done for them: laundry, drinking water, rubbish, falling sick.
-_Avoid_: Daily Life (reads as a place list)
+**Health** (สุขภาพ):
+Know-how for falling sick or feeling low: where to go and when, from a pharmacy to the ER, and who to talk to.
+
+**Household** (งานบ้าน):
+Know-how for the household tasks a Newcomer used to have done for them: laundry, drinking water, rubbish, everyday supplies.
+_Avoid_: Living Alone (อยู่คนเดียว: it held both of the above, and a Newcomer who is sick at night doesn't look under it), Daily Life (reads as a place list)
 
 **Home Taste** (รสชาติบ้าน):
 A place in the Campus Area serving authentic food from a Thai region, vouched for in a Note by someone whose hometown is in that region. Until someone vouches for it, a place the team found is shown as a team pick.
