@@ -188,16 +188,11 @@ svg { flex: none; }
   text-decoration: none;
 }
 
-.wordmark-lines {
-  display: inline-flex;
-  gap: 2px;
-}
-
-.wordmark-lines i {
-  width: 5px;
-  height: 20px;
-  border-radius: 2px;
-  background: var(--c);
+.wordmark-leaf {
+  flex: none;
+  width: 1.1em;
+  height: 1.1em;
+  fill: currentColor;
 }
 
 .tab-bar {
@@ -1187,6 +1182,11 @@ body:has(.explorer) .site-footer {
 
 .brand .wordmark {
   min-height: 44px;
+}
+
+/* On the paper pill the leaf keeps its green; on the canopy it takes the paper text colour */
+.brand .wordmark-leaf {
+  color: var(--leaf-dark);
 }
 
 .tagline {
