@@ -343,7 +343,6 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     <div className="brand">
       <h1 className="visually-hidden">ตั้งหลัก แผนที่ย่านจุฬาฯ</h1>
       <Wordmark />
-      <p className="tagline">บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก</p>
     </div>
   );
 

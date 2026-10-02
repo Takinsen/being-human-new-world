@@ -1243,12 +1243,6 @@ body:has(.explorer) .site-footer {
 }
 
 
-.tagline {
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-  font-weight: 500;
-}
-
 .explorer-top {
   right: 10px;
 }
@@ -1261,10 +1255,6 @@ body:has(.explorer) .site-footer {
   padding: 0 var(--space-2);
   color: var(--paper);
   text-shadow: 0 0 6px var(--leaf-dark), 0 0 2px var(--leaf-dark);
-}
-
-.explorer-top .tagline {
-  color: var(--paper);
 }
 
 .explorer-top .brand .wordmark {
@@ -1699,13 +1689,7 @@ body:not(:has(.explorer)) main {
   text-align: right;
 }
 
-/* Small and short screens */
-@media (max-width: 380px) {
-  .explorer-top .tagline {
-    display: none;
-  }
-}
-
+/* Short screens */
 @media (max-height: 520px) {
   .tab-bar a {
     min-height: 44px;
