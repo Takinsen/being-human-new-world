@@ -8,7 +8,8 @@ export const metadata: Metadata = {
   description: "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก วิธีใช้ชีวิตแถวจุฬาฯ ที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่เหมือนกัน",
 };
 
-export const viewport: Viewport = { themeColor: "#ffffff", viewportFit: "cover" };
+export const viewport: Viewport = { // The phone's bar takes the canopy's dark leaves (--leaf-dark in globals.css)
+  themeColor: "#3f7552", viewportFit: "cover" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,400;0,500;0,600;0,700;1,500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Mitr:wght@400;500&display=swap"
         />
       </head>
       <body>

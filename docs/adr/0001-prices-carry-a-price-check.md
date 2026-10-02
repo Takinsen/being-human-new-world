@@ -1,6 +1,6 @@
 # Prices carry a Price Check or are not shown
 
-Status: accepted (2026-09-25), amended 2026-09-27 and 2026-10-02
+Status: accepted (2026-09-25), amended 2026-09-27 and twice on 2026-10-02
 
 "What's normal" is the core of the product, and prices are its sharpest form. If the site says a dish costs 45 baht and the shop charges 60, every other piece of Local Know-how loses credibility. So every price shown as a number must carry a Price Check: who confirmed it on the spot, and when (e.g. "40–50 บาท · ตรวจ ก.ย. 69 โดยพี่บอส"). A price without one renders as "รอตรวจราคา" instead of a number.
 
@@ -21,3 +21,7 @@ For the demo the team filled prices from the web before anyone had walked the ar
 ## Amendment (2026-10-02): prices in Guides
 
 A price in a Guide follows the same rule and looks the same as a price on a Place: the yellow strip and the same label, drawn by the same component. Guides used to type the label into the text ("ข้อมูลจากเว็บ ก.ย. 2569"), so the same BTS fare showed two ways on two pages (UX audit 4, D2).
+
+## Amendment (2026-10-02): a shorter label in a Guide's facts
+
+With the look in 0007, a Guide's facts show the web label without its last words: "ข้อมูลจากเว็บ <month>". The words "ยังไม่มีใครไปดูราคาจริง" are still there for screen readers. A Place card, where someone decides whether to go, keeps the full label. The owner chose this so a Guide's head isn't crowded.

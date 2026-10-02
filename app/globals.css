@@ -1,25 +1,31 @@
-/* ตั้งหลัก: a transit line map. Each category is a line with its own colour,
-   Places and topics are its stations, all drawn the same size (--station).
-   Full-width bands and a continuous line hold lists together; a link to go
-   next is one bordered box (.detail-guide). Only a Guide page lifts its parts
-   into white cards with shadows on a grey ground, because each card is a step
-   you act on (docs/adr/0006). Platform yellow marks prices only. Line colours
-   are dark enough for white text (≥4.5:1); on a tint, text in the line's colour
-   is darkened (--on-tint). Spacing, corners and tints come from the tokens below. */
+/* ตั้งหลัก: shade under the rain trees (docs/adr/0007). A canopy runs across the
+   top of every page, the ground is warm cream, and what you read or act on sits
+   on soft white cards. Each screen has one thing that stands out. Categories keep
+   their colours, softened; text in them stays ≥4.5:1, darkened on a tint
+   (--on-tint). Steps and first-week stations are joined by a dotted path, all
+   drawn the same size (--station). Platform yellow marks prices only. Motion is
+   small and off for reduced motion. Spacing, corners, tints and type come from
+   the tokens below. */
 
 :root {
-  --ink: #13233d;
-  --ink-soft: #56647d;
-  --paper: #ffffff;
-  --rule: #dde1e8;
-  --transport: #257f3b;
-  --food: #b85a12;
-  --living: #1f57b8;
+  --ink: #1d2733;
+  --ink-soft: #59616c;
+  --paper: #fffdf9;
+  --rule: #e9e1d3;
+  --transport: #2f7448;
+  --food: #a4512a;
+  --living: #45609d;
+  /* The canopy: leaves and the light that falls through them */
+  --leaf: #6aa178;
+  --leaf-dark: #3f7552;
+  --sun: #ffe7a3;
   --platform: #ffd100;
   --caution: #b42318;
   --c: var(--ink);
 
-  --font: "Bai Jamjuree", "Noto Sans Thai", system-ui, sans-serif;
+  --font: "IBM Plex Sans Thai Looped", "Noto Sans Thai", system-ui, sans-serif;
+  /* Headings only: Mitr's slashed zero reads oddly in numbers, so numbers stay in --font */
+  --font-head: "Mitr", "IBM Plex Sans Thai Looped", sans-serif;
 
   --step--1: 0.875rem;
   --step-0: 1rem;
@@ -47,18 +53,20 @@
   --space-7: 48px;
 
   --radius-s: 6px;
-  --radius-m: 12px;
+  --radius-m: 18px;
   --radius-pill: 99px;
   /* A station on a line (numbered steps, map list stops, first-week ticks) and the line through it */
   --station: 2.5rem;
   --station-ring: 4px;
   --rail: 6px;
-  /* The Guide page's ground, under its white cards */
-  --ground: #f4f6f9;
+  /* How far the canopy reaches down a page (on the map it reaches a little further) */
+  --canopy: 104px;
+  /* The warm ground every page sits on, under its white cards */
+  --ground: #f7f1e6;
   /* Depth: cards you act on sit above the page, a photo a little higher */
-  --shadow-1: 0 1px 2px rgb(19 35 61 / 0.06), 0 2px 8px rgb(19 35 61 / 0.06);
-  --shadow-2: 0 2px 4px rgb(19 35 61 / 0.08), 0 8px 24px rgb(19 35 61 / 0.12);
-  /* Lines full-width bands up with the centred column */
+  --shadow-1: 0 1px 2px rgb(60 45 20 / 0.05), 0 4px 14px rgb(60 45 20 / 0.06);
+  --shadow-2: 0 2px 6px rgb(60 45 20 / 0.08), 0 14px 32px rgb(60 45 20 / 0.12);
+  /* Lines up full-width blocks with the centred column */
   --edge: max(var(--gutter), calc((100% - var(--measure)) / 2 + var(--gutter)));
 }
 
@@ -98,7 +106,7 @@ body {
   flex-direction: column;
   min-height: 100dvh;
   margin: 0;
-  background: var(--paper);
+  background: var(--ground);
   color: var(--ink);
   font-family: var(--font);
   font-size: var(--step-0);
@@ -107,7 +115,7 @@ body {
 
 h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
-h1, h2, h3 { line-height: 1.2; font-weight: 700; }
+h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: 500; }
 h2 { font-size: var(--step-1); }
 h3 { font-size: var(--step-half); }
 a { color: inherit; }
@@ -136,6 +144,7 @@ svg { flex: none; }
 }
 
 .lede {
+  max-width: 32ch;
   margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step-half);
@@ -173,7 +182,8 @@ svg { flex: none; }
   align-items: center;
   min-height: 44px;
   gap: var(--space-2);
-  font-weight: 700;
+  font-family: var(--font-head);
+  font-weight: 500;
   font-size: var(--step-1);
   text-decoration: none;
 }
@@ -197,9 +207,9 @@ svg { flex: none; }
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--paper);
-  border-top: 1px solid var(--rule);
-  box-shadow: 0 -4px 16px -8px rgb(19 35 61 / 0.25);
+  background: color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 -6px 24px -12px rgb(60 45 20 / 0.25);
 }
 
 .tab-bar a {
@@ -279,7 +289,7 @@ svg { flex: none; }
 .week-bar i {
   display: block;
   height: 100%;
-  background: var(--ink);
+  background: var(--leaf-dark);
 }
 
 .week-hint {
@@ -307,12 +317,11 @@ svg { flex: none; }
   left: calc((44px - var(--rail)) / 2);
   top: 22px;
   bottom: -22px;
-  width: var(--rail);
-  background: var(--rule);
+  border-left: var(--rail) dotted var(--rule);
 }
 
 .week-stops li.is-done:not(:last-child)::after {
-  background: var(--ink);
+  border-left-color: var(--leaf-dark);
 }
 
 .tick {
@@ -368,7 +377,7 @@ svg { flex: none; }
   text-decoration-thickness: 2px;
 }
 
-/* The next station opens up: a tinted band, its title as an item title, what it's about */
+/* The next station opens up: a tinted block, its title as an item title, what it's about */
 .week-next {
   flex: 1;
   margin-bottom: var(--space-3);
@@ -449,7 +458,7 @@ svg { flex: none; }
   height: 34px;
   border: 3px solid var(--c);
   border-radius: 50%;
-  background: #fff;
+  background: var(--paper);
   box-shadow: 0 2px 4px rgb(0 0 0 / 0.3);
 }
 
@@ -472,7 +481,7 @@ svg { flex: none; }
 .map-pin.is-selected .pin::before {
   width: 24px;
   height: 24px;
-  background: #fff;
+  background: var(--paper);
 }
 
 /* Pin icons: Phosphor bold, the same icons as IconFor in components/icons.tsx */
@@ -623,8 +632,10 @@ svg { flex: none; }
   padding-top: var(--space-3);
 }
 
+/* Room at the top for the canopy (below) */
 .page-head {
-  padding-top: var(--space-3);
+  position: relative;
+  padding-top: var(--canopy);
   padding-bottom: var(--space-2);
 }
 
@@ -713,7 +724,7 @@ svg { flex: none; }
   overflow-wrap: anywhere;
   padding: 0 var(--space-4);
   border-radius: var(--radius-s);
-  background: #fff;
+  background: var(--paper);
   color: var(--ink);
   font-size: var(--step-1);
   font-weight: 700;
@@ -743,7 +754,7 @@ svg { flex: none; }
   padding: 0 var(--space-4);
   border: 2px solid var(--c);
   border-radius: var(--radius-pill);
-  background: #fff;
+  background: var(--paper);
   color: var(--ink);
   font: 600 var(--step--1) var(--font);
   cursor: pointer;
@@ -817,8 +828,8 @@ body:has(.explorer) .site-footer {
   overflow-y: auto;
   padding: var(--space-5) var(--space-5) var(--space-5);
   background: var(--paper);
-  border-radius: 14px;
-  box-shadow: 0 12px 32px -12px rgb(19 35 61 / 0.35), 0 0 0 1px rgb(19 35 61 / 0.06);
+  border-radius: 24px;
+  box-shadow: 0 12px 32px -12px rgb(60 45 20 / 0.35), 0 0 0 1px rgb(60 45 20 / 0.06);
 }
 
 .line-filters {
@@ -834,15 +845,16 @@ body:has(.explorer) .site-footer {
   gap: var(--space-2);
   min-height: 44px;
   padding: 0 var(--space-4);
-  border: 2px solid var(--c);
+  border: 1px solid var(--rule);
   border-radius: var(--radius-pill);
-  background: #fff;
-  color: var(--c);
+  background: var(--paper);
+  color: var(--ink);
   font: 600 var(--step--1) var(--font);
   cursor: pointer;
 }
 
 .line-chip svg {
+  color: var(--c);
   font-size: 1.15rem;
 }
 
@@ -966,11 +978,11 @@ body:has(.explorer) .site-footer {
 
 .explorer-top .line-chip {
   flex: none;
-  box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
+  box-shadow: 0 2px 8px -2px rgb(60 45 20 / 0.35);
 }
 
 .explorer-top .line-chip:not([aria-pressed="true"]) {
-  background: #fff;
+  background: var(--paper);
 }
 
 .explorer-sheet {
@@ -982,8 +994,8 @@ body:has(.explorer) .site-footer {
   display: flex;
   flex-direction: column;
   background: var(--paper);
-  border-radius: 16px 16px 0 0;
-  box-shadow: 0 -8px 24px -10px rgb(19 35 61 / 0.35);
+  border-radius: 24px 24px 0 0;
+  box-shadow: 0 -8px 24px -10px rgb(60 45 20 / 0.35);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1192,9 +1204,9 @@ body:has(.explorer) .site-footer {
   width: fit-content;
   margin-bottom: var(--space-2);
   padding: 2px var(--space-4);
-  border-radius: var(--radius-m);
-  background: rgb(255 255 255 / 0.94);
-  box-shadow: 0 2px 8px -2px rgb(19 35 61 / 0.35);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  box-shadow: 0 2px 8px -2px rgb(60 45 20 / 0.35);
 }
 
 .explorer-top .brand .wordmark {
@@ -1319,20 +1331,23 @@ a.line-chip {
 
 /* ---------- Notes ---------- */
 
+/* A Note is a card like a leaf: one corner tucked in */
 .note {
-  padding: var(--space-4) 0 var(--space-4) var(--space-4);
-  border-left: 4px solid var(--c);
+  padding: var(--space-5);
+  border-radius: var(--radius-s) var(--radius-m) var(--radius-m) var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .note.is-compact {
-  padding: var(--space-3) var(--space-3);
-  border-radius: 0 8px 8px 0;
-  background: color-mix(in srgb, var(--c) 8%, #fff);
+  padding: var(--space-3);
+  background: var(--tint);
+  box-shadow: none;
 }
 
 .note-text {
   font-size: var(--type-quote);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .note.is-compact .note-text {
@@ -1379,18 +1394,24 @@ a.line-chip {
   scroll-margin-top: 0;
 }
 
+/* A category's head: its icon in a tinted circle, then its name */
 .line-head {
   margin-top: var(--space-6);
-  padding: var(--space-4) 0;
-  background: var(--c);
-  color: var(--paper);
   font-size: var(--step-1);
+}
+
+.line-head svg {
+  padding: 6px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--on-tint);
+  font-size: 2.2rem;
 }
 
 .line-head .inner {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .guides-line .guides {
@@ -1518,14 +1539,25 @@ body:not(:has(.explorer)) main {
   margin: var(--space-2) 0 var(--space-4);
 }
 
+.guide-list {
+  display: grid;
+  gap: var(--space-2);
+}
+
 .guide-list a {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   min-height: 64px;
-  padding: var(--space-3) 0;
-  border-bottom: 1px solid var(--rule);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
   text-decoration: none;
+}
+
+.guide-list .guide-icon {
+  flex: none;
 }
 
 .guide-list b {
@@ -1630,8 +1662,6 @@ body:not(:has(.explorer)) main {
 
 .note.is-fresh {
   background: var(--tint);
-  border-radius: 0 8px 8px 0;
-  padding-right: var(--space-3);
 }
 
 .feed-scope-links {
@@ -1651,6 +1681,17 @@ body:not(:has(.explorer)) main {
 .note-cat {
   color: var(--on-tint);
   font-weight: 700;
+}
+
+/* The category's leaf, beside its name */
+.note-cat::before {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 0.6em;
+  margin-right: 0.35em;
+  border-radius: 50% 0;
+  background: var(--c);
 }
 
 @media (min-width: 1600px) {
@@ -1765,8 +1806,9 @@ body:not(:has(.explorer)) main {
   gap: var(--space-3);
   min-height: 56px;
   padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--rule);
   border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
   font-weight: 700;
   text-decoration: none;
 }
@@ -1841,7 +1883,7 @@ body:not(:has(.explorer)) main {
 }
 
 .feed .note + .note {
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 /* Links to the forms further down: plain links, not filter chips */
@@ -1937,6 +1979,7 @@ h2 {
 .line-chip[aria-pressed="true"],
 .line-chip[aria-current="page"],
 .explorer-top .line-chip[aria-pressed="true"] {
+  border-color: transparent;
   background: var(--tint);
   color: var(--on-tint);
 }
@@ -2021,50 +2064,39 @@ h2 {
   }
 }
 
-/* ---------- Guide page: a tinted head, then steps as stations on the line ---------- */
+/* ---------- Guide page: facts on one card, then steps as stations on a dotted path ---------- */
 
-/* The grey ground runs on under the footer, so the page doesn't end in a seam */
-body:has(.guide-page) {
-  background: var(--ground);
-}
-
+/* The Guide's cards run straight on into the footer, with no line between */
 body:has(.guide-page) .site-footer {
   border-top: 0;
 }
 
 .guide-hero {
-  padding-bottom: var(--space-6);
-  background: var(--tint);
-}
-
-/* The photo overlaps the head's lower edge */
-.guide-page:has(.guide-photo) .guide-hero {
-  padding-bottom: calc(var(--space-7) + var(--space-5));
-}
-
-/* Without a photo, the line closes the head; a pale tint alone barely shows on the grey */
-.guide-page:not(:has(.guide-photo)) .guide-hero {
-  border-bottom: var(--rail) solid var(--c);
+  padding-bottom: var(--space-2);
 }
 
 .guide-hero .lede {
   color: var(--ink);
 }
 
-/* Facts at a glance: as many to a row as fit, a last one on its own fills the row */
+/* Facts at a glance, together on one card: as many to a row as fit */
 .guide-facts {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
   margin: var(--space-4) 0 0;
+  padding: var(--space-2);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .guide-facts > div {
   flex: 1 1 10rem;
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-m);
-  background: var(--paper);
-  box-shadow: var(--shadow-1);
+}
+
+.guide-facts > div + div {
+  border-left: 1px dashed var(--rule);
 }
 
 .guide-facts dt {
@@ -2109,17 +2141,6 @@ body:has(.guide-page) .site-footer {
 .guide-body {
   flex: 1;
   padding-bottom: var(--space-7);
-  background: var(--ground);
-}
-
-/* Capped, so the first step still shows on a laptop's first screen */
-.guide-body .guide-photo {
-  position: relative;
-  width: 100%;
-  max-height: 240px;
-  margin-top: calc(-1 * var(--space-7));
-  border-radius: var(--radius-m);
-  box-shadow: var(--shadow-2);
 }
 
 .guide {
@@ -2141,7 +2162,7 @@ body:has(.guide-page) .site-footer {
 
 .guide-card {
   padding: var(--space-4);
-  border: 1px solid var(--rule);
+  border: 0;
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -2161,7 +2182,9 @@ body:has(.guide-page) .site-footer {
 
 .guide-bring {
   margin-top: var(--space-5);
-  border-left: var(--station-ring) solid var(--c);
+  border: 0;
+  background: var(--tint);
+  box-shadow: none;
 }
 
 /* A section heading, the same size as "ทำตามนี้", above the steps' h3 */
@@ -2237,8 +2260,7 @@ body:has(.guide-page) .site-footer {
   top: var(--space-3);
   bottom: calc(-1 * var(--space-4) - var(--space-3));
   left: calc((var(--station) - var(--rail)) / 2);
-  width: var(--rail);
-  background: var(--c);
+  border-left: var(--rail) dotted var(--c);
 }
 
 .step-no {
@@ -2250,7 +2272,7 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-2);
   border: var(--station-ring) solid var(--c);
   border-radius: 50%;
-  background: var(--paper);
+  background: var(--tint);
   color: var(--ink);
   font-weight: 700;
   line-height: 1;
@@ -2344,12 +2366,132 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-5);
 }
 
-/* The site's one link card, on white so it stands on the grey */
+/* The site's one link card, with room above it at the end of a Guide */
 .guide-next {
   margin-top: var(--space-6);
-  background: var(--paper);
 }
 
 .guide-next > svg:last-child {
   color: var(--c);
+}
+
+/* ---------- The canopy (docs/adr/0007) ---------- */
+
+/* Across the top of every page; the wordmark sits in its shade, light falls through */
+.canopy {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: var(--canopy);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.canopy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.page-head > .wordmark {
+  position: absolute;
+  top: var(--space-3);
+  z-index: 1;
+  color: var(--paper);
+}
+
+.page-head > :not(.canopy, .wordmark) {
+  position: relative;
+}
+
+.page-head > .back-link {
+  margin-top: var(--space-2);
+}
+
+/* On the map: the same canopy along the top edge, the brand pill in front of it */
+.explorer > .canopy {
+  left: 0;
+  z-index: 400;
+  width: 100%;
+  height: calc(var(--canopy) + var(--space-4));
+  transform: none;
+}
+
+/* People from Open Peeps, where the site is about people */
+.peeps {
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.peeps img {
+  height: 124px;
+  margin-left: -28px;
+}
+
+.peeps img:first-child {
+  margin-left: 0;
+}
+
+.feed-peeps {
+  margin-top: var(--space-3);
+}
+
+.week-cheer {
+  margin-top: var(--space-4);
+}
+
+/* ---------- Motion: soft and small, off for anyone who asks for less ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  main {
+    animation: rise-in 0.35s ease-out both;
+  }
+
+  :is(.feed .note, .guide-card, .guide-list li, .week-stops li) {
+    animation: rise-up 0.4s ease-out both;
+  }
+
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(2) { animation-delay: 0.05s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(3) { animation-delay: 0.1s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(4) { animation-delay: 0.15s; }
+  :is(.feed .note, .guide-list li, .week-stops li):nth-child(n + 5) { animation-delay: 0.2s; }
+
+  .detail {
+    animation: rise-up 0.3s ease-out both;
+  }
+
+  :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a) {
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  :is(button, .action, .line-chip, .detail-guide, .feed-more a, .guide-list a):active {
+    transform: scale(0.97);
+  }
+
+  .week-stops input:checked {
+    animation: pop 0.35s ease-out;
+  }
+
+  .canopy-leaves {
+    transform-origin: top center;
+    animation: sway 9s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; }
+}
+
+@keyframes rise-up {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes pop {
+  50% { transform: scale(1.18); }
+}
+
+@keyframes sway {
+  to { transform: scaleY(1.04) translateX(-4px); }
 }

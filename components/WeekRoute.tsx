@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, CaretRight } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
+import { Peeps } from "./People";
 import { guides } from "@/content/guides";
 import { useChecklist } from "@/lib/useChecklist";
 
@@ -30,6 +31,8 @@ export function WeekRoute() {
         </span>
         <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>
       </div>
+      {/* All seven: the people come out to cheer */}
+      {count === firstWeek.length && <Peeps className="week-cheer" />}
       <ol className="week-stops">
         {firstWeek.map((item) => {
           const isDone = done.includes(item.id);

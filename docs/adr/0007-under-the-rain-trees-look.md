@@ -8,8 +8,9 @@ The whole site takes the look of shade under the rain trees (จามจุร�
 - A canopy runs across the top of every page and of the map. The ground is warm cream and cards are white. Category colours are softer, and text in them stays at 4.5:1 or more.
 - Lists everywhere become soft rounded cards, Notes included; a Note has one corner tucked in like a leaf. Category heads are an icon and a name, not a full-width band.
 - Steps in a Guide and stations in the Starter Checklist are joined by a dotted path rather than a rail.
-- People drawn from Open Peeps (CC0) appear on the Feed.
-- Headings are set in Mitr and text in IBM Plex Sans Thai Looped.
+- People drawn from Open Peeps (CC0) appear where the site is about people: the Feed, the Seniors page, and a finished first week.
+- Headings and the wordmark are set in Mitr, text and numbers in IBM Plex Sans Thai Looped.
+- Pictures are illustrations; real photos stay only on Place cards, so a Guide shows no photo.
 - Motion is soft and small (things rise in, buttons give a little when pressed, a ticked station pops), and all of it is off for anyone who asks for reduced motion.
 - Each screen has one thing that stands out; secondary text is quieter. The tagline stays.
 
