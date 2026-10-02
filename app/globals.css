@@ -383,17 +383,15 @@ svg { flex: none; }
   min-height: 44px;
   padding: var(--space-2) 0;
   font-weight: 500;
-  text-decoration: none;
-}
-
-.week-stops a > svg {
-  flex: none;
-  margin-left: auto;
-  color: var(--ink-soft);
+  /* No caret at the end: a quiet underline says it's a link (ai-tells audit, T6) */
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
 }
 
 .week-stops a:hover {
-  text-decoration: underline;
+  text-decoration-color: currentColor;
 }
 
 /* A tick and a quieter title say done; a strike through Thai marks reads as cancelled */
@@ -431,24 +429,13 @@ svg { flex: none; }
 }
 
 .week-read {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
+  display: inline-block;
   margin-top: var(--space-2);
   color: var(--on-tint);
   font-size: var(--step--1);
   font-weight: 700;
-}
-
-.next-badge {
-  display: inline-block;
-  padding: 1px var(--space-2);
-  border-radius: var(--radius-pill);
-  background: var(--action);
-  color: var(--paper);
-  font-size: var(--step--1);
-  font-weight: 700;
-  white-space: nowrap;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* ---------- Place details ---------- */
@@ -985,6 +972,13 @@ body:has(.explorer) .site-footer {
   color: var(--c);
 }
 
+/* "เรียงจากถูกไปแพง" after the food heading */
+.stop-group h2 small {
+  display: inline;
+  color: var(--ink-soft);
+  font: 500 var(--step--1) var(--font);
+}
+
 .stop-group ul {
   position: relative;
   margin-top: var(--space-1);
@@ -1479,6 +1473,12 @@ a.line-chip {
   font-weight: 700;
 }
 
+.note-date {
+  display: block;
+  margin-top: var(--space-1);
+  font-size: var(--step--1);
+}
+
 .note-place {
   display: inline-flex;
   align-items: center;
@@ -1610,11 +1610,11 @@ body:not(:has(.explorer)) main {
   display: none;
 }
 
-.stop-tags .price-strip {
-  padding: 0 var(--space-2);
-  border-radius: var(--radius-pill);
+/* In the list a price is plain bold ink; platform yellow stays on the Place card (ai-tells audit, T5) */
+.stop-tags .stop-price {
+  color: var(--ink);
   font-size: var(--step--1);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .stop-group .stop-tags small {
@@ -1693,11 +1693,6 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.45;
-}
-
-.guide-list a > svg {
-  margin-left: auto;
-  color: var(--ink-soft);
 }
 
 /* Home tastes: one tinted card among the Guide cards, not loose text on the ground */
@@ -1907,6 +1902,11 @@ body:not(:has(.explorer)) main {
   font-size: 1.25rem;
 }
 
+.to-chula-head {
+  display: block;
+  color: var(--on-tint);
+}
+
 .detail-body {
   display: grid;
   gap: var(--space-2);
@@ -1951,11 +1951,6 @@ body:not(:has(.explorer)) main {
 .detail-guide > svg:first-child {
   color: var(--c);
   font-size: 1.4rem;
-}
-
-.detail-guide > svg:last-child,
-.feed-more a > svg:last-child {
-  margin-left: auto;
 }
 
 .detail-guide small {
@@ -2134,19 +2129,19 @@ h2 {
   font-size: 1.4rem;
 }
 
-/* Selected chips: tinted with a tick, so a selected filter never looks like a button */
+/* Selected chips: a solid fill in the category's darkened colour, paper text on it
+   (each ≥7:1; no ✓ in front, ai-tells audit T8) */
 .line-chip[aria-pressed="true"],
 .line-chip[aria-current="page"],
 .explorer-top .line-chip[aria-pressed="true"] {
   border-color: transparent;
-  background: var(--tint);
-  color: var(--on-tint);
+  background: var(--on-tint, var(--ink));
+  color: var(--paper);
 }
 
-.line-chip[aria-pressed="true"]::before,
-.line-chip[aria-current="page"]::before {
-  content: "✓";
-  font-weight: 700;
+.line-chip[aria-pressed="true"] svg,
+.line-chip[aria-current="page"] svg {
+  color: inherit;
 }
 
 /* Chips have their own focus ring; the global one is a box-shadow the chips override */

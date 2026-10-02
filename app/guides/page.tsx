@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BowlSteam, CaretRight } from "@phosphor-icons/react/dist/ssr";
+import { BowlSteam } from "@phosphor-icons/react/dist/ssr";
 import { placeCategories } from "@/content/categories";
 import { BrandLogo, CategoryIcon, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
@@ -16,7 +16,7 @@ export default async function GuidesPage() {
   return (
     <>
       <OldGuideLinks ids={content.guides.map((g) => g.id)} />
-      <PageHead title="วิธี" lede="ทำเรื่องที่เคยมีคนทำให้ ด้วยตัวเอง ทีละขั้น">
+      <PageHead title="วิธี" lede="ตอนอยู่บ้านมีคนทำให้ มาอยู่นี่ต้องทำเอง พี่ๆ เขียนวิธีไว้ให้แล้ว">
         <nav className="line-filters" aria-label="ไปที่หมวด">
           {placeCategories.map((c) => (
             <a key={c.id} href={`#${c.id}`} className="line-chip" data-line={c.id}>
@@ -45,7 +45,6 @@ export default async function GuidesPage() {
                       <b>{g.title}</b>
                       <small>{g.summary}</small>
                     </span>
-                    <CaretRight weight="bold" aria-hidden="true" />
                   </Link>
                 </li>
               ))}
@@ -68,7 +67,7 @@ function HomeTaste({ content }: { content: Content }) {
         </span>
         รสชาติบ้าน
       </h3>
-      <p className="guide-intro">ร้านอาหารภาคต่างๆ แถวจุฬาฯ ที่คนจากภาคนั้นบอกว่าใช่ หรือที่ทีมหามาให้ลอง</p>
+      <p className="guide-intro">คิดถึงกับข้าวที่บ้าน ร้านพวกนี้คนจากภาคนั้นบอกว่าใช่ บางร้านทีมหามาให้ลองไปก่อน</p>
       <ul className="options">
         {content.homeTaste.map(({ place, region, by }) => (
           <li key={region}>

@@ -20,9 +20,9 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
   const hometown = text(form, "hometown", 40);
   const place = places.find((p) => p.id === text(form, "placeId", 100));
   const category = place?.category ?? text(form, "category", 20);
-  if (!body || !name) return { message: "เขียนโน้ตและใส่ชื่อก่อน" };
-  if (!regionOf(hometown)) return { message: "เลือกจังหวัดบ้านเกิด" };
-  if (!isCategory(category)) return { message: "เลือกที่บนแผนที่ หรือเลือกหมวดของโน้ตนี้" };
+  if (!body || !name) return { message: "เขียนก่อนว่าอยากบอกอะไร แล้วใส่ชื่อด้วย" };
+  if (!regionOf(hometown)) return { message: "เลือกจังหวัดที่บ้านอยู่ก่อน" };
+  if (!isCategory(category)) return { message: "บอกหน่อยว่าเรื่องนี้อยู่ที่ไหน หรือเป็นเรื่องอะไร" };
   try {
     await appendRow("notes", {
       text: body,
@@ -34,7 +34,7 @@ export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFo
     });
   } catch (err) {
     console.error(err);
-    return { message: "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง" };
+    return { message: "ส่งไม่ขึ้น ลองกดอีกทีนะ" };
   }
   updateTag(SHEET_TAG);
   // The writer sees their Note where it landed (docs/adr/0006); one who came from a

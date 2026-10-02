@@ -5,7 +5,7 @@ import { places } from "@/content/places";
 import { regionOf } from "@/lib/provinces";
 import { appendRow, SHEET_TAG } from "@/lib/sheet";
 
-/** `link` labels `href`; without one it reads "ดูบนเว็บ" */
+/** `link` labels `href`; without one it reads "ไปดู" */
 export type FormState = { ok: boolean; message: string; href?: string; link?: string } | null;
 
 function text(form: FormData, key: string, max = 2000): string {
@@ -17,11 +17,11 @@ async function save(write: () => Promise<void>, href: string, link?: string): Pr
     await write();
   } catch (err) {
     console.error(err);
-    return { ok: false, message: "บันทึกไม่สำเร็จ ลองใหม่อีกครั้ง" };
+    return { ok: false, message: "ส่งไม่ขึ้น ลองกดอีกทีนะ" };
   }
   // The person who just saved sees their row straight away.
   updateTag(SHEET_TAG);
-  return link ? { ok: true, message: "บันทึกแล้ว", href, link } : { ok: true, message: "บันทึกแล้ว ขึ้นบนเว็บเรียบร้อย", href };
+  return { ok: true, message: "ขึ้นแล้ว ขอบคุณนะ", href, link };
 }
 
 export async function savePrice(_: FormState, form: FormData): Promise<FormState> {
@@ -31,13 +31,13 @@ export async function savePrice(_: FormState, form: FormData): Promise<FormState
   const per = text(form, "per", 50);
   const by = text(form, "by", 80);
   if (!placeId || !by || !Number.isFinite(min) || !Number.isFinite(max) || min < 0) {
-    return { ok: false, message: "กรอกที่ ราคา และชื่อเราให้ครบ" };
+    return { ok: false, message: "ยังขาดที่ ราคา หรือชื่อเรา" };
   }
   const name = places.find((p) => p.id === placeId)?.name;
   return save(
     () => appendRow("prices", { placeId, min: String(min), max: String(max), per, by }),
     `/?place=${placeId}`,
-    name ? `ดูราคาใหม่ที่${name} →` : undefined,
+    name ? `ไปดูที่${name}` : undefined,
   );
 }
 
@@ -50,7 +50,7 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
   const region = regionOf(hometown);
   const story = text(form, "story", 4000);
   if (!name || !region || !story) {
-    return { ok: false, message: "กรอกชื่อ บ้านเกิด และเรื่องปีแรกให้ครบ" };
+    return { ok: false, message: "ยังขาดชื่อ จังหวัด หรือเรื่องปีแรก" };
   }
   return save(
     () =>
@@ -71,6 +71,6 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
 export async function saveGuideCheck(_: FormState, form: FormData): Promise<FormState> {
   const guideId = text(form, "guideId", 100);
   const by = text(form, "by", 80);
-  if (!guideId || !by) return { ok: false, message: "เลือกวิธีและใส่ชื่อคนที่ลองทำ" };
+  if (!guideId || !by) return { ok: false, message: "เลือกวิธีแล้วใส่ชื่อเราด้วย" };
   return save(() => appendRow("guides", { guideId, by }), `/guides/${guideId}`);
 }

@@ -10,7 +10,7 @@ export default function ChecklistPage() {
       <PageHead title="สัปดาห์แรก" />
       <div className="inner">
         <WeekRoute />
-        <p className="fine-print">เรียงตามลำดับที่ต้องใช้จริง ข้อมูลเก็บไว้ในเครื่องนี้เท่านั้น ไม่ต้องสมัครสมาชิก</p>
+        <p className="fine-print">เรียงตามที่ต้องใช้ก่อนหลัง ที่ติ๊กไว้จำอยู่ในเครื่องนี้ ไม่ต้องสมัครอะไร</p>
       </div>
     </>
   );

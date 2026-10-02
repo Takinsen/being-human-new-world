@@ -11,15 +11,14 @@ export function NoteCard({ note, placeName, compact, fresh }: { note: Note; plac
       <p className="note-text">{note.text}</p>
       <footer className="note-by">
         {/* The category in words too, so the colour of the bar isn't the only cue */}
-        <span className="note-cat">{categories.find((c) => c.id === note.category)?.name}</span>
-        {" · "}
+        <span className="note-cat">เรื่อง{categories.find((c) => c.id === note.category)?.name}</span> จาก
         {note.seniorId ? <Link href={`/seniors#${note.seniorId}`}>{note.name}</Link> : <b>{note.name}</b>}
         <span> บ้านอยู่{note.hometown}</span>
-        {note.on && <span className="nb"> · {thaiDate(note.on)}</span>}
+        {note.on && <small className="note-date">{thaiDate(note.on)}</small>}
       </footer>
       {placeName && note.placeId && (
         <Link href={`/?place=${note.placeId}`} className="note-place">
-          @ {placeName}
+          ที่{placeName}
         </Link>
       )}
     </article>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, CaretRight, PencilSimpleLine, Receipt } from "@phosphor-icons/react";
+import { PencilSimpleLine, Receipt } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
 import { Peeps } from "./People";
 import { guides } from "@/content/guides";
@@ -25,22 +25,22 @@ export function WeekRoute() {
             "ครบแล้ว ตั้งหลักได้แล้ว"
           ) : (
             <>
-              <b>{count}</b> / {firstWeek.length} <span>ทำแล้ว</span>
+              <span>ทำไปแล้ว</span> <b>{count}</b> <span>จาก</span> {firstWeek.length}
             </>
           )}
         </p>
         <span className="week-bar" aria-hidden="true">
           <i style={{ width: `${(count / firstWeek.length) * 100}%` }} />
         </span>
-        {!complete && <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>}
+        {!complete && <p className="week-hint">ทำอันไหนแล้วติ๊กวงกลมไว้</p>}
         {/* Whoever finished is the best person to help the next Newcomers (UX audit 7, U6) */}
         {complete && (
           <div className="week-after">
             <Link href="/notes/new" className="action is-primary">
-              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตให้รุ่นถัดไป
+              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตบอกน้องรุ่นหน้า
             </Link>
             <Link href="/contribute#price" className="action">
-              <Receipt weight="bold" aria-hidden="true" /> ไปมาแล้ว ช่วยตรวจราคา
+              <Receipt weight="bold" aria-hidden="true" /> ไปมาแล้ว บอกราคาที่เห็น
             </Link>
           </div>
         )}
@@ -60,23 +60,19 @@ export function WeekRoute() {
                   type="checkbox"
                   checked={isDone}
                   onChange={() => toggle(item.id)}
-                  aria-label={`ทำแล้ว: ${item.title}`}
+                  aria-label={`ทำแล้ว ${item.title}`}
                 />
               </label>
               {isNext ? (
                 <div className="week-next">
-                  <span className="next-badge">ถัดไป</span>
                   <Link href={item.href}>{item.title}</Link>
                   {nextSummary && <p>{nextSummary}</p>}
                   <span className="week-read" aria-hidden="true">
-                    อ่านวิธี <ArrowRight weight="bold" />
+                    อ่านวิธี
                   </span>
                 </div>
               ) : (
-                <Link href={item.href}>
-                  {item.title}
-                  <CaretRight weight="bold" aria-hidden="true" />
-                </Link>
+                <Link href={item.href}>{item.title}</Link>
               )}
             </li>
           );

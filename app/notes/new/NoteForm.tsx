@@ -9,10 +9,10 @@ import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
 
 const noteMessages = {
-  text: "เขียนโน้ตก่อน",
-  category: "เลือกหมวดของโน้ตนี้",
-  name: "ใส่ชื่อที่จะให้ขึ้นกับโน้ต",
-  hometown: "เลือกจังหวัดบ้านเกิด",
+  text: "เขียนก่อนว่าอยากบอกอะไร",
+  category: "เลือกก่อนว่าเป็นเรื่องอะไร",
+  name: "ใส่ชื่อด้วย ชื่อเล่นก็ได้",
+  hometown: "เลือกจังหวัดที่บ้านอยู่",
 };
 
 type Line = { id: CategoryId; name: string; hasPlaces: boolean };
@@ -41,7 +41,7 @@ export function NoteForm({
     <form action={action} className="contribute-form" onInvalidCapture={thaiValidity(noteMessages)} onInput={clearValidity}>
       {initialLine && <input type="hidden" name="from" value={initialLine} />}
       <label>
-        โน้ต
+        อยากบอกอะไร
         <textarea
           name="text"
           rows={4}
@@ -59,9 +59,9 @@ export function NoteForm({
         {length >= NOTE_MAX - 20 ? `เหลือ ${NOTE_MAX - length} ตัวอักษร` : ""}
       </p>
       <label>
-        ที่บนแผนที่ (ไม่ใส่ก็ได้)
+        เรื่องนี้อยู่ที่ไหน
         <select name="placeId" value={placeId} onChange={(e) => setPlaceId(e.target.value)}>
-          <option value="">ไม่ผูกกับที่ไหน</option>
+          <option value="">ไม่ได้เจาะจงที่ไหน</option>
           {/* Adjusting has no Places, so no empty group for it (docs/adr/0008) */}
           {lines.filter((l) => l.hasPlaces).map((l) => (
             <optgroup key={l.id} label={l.name}>
@@ -78,7 +78,7 @@ export function NoteForm({
       </label>
       {!place && (
         <fieldset className="line-pick">
-          <legend>เรื่องหมวดไหน</legend>
+          <legend>เป็นเรื่องอะไร</legend>
           {lines.map((l) => (
             <label key={l.id} className="check" data-line={l.id}>
               <input type="radio" name="category" value={l.id} required defaultChecked={l.id === initialLine} />
@@ -90,7 +90,7 @@ export function NoteForm({
       {place?.category === "food" && (
         <label className="check">
           <input type="checkbox" name="homeTaste" />
-          ร้านนี้รสชาติเหมือนอาหารบ้านเรา (ขึ้นในรสชาติบ้าน)
+          ร้านนี้รสชาติเหมือนที่บ้านเลย
         </label>
       )}
       <div className="form-row">
@@ -107,10 +107,10 @@ export function NoteForm({
       )}
       {/* Say it before they press: there's no edit or delete on the site (docs/adr/0005) */}
       <p className="status-note" id="note-public">
-        โน้ตจะขึ้นทันที พร้อมชื่อและจังหวัดที่ใส่ แก้หรือลบเองไม่ได้
+        กดแล้วขึ้นเว็บเลย พร้อมชื่อกับจังหวัด กลับมาแก้หรือลบเองไม่ได้นะ
       </p>
       <button type="submit" disabled={pending} aria-describedby="note-public">
-        {pending ? "กำลังบันทึก" : "ลงโน้ต"}
+        {pending ? "กำลังส่ง" : "ส่งโน้ต"}
       </button>
     </form>
   );

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, BookOpenText, ChatCenteredText, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, BookOpenText, ChatCenteredText, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { ChipInView } from "@/components/ChipFocus";
 import { CategoryIcon } from "@/components/icons";
@@ -30,8 +30,8 @@ export default async function NotesPage({ searchParams }: Props) {
   return (
     <>
       <PageHead
-        title={place ? `โน้ตที่${place.name}` : activeName ? `โน้ต · ${activeName}` : "โน้ต"}
-        lede={place ? undefined : activeName ? `${notes.length} โน้ตเรื่อง${activeName}` : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
+        title={place ? `โน้ตที่${place.name}` : activeName ? `โน้ตเรื่อง${activeName}` : "โน้ต"}
+        lede={place ? undefined : activeName ? `มี ${notes.length} โน้ต` : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
         back={
           place && (
             <Link href={`/?place=${place.id}`} className="back-link">
@@ -45,7 +45,7 @@ export default async function NotesPage({ searchParams }: Props) {
         {place ? (
           <p className="feed-scope">
             <Link href="/notes" className="related-link">
-              ดูโน้ตจากทุกที่ <ArrowRight weight="bold" aria-hidden="true" />
+              ดูโน้ตจากทุกที่
             </Link>
           </p>
         ) : (
@@ -79,11 +79,11 @@ export default async function NotesPage({ searchParams }: Props) {
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
           <PostedStatus className="form-status feed-posted" id="fresh">
-            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตของคุณขึ้นแล้ว อยู่ข้างล่างนี้
+            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว อยู่ข้างล่างนี้ ขอบคุณที่เล่านะ
           </PostedStatus>
         )}
         <div className="feed">
-          {notes.length === 0 && <p className="status-note">ยังไม่มีโน้ตตรงนี้ เขียนโน้ตแรกได้เลย</p>}
+          {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนเลย เป็นคนแรกไหม</p>}
           {notes.map((n, i) => (
             <NoteCard key={n.id} note={n} placeName={place ? undefined : placeName(n.placeId)} fresh={Boolean(posted) && i === 0} />
           ))}
@@ -93,14 +93,12 @@ export default async function NotesPage({ searchParams }: Props) {
             <Link href="/seniors">
               <BookOpenText weight="bold" aria-hidden="true" />
               <span>อ่านเรื่องปีแรกของรุ่นพี่</span>
-              <ArrowRight weight="bold" aria-hidden="true" />
             </Link>
           </li>
           <li>
             <Link href="/seniors#help">
               <Phone weight="bold" aria-hidden="true" />
               <span>เหงาหรือเครียด คุยกับคนได้</span>
-              <ArrowRight weight="bold" aria-hidden="true" />
             </Link>
           </li>
         </ul>
