@@ -13,12 +13,12 @@ export default async function Home() {
   const stops = categories.flatMap((c) => {
     const places = placesIn(content, c.id);
     return (c.id === "food" ? [...places].sort(byPrice) : places).map((place) => {
-      const guide = content.guides.find((g) => g.id === place.guide);
+      const guides = (place.guides ?? []).flatMap((id) => content.guides.filter((g) => g.id === id));
       const vouch = content.homeTaste.find((h) => h.place.id === place.id)?.by;
       return {
         place,
         notes: notesOn(content, place.id),
-        guide: guide && { id: guide.id, title: guide.title },
+        guides: guides.map((g) => ({ id: g.id, title: g.title })),
         homeTasteBy: vouch && `${vouch.name} บ้านอยู่${vouch.hometown}`,
       };
     });

@@ -3,10 +3,12 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, Phone, X } from "@phosphor-icons/react";
+import { ArrowLeft, ArrowRight, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, FirstAidKit, Phone, X } from "@phosphor-icons/react";
 import Link from "next/link";
 import type { Category } from "@/content/categories";
+import { firstWeek } from "@/content/checklist";
 import type { CategoryId } from "@/content/types";
+import { useChecklist } from "@/lib/useChecklist";
 import { CategoryIcon, PlaceIcon } from "../icons";
 import { Wordmark } from "../PageHead";
 import { PlaceDetail } from "./PlaceDetail";
@@ -115,6 +117,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   const [sheetOpen, setSheetOpen] = useState(true);
   const [sheetFull, setSheetFull] = useState(false);
   const welcome = useWelcome();
+  const checklist = useChecklist();
   const sheetBody = useRef<HTMLDivElement>(null);
   const returnTo = useRef<string | undefined>(undefined);
   // A card opened by the user takes focus; one opened by the URL on load doesn't.
@@ -250,7 +253,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
           if (!inCategory.length) return null;
           return (
             <section key={c.id} data-line={c.id} className="stop-group">
-              <h2>{c.name}</h2>
+              {/* app/page.tsx sorts food cheapest first; say so */}
+              <h2>{c.id === "food" ? `${c.name} · ถูกไปแพง` : c.name}</h2>
               <ul>
                 {inCategory.map((stop) => {
                   const { place, notes } = stop;
@@ -288,20 +292,36 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
             </section>
           );
         })}
+      <Link href="/guides/sick" className="list-help">
+        <FirstAidKit weight="bold" aria-hidden="true" /> ไม่สบาย ไปไหนดี
+      </Link>{" "}
       <Link href="/seniors#help" className="list-help">
         <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
       </Link>
     </div>
   );
 
-  const welcomeNote = welcome.show && !selected && visible.length > 0 && (
+  // Coming back mid-week: point at the next item instead of the start (UX audit 7, U4).
+  const doneCount = firstWeek.filter((i) => checklist.done.includes(i.id)).length;
+  const nextItem = firstWeek.find((i) => !checklist.done.includes(i.id));
+  const welcomeNote = welcome.show && !selected && visible.length > 0 && nextItem && (
     <p className="welcome">
-      <Link href="/checklist">
-        <span>
-          เพิ่งมาใหม่? เริ่มที่ <b>สัปดาห์แรก</b>
-        </span>
-        <ArrowRight weight="bold" aria-hidden="true" />
-      </Link>
+      {doneCount === 0 ? (
+        <Link href="/checklist">
+          <span>
+            เพิ่งมาใหม่? เริ่มที่ <b>สัปดาห์แรก</b>
+          </span>
+          <ArrowRight weight="bold" aria-hidden="true" />
+        </Link>
+      ) : (
+        <Link href={nextItem.href}>
+          <span>
+            {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
+            สัปดาห์แรก {doneCount}/{firstWeek.length} · ถัดไป: {nextItem.title}
+          </span>
+          <ArrowRight weight="bold" aria-hidden="true" />
+        </Link>
+      )}
       <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
         <X weight="bold" aria-hidden="true" />
       </button>
