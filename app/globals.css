@@ -21,6 +21,9 @@
   --sun: #ffe7a3;
   --platform: #ffd100;
   --caution: #b42318;
+  /* What you press: the canopy's green, not the ink (white on it is 5.3:1) */
+  --action: var(--leaf-dark);
+  --action-press: color-mix(in srgb, var(--leaf-dark) 85%, #000);
   --c: var(--ink);
 
   --font: "IBM Plex Sans Thai Looped", "Noto Sans Thai", system-ui, sans-serif;
@@ -52,8 +55,11 @@
   --space-6: 32px;
   --space-7: 48px;
 
-  --radius-s: 6px;
+  /* Corners: fields and small buttons, cards, sheets; a Note is a leaf with one corner tucked in */
+  --radius-s: 10px;
   --radius-m: 18px;
+  --radius-l: 24px;
+  --radius-leaf: 4px var(--radius-l) var(--radius-l) var(--radius-l);
   --radius-pill: 99px;
   /* A station on a line (numbered steps, map list stops, first-week ticks) and the line through it */
   --station: 2.5rem;
@@ -115,6 +121,10 @@ body {
 
 h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
 ol, ul { padding: 0; list-style: none; }
+h1, h2, h3, .lede {
+  text-wrap: balance;
+}
+
 h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: 500; }
 h2 { font-size: var(--step-1); }
 h3 { font-size: var(--step-half); }
@@ -257,7 +267,7 @@ svg { flex: none; }
 }
 
 /* Progress first: the biggest thing under the title */
-.week-progress p:first-child {
+.week-progress p:first-of-type {
   font-size: var(--step-1);
   font-weight: 700;
 }
@@ -266,7 +276,7 @@ svg { flex: none; }
   font-size: var(--step-2);
 }
 
-.week-progress p:first-child span {
+.week-progress p:first-of-type span {
   color: var(--ink-soft);
   font-size: var(--step--1);
   font-weight: 500;
@@ -302,7 +312,7 @@ svg { flex: none; }
   display: flex;
   align-items: flex-start;
   gap: var(--space-2);
-  min-height: 48px;
+  min-height: 60px;
 }
 
 /* Rail segment from this station to the next: dark once this station is done */
@@ -312,7 +322,7 @@ svg { flex: none; }
   left: calc((44px - var(--rail)) / 2);
   top: 22px;
   bottom: -22px;
-  border-left: var(--rail) dotted var(--rule);
+  border-left: var(--rail) dotted color-mix(in srgb, var(--leaf) 45%, var(--rule));
 }
 
 .week-stops li.is-done:not(:last-child)::after {
@@ -341,8 +351,9 @@ svg { flex: none; }
   cursor: pointer;
 }
 
+/* Done: filled with the line's colour and ticked */
 .week-stops input:checked {
-  background: var(--c);
+  background: var(--c) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5' fill='none' stroke='%23fffdf9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 62% no-repeat;
 }
 
 .week-stops a {
@@ -366,10 +377,9 @@ svg { flex: none; }
   text-decoration: underline;
 }
 
+/* A tick and a quieter title say done; a strike through Thai marks reads as cancelled */
 .week-stops .is-done a {
   color: var(--ink-soft);
-  text-decoration: line-through;
-  text-decoration-thickness: 2px;
 }
 
 /* The next station opens up: a tinted block, its title as an item title, what it's about */
@@ -415,7 +425,7 @@ svg { flex: none; }
   display: inline-block;
   padding: 1px var(--space-2);
   border-radius: var(--radius-pill);
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
   font-size: var(--step--1);
   font-weight: 700;
@@ -634,9 +644,13 @@ svg { flex: none; }
   padding-bottom: var(--space-2);
 }
 
+/* A Senior's story is a card like a Note: the same leaf corner */
 .story {
-  padding: var(--space-5) 0;
-  border-bottom: 1px solid var(--rule);
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-leaf);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .story header {
@@ -651,9 +665,10 @@ svg { flex: none; }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: var(--ink);
-  color: #fff;
-  font-weight: 700;
+  background: color-mix(in srgb, var(--leaf) 22%, var(--paper));
+  color: var(--leaf-dark);
+  font-family: var(--font-head);
+  font-weight: 500;
   font-size: var(--step-1);
 }
 
@@ -666,11 +681,9 @@ svg { flex: none; }
   font-size: var(--step-half);
 }
 
-/* A Senior's words look like a Note: the same size, the same bar */
+/* A Senior's words are the size of a Note's */
 .story-body {
   margin-top: var(--space-4);
-  padding-left: var(--space-4);
-  border-left: var(--station-ring) solid var(--ink);
   font-size: var(--type-quote);
   line-height: 1.6;
 }
@@ -679,11 +692,25 @@ svg { flex: none; }
   margin-top: var(--space-3);
 }
 
+/* Help is a calm green card at the end, not an alarm */
 .help {
   margin-top: var(--space-6);
-  padding: var(--space-5) 0;
-  background: var(--ink);
-  color: #fff;
+}
+
+.help > .inner {
+  padding-block: var(--space-5);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--leaf) 16%, var(--paper));
+}
+
+@media (max-width: 40rem) {
+  .help > .inner {
+    margin-inline: var(--gutter);
+  }
+}
+
+.help h2 svg {
+  color: var(--leaf-dark);
 }
 
 .help ul {
@@ -692,7 +719,7 @@ svg { flex: none; }
 
 .help li {
   padding: var(--space-4) 0;
-  border-top: 1px solid rgb(255 255 255 / 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--leaf) 35%, var(--paper));
 }
 
 .help h3 {
@@ -701,7 +728,7 @@ svg { flex: none; }
 
 .help p {
   margin-top: var(--space-1);
-  opacity: 0.8;
+  color: var(--ink-soft);
 }
 
 .help-contacts {
@@ -718,10 +745,10 @@ svg { flex: none; }
   max-width: 100%;
   overflow-wrap: anywhere;
   padding: 0 var(--space-4);
-  border-radius: var(--radius-s);
-  background: var(--paper);
-  color: var(--ink);
-  font-size: var(--step-1);
+  border-radius: var(--radius-pill);
+  background: var(--action);
+  color: var(--paper);
+  font-size: var(--step-0);
   font-weight: 700;
   text-decoration: none;
 }
@@ -823,7 +850,7 @@ body:has(.explorer) .site-footer {
   overflow-y: auto;
   padding: var(--space-5) var(--space-5) var(--space-5);
   background: var(--paper);
-  border-radius: 24px;
+  border-radius: var(--radius-l);
   box-shadow: 0 12px 32px -12px rgb(60 45 20 / 0.35), 0 0 0 1px rgb(60 45 20 / 0.06);
 }
 
@@ -871,15 +898,14 @@ body:has(.explorer) .site-footer {
   margin-top: var(--space-1);
 }
 
-/* The line runs through the codes */
+/* A dotted path through the places, like the steps in a Guide */
 .stop-group ul::before {
   content: "";
   position: absolute;
   left: calc(var(--space-1) + 2px + (var(--station) - var(--rail)) / 2);
   top: 22px;
   bottom: 22px;
-  width: var(--rail);
-  background: var(--c);
+  border-left: var(--rail) dotted color-mix(in srgb, var(--c) 45%, var(--paper));
 }
 
 .stop-group button {
@@ -890,7 +916,7 @@ body:has(.explorer) .site-footer {
   width: 100%;
   padding: var(--space-2) var(--space-1);
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-s);
   background: none;
   color: var(--ink);
   font: inherit;
@@ -989,7 +1015,7 @@ body:has(.explorer) .site-footer {
   display: flex;
   flex-direction: column;
   background: var(--paper);
-  border-radius: 24px 24px 0 0;
+  border-radius: var(--radius-l) var(--radius-l) 0 0;
   box-shadow: 0 -8px 24px -10px rgb(60 45 20 / 0.35);
 }
 
@@ -1053,11 +1079,15 @@ body:has(.explorer) .site-footer {
 }
 
 /* ช่วยเติมข้อมูล (/contribute) */
+/* Each form is one card on the ground, like everything else you act on */
 .contribute-form {
   display: grid;
   gap: var(--space-4);
-  padding: var(--space-6) 0;
-  border-bottom: 1px solid var(--rule);
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
 }
 
 .contribute-form h2 { margin-bottom: -10px; }
@@ -1108,11 +1138,15 @@ body:has(.explorer) .site-footer {
   padding: 0 var(--space-5);
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
   font: inherit;
   font-weight: 700;
   cursor: pointer;
+}
+
+.contribute-form button:hover:not(:disabled) {
+  background: var(--action-press);
 }
 
 .contribute-form button:disabled { opacity: 0.6; cursor: progress; }
@@ -1159,16 +1193,21 @@ body:has(.explorer) .site-footer {
   gap: var(--space-2);
   min-height: 44px;
   padding: 0 var(--space-5);
-  border: 2px solid var(--ink);
+  border: 2px solid var(--action);
   border-radius: var(--radius-pill);
-  color: var(--ink);
+  color: var(--action);
   font-weight: 700;
   text-decoration: none;
 }
 
 .action.is-primary {
-  background: var(--ink);
+  background: var(--action);
   color: var(--paper);
+}
+
+.action.is-primary:hover {
+  border-color: var(--action-press);
+  background: var(--action-press);
 }
 
 /* ---------- Map bar ---------- */
@@ -1224,9 +1263,9 @@ a.line-chip {
   gap: var(--space-2);
   margin-top: var(--space-3);
   padding-left: var(--space-4);
-  border-radius: 10px;
-  background: #eef1f6;
-  border: 2px solid var(--ink);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--sun) 55%, var(--paper));
+  box-shadow: var(--shadow-1);
 }
 
 .welcome a {
@@ -1334,7 +1373,7 @@ a.line-chip {
 /* A Note is a card like a leaf: one corner tucked in */
 .note {
   padding: var(--space-5);
-  border-radius: var(--radius-s) var(--radius-m) var(--radius-m) var(--radius-m);
+  border-radius: var(--radius-leaf);
   background: var(--paper);
   box-shadow: var(--shadow-1);
 }
@@ -1498,7 +1537,10 @@ body:not(:has(.explorer)) main {
 }
 
 .stop-tags .price-strip {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
   font-size: var(--step--1);
+  font-weight: 600;
 }
 
 .stop-group .stop-tags small {
@@ -1762,7 +1804,7 @@ body:not(:has(.explorer)) main {
   display: flex;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
-  border-radius: 10px;
+  border-radius: var(--radius-s);
   background: var(--tint);
 }
 
@@ -2024,10 +2066,6 @@ h2 {
 
 .welcome b {
   white-space: nowrap;
-}
-
-.contribute-form:last-child {
-  border-bottom: 0;
 }
 
 .feed-posted {
@@ -2324,7 +2362,7 @@ body:has(.guide-page) .site-footer {
 /* Words to say: a speech bubble in the line's colour */
 .step-say {
   padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-s) var(--radius-m) var(--radius-m) var(--radius-m);
+  border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
   background: var(--tint);
 }
 
@@ -2438,8 +2476,27 @@ body:has(.guide-page) .site-footer {
   margin-top: var(--space-3);
 }
 
+/* All seven done: the progress becomes a sunny card with the people in it */
+.week-progress.is-complete {
+  padding: var(--space-5);
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--sun) 60%, var(--paper));
+  box-shadow: var(--shadow-1);
+  text-align: center;
+}
+
+.week-progress.is-complete p:first-of-type {
+  font-family: var(--font-head);
+  font-size: var(--step-2);
+  font-weight: 500;
+}
+
+.week-progress.is-complete .week-bar {
+  background: color-mix(in srgb, var(--leaf) 25%, var(--paper));
+}
+
 .week-cheer {
-  margin-top: var(--space-4);
+  margin-bottom: var(--space-3);
 }
 
 /* ---------- Motion: soft and small, off for anyone who asks for less ---------- */

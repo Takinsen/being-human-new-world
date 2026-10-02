@@ -12,13 +12,16 @@ import { useChecklist } from "@/lib/useChecklist";
 export function WeekRoute() {
   const { done, toggle } = useChecklist();
   const count = firstWeek.filter((i) => done.includes(i.id)).length;
+  const complete = count === firstWeek.length;
   const next = firstWeek.find((i) => !done.includes(i.id));
   const nextSummary = next && guides.find((g) => `/guides/${g.id}` === next.href)?.summary;
   return (
     <section className="week">
-      <div className="week-progress">
+      {/* All seven: the progress turns into a sunny card and the people come out to cheer */}
+      <div className={complete ? "week-progress is-complete" : "week-progress"}>
+        {complete && <Peeps className="week-cheer" />}
         <p aria-live="polite">
-          {count === firstWeek.length ? (
+          {complete ? (
             "ครบแล้ว ตั้งหลักได้แล้ว"
           ) : (
             <>
@@ -29,10 +32,8 @@ export function WeekRoute() {
         <span className="week-bar" aria-hidden="true">
           <i style={{ width: `${(count / firstWeek.length) * 100}%` }} />
         </span>
-        <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>
+        {!complete && <p className="week-hint">กดวงกลมเมื่อทำแล้ว กดชื่อเพื่ออ่านวิธี</p>}
       </div>
-      {/* All seven: the people come out to cheer */}
-      {count === firstWeek.length && <Peeps className="week-cheer" />}
       <ol className="week-stops">
         {firstWeek.map((item) => {
           const isDone = done.includes(item.id);
