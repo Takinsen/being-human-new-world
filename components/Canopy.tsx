@@ -1,6 +1,7 @@
 // A canopy of rain-tree crowns across the top of the page, light falling through it (docs/adr/0007).
 // Decoration only. One 400-wide crown repeats across a wide strip that is cropped, never
 // stretched, so the crowns and the light keep their shape on a projector as on a phone.
+// Each crown has a hairline stroke of its own colour, so no seam shows where two meet.
 // The wordmark sits on the darker leaves with a halo of them (see .page-head > .wordmark).
 const TILE = 400;
 const TILES = 6;
@@ -17,6 +18,7 @@ export function Canopy() {
               transform={`translate(${x} 0)`}
               d="M0 0H400V70C385 92 360 96 344 82C330 104 298 106 284 86C268 108 232 104 222 84C206 102 176 100 166 80C150 100 118 98 108 78C92 96 62 94 54 74C40 90 14 88 0 72Z"
               fill="var(--leaf)"
+              stroke="var(--leaf)"
             />
           ))}
           {offsets.map((x) => (
@@ -25,6 +27,7 @@ export function Canopy() {
               transform={`translate(${x} 0)`}
               d="M0 0H400V48C380 66 352 64 340 52C322 70 292 68 282 54C262 72 232 68 222 54C204 70 174 66 164 52C146 68 116 66 106 52C88 66 58 64 50 50C34 62 12 60 0 50Z"
               fill="var(--leaf-dark)"
+              stroke="var(--leaf-dark)"
             />
           ))}
         </g>
