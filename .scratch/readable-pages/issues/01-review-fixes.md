@@ -36,3 +36,4 @@ Leave as is (looked at, not a problem): the Notes section's "ยังไม่�
   - Home Taste in the list stays grey as before (`.stop-group small` used to override its food colour); its own rule now says grey.
   - `thaiDate` went with the `title`, as nothing else used it.
   - Built; screenshots of the list, a Place card (phone and wide, a station and a food Place), Rabbit (ก.ย. 69), ไม่สบาย and the Feed, plus the unchecked state on a card and in a Guide's box with the data changed for the shot only.
+- 2026-10-03: `/code-review` against e60fcbb: nothing missing; Standards left only judgement calls (`--type-big` not yet in the "Type by role" list, type tokens sizing icons, `bangkok`/`day` naming in lib/format.ts). Owner's decision after seeing both side by side: the Place card's name stays at `--type-big` (1.75rem), not 1.875rem.
