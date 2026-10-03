@@ -2920,6 +2920,102 @@ body:has(.guide-page) .site-footer {
   }
 }
 
+/* Page changes (docs/adr/0007, amended 2026-10-03). The page under the tab bar moves as one
+   picture, the way its tap goes (components/PageMotion.tsx, NavLink.tsx): tabs slide sideways
+   in tab order, going deeper rises in, going back sinks away, a Feed category moves only its
+   Notes, and a name on both sides flies. The browser's own back and forward stay still. */
+
+/* The map fills main, so the frame around the page passes the height on */
+body:has(.explorer) .page-frame {
+  height: 100%;
+}
+
+/* The tab bar stays where it is, drawn over the moving page */
+.tab-bar {
+  view-transition-name: tab-bar;
+}
+
+/* The footer sits under the page, wherever the page ends, so it fades out and in with it */
+.site-footer {
+  view-transition-name: site-footer;
+}
+
+/* A flying name is captured as one box; text wrapped over two lines can't be */
+.flying-name {
+  display: inline-block;
+}
+
+/* A tapped link waits, dimmed, while the next page loads; the old page stays live meanwhile.
+   The tab bar has its own mark. */
+:not(.tab-bar) > a[data-going] {
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :not(.tab-bar) > a[data-going] {
+    animation: tab-pending 0.9s ease-in-out infinite alternate;
+  }
+
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation-duration: 0.22s;
+    animation-timing-function: ease-out;
+  }
+
+  /* Around the page (the ground, the footer) nothing moves: the new picture is just there */
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  /* The new page arrives scrolled; its box goes straight there and the old picture stays where
+     it was on screen (keepOldPicture in components/PageMotion.tsx) */
+  ::view-transition-old(.tab-left),
+  ::view-transition-old(.tab-right),
+  ::view-transition-old(.nav-forward),
+  ::view-transition-old(.nav-back),
+  ::view-transition-old(.list-refresh) {
+    translate: 0 var(--page-shift, 0);
+  }
+
+  ::view-transition-old(.tab-left) { animation-name: slide-out-left; }
+  ::view-transition-new(.tab-left) { animation-name: slide-in-right; }
+  ::view-transition-old(.tab-right) { animation-name: slide-out-right; }
+  ::view-transition-new(.tab-right) { animation-name: slide-in-left; }
+
+  /* Deeper: this page fades, the next rises in. Back: this one sinks away, the one under it fades in. */
+  ::view-transition-old(.nav-forward) { animation-name: fade-out; animation-duration: 0.14s; }
+  ::view-transition-new(.nav-forward) { animation-name: page-rise; }
+  ::view-transition-old(.nav-back) { animation-name: page-sink; animation-duration: 0.18s; }
+  ::view-transition-new(.nav-back) { animation-name: rise-in; }
+
+  ::view-transition-group(site-footer) { animation: none; }
+  ::view-transition-old(site-footer) { animation-name: fade-out; animation-duration: 0.14s; }
+  ::view-transition-new(site-footer) { animation-name: rise-in; }
+
+  ::view-transition-old(.list-refresh) { animation-name: fade-out; animation-duration: 0.12s; }
+  ::view-transition-new(.list-refresh) { animation-name: page-rise; }
+
+  /* A name keeps its size while it flies; the two pictures swap where they are, top left */
+  ::view-transition-group(.fly) {
+    animation-duration: 0.25s;
+    animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  ::view-transition-old(.fly),
+  ::view-transition-new(.fly) {
+    height: 100%;
+    object-fit: none;
+    object-position: left top;
+    animation-duration: 0.25s;
+  }
+
+  /* A name whose other spot is off screen doesn't fly; it goes with its page */
+  ::view-transition-old(.fly):only-child { animation-name: page-sink; animation-duration: 0.18s; }
+  ::view-transition-new(.fly):only-child { animation-name: page-rise; animation-duration: 0.22s; }
+}
+
 @keyframes fade-out {
   to { opacity: 0; }
 }
@@ -2935,6 +3031,30 @@ body:has(.guide-page) .site-footer {
 
 @keyframes rise-up {
   from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes page-rise {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes page-sink {
+  to { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes slide-out-left {
+  to { opacity: 0; transform: translateX(-30%); }
+}
+
+@keyframes slide-out-right {
+  to { opacity: 0; transform: translateX(30%); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(30%); }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-30%); }
 }
 
 @keyframes pop {
@@ -3123,44 +3243,6 @@ body:has(.guide-page) .site-footer {
   .tab-bar {
     transition: transform 0.2s ease;
   }
-}
-
-/* ---------- Swiping between tabs (components/SwipeTabs.tsx) ---------- */
-
-/* The page slides; the tab bar stays where it is */
-html[data-swipe] .tab-bar {
-  view-transition-name: tab-bar;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-group(tab-bar) {
-    animation-duration: 180ms;
-    animation-timing-function: ease-out;
-  }
-
-  /* Finger to the left: this page leaves to the left, the next comes in from the right */
-  html[data-swipe="left"]::view-transition-old(root) { animation-name: swipe-out-left; }
-  html[data-swipe="left"]::view-transition-new(root) { animation-name: swipe-in-right; }
-  html[data-swipe="right"]::view-transition-old(root) { animation-name: swipe-out-right; }
-  html[data-swipe="right"]::view-transition-new(root) { animation-name: swipe-in-left; }
-}
-
-@keyframes swipe-out-left {
-  to { opacity: 0; transform: translateX(-30%); }
-}
-
-@keyframes swipe-out-right {
-  to { opacity: 0; transform: translateX(30%); }
-}
-
-@keyframes swipe-in-right {
-  from { opacity: 0; transform: translateX(30%); }
-}
-
-@keyframes swipe-in-left {
-  from { opacity: 0; transform: translateX(-30%); }
 }
 
 /* ---------- Splash (docs/adr/0007) ---------- */

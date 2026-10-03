@@ -1,6 +1,6 @@
 # Every page change moves (prototype D)
 
-Status: ready-for-agent
+Status: done
 
 The owner wants every tap that changes the page to have a transition, and picked prototype D (see `../spec.md`, Q2–Q10). Build it fresh in the real code; the prototype is reference, not code to copy.
 
@@ -42,3 +42,21 @@ The owner wants every tap that changes the page to have a transition, and picked
 - `npm run typecheck` and `npm run build` pass.
 - Checked in Chromium with Playwright (`/opt/node22/lib/node_modules/playwright/index.mjs`, browsers at /opt/pw-browsers; run `next start` on the build): slow the animations with CDP (`Animation.enable`, then `Animation.setPlaybackRate` 0.05) and screenshot mid-transition for: tab right, tab left, a swipe, Guides list → Guide (the title flies), "← คู่มือทั้งหมด" (sinks, the title flies back), Place card → its Notes, a Feed category, posting a Note (sinks, then the new Note rises). Confirm the browser's back calls no transition (patch `Document.prototype.startViewTransition` to log types). Confirm with `reducedMotion: "reduce"` that nothing moves. Check the map page keeps its full height.
 - Commit with a clear message. Don't push.
+
+## Comments
+
+Done (2026-10-03). Built fresh from prototype D; no switcher, no `?motion=`.
+
+**How it works.** `components/PageMotion.tsx` works out the kind of change (`navType`: tab-left/right in `components/tabs.ts` order, nav-forward, nav-back, nav-filter; a `.back-link` is always back) and holds it in a small store from the tap until the new page is in. `PageFrame` (around `{children}` in `<main>`) and `FeedMotion` (around `.feed`) are `<ViewTransition>`s whose `update` class comes from that store; `FlyingName` wraps a name on both sides (`guide-title-<id>`, `place-name-<id>`) with `share="fly"` for forward/back. `components/NavLink.tsx` is next/link plus two things: on click it starts the motion, and a `useLinkStatus` child marks the link `data-going` so it pulses (dimmed, still, with reduced motion) while the old page stays live. Every page-to-page link now uses it; the tab bar keeps its own `Pending` bar. SwipeTabs starts a tab-left/right motion and `router.push`es (its own `startViewTransition` and the `html[data-swipe]` CSS are gone). Nothing is started for reduced motion, so no transition is even captured. CSS is in the motion section of app/globals.css; ADR 0007 is amended.
+
+**Where it differs from the prototype, and why.**
+- Not React transition types. `addTransitionType` / `<Link transitionTypes>` queue the types on the root and the next transition to commit takes them; Next commits small transitions of its own right after a tap, and in a loop of Feed-category taps about half the navigations came through untyped and didn't move. Holding the motion in a store (`useSyncExternalStore`) and putting it in the `update`/`share` props is reliable; it ends when the pathname changes, when the tapped link stops pending, or on `popstate` (so the browser's back never moves, even mid-tap).
+- The old picture stays where it was on screen. With the frame's group animation off (as in the prototype), a page that was scrolled, or a page that arrives scrolled to a `#section` ("← คู่มือทั้งหมด" lands on `/guides#transport`), made the old picture jump. `keepOldPicture` (the frame's `onUpdate`) reads the old and new positions from the browser's own group keyframes, cancels that animation and sets `--page-shift`, which the old picture is translated by.
+- The tab bar and footer have their own `view-transition-name`s and the root doesn't animate: otherwise the moving page was drawn over the tab bar and the root cross-faded.
+- A name whose other spot is off screen isn't paired by React; it then sinks or rises with its page (`:only-child`) instead of fading on its own.
+- Q10: NoteForm wraps `saveNote`; Next hands the redirect back as a thrown error just before the page changes, and that's where it starts nav-back (and rethrows). A Note that doesn't go up returns a message and nothing moves. Side effect: the Note form now needs JavaScript to post (a client function as the action). PostedStatus no longer calls `scrollIntoView`: Next already scrolls to `#fresh`, and a second (smooth) scroll dragged the arriving page; it still takes focus (UX audit 4, A2 was about focus). The fresh Note and "โน้ตขึ้นแล้ว" keep ticket 03's rise, playing as the Feed fades in.
+- Tabs moved to `components/tabs.ts` so NavLink/PageMotion can read the order without a TabBar import cycle.
+
+**Checked** (`npm run typecheck`, `npm run build`; `next start` on the build, Chromium via Playwright at 390×844 with touch, animations at 0.05 through CDP, screenshots in /tmp/claude-0/t02/, not in the repo): tab right (1), tab left (2), a swipe (3), Guides list → Guide with the title flying, from a scrolled list (4), "← คู่มือทั้งหมด" sinking with the title flying back (5), and with its spot off screen at 390×560 not flying (5b), Place card → its Notes with the name flying, and back (6, 6b), a Feed category (7), posting a Note to the Feed (8a sink, 8b the Note rising, 8c end) and to a Place (8d, 8e), a failed post not moving (8f), wide screen 1280×800 (12), slow network: the old page stays, the tapped link pulses, the tab bar's pending bar shows (13, 13b). Selecting a Place on the map makes no transition; `startViewTransition` patched to log: two taps made two, then back, back, forward made none. With `reducedMotion: "reduce"` five taps made no transition and `document.getAnimations()` stayed empty. The map keeps its full height (main, frame, explorer and map all 784px above the tab bar at 844). For Place Notes and posting, a throwaway local stand-in for the Sheet (SHEET_API_URL pointed at it for that build only; no code changed for it).
+
+**Not verified:** real phones and iOS's own edge swipe (headless Chromium only); Safari/Firefox (both without these view transition features fall back to no motion, not checked); map tiles (blocked here).

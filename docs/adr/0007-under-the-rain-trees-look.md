@@ -1,6 +1,6 @@
 # The site looks like shade under the rain trees, not a transit map
 
-Status: accepted (2026-10-02), amended four times on 2026-10-02: a Guide that reads like an article, the splash, the tagline, and readable pages (`.scratch/readable-pages/`). Replaces the look in 0006: the transit-line language, and cards with shadows only on Guide pages.
+Status: accepted (2026-10-02), amended four times on 2026-10-02: a Guide that reads like an article, the splash, the tagline, and readable pages (`.scratch/readable-pages/`); amended on 2026-10-03: page motion (`.scratch/page-motion/`). Replaces the look in 0006: the transit-line language, and cards with shadows only on Guide pages.
 
 The owner found the site "tidy but bland, crowded, like elements pasted all over a sheet of paper". Every part sat on one flat white surface, at about the same loudness, with nothing for the eye to rest on. The transit-map language (solid colour bands, rails through stations, saturated line colours) spoke of a system, while the site is about people: a Senior who has been there looking after a Newcomer. The pitch is judged first, on a projector, so the first glance matters most.
 
@@ -14,6 +14,7 @@ The whole site takes the look of shade under the rain trees (จามจุร�
 - Pictures are illustrations; real photos stay only on Place cards, so a Guide shows no photo.
 - Motion is soft and small (things rise in, buttons give a little when pressed, a ticked station pops), and all of it is off for anyone who asks for reduced motion.
   - Amended 2026-10-02: a short splash on the first page load of a browser session (concept A, the leaf drawing itself, then the green lifting into the page's canopy), about 1.5s, skipped by any tap or key, and never shown with reduced motion.
+  - Amended 2026-10-03 (`.scratch/page-motion/`, the owner chose prototype D): every page change moves, one of four ways depending on where you are and where the tap goes. Tab to tab, the page slides sideways in tab order, as a swipe does, and the tab bar stays still; going deeper (a Guide, the Note form, a Place's Notes) the new page rises in; going back up (a "← กลับ" link, a link to a shallower page, or landing on the Feed or the map after posting a Note) the page sinks away; a Feed category moves only its list of Notes. A name that is the same on both sides of the tap (a Guide's title, a Place's name) flies from where it was tapped into the new page's heading, and back again when its old spot is on screen. The browser's own back and forward never move: the browser animates those itself. While the next page loads the old one stays, live, and the tapped link pulses; there is no blank screen or skeleton. Fades and short moves, nothing over about 250ms, no springs; nothing moves for reduced motion.
 - Each screen has one thing that stands out; secondary text is quieter. The tagline is no longer shown on the site, only in the description a shared link shows (amended 2026-10-02 at the owner's request).
 
 ## Amendment (2026-10-02): readable pages

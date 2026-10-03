@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { categories } from "@/content/categories";
 import type { Note } from "@/content/types";
 import { TimeAgo } from "./TimeAgo";
@@ -20,7 +20,7 @@ export function NoteCard({ note, compact, fresh }: { note: Note; compact?: boole
       <footer className="note-by">
         <span className="note-sign">
           <span className="note-name">
-            {note.seniorId ? <Link href={`/seniors#${note.seniorId}`}>{note.name}</Link> : <b>{note.name}</b>}
+            {note.seniorId ? <NavLink href={`/seniors#${note.seniorId}`}>{note.name}</NavLink> : <b>{note.name}</b>}
           </span>
           <span aria-hidden="true">•</span>
           <span className="note-home">

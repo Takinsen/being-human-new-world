@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { useState } from "react";
 import { ArrowRight, CheckCircle, Circle } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
@@ -32,13 +32,13 @@ export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
         <span className="visually-hidden">ทำแล้ว: {title}</span>
       </button>
       {isDone && (
-        <Link href={next ? next.href : "/checklist"} className="detail-guide guide-next mark-next">
+        <NavLink href={next ? next.href : "/checklist"} className="detail-guide guide-next mark-next">
           <span>
             <small>{next ? "ถัดไปในสัปดาห์แรก" : "ครบแล้ว"}</small>
             {next ? next.title : "ดูสัปดาห์แรก"}
           </span>
           <ArrowRight weight="bold" aria-hidden="true" />
-        </Link>
+        </NavLink>
       )}
     </>
   );

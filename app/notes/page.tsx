@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { ArrowLeft, BookOpenText, ChatCenteredText, CheckCircle, PencilSimpleLine, Phone } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { ChipInView } from "@/components/ChipFocus";
 import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
 import { PageHead } from "@/components/PageHead";
+import { FeedMotion, FlyingName } from "@/components/PageMotion";
 import { Peeps } from "@/components/People";
 import { PostedStatus } from "@/components/PostedStatus";
 import { getContent, isCategory } from "@/lib/content";
@@ -29,13 +30,24 @@ export default async function NotesPage({ searchParams }: Props) {
   return (
     <>
       <PageHead
-        title={place ? `โน้ตที่${place.name}` : activeName ? `โน้ตเรื่อง${activeName}` : "โน้ต"}
+        title={
+          place ? (
+            // Only the name flies here from the Place's card
+            <>
+              โน้ตที่<FlyingName name={`place-name-${place.id}`}>{place.name}</FlyingName>
+            </>
+          ) : activeName ? (
+            `โน้ตเรื่อง${activeName}`
+          ) : (
+            "โน้ต"
+          )
+        }
         lede={place ? undefined : activeName ? `มี ${notes.length} โน้ต` : "เรื่องสั้นๆ ที่คนแถวนี้อยากบอกคนมาใหม่"}
         back={
           place && (
-            <Link href={`/?place=${place.id}`} className="back-link">
+            <NavLink href={`/?place=${place.id}`} className="back-link">
               <ArrowLeft weight="bold" aria-hidden="true" /> กลับไปที่แผนที่
-            </Link>
+            </NavLink>
           )
         }
       />
@@ -43,18 +55,18 @@ export default async function NotesPage({ searchParams }: Props) {
       <div className="inner">
         {place ? (
           <p className="feed-scope">
-            <Link href="/notes" className="related-link">
+            <NavLink href="/notes" className="related-link">
               ดูโน้ตจากทุกที่
-            </Link>
+            </NavLink>
           </p>
         ) : (
           <nav className="line-filters feed-filters" aria-label="กรองตามหมวด">
-            <Link href="/notes" className="line-chip" data-line="general" aria-current={!active ? "page" : undefined}>
+            <NavLink href="/notes" className="line-chip" data-line="general" aria-current={!active ? "page" : undefined}>
               <ChatCenteredText weight="bold" aria-hidden="true" />
               ทั้งหมด
-            </Link>
+            </NavLink>
             {categories.map((c) => (
-              <Link
+              <NavLink
                 key={c.id}
                 href={`/notes?line=${c.id}`}
                 className="line-chip"
@@ -63,42 +75,44 @@ export default async function NotesPage({ searchParams }: Props) {
               >
                 <CategoryIcon id={c.id} />
                 {c.name}
-              </Link>
+              </NavLink>
             ))}
             <ChipInView key={active ?? "all"} />
           </nav>
         )}
         {/* The way to write sits where the Notes start, not as a button in the head (ADR 0006, amended) */}
-        <Link href={writeHref} className="composer">
+        <NavLink href={writeHref} className="composer">
           <span className="composer-pen" aria-hidden="true">
             <PencilSimpleLine weight="bold" />
           </span>
           <span className="composer-prompt">{prompt}</span>
-        </Link>
+        </NavLink>
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
           <PostedStatus className="form-status feed-posted" id="fresh">
             <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว อยู่ข้างล่างนี้ ขอบคุณที่เล่านะ
           </PostedStatus>
         )}
-        <div className="feed">
-          {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย</p>}
-          {notes.map((n, i) => (
-            <NoteCard key={n.id} note={n} fresh={Boolean(posted) && i === 0} />
-          ))}
-        </div>
+        <FeedMotion>
+          <div className="feed">
+            {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย</p>}
+            {notes.map((n, i) => (
+              <NoteCard key={n.id} note={n} fresh={Boolean(posted) && i === 0} />
+            ))}
+          </div>
+        </FeedMotion>
         <ul className="feed-more">
           <li>
-            <Link href="/seniors">
+            <NavLink href="/seniors">
               <BookOpenText weight="bold" aria-hidden="true" />
               <span>อ่านเรื่องปีแรกของรุ่นพี่</span>
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <Link href="/seniors#help">
+            <NavLink href="/seniors#help">
               <Phone weight="bold" aria-hidden="true" />
               <span>เหงาหรือเครียด คุยกับคนได้</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>

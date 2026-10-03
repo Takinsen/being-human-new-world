@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { Check, MapPin, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { firstWeek } from "@/content/checklist";
 import type { Guide, GuideFact, GuideStep } from "@/content/types";
@@ -122,7 +122,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       {guide.related && (
         <p className="guide-next">
           <small>อ่านต่อ</small>
-          <Link href={guide.related.href}>{guide.related.label}</Link>
+          <NavLink href={guide.related.href}>{guide.related.label}</NavLink>
         </p>
       )}
     </article>

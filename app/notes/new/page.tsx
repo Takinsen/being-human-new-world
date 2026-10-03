@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { PageHead } from "@/components/PageHead";
@@ -24,9 +24,9 @@ export default async function NewNotePage({ searchParams }: Props) {
         title="เขียนโน้ต"
         lede="อยากบอกอะไรน้องที่เพิ่งมา เขียนสั้นๆ เหมือนพิมพ์บอกเพื่อน"
         back={
-          <Link href={from ? `/?place=${from.id}` : fromLine ? `/notes?line=${fromLine.id}` : "/notes"} className="back-link">
+          <NavLink href={from ? `/?place=${from.id}` : fromLine ? `/notes?line=${fromLine.id}` : "/notes"} className="back-link">
             <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : fromLine ? `โน้ตเรื่อง${fromLine.name}` : "โน้ต"}
-          </Link>
+          </NavLink>
         }
       />
       <div className="inner">

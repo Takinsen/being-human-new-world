@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { ArrowLeft, HandHeart, PencilSimpleLine } from "@phosphor-icons/react/dist/ssr";
 import { helpLinks } from "@/content/help";
 import { Peeps } from "@/components/People";
@@ -17,9 +17,9 @@ export default async function SeniorsPage() {
         title="รุ่นพี่ก็เคยมาใหม่"
         lede="รุ่นพี่เล่าปีแรกของตัวเอง ทั้งตอนหลงทาง ตอนหาร้านไม่เจอจนกินเซเว่นเยอะมาก ตอนนอนคนเดียวแล้วคิดถึงบ้าน"
         back={
-          <Link href="/notes" className="back-link">
+          <NavLink href="/notes" className="back-link">
             <ArrowLeft weight="bold" aria-hidden="true" /> โน้ต
-          </Link>
+          </NavLink>
         }
       />
       <Peeps className="feed-peeps inner" set="seniors" />
@@ -29,10 +29,10 @@ export default async function SeniorsPage() {
         ))}
         <ul className="feed-more seniors-more">
           <li>
-            <Link href="/contribute#senior">
+            <NavLink href="/contribute#senior">
               <PencilSimpleLine weight="bold" aria-hidden="true" />
               <span>เล่าปีแรกของเราบ้าง</span>
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </div>

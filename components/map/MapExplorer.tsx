@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, FirstAidKit, Phone, X } from "@phosphor-icons/react";
-import Link from "next/link";
+import { NavLink } from "../NavLink";
 import type { Category } from "@/content/categories";
 import { firstWeek } from "@/content/checklist";
 import type { CategoryId } from "@/content/types";
@@ -267,7 +267,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       {visible.length === 0 && (
         <p className="status-note">
           {active.length ? "หมวดนี้ยังไม่มีใครเขียนโน้ตไว้" : "ยังไม่มีโน้ตที่ไหนบนแผนที่เลย"}{" "}
-          <Link href="/notes/new">เขียนเป็นคนแรกเลย</Link>
+          <NavLink href="/notes/new">เขียนเป็นคนแรกเลย</NavLink>
         </p>
       )}
       {categories
@@ -318,12 +318,12 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
             </section>
           );
         })}
-      <Link href="/guides/sick" className="list-help">
+      <NavLink href="/guides/sick" className="list-help">
         <FirstAidKit weight="bold" aria-hidden="true" /> ไม่สบาย ไปไหนดี
-      </Link>{" "}
-      <Link href="/seniors#help" className="list-help">
+      </NavLink>{" "}
+      <NavLink href="/seniors#help" className="list-help">
         <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
-      </Link>
+      </NavLink>
       {SHOW_TRANSIT_LOGOS && <p className="fine-print">{LOGO_NOTICE}</p>}
     </div>
   );
@@ -336,18 +336,18 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       <div>
         <p className="welcome">
           {doneCount === 0 ? (
-            <Link href="/checklist">
+            <NavLink href="/checklist">
               <span>
                 เพิ่งย้ายมา เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้
               </span>
-            </Link>
+            </NavLink>
           ) : (
-            <Link href={nextItem.href}>
+            <NavLink href={nextItem.href}>
               <span>
                 {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
                 สัปดาห์แรกทำไปแล้ว {doneCount} จาก {firstWeek.length}&nbsp;ข้อ ต่อไปคือ{nextItem.title}
               </span>
-            </Link>
+            </NavLink>
           )}
           <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
             <X weight="bold" aria-hidden="true" />

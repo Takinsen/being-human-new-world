@@ -4,9 +4,10 @@ import { useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
 import { FormStatus } from "@/components/FormStatus";
+import { startMotion } from "@/components/PageMotion";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
-import { saveNote } from "../actions";
+import { type NoteFormState, saveNote } from "../actions";
 
 const noteMessages = {
   text: "เขียนก่อนว่าอยากบอกอะไร",
@@ -32,7 +33,18 @@ export function NoteForm({
   /** The Feed category the writer came from; picked already, and kept after posting */
   initialLine?: CategoryId;
 }) {
-  const [state, action, pending] = useActionState(saveNote, null);
+  // Posting lands on the Feed or the Place's card (actions.ts redirects), which counts as going
+  // back: the form sinks away and the new Note rises in there (docs/adr/0007). Next carries out
+  // the redirect itself and hands it back here as a thrown error just before the page changes,
+  // the one moment to say so. A Note that didn't go up returns a message; the form stays still.
+  const [state, action, pending] = useActionState(async (previous: NoteFormState, form: FormData) => {
+    try {
+      return await saveNote(previous, form);
+    } catch (err) {
+      startMotion("nav-back");
+      throw err;
+    }
+  }, null);
   const [placeId, setPlaceId] = useState(initialPlace ?? "");
   const [length, setLength] = useState(0);
   const place = places.find((p) => p.id === placeId);

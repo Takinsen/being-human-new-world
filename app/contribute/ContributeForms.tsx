@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { type FormEvent, useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { FormStatus } from "@/components/FormStatus";
@@ -20,7 +20,7 @@ function Status({ state }: { state: FormState }) {
       {state.href && (
         <>
           {" "}
-          <Link href={state.href}>{state.link ?? "ไปดู"}</Link>
+          <NavLink href={state.href}>{state.link ?? "ไปดู"}</NavLink>
         </>
       )}
     </FormStatus>
