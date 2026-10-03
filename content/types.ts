@@ -33,8 +33,8 @@ export type Photo = {
   alt: string;
 };
 
-/** A transit operator whose logo we show to name a station; see lib/brands.ts */
-export type Brand = "bts" | "mrt";
+/** A transit operator whose logo we show to name a station or a Guide; see lib/brands.ts */
+export type Brand = "bts" | "mrt" | "pop";
 
 /** Icon keys map to Phosphor icons in components/icons.tsx. */
 export type IconKey =
@@ -134,7 +134,7 @@ export type Guide = {
   /** On the Guides list (and the Guide's lede when it has no `intro`): what newcomers get wrong, in a person's words */
   summary: string;
   icon: IconKey;
-  /** The Guide is about one operator's trains: its logo shows in the page head (lib/brands.ts) */
+  /** The Guide is about one operator's trains or buses: its logo shows in the page head (lib/brands.ts) */
   brand?: Brand;
   /** The gist of the whole Guide, read first: the lede under the title (docs/adr/0007, amended 2026-10-02) */
   intro?: string;

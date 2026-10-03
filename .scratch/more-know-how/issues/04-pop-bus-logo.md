@@ -1,6 +1,6 @@
 # The CU POP BUS logo on its Guide
 
-Status: ready-for-agent
+Status: done
 
 From `../spec.md` Q7, Q8. Reverses `.scratch/logos` (CU Pop Bus kept our own icon).
 

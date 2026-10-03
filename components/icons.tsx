@@ -66,9 +66,9 @@ export function PlaceIcon({ place }: { place: { category: CategoryId; icon?: Ico
 
 /** A station's or Guide's operator logo, unaltered, when logos are on (lib/brands.ts); else `fallback`.
  * Its box sets the size and the logo keeps its own shape inside it. Wherever it shows, the name
- * beside it already says "BTS" or "MRT", so it is decorative (alt=""). */
+ * beside it already says "BTS", "MRT" or "รถป๊อป", so it is decorative (alt=""). */
 export function BrandLogo({ brand, fallback }: { brand?: Brand; fallback: ReactNode }) {
   const logo = logoFor(brand);
   if (!logo) return <>{fallback}</>;
-  return <img className="brand-logo" src={logo.src} alt="" />;
+  return <img className="brand-logo" data-brand={brand} src={logo.src} alt="" />;
 }
