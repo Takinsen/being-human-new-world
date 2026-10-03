@@ -10,5 +10,6 @@ export const firstWeek: ChecklistItem[] = [
   { id: "laundry", title: "ซักผ้าหยอดเหรียญเองให้ได้สักรอบ", href: "/guides/coin-laundry", category: "household" },
   { id: "water", title: "เลือกว่าจะกินน้ำแบบไหน", href: "/guides/drinking-water", category: "household" },
   { id: "sick", title: "รู้ไว้ก่อนว่าไม่สบายแล้วไปไหน", href: "/guides/sick", category: "health" },
+  { id: "rights", title: "เช็กว่าเราใช้สิทธิ์รักษาอะไรได้", href: "/guides/rights", category: "health" },
   { id: "senior-story", title: "อ่านเรื่องปีแรกของรุ่นพี่สักคน", href: "/seniors", category: "adjusting" },
 ];

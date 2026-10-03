@@ -71,7 +71,7 @@ Status: needs-triage
 | BTS | ใช้ | `BTS-Logo.svg` (Commons) — สำเนาใน scratchpad `bts-logo.commons-mirror.svg` | redraw, ไทยอาจ non-free |
 | MRT | ใช้ | `MRT_(Bangkok)_logo.svg` (Commons) — สำเนา `mrt-bangkok-logo.commons-mirror.svg` | PD-textlogo + trademarked; ไม่ใช้ตรา รฟม./BEM |
 | Rabbit | **ยังไม่ใช้** | — | ไม่มีไฟล์ที่ใบอนุญาตชัด; ใช้ข้อความ "Rabbit" + ไอคอนบัตรทั่วไป จนกว่าจะได้รับอนุญาต |
-| CU Pop Bus | ไม่มีโลโก้ | ไอคอนบัสของเราเอง สีชมพู | ห้ามใช้พระเกี้ยว |
+| CU Pop Bus | โลโก้จากเพจ CU POP BUS (เจ้าของเว็บส่งมา 2026-10-03) | `public/logos/cu-pop-bus.jpg` บนคู่มือรถป๊อป (.scratch/more-know-how) | ห้ามใช้พระเกี้ยว |
 | BMTA | ทางเลือก | `BMTA_Logo2014-en.svg` (ยังไม่ได้ดาวน์โหลด) | ต้องยืนยันใบอนุญาตก่อน |
 
 **ขนาด**
@@ -101,6 +101,6 @@ Status: needs-triage
 ## Done (2026-10-02)
 
 - `public/logos/bts.svg` and `public/logos/mrt.svg` are the two mirror files above, **byte for byte** (sha256 `a6aafbe487dbd267924f8af506fc9b1783192c38c8a5086f65f3e218ec76ff31` and `90cc3151dfa36b2d29bb7aee90d73cd96ec7c903bb69b4157bd1c7e359348713`). Inkscape metadata was left in: browsers scale both files fine without a `viewBox`.
-- Shown on: the map pins of MRT สามย่าน, BTS สยาม and BTS สนามกีฬาแห่งชาติ (logo on the white disc, ringed in the transport colour), those Places' cards and list rows, and the Guides `rabbit` (BTS) and `mrt` (MRT), on `/guides` and on their own pages. Always on white, never recoloured. Rabbit and CU Pop Bus keep our own icons; no Phra Kiao anywhere.
+- Shown on: the map pins of MRT สามย่าน, BTS สยาม and BTS สนามกีฬาแห่งชาติ (logo on the white disc, ringed in the transport colour), those Places' cards and list rows, and the Guides `rabbit` (BTS) and `mrt` (MRT), on `/guides` and on their own pages. Always on white, never recoloured. Rabbit keeps our own icon; no Phra Kiao anywhere. (2026-10-03: the owner supplied the CU POP BUS logo from its page; it now shows on the `pop-bus` Guide, see .scratch/more-know-how/spec.md Q7–Q8.)
 - One switch turns them all off: `NEXT_PUBLIC_TRANSIT_LOGOS=off` at build time (`lib/brands.ts`). The footer line saying the marks are their owners' shows only while logos are on. The map page has no footer, so the line shows on every other page.
 - **Before the pitch:** on a machine with an open network, download `File:BTS-Logo.svg` and `File:MRT_(Bangkok)_logo.svg` from upload.wikimedia.org, run `sha256sum` on them and on `public/logos/*.svg`, and check the hashes match. If they don't, diff the paths, and confirm the licence templates on both Commons pages (step 1 of the risks above).

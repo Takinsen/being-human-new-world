@@ -69,7 +69,7 @@ Know-how on eating affordably in the Campus Area, including Home Taste.
 Know-how for falling sick or feeling low: where to go and when, from a pharmacy to the ER, and who to talk to.
 
 **Household** (งานบ้าน):
-Know-how for the household tasks a Newcomer used to have done for them: laundry, drinking water, rubbish, everyday supplies.
+Know-how for the household tasks a Newcomer used to have done for them: laundry, drinking water, rubbish, everyday supplies, and keeping the room and their things in order (a key cut, shoes or clothes mended, a tool or a spare part bought). Post, parcels and printing are not Household.
 _Avoid_: Living Alone (อยู่คนเดียว: it held both of the above, and a Newcomer who is sick at night doesn't look under it), Daily Life (reads as a place list)
 
 **Adjusting** (ปรับตัว):
