@@ -23,7 +23,7 @@ export function Price({ price, children }: { price: PriceData; children?: React.
 
 /** The figure alone on platform yellow, or that nobody has checked it yet; a Guide's facts use it too */
 export function PriceFigure({ price }: { price: PriceData }) {
-  if (!price.checked) return <span className="price-pending">{keepPhrases("ยังไม่รู้ราคาจริง รอคนไปดู")}</span>;
+  if (!price.checked) return <span className="price-pending">{keepPhrases("ยังไม่รู้ราคา")}</span>;
   return (
     <>
       <span className="visually-hidden">ราคาปกติ </span>

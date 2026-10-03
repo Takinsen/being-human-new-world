@@ -91,7 +91,7 @@ export default async function NotesPage({ searchParams }: Props) {
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
           <PostedStatus className="form-status feed-posted" id="fresh">
-            <CheckCircle weight="fill" aria-hidden="true" /> {keepPhrases("โน้ตขึ้นแล้ว อยู่ข้างล่างนี้ ขอบคุณที่เล่านะ")}
+            <CheckCircle weight="fill" aria-hidden="true" /> {keepPhrases("โน้ตขึ้นแล้ว ขอบคุณนะ")}
           </PostedStatus>
         )}
         <FeedMotion>
