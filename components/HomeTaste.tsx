@@ -16,7 +16,7 @@ export type HomeTasteData = {
 }[];
 
 // Home Taste (.scratch/more-know-how/spec.md Q5, Q9–Q14, Q21): until a Newcomer says where
-// home is, ask with one big button per region; then show that region's Places as photo
+// home is, one big button per region (the page's lede asks); then show that region's Places as photo
 // cards, with chips to look at another region. The choice stays in this browser.
 export function HomeTaste({ regions }: { regions: HomeTasteData }) {
   const { region, setRegion } = useHomeRegion();
@@ -24,9 +24,8 @@ export function HomeTaste({ regions }: { regions: HomeTasteData }) {
 
   if (!current)
     return (
-      <section className="home-ask" aria-labelledby="home-ask-q">
-        <h2 id="home-ask-q">บ้านอยู่ภาคไหน</h2>
-        <p>{keepPhrases("เลือกครั้งเดียว ครั้งหน้าเปิดมาก็เจอร้านภาคเราเลย")}</p>
+      // The page's lede already asks the question, so the buttons carry no heading of their own
+      <section className="home-ask" aria-label="บ้านอยู่ภาคไหน">
         <div className="home-ask-regions">
           {regions.map((r) => (
             <button key={r.region} type="button" onClick={() => setRegion(r.region)}>
@@ -36,6 +35,7 @@ export function HomeTaste({ regions }: { regions: HomeTasteData }) {
             </button>
           ))}
         </div>
+        <p className="fine-print">{keepPhrases("เลือกครั้งเดียว เครื่องนี้จำไว้ให้ ครั้งหน้าเปิดมาก็เจอร้านภาคเราเลย")}</p>
       </section>
     );
 

@@ -28,3 +28,4 @@ From `../spec.md` Q5, Q9–Q14, Q16, Q20–Q22. The prototype is on branch `prot
 - Built from the prototype's B (ask first) and A (chips + cards), on `/guides/home-taste`. Checked in headless Chromium at 390 and 1440 px: the ask, a region's cards, the region kept after reload, the empty east, the link card on `/guides`; no console errors.
 - The dish photo keeps its Commons credit (CC BY-SA needs it), so the card's link is the shop name stretched over the card, not a link wrapping the card.
 - The "tell us" button opens the Note form in ของกิน; "tastes like home" can't be ticked there yet, because a Home Taste Note has to be pinned to a Place and a shop nobody has added has no Place.
+- Follow-up (owner, 2026-10-03): the ask's own heading and sub-line ("บ้านอยู่ภาคไหน", "เลือกครั้งเดียว…") repeated the page head. The page's lede now asks the question, the region buttons sit straight under it with no box, and the "remembered on this device" line is fine print under them.

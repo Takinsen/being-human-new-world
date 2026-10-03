@@ -20,7 +20,7 @@ export default async function HomeTastePage() {
     <div className="home-taste-page" data-line="food">
       <PageHead
         title="รสชาติบ้าน"
-        lede="คิดถึงกับข้าวที่บ้าน ร้านแถวนี้ที่คนจากภาคนั้นบอกว่าใช่ บางร้านทีมหามาให้ลองไปก่อน"
+        lede="คิดถึงกับข้าวที่บ้าน บอกก่อนว่าบ้านอยู่ภาคไหน แล้วดูร้านแถวนี้ที่คนจากภาคนั้นบอกว่าใช่"
         back={
           <NavLink href="/guides#food" className="back-link">
             <ArrowLeft weight="bold" aria-hidden="true" /> คู่มือทั้งหมด
