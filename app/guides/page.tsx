@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { BowlSteam } from "@phosphor-icons/react/dist/ssr";
 import { placeCategories } from "@/content/categories";
 import { BrandLogo, CategoryIcon, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
+import { FlyingName } from "@/components/PageMotion";
 import { type Content, getContent, guidesIn } from "@/lib/content";
 import { OldGuideLinks } from "./OldGuideLinks";
 
-export const metadata: Metadata = { title: "วิธี | ตั้งหลัก" };
+export const metadata: Metadata = { title: "คู่มือ | ตั้งหลัก" };
 
 // Every Guide as one line, grouped by category; the steps are on /guides/<id> (docs/adr/0006).
 // Adjusting has no Guides, so it has no section here (docs/adr/0008).
@@ -16,7 +17,7 @@ export default async function GuidesPage() {
   return (
     <>
       <OldGuideLinks ids={content.guides.map((g) => g.id)} />
-      <PageHead title="วิธี" lede="ตอนอยู่บ้านมีคนทำให้ มาอยู่นี่ต้องทำเอง พี่ๆ เขียนวิธีไว้ให้แล้ว">
+      <PageHead title="คู่มือ" lede="ตอนอยู่บ้านมีคนทำให้ มาอยู่นี่ต้องทำเอง พี่ๆ เขียนคู่มือไว้ให้แล้ว">
         <nav className="line-filters" aria-label="ไปที่หมวด">
           {placeCategories.map((c) => (
             <a key={c.id} href={`#${c.id}`} className="line-chip" data-line={c.id}>
@@ -37,15 +38,17 @@ export default async function GuidesPage() {
             <ul className="guide-list">
               {guidesIn(content, c.id).map((g) => (
                 <li key={g.id}>
-                  <Link href={`/guides/${g.id}`}>
+                  <NavLink href={`/guides/${g.id}`}>
                     <span className="guide-icon">
                       <BrandLogo brand={g.brand} fallback={<IconFor name={g.icon} />} />
                     </span>
                     <span>
-                      <b>{g.title}</b>
+                      <b>
+                        <FlyingName name={`guide-title-${g.id}`}>{g.title}</FlyingName>
+                      </b>
                       <small>{g.summary}</small>
                     </span>
-                  </Link>
+                  </NavLink>
                 </li>
               ))}
             </ul>
@@ -72,7 +75,7 @@ function HomeTaste({ content }: { content: Content }) {
         {content.homeTaste.map(({ place, region, by }) => (
           <li key={region}>
             <span>
-              <b>อาหาร{region}</b> <Link href={`/?place=${place.id}`}>{place.name}</Link>
+              <b>อาหาร{region}</b> <NavLink href={`/?place=${place.id}`}>{place.name}</NavLink>
               <small>{by ? ` ${by.name} บ้านอยู่${by.hometown} แนะนำ` : " ทีมหามาให้ลอง"}</small>
             </span>
           </li>

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { Canopy } from "./Canopy";
 
 /** Top of every page but the map: the wordmark, then the page's own heading. */
@@ -28,10 +28,10 @@ export function PageHead({
 
 export function Wordmark() {
   return (
-    <Link href="/" className="wordmark">
+    <NavLink href="/" className="wordmark">
       <LeafMark />
       ตั้งหลัก
-    </Link>
+    </NavLink>
   );
 }
 

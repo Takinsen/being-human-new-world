@@ -18,15 +18,15 @@ const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 // colour (lib/brands.ts). The logo is decorative: the marker's tooltip names the station.
 // Built once per look, so Leaflet only swaps a marker's element when it changes.
 const icons = new Map<string, L.DivIcon>();
-function pinIcon(category: string, icon: string, logo: string | undefined, selected: boolean) {
-  const key = `${category}:${icon}:${logo}:${selected}`;
-  if (!icons.has(key)) icons.set(key, makePinIcon(category, icon, logo, selected));
+function pinIcon(category: string, icon: string, logo: string | undefined, selected: boolean, leaving = false) {
+  const key = `${category}:${icon}:${logo}:${selected}:${leaving}`;
+  if (!icons.has(key)) icons.set(key, makePinIcon(category, icon, logo, selected, leaving));
   return icons.get(key)!;
 }
 
-function makePinIcon(category: string, icon: string, logo: string | undefined, selected: boolean) {
+function makePinIcon(category: string, icon: string, logo: string | undefined, selected: boolean, leaving: boolean) {
   return L.divIcon({
-    className: selected ? "map-pin is-selected" : "map-pin",
+    className: `map-pin${selected ? " is-selected" : ""}${leaving ? " is-leaving" : ""}`,
     html: logo
       ? `<span class="pin has-logo" data-line="${category}"><img class="brand-logo" src="${logo}" alt=""></span>`
       : `<span class="pin" data-line="${category}" data-icon="${icon}"></span>`,
@@ -113,26 +113,64 @@ function useSpreadPositions(stops: MapStop[]) {
   }, [stops, zoom, map]);
 }
 
+const FADE_MS = 200; // how long a filtered-out pin lingers; keep in step with .is-leaving in globals.css
+
 function Pins({
   stops,
   selectedId,
   onSelect,
   inset,
+  animate,
 }: {
   stops: MapStop[];
   selectedId?: string;
   onSelect: (id: string) => void;
   inset: Inset;
+  animate: boolean;
 }) {
   const map = useMap();
   const positions = useSpreadPositions(stops);
   const markers = useRef(new Map<string, L.Marker>());
+
+  // A pin filtered out isn't removed at once: it stays, unclickable, for FADE_MS while CSS fades it.
+  // The ghosts are worked out during render (not in an effect) so the pin never blinks off first.
+  const stopsKey = stops.map((s) => s.place.id).join(",");
+  const [shown, setShown] = useState({ key: stopsKey, stops });
+  const [ghosts, setGhosts] = useState<MapStop[]>([]);
+  if (shown.key !== stopsKey) {
+    setShown({ key: stopsKey, stops });
+    setGhosts(animate ? shown.stops.filter((old) => !stops.some((s) => s.place.id === old.place.id)) : []);
+  }
+  useEffect(() => {
+    if (!ghosts.length) return;
+    const t = setTimeout(() => setGhosts([]), FADE_MS);
+    return () => clearTimeout(t);
+  }, [ghosts]);
+  // Where each pin was last drawn, so a ghost fades where it stood rather than at its true spot
+  const drawn = useRef(new Map<string, L.LatLng>());
+  const ghostAt = (s: MapStop) => drawn.current.get(s.place.id) ?? L.latLng(s.place.lat, s.place.lng);
+
+  // Pins that weren't on the map a moment ago fade in. Done on the element, not in the icon,
+  // because Leaflet swaps the element when a pin is selected, and that must not fade again.
+  const known = useRef(new Set<string>());
+  useEffect(() => {
+    const now = new Set(stops.map((s) => s.place.id));
+    for (const id of now) {
+      if (known.current.has(id)) continue;
+      const el = markers.current.get(id)?.getElement();
+      if (!el) continue;
+      el.classList.add("is-entering");
+      el.addEventListener("animationend", () => el.classList.remove("is-entering"), { once: true });
+    }
+    known.current = now;
+  }, [stopsKey]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Leaflet rebuilds a marker's element when its icon changes, so label every render.
   useEffect(() => {
     for (const { place } of stops) {
       const el = markers.current.get(place.id)?.getElement();
       if (!el) continue;
+      drawn.current.set(place.id, markers.current.get(place.id)!.getLatLng());
       el.setAttribute("aria-label", place.name);
       // Tabbing to a pin brings it out from under the chips or the sheet.
       el.onfocus = () =>
@@ -145,7 +183,7 @@ function Pins({
     }
   });
 
-  return stops.map(({ place }) => (
+  const live = stops.map(({ place }) => (
     <Marker
       key={place.id}
       ref={(m) => {
@@ -168,6 +206,20 @@ function Pins({
       </Tooltip>
     </Marker>
   ));
+
+  const leaving = ghosts
+    .filter((g) => !stops.some((s) => s.place.id === g.place.id))
+    .map((g) => (
+      <Marker
+        key={g.place.id}
+        position={ghostAt(g)}
+        icon={pinIcon(g.place.category, placeIconKey(g.place), logoFor(g.place.brand)?.src, false, true)}
+        interactive={false}
+        keyboard={false}
+      />
+    ));
+
+  return [...live, ...leaving];
 }
 
 function Inert({ when }: { when: boolean }) {
@@ -211,7 +263,7 @@ export default function ExplorerMap({
       />
       <ZoomControl position="topright" zoomInTitle="ขยายแผนที่" zoomOutTitle="ย่อแผนที่" />
       <Camera stops={stops} selected={selected} inset={inset} animate={animate} />
-      <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} inset={inset} />
+      <Pins stops={stops} selectedId={selectedId} onSelect={onSelect} inset={inset} animate={animate} />
       <Inert when={covered} />
     </MapContainer>
   );

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
 import { ChipFocus } from "@/components/ChipFocus";
+import { NavLink } from "@/components/NavLink";
+import { PageFrame } from "@/components/PageMotion";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
@@ -35,10 +36,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#menu" className="skip-link">
           ไปที่เมนู
         </a>
-        <main id="main">{children}</main>
+        <main id="main">
+          <PageFrame>{children}</PageFrame>
+        </main>
         <footer className="site-footer">
           <p>
-            ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี <Link href="/contribute">ช่วยเติมได้เลย</Link>
+            ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี <NavLink href="/contribute">ช่วยเติมได้เลย</NavLink>
           </p>
           {SHOW_TRANSIT_LOGOS && (
             <p className="logo-notice">

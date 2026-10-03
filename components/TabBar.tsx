@@ -1,17 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState, type RefObject } from "react";
-import Link, { useLinkStatus } from "next/link";
+import { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpenText, ChatCenteredText, ListChecks, MapTrifold } from "@phosphor-icons/react";
-
-/** The tabs in order, left to right; swiping between pages follows it too (components/SwipeTabs.tsx) */
-export const tabs = [
-  { href: "/", label: "แผนที่", Icon: MapTrifold },
-  { href: "/notes", label: "โน้ต", Icon: ChatCenteredText },
-  { href: "/guides", label: "วิธี", Icon: BookOpenText },
-  { href: "/checklist", label: "สัปดาห์แรก", Icon: ListChecks },
-];
+import { NavLink } from "./NavLink";
+import { tabs } from "./tabs";
 
 // The site's only navigation (docs/adr/0006): within thumb reach on a phone.
 export function TabBar() {
@@ -24,11 +17,11 @@ export function TabBar() {
   return (
     <nav ref={nav} className="tab-bar" id="menu" aria-label="เมนูหลัก" data-hidden={hidden || undefined}>
       {tabs.map(({ href, label, Icon }) => (
-        <Link key={href} href={href} aria-current={current(href) ? "page" : undefined}>
+        <NavLink key={href} href={href} aria-current={current(href) ? "page" : undefined}>
           <Icon weight={current(href) ? "fill" : "bold"} aria-hidden="true" />
           {label}
           <Pending />
-        </Link>
+        </NavLink>
       ))}
     </nav>
   );

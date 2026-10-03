@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { NavLink } from "../NavLink";
 import { useEffect, useRef } from "react";
 import {
   ArrowLeft,
@@ -13,6 +13,7 @@ import {
 import { mapsUrl } from "@/lib/format";
 import { PlaceIcon } from "../icons";
 import { NoteCard } from "../NoteCard";
+import { FlyingName } from "../PageMotion";
 import { Photo } from "../Photo";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
@@ -69,7 +70,7 @@ export function PlaceDetail({
             <PlaceIcon place={place} />
           </span>
           <h2 ref={heading} tabIndex={-1}>
-            {place.name}
+            <FlyingName name={`place-name-${place.id}`}>{place.name}</FlyingName>
           </h2>
         </div>
         {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
@@ -125,9 +126,9 @@ export function PlaceDetail({
           <h3 id="detail-notes" className="detail-h">
             โน้ตจากคนที่เคยไป
           </h3>
-          <Link href={`/notes/new?place=${place.id}`} className="detail-write">
+          <NavLink href={`/notes/new?place=${place.id}`} className="detail-write">
             <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
-          </Link>
+          </NavLink>
         </div>
         {posted && (
           <p className="form-status" role="status" tabIndex={-1} ref={status}>
@@ -138,9 +139,9 @@ export function PlaceDetail({
           <>
             <NoteCard note={latest} compact />
             {notes.length > 1 && (
-              <Link href={`/notes?place=${place.id}`} className="related-link">
+              <NavLink href={`/notes?place=${place.id}`} className="related-link">
                 อ่านโน้ตที่นี่ทั้งหมด {notes.length} อัน
-              </Link>
+              </NavLink>
             )}
           </>
         ) : (
@@ -151,16 +152,18 @@ export function PlaceDetail({
       {guides.length > 0 && (
         <section className="detail-section" aria-labelledby="detail-guides">
           <h3 id="detail-guides" className="detail-h">
-            อ่านวิธี
+            อ่านคู่มือ
           </h3>
           <ul className="detail-guides">
             {guides.map((guide) => (
               <li key={guide.id}>
-                <Link href={`/guides/${guide.id}`}>
+                <NavLink href={`/guides/${guide.id}`}>
                   <BookOpenText weight="bold" aria-hidden="true" />
-                  <span>{guide.title}</span>
+                  <span>
+                    <FlyingName name={`guide-title-${guide.id}`}>{guide.title}</FlyingName>
+                  </span>
                   <CaretRight weight="bold" aria-hidden="true" />
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -172,9 +175,9 @@ export function PlaceDetail({
         {place.price ? (
           <Price price={place.price}>
             {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
-            <Link href={`/contribute?place=${place.id}#price`} className="price-report">
+            <NavLink href={`/contribute?place=${place.id}#price`} className="price-report">
               {place.price.checked ? "ราคาไม่ตรง?" : "บอกราคา"}
-            </Link>
+            </NavLink>
           </Price>
         ) : (
           <span />

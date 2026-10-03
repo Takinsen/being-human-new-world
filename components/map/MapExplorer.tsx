@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowsInSimple, ArrowsOutSimple, BowlSteam, CaretDown, CaretUp, ChatCenteredText, FirstAidKit, Phone, X } from "@phosphor-icons/react";
-import Link from "next/link";
+import { NavLink } from "../NavLink";
 import type { Category } from "@/content/categories";
 import { firstWeek } from "@/content/checklist";
 import type { CategoryId } from "@/content/types";
@@ -44,8 +44,11 @@ function useViewport() {
 // The first-visit pointer to the Starter Checklist stays dismissed in this browser.
 const WELCOME_KEY = "tanglak:welcome-dismissed";
 
+const WELCOME_FOLD_MS = 240; // keep in step with .welcome-fold's transition in globals.css
+
 function useWelcome() {
   const [show, setShow] = useState(false);
+  const [closing, setClosing] = useState(false);
   useEffect(() => {
     try {
       setShow(window.localStorage.getItem(WELCOME_KEY) !== "1");
@@ -54,14 +57,17 @@ function useWelcome() {
     }
   }, []);
   const dismiss = () => {
-    setShow(false);
     try {
       window.localStorage.setItem(WELCOME_KEY, "1");
     } catch {
       // Storage blocked: hidden until the page reloads.
     }
+    // It fades and folds away first; with reduced motion there is nothing to wait for.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setShow(false);
+    setClosing(true);
+    setTimeout(() => setShow(false), WELCOME_FOLD_MS);
   };
-  return { show, dismiss };
+  return { show, closing, dismiss };
 }
 
 function useWide() {
@@ -115,6 +121,22 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     [lineParam, categories],
   );
   const withNotes = params.get("notes") === "1";
+
+  // How the list comes back, worked out from what changed (docs/adr/0007): after a category or
+  // "มีโน้ต" tap its rows rise in again; back from a Place card the list fades in. Set during
+  // render, so it holds from the very render that mounts the list, URL changes included.
+  const filterKey = `${lineParam ?? ""}|${withNotes}`;
+  const [listMotion, setListMotion] = useState<{ filterKey: string; selectedId?: string; enter?: "rise" | "fade" }>({
+    filterKey,
+    selectedId,
+  });
+  if (listMotion.filterKey !== filterKey || listMotion.selectedId !== selectedId) {
+    setListMotion({
+      filterKey,
+      selectedId,
+      enter: listMotion.filterKey !== filterKey ? "rise" : selectedId ? undefined : "fade",
+    });
+  }
 
   const [sheetOpen, setSheetOpen] = useState(true);
   const [sheetFull, setSheetFull] = useState(false);
@@ -241,11 +263,11 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   );
 
   const list = (
-    <div className="stop-list">
+    <div className="stop-list" key={filterKey} data-enter={listMotion.enter}>
       {visible.length === 0 && (
         <p className="status-note">
           {active.length ? "หมวดนี้ยังไม่มีใครเขียนโน้ตไว้" : "ยังไม่มีโน้ตที่ไหนบนแผนที่เลย"}{" "}
-          <Link href="/notes/new">เขียนเป็นคนแรกเลย</Link>
+          <NavLink href="/notes/new">เขียนเป็นคนแรกเลย</NavLink>
         </p>
       )}
       {categories
@@ -296,12 +318,12 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
             </section>
           );
         })}
-      <Link href="/guides/sick" className="list-help">
+      <NavLink href="/guides/sick" className="list-help">
         <FirstAidKit weight="bold" aria-hidden="true" /> ไม่สบาย ไปไหนดี
-      </Link>{" "}
-      <Link href="/seniors#help" className="list-help">
+      </NavLink>{" "}
+      <NavLink href="/seniors#help" className="list-help">
         <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
-      </Link>
+      </NavLink>
       {SHOW_TRANSIT_LOGOS && <p className="fine-print">{LOGO_NOTICE}</p>}
     </div>
   );
@@ -310,25 +332,29 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   const doneCount = firstWeek.filter((i) => checklist.done.includes(i.id)).length;
   const nextItem = firstWeek.find((i) => !checklist.done.includes(i.id));
   const welcomeNote = welcome.show && !selected && visible.length > 0 && nextItem && (
-    <p className="welcome">
-      {doneCount === 0 ? (
-        <Link href="/checklist">
-          <span>
-            เพิ่งย้ายมา เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้
-          </span>
-        </Link>
-      ) : (
-        <Link href={nextItem.href}>
-          <span>
-            {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
-            สัปดาห์แรกทำไปแล้ว {doneCount} จาก {firstWeek.length}&nbsp;ข้อ ต่อไปคือ{nextItem.title}
-          </span>
-        </Link>
-      )}
-      <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
-        <X weight="bold" aria-hidden="true" />
-      </button>
-    </p>
+    <div className={welcome.closing ? "welcome-fold is-closing" : "welcome-fold"} inert={welcome.closing}>
+      <div>
+        <p className="welcome">
+          {doneCount === 0 ? (
+            <NavLink href="/checklist">
+              <span>
+                เพิ่งย้ายมา เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้
+              </span>
+            </NavLink>
+          ) : (
+            <NavLink href={nextItem.href}>
+              <span>
+                {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
+                สัปดาห์แรกทำไปแล้ว {doneCount} จาก {firstWeek.length}&nbsp;ข้อ ต่อไปคือ{nextItem.title}
+              </span>
+            </NavLink>
+          )}
+          <button type="button" onClick={welcome.dismiss} aria-label="ปิดคำแนะนำ">
+            <X weight="bold" aria-hidden="true" />
+          </button>
+        </p>
+      </div>
+    </div>
   );
 
   const panelBody = selected ? (

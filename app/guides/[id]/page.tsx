@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
@@ -7,6 +7,7 @@ import { guides } from "@/content/guides";
 import { GuideBlock, GuideNeedToKnow } from "@/components/GuideBlock";
 import { BrandLogo, CategoryIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
+import { FlyingName } from "@/components/PageMotion";
 import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
@@ -19,7 +20,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const guide = guides.find((g) => g.id === id);
-  return { title: guide ? `${guide.title} | ตั้งหลัก` : "วิธี | ตั้งหลัก" };
+  return { title: guide ? `${guide.title} | ตั้งหลัก` : "คู่มือ | ตั้งหลัก" };
 }
 
 // One Guide per page, so the Guides list stays short (docs/adr/0006). It reads like an
@@ -32,12 +33,12 @@ export default async function GuidePage({ params }: Props) {
   return (
     <div className="guide-page" data-line={guide.category}>
       <PageHead
-        title={guide.title}
+        title={<FlyingName name={`guide-title-${guide.id}`}>{guide.title}</FlyingName>}
         back={
           <div className="guide-crumbs">
-            <Link href={`/guides#${guide.category}`} className="back-link">
-              <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด
-            </Link>
+            <NavLink href={`/guides#${guide.category}`} className="back-link">
+              <ArrowLeft weight="bold" aria-hidden="true" /> คู่มือทั้งหมด
+            </NavLink>
             {/* A BTS or MRT Guide names its operator with the logo, on white; others show the category's icon */}
             <span className="guide-eyebrow">
               <BrandLogo brand={guide.brand} fallback={<CategoryIcon id={guide.category} />} />

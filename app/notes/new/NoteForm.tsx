@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { NOTE_MAX } from "@/content/notes";
 import { FormStatus } from "@/components/FormStatus";
+import { endMotion, startMotion } from "@/components/PageMotion";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
@@ -33,12 +34,20 @@ export function NoteForm({
   initialLine?: CategoryId;
 }) {
   const [state, action, pending] = useActionState(saveNote, null);
+  // Posting lands on the Feed or the Place's card (actions.ts redirects), which counts as going
+  // back: the form sinks away and the Feed fades in (docs/adr/0007). It is armed as the form is
+  // sent and only moves the form leaving, so a Note that didn't go up (a message back, or an
+  // error) leaves the form still, and the motion goes as soon as sending ends or the form goes.
+  useEffect(() => {
+    if (!pending) endMotion();
+  }, [pending]);
+  useEffect(() => endMotion, []);
   const [placeId, setPlaceId] = useState(initialPlace ?? "");
   const [length, setLength] = useState(0);
   const place = places.find((p) => p.id === placeId);
 
   return (
-    <form action={action} className="contribute-form" onInvalidCapture={thaiValidity(noteMessages)} onInput={clearValidity}>
+    <form action={action} onSubmit={() => startMotion("nav-posted")} className="contribute-form" onInvalidCapture={thaiValidity(noteMessages)} onInput={clearValidity}>
       {initialLine && <input type="hidden" name="from" value={initialLine} />}
       <label>
         อยากบอกอะไร
@@ -109,7 +118,7 @@ export function NoteForm({
       <p className="status-note" id="note-public">
         กดแล้วขึ้นเว็บเลย พร้อมชื่อกับจังหวัด กลับมาแก้หรือลบเองไม่ได้นะ
       </p>
-      <button type="submit" disabled={pending} aria-describedby="note-public">
+      <button type="submit" disabled={pending} aria-busy={pending} aria-describedby="note-public">
         {pending ? "กำลังส่ง" : "ส่งโน้ต"}
       </button>
     </form>

@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
+import { NavLink } from "./NavLink";
 import { PencilSimpleLine, Receipt } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
+import { FlyingName } from "./PageMotion";
 import { Peeps } from "./People";
 import { guides } from "@/content/guides";
 import { useChecklist } from "@/lib/useChecklist";
@@ -14,7 +15,8 @@ export function WeekRoute() {
   const count = firstWeek.filter((i) => done.includes(i.id)).length;
   const complete = count === firstWeek.length;
   const next = firstWeek.find((i) => !done.includes(i.id));
-  const nextSummary = next && guides.find((g) => `/guides/${g.id}` === next.href)?.summary;
+  const guideAt = (href: string) => guides.find((g) => `/guides/${g.id}` === href);
+  const nextSummary = next && guideAt(next.href)?.summary;
   return (
     <section className="week">
       {/* All done: the progress turns into a sunny card and the people come out to cheer */}
@@ -36,12 +38,12 @@ export function WeekRoute() {
         {/* Whoever finished is the best person to help the next Newcomers (UX audit 7, U6) */}
         {complete && (
           <div className="week-after">
-            <Link href="/notes/new" className="action is-primary">
+            <NavLink href="/notes/new" className="action is-primary">
               <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตบอกน้องรุ่นหน้า
-            </Link>
-            <Link href="/contribute#price" className="action">
+            </NavLink>
+            <NavLink href="/contribute#price" className="action">
               <Receipt weight="bold" aria-hidden="true" /> ไปมาแล้ว บอกราคาที่เห็น
-            </Link>
+            </NavLink>
           </div>
         )}
       </div>
@@ -49,6 +51,9 @@ export function WeekRoute() {
         {firstWeek.map((item) => {
           const isDone = done.includes(item.id);
           const isNext = item === next;
+          // The stop's title flies into the Guide's heading only where it is the Guide's own title
+          const guide = guideAt(item.href);
+          const title = guide?.title === item.title ? <FlyingName name={`guide-title-${guide.id}`}>{item.title}</FlyingName> : item.title;
           return (
             <li
               key={item.id}
@@ -65,14 +70,14 @@ export function WeekRoute() {
               </label>
               {isNext ? (
                 <div className="week-next">
-                  <Link href={item.href}>{item.title}</Link>
+                  <NavLink href={item.href}>{title}</NavLink>
                   {nextSummary && <p>{nextSummary}</p>}
                   <span className="week-read" aria-hidden="true">
-                    อ่านวิธี
+                    อ่านคู่มือ
                   </span>
                 </div>
               ) : (
-                <Link href={item.href}>{item.title}</Link>
+                <NavLink href={item.href}>{title}</NavLink>
               )}
             </li>
           );

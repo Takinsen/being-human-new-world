@@ -1,11 +1,14 @@
 "use client";
 
-import { type ReactNode, useEffect, useRef } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 
 // What came back from sending a form. It takes focus when it changes, so a screen reader
 // reads it and a phone shows it, rather than leaving the writer at a button below the fold.
 export function FormStatus({ error, children, signal }: { error?: boolean; children: ReactNode; signal: unknown }) {
   const ref = useRef<HTMLParagraphElement>(null);
+  // A second answer gets a new <p>, so it rises in again instead of just changing its words.
+  const [shown, setShown] = useState({ signal, n: 0 });
+  if (shown.signal !== signal) setShown({ signal, n: shown.n + 1 });
   useEffect(() => {
     if (!signal) return;
     ref.current?.focus({ preventScroll: true });
@@ -13,7 +16,7 @@ export function FormStatus({ error, children, signal }: { error?: boolean; child
     ref.current?.scrollIntoView({ block: "center", behavior: still ? "auto" : "smooth" });
   }, [signal]);
   return (
-    <p ref={ref} tabIndex={-1} className={error ? "form-status is-error" : "form-status"} role={error ? "alert" : "status"}>
+    <p key={shown.n} ref={ref} tabIndex={-1} className={error ? "form-status is-error" : "form-status"} role={error ? "alert" : "status"}>
       {children}
     </p>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { NavLink } from "@/components/NavLink";
 import { type FormEvent, useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { FormStatus } from "@/components/FormStatus";
@@ -20,7 +20,7 @@ function Status({ state }: { state: FormState }) {
       {state.href && (
         <>
           {" "}
-          <Link href={state.href}>{state.link ?? "ไปดู"}</Link>
+          <NavLink href={state.href}>{state.link ?? "ไปดู"}</NavLink>
         </>
       )}
     </FormStatus>
@@ -68,7 +68,7 @@ const contributeMessages = {
   name: "ใส่ชื่อที่อยากให้ขึ้น",
   hometown: "เลือกจังหวัดที่บ้านอยู่",
   story: "เล่าเรื่องปีแรกก่อน",
-  guideId: "เลือกก่อนว่าวิธีไหน",
+  guideId: "เลือกก่อนว่าคู่มือไหน",
 };
 
 export function ContributeForms({
@@ -143,7 +143,7 @@ export function ContributeForms({
           ชื่อเรา
           <input name="by" placeholder="เช่น พี่บอส" required />
         </label>
-        <button type="submit" disabled={pricePending}>
+        <button type="submit" disabled={pricePending} aria-busy={pricePending}>
           {pricePending ? "กำลังส่ง" : "ส่งราคา"}
         </button>
         <Status state={priceState} />
@@ -168,7 +168,7 @@ export function ContributeForms({
           เรื่องปีแรก
           <textarea name="story" rows={8} required placeholder="อยากขึ้นย่อหน้าใหม่ก็เว้นบรรทัด" />
         </label>
-        <button type="submit" disabled={seniorPending}>
+        <button type="submit" disabled={seniorPending} aria-busy={seniorPending}>
           {seniorPending ? "กำลังส่ง" : "ส่งเรื่อง"}
         </button>
         <Status state={seniorState} />
@@ -176,13 +176,13 @@ export function ContributeForms({
 
       {guides.length > 0 && (
         <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-          <h2 id="guide">ลองทำตามวิธีแล้ว</h2>
+          <h2 id="guide">ลองทำตามคู่มือแล้ว</h2>
           <p className="status-note">ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย &ldquo;ร่าง&rdquo; จะหายไป</p>
           <label>
-            วิธีไหน
+            คู่มือไหน
             <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>
               <option value="" disabled>
-                เลือกวิธี
+                เลือกคู่มือ
               </option>
               {lines.map((l) => (
                 <optgroup key={l.id} label={l.name}>
@@ -202,7 +202,7 @@ export function ContributeForms({
             ชื่อเรา
             <input name="by" required />
           </label>
-          <button type="submit" disabled={guidePending}>
+          <button type="submit" disabled={guidePending} aria-busy={guidePending}>
             {guidePending ? "กำลังส่ง" : "ลองแล้ว ใช้ได้"}
           </button>
           <Status state={guideState} />

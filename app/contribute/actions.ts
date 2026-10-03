@@ -71,6 +71,6 @@ export async function saveSenior(_: FormState, form: FormData): Promise<FormStat
 export async function saveGuideCheck(_: FormState, form: FormData): Promise<FormState> {
   const guideId = text(form, "guideId", 100);
   const by = text(form, "by", 80);
-  if (!guideId || !by) return { ok: false, message: "เลือกวิธีแล้วใส่ชื่อเราด้วย" };
+  if (!guideId || !by) return { ok: false, message: "เลือกคู่มือแล้วใส่ชื่อเราด้วย" };
   return save(() => appendRow("guides", { guideId, by }), `/guides/${guideId}`);
 }

@@ -34,9 +34,9 @@ _Avoid_: POI, listing, shop (a Place can be a station or a clinic)
 The date and the person who last confirmed a price, and how: on the spot, or (for the demo) found online by the team. A price without a Price Check is never shown as a number. Readers see only when the price was last updated ("อัปเดตล่าสุด"), not who checked it or how.
 _Avoid_: Price source, verified price
 
-**Guide** (วิธี):
+**Guide** (คู่มือ):
 Team-written, unattributed step-by-step Local Know-how for a procedure, such as topping up a Rabbit card or using a coin laundry.
-_Avoid_: Article, tutorial
+_Avoid_: วิธี (its earlier label; keep that word for "how" in plain sentences), Article, tutorial
 
 **Note** (โน้ต):
 A short piece of Local Know-how anyone writes for Newcomers, signed with their name and hometown. It may be pinned to a Place or stand alone under a category. Notes are shown newest first in the Feed and on the Place they are pinned to.
