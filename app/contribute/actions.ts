@@ -4,12 +4,14 @@ import { updateTag } from "next/cache";
 import { places } from "@/content/places";
 import { regionOf } from "@/lib/provinces";
 import { appendRow, SHEET_TAG } from "@/lib/sheet";
+import { stripJoiners } from "@/lib/thaiBreaks";
 
 /** `link` labels `href`; without one it reads "ไปดู" */
 export type FormState = { ok: boolean; message: string; href?: string; link?: string } | null;
 
 function text(form: FormData, key: string, max = 2000): string {
-  return String(form.get(key) ?? "").trim().slice(0, max);
+  // Text pasted from the site may carry its word joiners; none are stored
+  return stripJoiners(String(form.get(key) ?? "")).trim().slice(0, max);
 }
 
 async function save(write: () => Promise<void>, href: string, link?: string): Promise<FormState> {

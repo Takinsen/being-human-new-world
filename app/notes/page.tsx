@@ -10,6 +10,7 @@ import { FeedMotion, FlyingName, PageArrive } from "@/components/PageMotion";
 import { Peeps } from "@/components/People";
 import { PostedStatus } from "@/components/PostedStatus";
 import { getContent, isCategory } from "@/lib/content";
+import { keepPhrases } from "@/lib/thaiBreaks";
 
 export const metadata: Metadata = { title: "โน้ต | ตั้งหลัก" };
 
@@ -34,7 +35,7 @@ export default async function NotesPage({ searchParams }: Props) {
           place ? (
             // Only the name flies here from the Place's card
             <>
-              โน้ตที่<FlyingName name={`place-name-${place.id}`}>{place.name}</FlyingName>
+              โน้ตที่<FlyingName name={`place-name-${place.id}`}>{keepPhrases(place.name)}</FlyingName>
             </>
           ) : activeName ? (
             `โน้ตเรื่อง${activeName}`
@@ -85,17 +86,17 @@ export default async function NotesPage({ searchParams }: Props) {
           <span className="composer-pen" aria-hidden="true">
             <PencilSimpleLine weight="bold" />
           </span>
-          <span className="composer-prompt">{prompt}</span>
+          <span className="composer-prompt">{keepPhrases(prompt)}</span>
         </NavLink>
         {posted && (
           // The redirect after posting lands here (#fresh), right above the new Note.
           <PostedStatus className="form-status feed-posted" id="fresh">
-            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว อยู่ข้างล่างนี้ ขอบคุณที่เล่านะ
+            <CheckCircle weight="fill" aria-hidden="true" /> {keepPhrases("โน้ตขึ้นแล้ว อยู่ข้างล่างนี้ ขอบคุณที่เล่านะ")}
           </PostedStatus>
         )}
         <FeedMotion>
           <div className="feed">
-            {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย</p>}
+            {notes.length === 0 && <p className="status-note">{keepPhrases("ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย")}</p>}
             {notes.map((n, i) => (
               <NoteCard key={n.id} note={n} fresh={Boolean(posted) && i === 0} />
             ))}
@@ -105,13 +106,13 @@ export default async function NotesPage({ searchParams }: Props) {
           <li>
             <NavLink href="/seniors">
               <BookOpenText weight="bold" aria-hidden="true" />
-              <span>อ่านเรื่องปีแรกของรุ่นพี่</span>
+              <span>{keepPhrases("อ่านเรื่องปีแรกของรุ่นพี่")}</span>
             </NavLink>
           </li>
           <li>
             <NavLink href="/seniors#help">
               <Phone weight="bold" aria-hidden="true" />
-              <span>เหงาหรือเครียด คุยกับคนได้</span>
+              <span>{keepPhrases("เหงาหรือเครียด คุยกับคนได้")}</span>
             </NavLink>
           </li>
         </ul>

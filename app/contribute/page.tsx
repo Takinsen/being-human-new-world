@@ -3,6 +3,7 @@ import { placeCategories } from "@/content/categories";
 import { getContent } from "@/lib/content";
 import { provincesByRegion } from "@/lib/provinces";
 import { sheetConfigured } from "@/lib/sheet";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { PageHead } from "@/components/PageHead";
 import { ContributeForms } from "./ContributeForms";
 
@@ -20,7 +21,7 @@ export default async function ContributePage({ searchParams }: Props) {
       <PageHead title="ช่วยเติมข้อมูล" lede="รู้อะไรที่เว็บยังไม่มี เติมตรงนี้ได้ กดส่งแล้วขึ้นเลย" />
       <div className="inner">
       {!sheetConfigured() && (
-        <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้กดส่งยังไม่ขึ้น</p>
+        <p className="form-status is-error">{keepPhrases("ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้กดส่งยังไม่ขึ้น")}</p>
       )}
       <ContributeForms
         // Places and Guides only: Adjusting has neither (docs/adr/0008)

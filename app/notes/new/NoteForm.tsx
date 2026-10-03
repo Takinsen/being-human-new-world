@@ -6,6 +6,7 @@ import { NOTE_MAX } from "@/content/notes";
 import { FormStatus } from "@/components/FormStatus";
 import { endMotion, startMotion } from "@/components/PageMotion";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { saveNote } from "../actions";
 
@@ -111,12 +112,12 @@ export function NoteForm({
       </div>
       {state && (
         <FormStatus error signal={state}>
-          {state.message}
+          {keepPhrases(state.message)}
         </FormStatus>
       )}
       {/* Say it before they press: there's no edit or delete on the site (docs/adr/0005) */}
       <p className="status-note" id="note-public">
-        กดแล้วขึ้นเว็บเลย พร้อมชื่อกับจังหวัด กลับมาแก้หรือลบเองไม่ได้นะ
+        {keepPhrases("กดแล้วขึ้นเว็บเลย พร้อมชื่อกับจังหวัด กลับมาแก้หรือลบเองไม่ได้นะ")}
       </p>
       <button type="submit" disabled={pending} aria-busy={pending} aria-describedby="note-public">
         {pending ? "กำลังส่ง" : "ส่งโน้ต"}

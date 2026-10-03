@@ -6,6 +6,7 @@ import { Peeps } from "@/components/People";
 import { PageHead } from "@/components/PageHead";
 import { SeniorStory } from "@/components/SeniorStory";
 import { getContent } from "@/lib/content";
+import { keepPhrases } from "@/lib/thaiBreaks";
 
 export const metadata: Metadata = { title: "รุ่นพี่ | ตั้งหลัก" };
 
@@ -31,7 +32,7 @@ export default async function SeniorsPage() {
           <li>
             <NavLink href="/contribute#senior">
               <PencilSimpleLine weight="bold" aria-hidden="true" />
-              <span>เล่าปีแรกของเราบ้าง</span>
+              <span>{keepPhrases("เล่าปีแรกของเราบ้าง")}</span>
             </NavLink>
           </li>
         </ul>
@@ -39,21 +40,21 @@ export default async function SeniorsPage() {
       <section className="help" id="help">
         <div className="inner">
           <h2>
-            <HandHeart weight="bold" aria-hidden="true" /> ถ้าหนักเกินไป คุยกับคนได้
+            <HandHeart weight="bold" aria-hidden="true" /> {keepPhrases("ถ้าหนักเกินไป คุยกับคนได้")}
           </h2>
           <ul>
             {helpLinks.map((h) => (
               <li key={h.name}>
-                <h3>{h.name}</h3>
-                <p>{h.what}</p>
+                <h3>{keepPhrases(h.name)}</h3>
+                <p>{keepPhrases(h.what)}</p>
                 <div className="help-contacts">
                   {h.contact &&
                     (h.href ? (
                       <a href={h.href} className="help-contact">
-                        {h.contact}
+                        {keepPhrases(h.contact)}
                       </a>
                     ) : (
-                      <span className="help-contact">{h.contact}</span>
+                      <span className="help-contact">{keepPhrases(h.contact)}</span>
                     ))}
                   {h.web && (
                     <a href={h.web} className="help-contact" target="_blank" rel="noreferrer">
