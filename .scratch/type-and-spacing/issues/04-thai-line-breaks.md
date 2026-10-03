@@ -1,6 +1,6 @@
 # Thai lines break only at spaces
 
-Status: ready-for-agent
+Status: done
 
 The browser breaks Thai between any two dictionary words, so lines split phrases ("กินเซเว่น ┃ เยอะ", "ยัง ┃ ไง"). The owner wants a line to break only at a space (`../spec.md`, Q17–Q19, Q21, Q22; docs/adr/0007's type and spacing amendment). The prototype did it on the client by editing text nodes (`git show 458cc8f:components/prototype/PhraseWrap.tsx`); the real version joins when text is rendered.
 
@@ -25,3 +25,24 @@ The browser breaks Thai between any two dictionary words, so lines split phrases
 - The scan's count with the real code is at or below the prototype's 22, and none of the remaining ones splits a word in the list.
 - Posting a Note and a contribute form stores text without U+2060 (check the action's payload).
 - `npm run typecheck` and `npm run build` pass.
+
+## Comments
+
+Done (2026-10-03).
+
+**How it works.** `lib/thaiBreaks.ts`: `keepPhrases(text)` strips any joiners, splits at breakable whitespace (U+00A0 stays inside a phrase, so "สาย 1" is one), and inside each phrase of up to 24 letters puts U+2060 before every Thai word start after a Thai character, and after a dash or slash ("จันทร์–เสาร์", "7:00–19:00"; this replaces the hand-placed joiners around en dashes). A longer phrase only keeps the words in `KEEP_WHOLE` whole, and puts a zero-width space (U+200B) at each Thai edge of such a word: a joiner cuts the browser's dictionary run, and a run ending in half a word broke mid-word ("…สูงกว่าต่า" gave "สู┃งกว่า", "…ของมหา" gave "ขอ┃ง"). `stripJoiners` removes both. Used at render in every component listed above; `TelText` joins after its split, so numbers are still found and dialled as written; `PageHead` joins a string title or lede itself. Raw strings stay for keys, hrefs, ids, aria-labels, metadata, form values and the checklist/Guide title comparison. `components/PlainCopy.tsx` (mounted in app/layout.tsx) strips them on copy. The two `actions.ts` files strip them from what is posted too, in case pasted text keeps them. The hand-placed U+2060 are gone from content/ (guides.ts, and places.ts and seniors.ts too); this also fixes the Commons file name of the Samyan Mitrtown photo, which had picked one up. Short titles balance (one block next to `h1, h2, h3` in globals.css). `.lede` keeps `text-wrap: pretty` with a new comment: now that a lede breaks only at spaces, pretty keeps a short last phrase off a line of its own (it took the scan from 23 to 22).
+
+**Word list:** แพ็กเกจ, มหิตลาธิเบศร, ใบอนุญาต, ศาลาพระเกี้ยว, สามย่าน, สามย่านมิตรทาวน์, จามจุรีสแควร์, plus from the scan: อาคาร, มหาลัย, ต่างจังหวัด, ส่วนต่าง, ข้าวราดแกง, โรงพยาบาล, โรงเรียนแพทย์, ผู้ให้บริการ, รูปคลื่นแตะจ่าย. "ไม่ได้" stays out: it also starts "ไม่ได้ยิน", and the zero-width space would allow "ไม่ได้┃ยิน".
+
+**Scan** (the prototype's, on `next dev`, 19 pages at 390 and 1440, joiners and zero-width spaces stripped before checking):
+- With the prototype's type (font D, the new scale and spacing, injected from 458cc8f's CSS, since tickets 01–03 aren't in yet): 108 before, **22** after.
+- With today's type (Plex Looped and Mitr, the old scale): 132 before, 34 after.
+- None of the remaining ones splits a word in the list. Each is a break between words in a phrase over 24 letters, or a short last line at a space ("จุฬาฯ ┃ ยังไง", "โทร ┃ 1669", "นั่ง ┃ BTS"). Run it again once 01–03 land.
+
+**Checked:** copying the Seniors lede gives plain text. The price form and a Note post nothing with U+2060/U+200B (the request payload). `npm run typecheck`, `npm run build`. No hydration warnings.
+
+**Find in page:** Ctrl+F itself (browser UI) couldn't be driven. `window.find` in headed Chromium (under Xvfb) finds "เซเว่น", "เยอะมาก", "พระเกี้ยว" and "สามย่าน" inside joined phrases, and across U+200B. Headless shell's `window.find` finds nothing, not even Latin text, so it can't tell.
+
+**Screen readers, open:** Chromium's accessibility tree keeps U+2060 in names (65 of 121 Thai names on /guides/pop-bus, e.g. the heading "ขึ้นรถป๊อป"). VoiceOver and NVDA should skip it, since it is default-ignorable, but they couldn't be run here. One check with VoiceOver on a phone would settle it.
+
+**Left as is:** a phrase split across elements still breaks at the element edge: "โน้ตที่" + the Place's name in the Feed's title, and "เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้" on the map.

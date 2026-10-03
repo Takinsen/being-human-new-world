@@ -1,5 +1,6 @@
 import { NavLink } from "./NavLink";
 import { Canopy } from "./Canopy";
+import { keepPhrases } from "@/lib/thaiBreaks";
 
 /** Top of every page but the map: the wordmark, then the page's own heading. */
 export function PageHead({
@@ -19,8 +20,9 @@ export function PageHead({
       <Canopy />
       <Wordmark />
       {back}
-      <h1>{title}</h1>
-      {lede && <p className="lede">{lede}</p>}
+      {/* Plain strings keep their phrases whole here; a node passed in does its own */}
+      <h1>{typeof title === "string" ? keepPhrases(title) : title}</h1>
+      {lede && <p className="lede">{typeof lede === "string" ? keepPhrases(lede) : lede}</p>}
       {children}
     </header>
   );

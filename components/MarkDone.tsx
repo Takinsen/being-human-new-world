@@ -4,6 +4,7 @@ import { NavLink } from "./NavLink";
 import { useState } from "react";
 import { ArrowRight, CheckCircle, Circle } from "@phosphor-icons/react";
 import { firstWeek } from "@/content/checklist";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { useChecklist } from "@/lib/useChecklist";
 
 // Lets a Newcomer tick the matching first-week station right after reading a Guide,
@@ -35,7 +36,7 @@ export function MarkDone({ itemId, title }: { itemId: string; title: string }) {
         <NavLink href={next ? next.href : "/checklist"} className="detail-guide guide-next mark-next">
           <span>
             <small>{next ? "ถัดไปในสัปดาห์แรก" : "ครบแล้ว"}</small>
-            {next ? next.title : "ดูสัปดาห์แรก"}
+            {next ? keepPhrases(next.title) : "ดูสัปดาห์แรก"}
           </span>
           <ArrowRight weight="bold" aria-hidden="true" />
         </NavLink>

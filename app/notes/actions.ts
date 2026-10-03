@@ -7,11 +7,13 @@ import { isCategory } from "@/lib/content";
 import { NOTE_MAX } from "@/content/notes";
 import { regionOf } from "@/lib/provinces";
 import { appendRow, SHEET_TAG } from "@/lib/sheet";
+import { stripJoiners } from "@/lib/thaiBreaks";
 
 export type NoteFormState = { message: string } | null;
 
 function text(form: FormData, key: string, max: number): string {
-  return String(form.get(key) ?? "").trim().slice(0, max);
+  // Text pasted from the site may carry its word joiners; none are stored
+  return stripJoiners(String(form.get(key) ?? "")).trim().slice(0, max);
 }
 
 export async function saveNote(_: NoteFormState, form: FormData): Promise<NoteFormState> {

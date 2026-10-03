@@ -1,4 +1,5 @@
 import type { Senior } from "@/content/types";
+import { keepPhrases } from "@/lib/thaiBreaks";
 
 export function SeniorStory({ senior }: { senior: Senior }) {
   return (
@@ -8,19 +9,18 @@ export function SeniorStory({ senior }: { senior: Senior }) {
           {initial(senior.name)}
         </span>
         <div>
-          <h2>{senior.name}</h2>
+          <h2>{keepPhrases(senior.name)}</h2>
           <p className="story-from">
-            บ้านอยู่{senior.hometown}
-            {senior.about && ` ${senior.about}`}
+            {keepPhrases(`บ้านอยู่${senior.hometown}${senior.about ? ` ${senior.about}` : ""}`)}
           </p>
         </div>
       </header>
       <div className="story-body">
         {senior.story.map((p) => (
-          <p key={p}>{p}</p>
+          <p key={p}>{keepPhrases(p)}</p>
         ))}
       </div>
-      {!senior.approved && <p className="draft-tag">ร่างจากบทสัมภาษณ์ รอ{senior.name}ตรวจ</p>}
+      {!senior.approved && <p className="draft-tag">{keepPhrases(`ร่างจากบทสัมภาษณ์ รอ${senior.name}ตรวจ`)}</p>}
     </article>
   );
 }

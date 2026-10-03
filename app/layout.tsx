@@ -2,10 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { ChipFocus } from "@/components/ChipFocus";
 import { NavLink } from "@/components/NavLink";
 import { PageFrame } from "@/components/PageMotion";
+import { PlainCopy } from "@/components/PlainCopy";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -41,17 +43,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <footer className="site-footer">
           <p>
-            ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี <NavLink href="/contribute">ช่วยเติมได้เลย</NavLink>
+            {keepPhrases("ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี")}{" "}
+            <NavLink href="/contribute">{keepPhrases("ช่วยเติมได้เลย")}</NavLink>
           </p>
           {SHOW_TRANSIT_LOGOS && (
             <p className="logo-notice">
-              <small>{LOGO_NOTICE}</small>
+              <small>{keepPhrases(LOGO_NOTICE)}</small>
             </p>
           )}
         </footer>
         <TabBar />
         <ChipFocus />
         <SwipeTabs />
+        <PlainCopy />
       </body>
     </html>
   );

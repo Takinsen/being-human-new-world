@@ -2,6 +2,7 @@ import { NavLink } from "./NavLink";
 import { Check, MapPin, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { firstWeek } from "@/content/checklist";
 import type { Guide, GuideFact, GuideStep } from "@/content/types";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { MarkDone } from "./MarkDone";
 import { PriceFigure, PriceUpdated } from "./Price";
 import { TelText } from "./TelText";
@@ -28,7 +29,7 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
         <dl className="guide-facts">
           {guide.facts.map((f) => (
             <div key={f.label}>
-              <dt>{f.label}</dt>
+              <dt>{keepPhrases(f.label)}</dt>
               <dd>
                 <FactValue fact={f} />
               </dd>
@@ -47,7 +48,7 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
           <h2 id="bring">พกไปด้วย</h2>
           <ul>
             {guide.bring.map((b) => (
-              <li key={b}>{b}</li>
+              <li key={b}>{keepPhrases(b)}</li>
             ))}
           </ul>
         </section>
@@ -75,14 +76,14 @@ export function GuideBlock({ guide }: { guide: Guide }) {
         <nav className="jump-links guide-jumps" aria-label="ไปที่ทางเลือก">
           {guide.jumps.map((j) => (
             <a key={j.to} href={`#${j.to}`} data-urgent={guide.steps.find((s) => s.id === j.to)?.urgent || undefined}>
-              {j.label}
+              {keepPhrases(j.label)}
             </a>
           ))}
         </nav>
       )}
 
       <h2 className="guide-steps-title" id="steps">
-        {options ? (guide.choose ?? "เลือกแบบที่ใช่") : "ทำตามนี้"}
+        {options ? keepPhrases(guide.choose ?? "เลือกแบบที่ใช่") : "ทำตามนี้"}
       </h2>
 
       {options ? (
@@ -122,7 +123,7 @@ export function GuideBlock({ guide }: { guide: Guide }) {
       {guide.related && (
         <p className="guide-next">
           <small>อ่านต่อ</small>
-          <NavLink href={guide.related.href}>{guide.related.label}</NavLink>
+          <NavLink href={guide.related.href}>{keepPhrases(guide.related.label)}</NavLink>
         </p>
       )}
     </article>
@@ -137,7 +138,7 @@ function Step({ step, number }: { step: GuideStep; number?: number }) {
         {number && <span className="visually-hidden">ขั้นที่ {number}: </span>}
         {step.when && (
           <small className="step-when">
-            {step.when}
+            {keepPhrases(step.when)}
             <span className="visually-hidden">: </span>
           </small>
         )}
@@ -158,13 +159,13 @@ function Step({ step, number }: { step: GuideStep; number?: number }) {
       {step.link && (
         <a className="step-link" href={step.link.href} target="_blank" rel="noreferrer">
           <MapPin weight="bold" aria-hidden="true" />
-          {step.link.label}
+          {keepPhrases(step.link.label)}
           <span className="visually-hidden"> (เปิดแท็บใหม่)</span>
         </a>
       )}
       {step.say && (
         <p className="step-say">
-          <b>พูดว่า</b> <q>{step.say}</q>
+          <b>พูดว่า</b> <q>{keepPhrases(step.say)}</q>
         </p>
       )}
       {step.warn && (

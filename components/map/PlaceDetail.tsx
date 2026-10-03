@@ -11,6 +11,7 @@ import {
   Warning,
 } from "@phosphor-icons/react";
 import { mapsUrl } from "@/lib/format";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { PlaceIcon } from "../icons";
 import { NoteCard } from "../NoteCard";
 import { FlyingName } from "../PageMotion";
@@ -70,7 +71,7 @@ export function PlaceDetail({
             <PlaceIcon place={place} />
           </span>
           <h2 ref={heading} tabIndex={-1}>
-            <FlyingName name={`place-name-${place.id}`}>{place.name}</FlyingName>
+            <FlyingName name={`place-name-${place.id}`}>{keepPhrases(place.name)}</FlyingName>
           </h2>
         </div>
         {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
@@ -79,9 +80,11 @@ export function PlaceDetail({
         </p>
         {place.homeTaste && (
           <p className="detail-taste">
-            {stop.homeTasteBy
-              ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน`
-              : `อาหาร${place.homeTaste} ทีมหามาให้ลอง ยังรอคน${place.homeTaste}มาบอกว่าใช่ไหม`}
+            {keepPhrases(
+              stop.homeTasteBy
+                ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน`
+                : `อาหาร${place.homeTaste} ทีมหามาให้ลอง ยังรอคน${place.homeTaste}มาบอกว่าใช่ไหม`,
+            )}
           </p>
         )}
       </header>
@@ -91,7 +94,7 @@ export function PlaceDetail({
           <h3 id="detail-to-chula" className="detail-h">
             <SignIn weight="bold" aria-hidden="true" /> เข้าจุฬาฯ ยังไง
           </h3>
-          <p>{place.toChula}</p>
+          <p>{keepPhrases(place.toChula)}</p>
         </section>
       )}
 
@@ -114,7 +117,7 @@ export function PlaceDetail({
             {place.knowhow.map((k) => (
               <li key={k}>
                 <span className="detail-leaf" aria-hidden="true" />
-                <span>{k}</span>
+                <span>{keepPhrases(k)}</span>
               </li>
             ))}
           </ul>
@@ -132,7 +135,7 @@ export function PlaceDetail({
         </div>
         {posted && (
           <p className="form-status" role="status" tabIndex={-1} ref={status}>
-            <CheckCircle weight="fill" aria-hidden="true" /> โน้ตขึ้นแล้ว ขอบคุณนะ
+            <CheckCircle weight="fill" aria-hidden="true" /> {keepPhrases("โน้ตขึ้นแล้ว ขอบคุณนะ")}
           </p>
         )}
         {latest ? (
@@ -140,12 +143,12 @@ export function PlaceDetail({
             <NoteCard note={latest} compact />
             {notes.length > 1 && (
               <NavLink href={`/notes?place=${place.id}`} className="related-link">
-                อ่านโน้ตที่นี่ทั้งหมด {notes.length} อัน
+                {keepPhrases(`อ่านโน้ตที่นี่ทั้งหมด ${notes.length} อัน`)}
               </NavLink>
             )}
           </>
         ) : (
-          <p className="detail-empty">ยังไม่มีใครเขียนถึงที่นี่</p>
+          <p className="detail-empty">{keepPhrases("ยังไม่มีใครเขียนถึงที่นี่")}</p>
         )}
       </section>
 
@@ -160,7 +163,7 @@ export function PlaceDetail({
                 <NavLink href={`/guides/${guide.id}`}>
                   <BookOpenText weight="bold" aria-hidden="true" />
                   <span>
-                    <FlyingName name={`guide-title-${guide.id}`}>{guide.title}</FlyingName>
+                    <FlyingName name={`guide-title-${guide.id}`}>{keepPhrases(guide.title)}</FlyingName>
                   </span>
                   <CaretRight weight="bold" aria-hidden="true" />
                 </NavLink>

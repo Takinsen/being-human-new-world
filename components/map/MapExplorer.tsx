@@ -8,6 +8,7 @@ import { NavLink } from "../NavLink";
 import type { Category } from "@/content/categories";
 import { firstWeek } from "@/content/checklist";
 import type { CategoryId } from "@/content/types";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { useChecklist } from "@/lib/useChecklist";
 import { CategoryIcon, PlaceIcon } from "../icons";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
@@ -266,8 +267,8 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
     <div className="stop-list" key={filterKey} data-enter={listMotion.enter}>
       {visible.length === 0 && (
         <p className="status-note">
-          {active.length ? "หมวดนี้ยังไม่มีใครเขียนโน้ตไว้" : "ยังไม่มีโน้ตที่ไหนบนแผนที่เลย"}{" "}
-          <NavLink href="/notes/new">เขียนเป็นคนแรกเลย</NavLink>
+          {keepPhrases(active.length ? "หมวดนี้ยังไม่มีใครเขียนโน้ตไว้" : "ยังไม่มีโน้ตที่ไหนบนแผนที่เลย")}{" "}
+          <NavLink href="/notes/new">{keepPhrases("เขียนเป็นคนแรกเลย")}</NavLink>
         </p>
       )}
       {categories
@@ -294,13 +295,13 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                         </span>
                         {/* Name and tags only: what a Place is waits on its card (docs/adr/0007, amended 2026-10-02) */}
                         <span>
-                          <b>{place.name}</b>
+                          <b>{keepPhrases(place.name)}</b>
                           <span className="visually-hidden">: </span>
                           <span className="stop-tags">
                             {price && <b className="stop-price">{price}</b>}
                             {place.homeTaste && (
                               <small className="home-taste-tag">
-                                <BowlSteam weight="bold" aria-hidden="true" /> รสชาติบ้าน{place.homeTaste}
+                                <BowlSteam weight="bold" aria-hidden="true" /> {keepPhrases(`รสชาติบ้าน${place.homeTaste}`)}
                               </small>
                             )}
                             {notes.length > 0 && (
@@ -319,12 +320,12 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
           );
         })}
       <NavLink href="/guides/sick" className="list-help">
-        <FirstAidKit weight="bold" aria-hidden="true" /> ไม่สบาย ไปไหนดี
+        <FirstAidKit weight="bold" aria-hidden="true" /> {keepPhrases("ไม่สบาย ไปไหนดี")}
       </NavLink>{" "}
       <NavLink href="/seniors#help" className="list-help">
-        <Phone weight="bold" aria-hidden="true" /> เหงาหรือเครียด คุยกับคนได้
+        <Phone weight="bold" aria-hidden="true" /> {keepPhrases("เหงาหรือเครียด คุยกับคนได้")}
       </NavLink>
-      {SHOW_TRANSIT_LOGOS && <p className="fine-print">{LOGO_NOTICE}</p>}
+      {SHOW_TRANSIT_LOGOS && <p className="fine-print">{keepPhrases(LOGO_NOTICE)}</p>}
     </div>
   );
 
@@ -338,14 +339,14 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
           {doneCount === 0 ? (
             <NavLink href="/checklist">
               <span>
-                เพิ่งย้ายมา เริ่มจาก<b>สัปดาห์แรก</b>ก่อนก็ได้
+                {keepPhrases("เพิ่งย้ายมา เริ่มจาก")}<b>สัปดาห์แรก</b>{keepPhrases("ก่อนก็ได้")}
               </span>
             </NavLink>
           ) : (
             <NavLink href={nextItem.href}>
               <span>
                 {/* No <b>: .welcome b doesn't wrap, and a title can be long */}
-                สัปดาห์แรกทำไปแล้ว {doneCount} จาก {firstWeek.length}&nbsp;ข้อ ต่อไปคือ{nextItem.title}
+                {keepPhrases(`สัปดาห์แรกทำไปแล้ว ${doneCount} จาก ${firstWeek.length}\u00a0ข้อ ต่อไปคือ${nextItem.title}`)}
               </span>
             </NavLink>
           )}
