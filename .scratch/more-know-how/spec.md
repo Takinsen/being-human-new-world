@@ -1,4 +1,4 @@
-Status: needs-triage
+Status: done
 
 # More know-how: Household Places, food and health, Home Taste, the CU POP BUS logo
 
@@ -28,3 +28,20 @@ Research: `research-household.md`, `research-food-health.md` (this folder).
 - **Q18 Order:** the content (Household, food and health Places, the two new Guides, the logo, the Starter Checklist) goes into `main` first, through tickets. Home Taste follows after the prototype, together with its extra places per region.
 - **Q19 Out-of-date content:** fix it from the research: the Samyan Mitrtown food court (cashless now, closes around 21:00–22:00) and the `sick` Guide's gold-card tip (you can move it yourself now; link to the new rights Guide).
 - **Q20 Central region:** look for a place with clearly central-provinces food (Suphanburi, Ayutthaya and the like). If none turns up, central shows the "tell us" prompt like east and west.
+
+## Shipped (2026-10-03)
+
+Tickets 01–05 (`issues/`) merged to main in Takinsen/being-human-new-world#6.
+Note on Q16: the Starter Checklist has only a first week, no first month, so the cover check went into the first week; the Home Taste stop waits for the Home Taste ticket.
+
+## Prototype: Home Taste (2026-10-03)
+
+- Branch `prototype/home-taste` (pushed). Run `NEXT_PUBLIC_PROTOTYPE=1 npm run build && npm start` (or `npm run dev`), open `/guides#food` or `/home-taste`.
+- `?ht=A|B|C` picks the variant (keys ←/→), `?at=guides|page` where it lives (key P), `?region=` the chosen region (the real thing keeps it in the browser, Q10).
+  - A: region chips with a count, then that region's places as photo cards.
+  - B: "บ้านอยู่ภาคไหน" first, six big buttons; once picked, your region's places on top and the rest folded under "ร้านภาคอื่น".
+  - C: one sideways-scrolling row per region, yours first and tinted.
+- New team picks (from `research-food-health.md` §3 and `research-home-taste.md`): north 3 (ข้าวซอยดอยคำ, ลำดวนฟ้าฮ่าม, หอมด่วน), Isan +2 (พาข้าว, คำแพง), south +1 (ศรีขมิ้น), central 2 (ขนมไทยแม่เดือน, Suphanburi; เส้นสุโข, Sukhothai, central in the app's six regions), west 1 (ก๋งตุ๋ย ไก่ย่างบางตาล ราชบุรี). East: none found, so it shows the "tell us" prompt.
+- Screenshots: `prototype/` on that branch. Commons is blocked from the agent's browser, so the photos there are placeholders; on a normal network they are real dish photos.
+- **Q21 Home Taste variant:** B then A. With no region chosen, ask "บ้านอยู่ภาคไหน" with six big buttons; once chosen, region chips (yours selected) over that region's photo cards.
+- **Q22 Where:** its own page, with a card at the top of the food section on `/guides` that says how many places your region has. The page is `/guides/home-taste`, so the คู่มือ tab stays lit.
