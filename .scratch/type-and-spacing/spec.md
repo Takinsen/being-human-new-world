@@ -1,6 +1,6 @@
 # Type and spacing: a new font, a smaller scale, one rhythm
 
-Status: needs-info (prototype round 2 built 2026-10-03; waiting for the owner on line breaks)
+Status: ready-for-agent (decided 2026-10-03; tickets in `issues/`)
 
 ## What the owner said
 
@@ -37,6 +37,9 @@ Status: needs-info (prototype round 2 built 2026-10-03; waiting for the owner on
 - **Q18, where:** all text, Notes and Senior Stories included, applied at render, never in the stored text. The hand-placed U+2060 in `content/guides.ts` become unnecessary; U+00A0 ("สาย 1") stays. Copying strips the joiners.
 - **Q19:** try it in the prototype first.
 - **Q20, LINE Seed's licence:** the files' licence couldn't be confirmed (their name table points at Dalton Maag's EULA and seed.line.me is blocked for the agent), so headings move to Anuphan: font D, Anuphan headings + IBM Plex Sans Thai text. No self-hosted font remains.
+- **Q21, a ragged right edge:** fine; phrases whole matter more.
+- **Q22, words the dictionary splits inside long phrases:** one list of words kept whole, applied everywhere (Notes too); it replaces the hand-placed U+2060 in `content/guides.ts`.
+- **Q23, font:** D, Anuphan headings + IBM Plex Sans Thai text, the wordmark in Mitr.
 - Everything else in Mitr (a step's action line, the words to say, the Guide's end line) takes the new heading font.
 
 ## Prototype
@@ -58,6 +61,11 @@ Status: needs-info (prototype round 2 built 2026-10-03; waiting for the owner on
 - A scan of 19 pages at 390px and 1440px for a break between two Thai letters, or a last line of 6 letters or fewer: 108 with today's breaks, 22 with phrases. All 22 are long phrases breaking between words; a few split loanwords and names the browser's dictionary doesn't know ("แพ็ก┃เกจ", "มหิ┃ตลาธิเบศร", "ใบ┃อนุญาต").
 - Before/after screenshots sent: the Feed, the Guides list, Seniors, a Guide's steps and the Starter Checklist.
 
-## Next
+## Tickets
 
-- Once the owner picks, amend ADR 0007 (type and the projector growth) and write tickets under `issues/`.
+- `issues/01-fonts.md`: Anuphan headings, IBM Plex Sans Thai text, the wordmark in Mitr.
+- `issues/02-type-scale.md` (blocked by 01): one scale, bold only where it matters, no laptop growth.
+- `issues/03-spacing.md` (blocked by 02): 8 / 16 / 32 / 48.
+- `issues/04-thai-line-breaks.md`: lines break only at spaces.
+
+ADR 0007 is amended (type and spacing).
