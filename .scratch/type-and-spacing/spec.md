@@ -1,6 +1,6 @@
 # Type and spacing: a new font, a smaller scale, one rhythm
 
-Status: ready-for-agent (decided 2026-10-03; tickets in `issues/`)
+Status: done (2026-10-03; tickets 01–04 done)
 
 ## What the owner said
 
