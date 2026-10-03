@@ -1,6 +1,6 @@
 # One type scale for the whole site, bold only where it matters
 
-Status: ready-for-agent
+Status: done
 Blocked by: 01
 
 The owner found a Guide too big (on a laptop, and in places on a phone), too many things equally loud and bold, and headings too close to body text (`../spec.md`, Q3, Q8–Q10, Q12, Q13, Q16; docs/adr/0007's type and spacing amendment). The prototype's type layer is `app/prototype-type.css` on branch `prototype/type-and-spacing` (local to this repo: `git show 458cc8f:app/prototype-type.css`); fold its decisions into app/globals.css's own rules and tokens rather than layering overrides.
@@ -20,3 +20,9 @@ The owner found a Guide too big (on a laptop, and in places on a phone), too man
 - No 18px text is left (`getComputedStyle` sweep), and no 700 outside the four kinds above.
 - Text in category colours still reads at 4.5:1 or more.
 - `npm run typecheck` and `npm run build` pass.
+
+## Comments
+
+- Done in 059e7dd. Tokens kept their names (`--step--1` 14, `--step-0` 16, `--step-1` 20, `--step-2` 25, `--step-3` 32 / 36 from 900px); `--step-half`, `--type-quote` and `--type-big` are gone.
+- A computed-style sweep of the map, a Place card, the Feed, the Guides list, the rabbit and sick Guides, the Starter Checklist, Seniors and both forms at 390px and 1440px: no 18px text left; weight 700 only on prices (`.price-strip`, `.stop-price`), numbers to call, the forms' submit and Leaflet's own zoom buttons. `b, strong` default to 500.
+- Off the scale on purpose: a tip at 0.94em (a quiet sentence, as in the prototype), the wordmark (a logo: 16 / 20 / 24px), icons, the tab bar's labels and the Note form's counter at meta size.

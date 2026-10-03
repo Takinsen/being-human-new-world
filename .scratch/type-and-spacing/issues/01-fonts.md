@@ -1,6 +1,6 @@
 # Headings in Anuphan, text in IBM Plex Sans Thai, the wordmark in Mitr
 
-Status: ready-for-agent
+Status: done
 
 The owner picked font D in the prototype (see `../spec.md`, Q1, Q2, Q7, Q15, Q20, Q23, and docs/adr/0007's type and spacing amendment). Build it in the real code; the prototype is reference, not code to copy.
 
@@ -15,3 +15,7 @@ The owner picked font D in the prototype (see `../spec.md`, Q1, Q2, Q7, Q15, Q20
 
 - `CSS.getPlatformFontsForNode` (or the DevTools "Rendered fonts" panel) shows Anuphan on headings, IBM Plex Sans Thai on text and Mitr only on the wordmark, on the map, the Feed, a Guide and the Starter Checklist.
 - `npm run typecheck` and `npm run build` pass.
+
+## Comments
+
+- Done in ccd3530. Rendered fonts checked with `CSS.getPlatformFontsForNode` on a Guide: headings, the step line and the words to say in Anuphan; text and prices in IBM Plex Sans Thai; the wordmark in Mitr Medium.

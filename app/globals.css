@@ -50,8 +50,10 @@
   --measure: 40rem;
   --gutter: 16px;
 
-  /* Spacing scale: 4 inside a label, 8 inside a group, 12 between items,
-     16 between groups, 24 between sections, 32 under a page head, 48 between big sections */
+  /* Spacing by proximity (docs/adr/0007, amended 2026-10-03): 8 inside one thing, 16 between
+     things in a list and inside a card, 32 between sections, 48 under a page head and between
+     big sections. 4, 12 and 24 only inside small labels, chips and pills, and where a comment
+     says why */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -208,7 +210,7 @@ svg { flex: none; }
 }
 
 .fine-print {
-  margin: var(--space-4) 0 var(--space-6);
+  margin: var(--space-4) 0 0;
   color: var(--ink-soft);
   font-size: var(--step--1);
 }
@@ -274,7 +276,7 @@ svg { flex: none; }
   width: 100%;
   max-width: var(--measure);
   margin: 0 auto;
-  padding: var(--space-5) var(--gutter) var(--space-7);
+  padding: var(--space-4) var(--gutter) var(--space-7);
   border-top: 1px solid var(--rule);
   color: var(--ink-soft);
   font-size: var(--step--1);
@@ -291,7 +293,7 @@ svg { flex: none; }
 /* ---------- Starter Checklist ---------- */
 
 .week {
-  padding: var(--space-4) 0 var(--space-6);
+  padding: 0;
 }
 
 /* Progress first: the biggest thing under the title */
@@ -335,14 +337,14 @@ svg { flex: none; }
 }
 
 .week-stops {
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 .week-stops li {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--space-4);
   min-height: 60px;
 }
 
@@ -414,15 +416,15 @@ svg { flex: none; }
 /* The next station opens up: a tinted block, its title as an item title, what it's about */
 .week-next {
   flex: 1;
-  margin-bottom: var(--space-3);
-  padding: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
   border-radius: var(--radius-m);
   background: var(--tint);
 }
 
 .week-stops .week-next a {
   min-height: 0;
-  padding: var(--space-1) 0 0;
+  padding: 0;
   font-size: var(--step-1);
   font-weight: var(--w-head);
   font-family: var(--font-head);
@@ -432,7 +434,7 @@ svg { flex: none; }
 .week-next a::after {
   content: "";
   position: absolute;
-  inset: 0 0 var(--space-3) calc(var(--tick) + var(--space-3));
+  inset: 0 0 var(--space-4) calc(var(--tick) + var(--space-4));
 }
 
 .week-next p {
@@ -681,13 +683,13 @@ svg { flex: none; }
 .page-head {
   position: relative;
   padding-top: var(--canopy);
-  padding-bottom: var(--space-2);
+  padding-bottom: 0;
 }
 
 /* A Senior's story is a card like a Note: the same leaf corner */
 .story {
   margin-top: var(--space-4);
-  padding: var(--space-5);
+  padding: var(--space-4);
   border-radius: var(--radius-leaf);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -696,7 +698,7 @@ svg { flex: none; }
 .story header {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .avatar {
@@ -728,7 +730,7 @@ svg { flex: none; }
 }
 
 .story-body p + p {
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 /* Help is a calm green card at the end, not an alarm */
@@ -737,7 +739,7 @@ svg { flex: none; }
 }
 
 .help > .inner {
-  padding-block: var(--space-5);
+  padding-block: var(--space-4);
   border-radius: var(--radius-m);
   background: color-mix(in srgb, var(--leaf) 16%, var(--paper));
 }
@@ -780,8 +782,8 @@ svg { flex: none; }
 .help-contacts {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
+  gap: var(--space-2);
+  margin-top: var(--space-2);
 }
 
 .help-contact {
@@ -894,7 +896,7 @@ body:has(.explorer) .site-footer {
   left: 16px;
   z-index: 500;
   overflow-y: auto;
-  padding: var(--space-5) var(--space-5) var(--space-5);
+  padding: var(--space-4);
   background: var(--paper);
   border-radius: var(--radius-l);
   box-shadow: 0 12px 32px -12px rgb(60 45 20 / 0.35), 0 0 0 1px rgb(60 45 20 / 0.06);
@@ -927,11 +929,21 @@ body:has(.explorer) .site-footer {
 }
 
 .stop-list {
-  margin-top: var(--space-2);
+  margin-top: 0;
 }
 
 .stop-group {
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+/* In the sheet the first category starts 16 under the sheet's bar, as a card's padding… */
+.sheet-body .stop-list > .stop-group:first-of-type {
+  margin-top: var(--space-4);
+}
+
+/* …but under the welcome tip the list is a section of its own, as in the wide panel: 32 */
+.sheet-body .welcome-fold + .stop-list > .stop-group:first-of-type {
+  margin-top: var(--space-6);
 }
 
 .stop-group h2 {
@@ -960,7 +972,7 @@ body:has(.explorer) .site-footer {
   position: relative;
   display: flex;
   align-items: flex-start;
-  gap: var(--space-3);
+  gap: var(--space-2);
   width: 100%;
   padding: var(--space-3) var(--space-1);
   border: 0;
@@ -998,7 +1010,7 @@ body:has(.explorer) .site-footer {
 }
 
 .detail {
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 .detail-back {
@@ -1090,7 +1102,7 @@ body:has(.explorer) .site-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-2);
   flex: 1;
   min-width: 0;
   min-height: 60px;
@@ -1118,7 +1130,7 @@ body:has(.explorer) .site-footer {
 .sheet-body {
   flex: 1;
   overflow-y: auto;
-  padding: 0 var(--gutter) var(--space-5);
+  padding: 0 var(--gutter) var(--space-4);
 }
 
 /* ช่วยเติมข้อมูล (/contribute) */
@@ -1126,19 +1138,19 @@ body:has(.explorer) .site-footer {
 .contribute-form {
   display: grid;
   gap: var(--space-4);
-  margin-top: var(--space-5);
-  padding: var(--space-5);
+  margin-top: var(--space-6);
+  padding: var(--space-4);
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
 }
 
-.contribute-form h2 { margin-bottom: -10px; }
+.contribute-form h2 { margin-bottom: calc(var(--space-2) - var(--space-4)); }
 .contribute-form .status-note { margin: 0; }
 
 .contribute-form label {
   display: grid;
-  gap: var(--space-1);
+  gap: var(--space-2);
   font-weight: 500;
 }
 
@@ -1217,8 +1229,28 @@ body:has(.explorer) .site-footer {
   font-size: var(--step-3);
 }
 
+/* Under a page head: 48 to the page's first thing (docs/adr/0007, amended 2026-10-03) */
+.page-head + .inner:not(.feed-peeps) > :first-child,
+.page-head + .feed-peeps + .inner > :first-child {
+  margin-top: var(--space-7);
+}
+
+/* Chip rows in or right under a head (Guides, Feed) sit 16 under the lede. Their scroller has
+   6px of room for the focus ring above and below the chips, taken off so the chips sit on the
+   rhythm */
+.page-head .line-filters,
+.page-head + .feed-peeps + .inner > .feed-filters,
+.page-head + .inner > .feed-filters {
+  margin-top: calc(var(--space-4) - 6px);
+}
+
+/* Filters sit 32 over the list they filter, not 48: further, they read as cut off from it */
+.page-head:has(.line-filters) + .inner > :first-child {
+  margin-top: calc(var(--space-6) - 6px);
+}
+
 .page-head .line-filters {
-  margin-top: var(--space-4);
+  margin-top: calc(var(--space-4) - 6px);
 }
 
 /* A pill button, filled for the main action */
@@ -1286,7 +1318,7 @@ a.line-chip {
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
   padding-left: var(--space-4);
   border-radius: var(--radius-m);
   background: color-mix(in srgb, var(--sun) 55%, var(--paper));
@@ -1329,14 +1361,14 @@ a.line-chip {
 
 /* A Note is a card like a leaf: one corner tucked in */
 .note {
-  padding: var(--space-4) var(--space-5);
+  padding: var(--space-4);
   border-radius: var(--radius-leaf);
   background: var(--paper);
   box-shadow: var(--shadow-1);
 }
 
 .note.is-compact {
-  padding: var(--space-3);
+  padding: var(--space-4);
   background: var(--tint);
   box-shadow: none;
 }
@@ -1356,8 +1388,8 @@ a.line-chip {
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 0 var(--space-3);
-  margin-top: var(--space-3);
+  gap: 0 var(--space-2);
+  margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.5;
@@ -1384,7 +1416,7 @@ a.line-chip {
 }
 
 .feed-filters {
-  margin: var(--space-3) 0 var(--space-4);
+  margin: var(--space-3) 0 calc(var(--space-6) - 6px);
 }
 
 .feed {
@@ -1406,6 +1438,11 @@ a.line-chip {
 .line-head {
   margin-top: var(--space-6);
   font-size: var(--step-1);
+}
+
+/* Head → the first category: 48 */
+.page-head + .guides-line > .line-head {
+  margin-top: calc(var(--space-7) - 6px);
 }
 
 .line-head svg {
@@ -1445,14 +1482,14 @@ a.line-chip {
 .line-pick {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-1) var(--space-5);
+  gap: var(--space-1) var(--space-4);
   margin: 0;
   padding: 0;
   border: 0;
 }
 
 .line-pick legend {
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
   padding: 0;
   font-weight: 500;
 }
@@ -1490,7 +1527,7 @@ html {
 }
 
 body:not(:has(.explorer)) main {
-  padding-bottom: var(--space-5);
+  padding-bottom: var(--space-7);
 }
 
 /* Price, Home Taste and Notes under a Place in the list */
@@ -1498,7 +1535,7 @@ body:not(:has(.explorer)) main {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-1) var(--space-3);
+  gap: var(--space-1) var(--space-2);
   margin-top: var(--space-1);
 }
 
@@ -1544,20 +1581,20 @@ body:not(:has(.explorer)) main {
 
 /* Guides list: one line per Guide, steps on its own page */
 .guide-list {
-  margin: var(--space-2) 0 var(--space-4);
+  margin: var(--space-4) 0 0;
 }
 
 .guide-list {
   display: grid;
-  gap: var(--space-2);
+  gap: var(--space-4);
 }
 
 .guide-list a {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   min-height: 64px;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -1586,11 +1623,12 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.45;
+  margin-top: var(--space-1);
 }
 
 /* Home tastes: one tinted card among the Guide cards, not loose text on the ground */
 .home-taste-list {
-  margin: var(--space-3) 0 var(--space-5);
+  margin: var(--space-4) 0 0;
   padding: var(--space-4);
   border-radius: var(--radius-m);
   background: var(--tint, color-mix(in srgb, var(--food) 10%, var(--paper)));
@@ -1610,13 +1648,13 @@ body:not(:has(.explorer)) main {
   font-size: var(--step-0);
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .home-taste-list .options {
   display: grid;
   gap: var(--space-2);
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 .home-taste-list a {
@@ -1638,7 +1676,7 @@ body:not(:has(.explorer)) main {
 
 /* Note form: the counter sits outside the label */
 .field-counter {
-  margin-top: -10px;
+  margin-top: calc(var(--space-2) - var(--space-4));
   text-align: right;
 }
 
@@ -1690,7 +1728,7 @@ body:not(:has(.explorer)) main {
 .feed-scope-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--space-5);
+  gap: 0 var(--space-4);
   font-weight: 500;
 }
 
@@ -1744,7 +1782,7 @@ body:not(:has(.explorer)) main {
 .detail {
   display: grid;
   gap: var(--space-4);
-  margin-top: var(--space-2);
+  margin-top: var(--space-4);
 }
 
 .detail > * {
@@ -1814,7 +1852,7 @@ body:not(:has(.explorer)) main {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 /* "เขียนโน้ต" beside the Notes heading: small to look at, a full tap target to press */
@@ -1829,7 +1867,7 @@ body:not(:has(.explorer)) main {
 }
 
 .detail-notes .form-status {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-2);
 }
 
 .detail-notes .related-link {
@@ -1850,7 +1888,7 @@ body:not(:has(.explorer)) main {
 
 .detail-know li {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .detail-know .is-caution {
@@ -1885,7 +1923,7 @@ body:not(:has(.explorer)) main {
 .detail-guides a {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   min-height: 44px;
   padding-block: var(--space-1);
   font-weight: 500;
@@ -1922,16 +1960,16 @@ body:not(:has(.explorer)) main {
 
 /* Down over the scroll area's own bottom padding, so nothing shows under the bar */
 .sheet-body .detail-bar {
-  bottom: calc(-1 * var(--space-5));
-  margin-bottom: calc(-1 * var(--space-5));
-  padding-bottom: calc(var(--space-3) + var(--space-5));
+  bottom: calc(-1 * var(--space-4));
+  margin-bottom: calc(-1 * var(--space-4));
+  padding-bottom: calc(var(--space-3) + var(--space-4));
 }
 
 /* The wide panel pads by --space-5, not the gutter: the bar reaches its edges and bottom the same way */
 .explorer-panel .detail-bar {
-  bottom: calc(-1 * var(--space-5));
-  margin: 0 calc(-1 * var(--space-5)) calc(-1 * var(--space-5));
-  padding: var(--space-3) var(--space-5) var(--space-5);
+  bottom: calc(-1 * var(--space-4));
+  margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-4));
+  padding: var(--space-3) var(--space-4) var(--space-4);
 }
 
 .detail-bar .price {
@@ -1957,9 +1995,9 @@ body:not(:has(.explorer)) main {
 .feed-more a {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   min-height: 56px;
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-4);
   border-radius: var(--radius-m);
   background: var(--paper);
   box-shadow: var(--shadow-1);
@@ -2019,8 +2057,13 @@ body:not(:has(.explorer)) main {
 
 .feed-more {
   display: grid;
-  gap: var(--space-2);
-  margin: var(--space-2) 0 var(--space-6);
+  gap: var(--space-4);
+  margin: 0;
+}
+
+/* The stories → "write yours": a new section (after .feed-more, which it overrides) */
+.seniors-more {
+  margin-top: var(--space-6);
 }
 
 .feed .note + .note {
@@ -2072,7 +2115,7 @@ body:not(:has(.explorer)) main {
 
 /* Forms: room between fields, a taller submit */
 .contribute-form {
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
 .contribute-form button[type="submit"] {
@@ -2124,7 +2167,7 @@ h2 {
 .detail-title {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .detail-title h2 {
@@ -2177,7 +2220,7 @@ h2 {
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
   color: var(--ink-soft);
   font-weight: 500;
 }
@@ -2255,7 +2298,7 @@ body:has(.guide-page) .site-footer {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  column-gap: var(--space-3);
+  column-gap: var(--space-2);
   margin-top: var(--space-2);
 }
 
@@ -2263,7 +2306,7 @@ body:has(.guide-page) .site-footer {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  padding-left: var(--space-3);
+  padding-left: var(--space-2);
   border-left: 1px solid var(--hairline);
   color: var(--on-tint);
   font-size: var(--step--1);
@@ -2288,7 +2331,7 @@ body:has(.guide-page) .site-footer {
 }
 
 .guide-page .page-head h1 {
-  margin-top: var(--space-1);
+  margin-top: 0;
   font-size: 1.75rem;
   line-height: 1.25;
 }
@@ -2302,7 +2345,7 @@ body:has(.guide-page) .site-footer {
 /* The lede is the Guide's gist, read first: ink, not grey (docs/adr/0007, amended 2026-10-02) */
 .guide-page .page-head .lede {
   max-width: none;
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   color: var(--ink);
   font-size: var(--read);
   line-height: 1.65;
@@ -2311,7 +2354,7 @@ body:has(.guide-page) .site-footer {
 .guide-body {
   max-width: var(--measure);
   margin: 0 auto;
-  padding: var(--space-5) var(--gutter) var(--space-7);
+  padding: var(--space-7) var(--gutter) 0;
 }
 
 /* The "need to know" box: a plain paper card, a hairline round it, no shadow */
@@ -2332,7 +2375,7 @@ body:has(.guide-page) .site-footer {
   display: grid;
   grid-template-columns: 7.5rem 1fr;
   align-items: baseline;
-  gap: var(--space-3);
+  gap: var(--space-2);
   padding-block: var(--space-2);
 }
 
@@ -2370,7 +2413,7 @@ body:has(.guide-page) .site-footer {
 
 /* When the prices were last updated: one fine line under the facts */
 .guide-source {
-  margin-top: var(--space-3);
+  margin-top: 0;
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.5;
@@ -2395,7 +2438,7 @@ body:has(.guide-page) .site-footer {
 
 .guide-bring ul {
   display: grid;
-  gap: var(--space-1);
+  gap: var(--space-2);
   margin-top: var(--space-2);
   line-height: 1.55;
 }
@@ -2428,7 +2471,7 @@ body:has(.guide-page) .site-footer {
 }
 
 .guide > .draft-tag + * {
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
 }
 
 .guide-jumps {
@@ -2454,7 +2497,7 @@ body:has(.guide-page) .site-footer {
 .guide-steps {
   display: grid;
   gap: var(--space-6);
-  margin-top: var(--space-5);
+  margin-top: var(--space-4);
 }
 
 .guide-steps > li,
@@ -2508,13 +2551,13 @@ body:has(.guide-page) .site-footer {
 /* How, as short plain lines, each led by a short dash in the line's colour */
 .step-points {
   display: grid;
-  gap: var(--space-1);
+  gap: var(--space-2);
   margin-top: var(--space-2);
 }
 
 .step-points li {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-2);
 }
 
 .step-points li::before {
@@ -2532,7 +2575,7 @@ body:has(.guide-page) .site-footer {
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
-  margin-top: var(--space-1);
+  margin-top: 0;
   color: var(--on-tint);
   font-weight: 500;
 }
@@ -2541,8 +2584,8 @@ body:has(.guide-page) .site-footer {
 .step-say {
   width: fit-content;
   max-width: 100%;
-  margin-top: var(--space-3);
-  padding: var(--space-2) var(--space-4) var(--space-3);
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
   border-radius: 4px var(--radius-m) var(--radius-m) var(--radius-m);
   background: var(--tint);
   line-height: 1.5;
@@ -2563,9 +2606,9 @@ body:has(.guide-page) .site-footer {
 /* A real trap or emergency criteria: the page's one callout, used sparingly */
 .step-warn {
   display: flex;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-  padding: var(--space-3) var(--space-4);
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-4);
   border-radius: var(--radius-s);
   background: color-mix(in srgb, var(--caution) 7%, var(--paper));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--caution) 35%, transparent);
@@ -2580,7 +2623,7 @@ body:has(.guide-page) .site-footer {
 
 /* A tip is a quiet sentence */
 .step-tip {
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
   color: var(--ink-soft);
   font-size: 0.94em;
   line-height: 1.65;
@@ -2621,7 +2664,7 @@ body:has(.guide-page) .site-footer {
 }
 
 .guide-options > li {
-  padding-block: var(--space-5);
+  padding-block: var(--space-4);
   border-top: 1px solid var(--hairline);
   scroll-margin-top: var(--space-4);
 }
@@ -2651,7 +2694,7 @@ body:has(.guide-page) .site-footer {
 .guide > .mark-done {
   display: flex;
   width: fit-content;
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
 }
 
 /* "อ่านต่อ", and once ticked "ถัดไปในสัปดาห์แรก": a quiet line, the whole line the link */
@@ -2666,7 +2709,7 @@ body:has(.guide-page) .site-footer {
 
 .guide .mark-next {
   min-height: 0;
-  margin-top: var(--space-5);
+  margin-top: var(--space-6);
   padding-inline: 0;
   padding-bottom: 0;
   border-radius: 0;
@@ -2717,14 +2760,14 @@ body:has(.guide-page) .site-footer {
 
   .guide-know {
     position: sticky;
-    top: var(--space-5);
+    top: var(--space-4);
     grid-column: 3;
     grid-row: 1;
     align-self: start;
     /* Wide enough that "17–47 บาท/เที่ยว" stays inside it */
     max-width: 20rem;
     /* Room on the right too, so the box doesn't lean on the screen's edge at 1280 */
-    margin-inline: var(--space-5) var(--space-6);
+    margin-inline: var(--space-6);
   }
 }
 
@@ -2805,12 +2848,12 @@ body:has(.guide-page) .site-footer {
 }
 
 .feed-peeps {
-  margin-top: var(--space-3);
+  margin-top: var(--space-4);
 }
 
 /* All seven done: the progress becomes a sunny card with the people in it */
 .week-progress.is-complete {
-  padding: var(--space-5);
+  padding: var(--space-4);
   border-radius: var(--radius-m);
   background: color-mix(in srgb, var(--sun) 60%, var(--paper));
   box-shadow: var(--shadow-1);
@@ -2828,7 +2871,7 @@ body:has(.guide-page) .site-footer {
 }
 
 .week-cheer {
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-2);
 }
 
 /* ---------- Motion: soft and small, off for anyone who asks for less ---------- */
@@ -3112,7 +3155,7 @@ body:has(.explorer) .page-frame {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: var(--space-3);
+  gap: var(--space-2);
   margin-top: var(--space-4);
 }
 
@@ -3127,7 +3170,7 @@ body:has(.explorer) .page-frame {
 
   .guide-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
+    gap: var(--space-4);
   }
 
   .guide-list a {
@@ -3151,12 +3194,13 @@ body:has(.explorer) .page-frame {
 
   .feed-more {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-4);
   }
 
   /* People beside the title and lede rather than on a row of their own */
   .feed-peeps {
     justify-content: flex-end;
-    margin-top: -96px;
+    margin-top: -88px;
   }
 
   /* Fading out at the waist, rather than cut off straight above the chips */
@@ -3175,13 +3219,13 @@ body:has(.explorer) .page-frame {
     display: grid;
     grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
     align-items: start;
-    gap: var(--space-7);
+    gap: var(--space-6);
   }
 
   .week-progress {
     position: sticky;
-    top: var(--space-5);
-    padding: var(--space-5);
+    top: var(--space-4);
+    padding: var(--space-4);
     border-radius: var(--radius-m);
     background: var(--paper);
     box-shadow: var(--shadow-1);
@@ -3210,9 +3254,9 @@ body:has(.explorer) .page-frame {
 .composer {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
+  gap: var(--space-4);
   min-height: 56px;
-  margin: var(--space-2) 0 var(--space-4);
+  margin: 0 0 var(--space-4);
   padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
   border: 1px solid var(--rule);
   border-radius: var(--radius-m);
