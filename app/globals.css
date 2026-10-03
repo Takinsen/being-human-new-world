@@ -29,9 +29,13 @@
   --action-press: color-mix(in srgb, var(--leaf-dark) 85%, #000);
   --c: var(--ink);
 
-  --font: "IBM Plex Sans Thai Looped", "Noto Sans Thai", system-ui, sans-serif;
-  /* Headings only: Mitr's slashed zero reads oddly in numbers, so numbers stay in --font */
-  --font-head: "Mitr", "IBM Plex Sans Thai Looped", sans-serif;
+  /* Loopless, site-wide (docs/adr/0007, amended 2026-10-03). Numbers stay in --font even in a
+     heading's company: a price, a time or a number to call reads as text */
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "Anuphan", "IBM Plex Sans Thai", sans-serif;
+  --w-head: 600;
+  /* The wordmark and the splash's name only: a logo, not a heading */
+  --font-mark: "Mitr", "Anuphan", sans-serif;
 
   --step--1: 0.875rem;
   --step-0: 1rem;
@@ -150,7 +154,7 @@ h1, h2, h3 {
   white-space: nowrap;
 }
 
-h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: 500; }
+h1, h2, h3 { line-height: 1.25; font-family: var(--font-head); font-weight: var(--w-head); }
 h2 { font-size: var(--step-1); }
 h3 { font-size: var(--step-half); }
 a { color: inherit; }
@@ -217,7 +221,7 @@ svg { flex: none; }
   align-items: center;
   min-height: 44px;
   gap: var(--space-2);
-  font-family: var(--font-head);
+  font-family: var(--font-mark);
   font-weight: 500;
   font-size: var(--step-1);
   text-decoration: none;
@@ -2518,7 +2522,7 @@ body:has(.guide-page) .site-footer {
   font-weight: 600;
 }
 
-/* Words to say: a speech bubble in the line's colour, the words in Mitr */
+/* Words to say: a speech bubble in the line's colour, the words in the heading face */
 .step-say {
   width: fit-content;
   max-width: 100%;
@@ -2537,6 +2541,7 @@ body:has(.guide-page) .site-footer {
 
 .step-say q {
   font-family: var(--font-head);
+  font-weight: 500;
   font-size: 1.1em;
 }
 
@@ -2588,7 +2593,7 @@ body:has(.guide-page) .site-footer {
   min-height: var(--station);
   font-family: var(--font-head);
   font-size: var(--step-1);
-  font-weight: 500;
+  font-weight: var(--w-head);
 }
 
 .guide-end .mark-done {
@@ -2653,7 +2658,7 @@ body:has(.guide-page) .site-footer {
   background: none;
   box-shadow: none;
   color: var(--on-tint);
-  font: 500 var(--step-1) / 1.4 var(--font-head);
+  font: var(--w-head) var(--step-1) / 1.4 var(--font-head);
 }
 
 .guide .mark-next > svg {
@@ -2669,7 +2674,7 @@ body:has(.guide-page) .site-footer {
 
 .guide-next a {
   color: var(--on-tint);
-  font: 500 var(--step-1) / 1.4 var(--font-head);
+  font: var(--w-head) var(--step-1) / 1.4 var(--font-head);
   text-decoration: none;
 }
 
@@ -2799,7 +2804,7 @@ body:has(.guide-page) .site-footer {
 .week-progress.is-complete p:first-of-type {
   font-family: var(--font-head);
   font-size: var(--step-2);
-  font-weight: 500;
+  font-weight: var(--w-head);
 }
 
 .week-progress.is-complete .week-bar {
@@ -3318,7 +3323,7 @@ body:has(.explorer) .page-frame {
   min-height: 44px;
   gap: var(--space-2);
   color: var(--paper);
-  font-family: var(--font-head);
+  font-family: var(--font-mark);
   font-size: var(--step-0);
   font-weight: 500;
   white-space: nowrap;
