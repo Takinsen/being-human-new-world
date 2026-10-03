@@ -1,0 +1,467 @@
+/* PROTOTYPE (type-and-spacing), throwaway: lives only on the prototype/type-and-spacing branch.
+   The new spacing rhythm (Q14 in .scratch/type-and-spacing/spec.md), on html[data-scale="new"].
+   Only margin, padding and gaps; sizes, fonts and weights are in prototype-type.css.
+
+   Proximity, strictly: things that belong together sit closer than things that don't.
+     8  (--space-2)  inside one thing: a title and its lede, an icon and its label, lines in a card
+     16 (--space-4)  between things in one list, and padding inside a card
+     32 (--space-6)  between sections (and between headed chunks: steps, options, help items)
+     48 (--space-7)  under a page head, and before the footer
+   A thumbnail disc (40px+: a Guide's icon, the composer's pen, an avatar, a station) is a thing
+   of its own, so 16 to its text; a plain icon glyph is part of its label, so 8.
+   4 / 12 / 24 stay only where there's a reason, each said beside it. Left as they are in
+   globals.css, on purpose: chips and pills (a chip's 16 sides, a pill button's 24 sides, the
+   phone map chips' 4 gap and 12 sides so four fit across, jump pills' 4 and 12), a field's 12
+   text inset, the 4 between a small icon and its 14px label (note count, "เขียนโน้ต"), the
+   tab bar's 2px, the map list rows' 12 (a tap-target nudge), the Place card's bar (12 keeps a
+   strip with a 44px button slim), a status strip's 12, row-gaps of 4 between 44px tap rows. */
+
+/* ---------- Page heads (every page but the map) ---------- */
+
+/* The head ends at its last line; what comes next sets the 48 under it */
+:root[data-scale="new"] .page-head {
+  padding-bottom: 0;
+}
+
+/* Under a page head: 48 to the page's first thing */
+:root[data-scale="new"] .page-head + .inner:not(.feed-peeps) > :first-child,
+:root[data-scale="new"] .page-head + .feed-peeps + .inner > :first-child {
+  margin-top: var(--space-7);
+}
+
+/* Chip rows in or right under a head (Guides, Feed) sit 16 under the lede on both pages.
+   Their scroller has 6px of room for the focus ring above and below the chips, taken off here
+   so the drawn chips sit on the rhythm. */
+:root[data-scale="new"] .page-head .line-filters,
+:root[data-scale="new"] .page-head + .feed-peeps + .inner > .feed-filters,
+:root[data-scale="new"] .page-head + .inner > .feed-filters {
+  margin-top: calc(var(--space-4) - 6px);
+}
+
+/* A back link above the title: its 44px tap box already leaves air under the words */
+:root[data-scale="new"] .guide-page .page-head h1 {
+  margin-top: 0;
+}
+
+/* Title and its lede are one thing, on a Guide as on every other page (was 12) */
+:root[data-scale="new"] .guide-page .page-head .lede {
+  margin-top: var(--space-2);
+}
+
+/* Back link | category: 8 either side of the hairline between them (was 12 + 12) */
+:root[data-scale="new"] .guide-crumbs {
+  column-gap: var(--space-2);
+}
+:root[data-scale="new"] .guide-eyebrow {
+  padding-left: var(--space-2);
+}
+
+/* The People under the head belong to it: 16 under the lede */
+:root[data-scale="new"] .feed-peeps {
+  margin-top: var(--space-4);
+}
+
+/* A label attached to what it marks */
+:root[data-scale="new"] .guide > .draft-tag + * {
+  margin-top: var(--space-2);
+}
+
+/* ---------- Page ends and the footer ---------- */
+
+/* 48 from the page's last thing to the footer, set once here instead of page by page */
+:root[data-scale="new"] body:not(:has(.explorer)) main {
+  padding-bottom: var(--space-7);
+}
+:root[data-scale="new"] .site-footer {
+  padding-top: var(--space-4);
+}
+:root[data-scale="new"] .feed-more {
+  margin-bottom: 0;
+}
+:root[data-scale="new"] .guide-body {
+  padding-bottom: 0;
+}
+
+/* ---------- Feed: the composer and Note cards ---------- */
+
+/* Filters → the list they filter: 32, on the Feed as on Guides (48 cut the chips off from it) */
+:root[data-scale="new"] .feed-filters {
+  margin-bottom: calc(var(--space-6) - 6px);
+}
+
+:root[data-scale="new"] .page-head:has(.line-filters) + .inner > :first-child {
+  margin-top: calc(var(--space-6) - 6px);
+}
+
+/* The composer is the list's first card: 16 to the first Note, as between Notes */
+:root[data-scale="new"] .composer {
+  gap: var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+/* A card: 16 all round (was 16 / 24) */
+:root[data-scale="new"] .note {
+  padding: var(--space-4);
+}
+/* On a Place card: the same card padding (was 12) */
+:root[data-scale="new"] .note.is-compact {
+  padding: var(--space-4);
+}
+
+/* Category → words → signature: lines inside one card, 8 (was 8 / 12) */
+:root[data-scale="new"] .note-by {
+  gap: 0 var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* The Notes list → "read more" cards: a new section, 32 (was 32 + 8) */
+:root[data-scale="new"] .feed {
+  padding-bottom: var(--space-6);
+}
+:root[data-scale="new"] .feed-more {
+  gap: var(--space-4);
+  margin-top: 0;
+}
+
+/* The one "go next" card, the same 16 padding as every card (was 12 / 16) */
+:root[data-scale="new"] .detail-guide,
+:root[data-scale="new"] .feed-more a {
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  /* Wide: the People stand on the lede's line, at the right, and the chips sit 16 under it */
+  :root[data-scale="new"] .feed-peeps {
+    margin-top: -88px;
+  }
+  /* Two columns of Notes: 16 across and down, the same as on a phone */
+  :root[data-scale="new"] .feed {
+    column-gap: var(--space-4);
+  }
+  :root[data-scale="new"] .feed-more {
+    column-gap: var(--space-4);
+  }
+}
+
+/* "Posted" and "all places" lines above the list */
+:root[data-scale="new"] .feed-scope-links {
+  gap: 0 var(--space-4);
+}
+
+/* ---------- Guides list ---------- */
+
+/* Head → the first category: 48 */
+:root[data-scale="new"] .page-head + .guides-line > .line-head {
+  margin-top: calc(var(--space-7) - 6px);
+}
+
+/* Category heading → its cards 16; between cards 16, as between Notes (was 8, and 12 wide).
+   Category to category stays 32. */
+:root[data-scale="new"] .guide-list {
+  gap: var(--space-4);
+  margin: var(--space-4) 0 0;
+}
+@media (min-width: 64rem) {
+  :root[data-scale="new"] .guide-list {
+    gap: var(--space-4);
+  }
+}
+
+/* A card: 16 all round; the icon disc is a thumbnail, 16 to the words (was 12 / 16, 12) */
+:root[data-scale="new"] .guide-list a {
+  gap: var(--space-4);
+  padding: var(--space-4);
+}
+/* Title and summary: one thing; 4 because the line-height already puts air between them */
+:root[data-scale="new"] .guide-list small {
+  margin-top: var(--space-1);
+}
+
+/* Home Taste is a card among the Guide cards: 16 after them, and the section's own end after */
+:root[data-scale="new"] .home-taste-list {
+  margin: var(--space-4) 0 0;
+}
+:root[data-scale="new"] .home-taste-list h3 {
+  gap: var(--space-4);
+}
+/* Heading and intro are one thing (8); intro → its list 16 (was 12) */
+:root[data-scale="new"] .home-taste-list .options {
+  margin-top: var(--space-4);
+}
+
+/* ---------- A Guide ---------- */
+
+/* Head → the "need to know" box: 48 (was 24) */
+:root[data-scale="new"] .guide-body {
+  padding-top: var(--space-7);
+}
+
+/* The box: one fact per row, name and value one thing (8 across); 8 either side of the hairline */
+:root[data-scale="new"] .guide-facts > div {
+  gap: var(--space-2);
+}
+/* "Prices updated" belongs to the facts: 8 under the last one (its row's own padding) */
+:root[data-scale="new"] .guide-source {
+  margin-top: 0;
+}
+/* What to bring: lines in one card, 8 apart (was 4) */
+:root[data-scale="new"] .guide-bring ul {
+  gap: var(--space-2);
+}
+
+/* The box → the article stays 32. The steps' heading → its steps 16 (was 24); a heading is
+   closer to what it heads than to what's above it (32). */
+:root[data-scale="new"] .guide-steps {
+  margin-top: var(--space-4);
+}
+
+/* Inside a step, everything 8: action line → points → link → words to say → warning → tip.
+   Steps stay 32 apart, so each reads as one chunk. */
+:root[data-scale="new"] .step-points {
+  gap: var(--space-2);
+}
+/* The dash and its line, like the dot and its line in "what to bring" (was 12) */
+:root[data-scale="new"] .step-points li {
+  gap: var(--space-2);
+}
+/* The link's 44px tap box already leaves about 8 above the words (was 4 more) */
+:root[data-scale="new"] .step-link {
+  margin-top: 0;
+}
+/* Words to say: a bubble, padded like a chip, 8 / 16 (was 8 / 16 / 12) */
+:root[data-scale="new"] .step-say {
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+}
+/* A warning is a callout card: 16 padding, the icon 8 from its words (was 12, 12) */
+:root[data-scale="new"] .step-warn {
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: var(--space-4);
+}
+:root[data-scale="new"] .step-tip {
+  margin-top: var(--space-2);
+}
+
+/* Options: 16 either side of the hairline, so 32 between options, the same as between steps
+   (was 24 + 24 = 48) */
+:root[data-scale="new"] .guide-options > li {
+  padding-block: var(--space-4);
+}
+
+/* The tick after the options, and the "next" line: 32, like the path's end after the last step
+   (was 24) */
+:root[data-scale="new"] .guide > .mark-done,
+:root[data-scale="new"] .guide .mark-next {
+  margin-top: var(--space-6);
+}
+
+@media (min-width: 78rem) {
+  /* The box beside the column: 32 from it and from the screen's edge; stuck 16 from the top
+     (was 24 / 32, 24) */
+  :root[data-scale="new"] .guide-know {
+    top: var(--space-4);
+    margin-inline: var(--space-6);
+  }
+}
+
+/* ---------- Starter Checklist ---------- */
+
+/* Head → progress: 48 (set by the head rule); the list ends where the fine print starts */
+:root[data-scale="new"] .week {
+  padding: 0;
+}
+/* The fine print explains the list's order: it belongs to it, 16 under */
+:root[data-scale="new"] .fine-print {
+  margin: var(--space-4) 0 0;
+}
+/* Progress → stations: 32, a new section (was 24) */
+:root[data-scale="new"] .week-stops {
+  margin-top: var(--space-6);
+}
+/* A station and its title, as a Guide's station and its step: 16 (was 12) */
+:root[data-scale="new"] .week-stops li {
+  gap: var(--space-4);
+}
+/* The next station opens up as a card: 16 padding, 16 to the next station (was 12, 12) */
+:root[data-scale="new"] .week-next {
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+}
+:root[data-scale="new"] .week-stops .week-next a {
+  padding: 0;
+}
+:root[data-scale="new"] .week-next a::after {
+  inset: 0 0 var(--space-4) calc(var(--tick) + var(--space-4));
+}
+/* Title and summary: one thing; 4 as in the Guide cards, the line-height adds the rest */
+:root[data-scale="new"] .week-next p {
+  margin-top: var(--space-1);
+}
+/* Two buttons are one group: 8 between, as between chips (was 12) */
+:root[data-scale="new"] .week-after {
+  gap: var(--space-2);
+}
+:root[data-scale="new"] .week-progress.is-complete {
+  padding: var(--space-4);
+}
+:root[data-scale="new"] .week-cheer {
+  margin-bottom: var(--space-2);
+}
+
+@media (min-width: 64rem) {
+  /* Progress beside the stations: they belong together, 32 (was 48) */
+  :root[data-scale="new"] .week {
+    gap: var(--space-6);
+  }
+  :root[data-scale="new"] .week-progress {
+    top: var(--space-4);
+    padding: var(--space-4);
+  }
+  :root[data-scale="new"] .week-stops {
+    margin-top: 0;
+  }
+}
+
+/* ---------- Map: the panel, the sheet and the list ---------- */
+
+/* The panel is a card: 16 padding (was 24) */
+:root[data-scale="new"] .explorer-panel {
+  padding: var(--space-4);
+}
+/* Its bar reaches the panel's edges and bottom the same way */
+:root[data-scale="new"] .explorer-panel .detail-bar {
+  bottom: calc(-1 * var(--space-4));
+  margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-4));
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+/* The sheet's scroll ends 16 under the last thing (was 24) */
+:root[data-scale="new"] .sheet-body {
+  padding-bottom: var(--space-4);
+}
+:root[data-scale="new"] .sheet-body .detail-bar {
+  bottom: calc(-1 * var(--space-4));
+  margin-bottom: calc(-1 * var(--space-4));
+  padding-bottom: calc(var(--space-3) + var(--space-4));
+}
+/* The handle's words and its caret: one thing */
+:root[data-scale="new"] .sheet-handle {
+  gap: var(--space-2);
+}
+
+/* Filters → the welcome tip: 16 (was 12); tip → the list 32 */
+:root[data-scale="new"] .welcome {
+  margin-top: var(--space-4);
+}
+/* Category to category: 32, a section each (was 8 + 24 for the first, 24 after) */
+:root[data-scale="new"] .stop-list {
+  margin-top: 0;
+}
+:root[data-scale="new"] .stop-group {
+  margin-top: var(--space-6);
+}
+/* In the sheet the first category starts 16 under the sheet's bar, as a card's padding */
+:root[data-scale="new"] .sheet-body .stop-list > .stop-group:first-of-type {
+  margin-top: var(--space-4);
+}
+/* …but under the welcome tip, the list is a section of its own, as in the wide panel: 32 */
+:root[data-scale="new"] .sheet-body .welcome-fold + .stop-list > .stop-group:first-of-type {
+  margin-top: var(--space-6);
+}
+/* A Place's icon and its name: one thing (was 12) */
+:root[data-scale="new"] .stop-group button {
+  gap: var(--space-2);
+}
+/* The tags after a name: 4 inside a tag, 8 between tags (was 12); rows 4 when they wrap */
+:root[data-scale="new"] .stop-tags {
+  gap: var(--space-1) var(--space-2);
+}
+/* After the list: the help links are a section of their own (was 24) */
+:root[data-scale="new"] .list-help {
+  margin-top: var(--space-6);
+}
+
+/* ---------- Map: a Place's card ---------- */
+
+/* 16 from the filters or the sheet's bar, as a card's padding (was 8) */
+:root[data-scale="new"] .detail {
+  margin-top: var(--space-4);
+}
+/* The icon and the name: one thing (was 12) */
+:root[data-scale="new"] .detail-title {
+  gap: var(--space-2);
+}
+:root[data-scale="new"] .detail-h-row {
+  gap: var(--space-4);
+}
+/* An icon or bullet and its line (was 12) */
+:root[data-scale="new"] .detail-know li,
+:root[data-scale="new"] .detail-guides a {
+  gap: var(--space-2);
+}
+/* "Posted" → the Note: one thing (was 12) */
+:root[data-scale="new"] .detail-notes .form-status {
+  margin: 0 0 var(--space-2);
+}
+
+/* ---------- Seniors ---------- */
+
+/* A story is a card: 16 all round (was 24); the avatar is a thumbnail, 16 to the name (was 12) */
+:root[data-scale="new"] .story {
+  padding: var(--space-4);
+}
+:root[data-scale="new"] .story header {
+  gap: var(--space-4);
+}
+/* Paragraphs in one story 16 apart, so each is plainly a paragraph (was 12) */
+:root[data-scale="new"] .story-body p + p {
+  margin-top: var(--space-4);
+}
+/* The stories → "write yours": a new section (was 16 + 8) */
+:root[data-scale="new"] .seniors-more {
+  margin-top: var(--space-6);
+}
+/* Help: a card, 16 padding (was 24); its pill buttons 8 apart, 8 under the words, as chips (was 12) */
+:root[data-scale="new"] .help > .inner {
+  padding-block: var(--space-4);
+}
+:root[data-scale="new"] .help-contacts {
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+/* ---------- Forms: contribute and a new Note ---------- */
+
+/* A form is a card: 16 padding and 16 between fields (was 24, 24); forms 32 apart (was 24) */
+:root[data-scale="new"] .contribute-form {
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+}
+/* A form's heading sits 8 above its first line: pulled up against the 16 grid gap */
+:root[data-scale="new"] .contribute-form h2 {
+  margin-bottom: calc(var(--space-2) - var(--space-4));
+}
+/* A label and its field are one thing (was 4) */
+:root[data-scale="new"] .contribute-form label {
+  gap: var(--space-2);
+}
+/* The counter belongs to the field above it: 8 under it, pulled against the 16 gap */
+:root[data-scale="new"] .field-counter {
+  margin-top: calc(var(--space-2) - var(--space-4));
+}
+/* Category choices: 16 apart across; 4 down only because each is a 44px tap row (was 24) */
+:root[data-scale="new"] .line-pick {
+  gap: var(--space-1) var(--space-4);
+}
+:root[data-scale="new"] .line-pick legend {
+  margin-bottom: var(--space-2);
+}
+
+/* Laptop Guide box: wide enough that "17–47 บาท/เที่ยว" stays inside it (it spilled at 18rem) */
+@media (min-width: 64rem) {
+  :root[data-scale="new"] .guide-know {
+    max-width: 20rem;
+  }
+}
