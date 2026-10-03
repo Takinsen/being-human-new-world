@@ -1,6 +1,6 @@
 # More Everyday Food: canteens, eating late, more Places
 
-Status: ready-for-agent
+Status: done
 
 From `../spec.md` Q3, Q19 and `../research-food-health.md` §1.
 

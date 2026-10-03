@@ -66,10 +66,13 @@ export const places: Place[] = [
     category: "food",
     lat: 13.7338,
     lng: 100.5282,
-    summary: "กินเสร็จนั่งอ่านหนังสือต่อได้ แอร์เย็น เปิดถึงดึก ร้านให้เลือกเยอะ",
-    guides: ["eat-cheap"],
+    summary: "Samyan Food Legends ชั้น 4 แอร์เย็น ร้านให้เลือกเยอะ เปิด 10:00 ถึงราว 22:00",
+    guides: ["eat-cheap", "late-night"],
     photo: { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
-    knowhow: ["ต้องเติมเงินใส่บัตรที่เคาน์เตอร์ก่อนสั่ง กินแล้วเงินเหลือ เอาบัตรไปขอคืนที่เคาน์เตอร์เดิม"],
+    knowhow: [
+      "ไม่ต้องแลกบัตรแล้ว สแกน QR จ่ายที่ร้านได้เลย หรือจ่ายด้วย TrueMoney",
+      "ศูนย์อาหารปิดพร้อมห้าง หิวดึกลงไปโซน 24 ชั่วโมงชั้นล่าง",
+    ],
     price: { min: 60, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
   },
   {
@@ -121,6 +124,54 @@ export const places: Place[] = [
     knowhow: ["ร้านเปิดตอนเย็น มาหลังเลิกเรียนหรือหลังซ้อมได้พอดี", "คนชอบสั่งส้มตำไทยกับคอหมูย่าง"],
     price: { min: 50, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
+  },
+
+  {
+    id: "sor-thor-food-court",
+    name: "ศูนย์อาหารตึก สธ. โรงพยาบาลจุฬาฯ",
+    category: "food",
+    // Pin is an estimate inside the hospital grounds; check on the spot.
+    lat: 13.7318,
+    lng: 100.5352,
+    summary: "ที่กินถูกที่เปิดวันเสาร์–อาทิตย์ ตอนโรงอาหารคณะปิด ชั้น 2 อาคาร ส.ธ.",
+    knowhow: [
+      "เปิดจันทร์–ศุกร์ 6:00–17:00 เสาร์–อาทิตย์ 6:00–15:00",
+      "ร้านติดธงฟ้า ราคาคุมไว้ มีอาหารมังสวิรัติกับอาหารมุสลิม",
+      "นิสิตกับคนทั่วไปเข้ากินได้ ไม่ต้องเป็นคนไข้",
+    ],
+    cautions: ["คนไข้กับญาติเยอะช่วงเที่ยง ไปก่อน 11:00 หรือหลัง 13:00"],
+    guides: ["eat-cheap"],
+    // Price is an estimate for a plate at a blue-flag shop.
+    price: { min: 40, max: 60, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
+  },
+  {
+    id: "jae-oh",
+    name: "เจ๊โอว ซอยจุฬาฯ 22",
+    category: "food",
+    // Pin is an estimate from the address; check it on the spot.
+    lat: 13.7395,
+    lng: 100.5223,
+    summary: "ข้าวต้มกับมาม่าโอ้โห เปิดราว 16:30 ถึงเที่ยงคืน ของกินดึกที่คนแถวนี้รู้จัก",
+    knowhow: [
+      "จองคิวล่วงหน้าหนึ่งวันทางโทรศัพท์ได้ที่ 06-4118-5888 รับชั่วโมงละไม่กี่คิว",
+      "ไม่ได้จองก็มาหลัง 21:00 คิวสั้นลง",
+    ],
+    cautions: ["หัวค่ำราว 19:00 คิวยาวมาก ถ้าหิวจริงอย่าเพิ่งมาช่วงนี้"],
+    guides: ["late-night"],
+    // Price is an estimate; sources gave none.
+    price: { min: 80, max: 200, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
+  },
+  {
+    id: "asawin-boat-noodles",
+    name: "ก๋วยเตี๋ยวเรืออัศวิน บรรทัดทอง",
+    category: "food",
+    // Pin is an estimate from the address; check it on the spot.
+    lat: 13.7435,
+    lng: 100.5221,
+    summary: "ก๋วยเตี๋ยวเรือ เปิดทุกวัน 11:00 ถึงเที่ยงคืน ระหว่างซอยจุฬาฯ 12 กับ 14",
+    knowhow: ["เส้นเล็กน้ำตกเป็นชามที่คนสั่งกันบ่อย", "เปิดถึงเที่ยงคืน อ่านหนังสือเสร็จดึกๆ ยังมากินทัน"],
+    guides: ["late-night"],
+    price: { min: 69, max: 89, per: "ต่อชาม", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
   },
 
   // สุขภาพ
