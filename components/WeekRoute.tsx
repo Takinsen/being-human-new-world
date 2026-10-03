@@ -35,7 +35,6 @@ export function WeekRoute() {
         <span className="week-bar" aria-hidden="true">
           <i style={{ width: `${(count / firstWeek.length) * 100}%` }} />
         </span>
-        {!complete && <p className="week-hint">ทำอันไหนแล้วติ๊กวงกลมไว้</p>}
         {/* Whoever finished is the best person to help the next Newcomers (UX audit 7, U6) */}
         {complete && (
           <div className="week-after">

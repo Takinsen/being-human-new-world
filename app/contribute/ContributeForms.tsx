@@ -119,7 +119,6 @@ export function ContributeForms({
         onSubmit={checkRange}
       >
         <h2 id="price">บอกราคาที่เห็น</h2>
-        <p className="status-note">{keepPhrases("ไปมาแล้วเห็นราคาเท่าไหร่ ใส่ไว้ตรงนี้ ราคาจะขึ้นพร้อมชื่อเรากับเดือนนี้")}</p>
         <PlaceSelect
           lines={lines}
           places={places}
@@ -152,7 +151,7 @@ export function ContributeForms({
 
       <form action={seniorAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
         <h2 id="senior">เล่าปีแรกของเรา</h2>
-        <p className="status-note">{keepPhrases("ปีแรกเราเจออะไรมาบ้าง เล่าให้น้องฟัง ขึ้นเว็บแล้วกลับมาแก้ตรงนี้ไม่ได้นะ")}</p>
+        <p className="status-note">{keepPhrases("ขึ้นเว็บแล้วกลับมาแก้ไม่ได้นะ")}</p>
         <div className="form-row">
           <label>
             ชื่อที่อยากให้ขึ้น
@@ -178,7 +177,6 @@ export function ContributeForms({
       {guides.length > 0 && (
         <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
           <h2 id="guide">ลองทำตามคู่มือแล้ว</h2>
-          <p className="status-note">{keepPhrases("ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย “ร่าง” จะหายไป")}</p>
           <label>
             คู่มือไหน
             <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>
