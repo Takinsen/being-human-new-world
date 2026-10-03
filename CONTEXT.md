@@ -77,7 +77,7 @@ Know-how about the first months themselves: feeling lonely, missing home, making
 _Avoid_: Mental health (that is Health), Feelings
 
 **Home Taste** (รสชาติบ้าน):
-A place in the Campus Area serving authentic food from a Thai region, vouched for in a Note by someone whose hometown is in that region. Until someone vouches for it, a place the team found is shown as a team pick.
+A place in the Campus Area serving authentic food from a Thai region, vouched for in a Note by someone whose hometown is in that region. Until someone vouches for it, a place the team found stands in.
 _Avoid_: Regional food, comfort food
 
 **Starter Checklist**:

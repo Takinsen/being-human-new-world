@@ -111,6 +111,7 @@ export const places: Place[] = [
     knowhow: ["เผ็ดแบบใต้จริง กินเผ็ดไม่เก่งก็บอกลดเผ็ดตอนสั่ง", "ราคาต่อจานแรงกว่าร้านข้าวทั่วไป ชวนเพื่อนไปหลายคนแล้วแบ่งกันกินคุ้มกว่า"],
     price: { min: 120, max: 250, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ใต้",
+    dishes: "แกงไตปลา คั่วกลิ้ง",
   },
   {
     id: "somtam-chula-20",
@@ -124,6 +125,7 @@ export const places: Place[] = [
     knowhow: ["ร้านเปิดตอนเย็น มาหลังเลิกเรียนหรือหลังซ้อมได้พอดี", "คนชอบสั่งส้มตำไทยกับคอหมูย่าง"],
     price: { min: 50, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
+    dishes: "ส้มตำไทย คอหมูย่าง",
   },
   // More Home Taste team picks (.scratch/more-know-how/research-food-health.md §3, research-home-taste.md).
   // Pins are estimates from the address; check them on the spot. Dish photos are illustrations.
@@ -138,6 +140,7 @@ export const places: Place[] = [
     knowhow: ["ข้าวซอยเนื้อชามละ 79 บาท", "มีข้าวกั้นจิ้นกับไส้อั่วน้ำพริกหนุ่มด้วย"],
     price: { min: 79, max: 120, per: "ต่อชาม", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "เหนือ",
+    dishes: "ข้าวซอย ขนมจีนน้ำเงี้ยว ไส้อั่ว",
   },
   {
     id: "lamduan-faham",
@@ -150,6 +153,7 @@ export const places: Place[] = [
     knowhow: ["ร้านดั้งเดิมอยู่เชียงใหม่มากว่า 80 ปี", "ข้าวซอยเนื้อกับข้าวซอยกระดูกอ่อนเป็นจานที่คนสั่งกัน"],
     price: { min: 69, max: 129, per: "ต่อชาม", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "เหนือ",
+    dishes: "ข้าวซอยเนื้อ ข้าวซอยกระดูกอ่อน",
   },
   {
     id: "hom-duan",
@@ -162,6 +166,7 @@ export const places: Place[] = [
     knowhow: ["ขนมจีนน้ำเงี้ยวชามละ 75 บาท ข้าวซอยกับแกงฮังเลราว 140"],
     price: { min: 75, max: 140, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "เหนือ",
+    dishes: "น้ำพริกหนุ่ม แกงฮังเล ขนมจีนน้ำเงี้ยว",
   },
   {
     id: "pa-khao",
@@ -174,6 +179,7 @@ export const places: Place[] = [
     knowhow: ["ตำเส้นเล็ก 59 บาท ไส้กรอกอีสานชุดเล็ก 125", "คิวยาวช่วงเย็น"],
     price: { min: 59, max: 125, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
+    dishes: "ส้มตำปลาร้า ไส้กรอกอีสาน",
   },
   {
     id: "kham-paeng",
@@ -186,6 +192,7 @@ export const places: Place[] = [
     knowhow: ["ไก่ทอดเกลือ 249 บาท", "เปิดถึงห้าทุ่ม ศุกร์ถึงอาทิตย์ถึงเที่ยงคืน"],
     price: { min: 120, max: 250, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
+    dishes: "ไก่ทอดเกลือ รสมือคนอุดรฯ",
   },
   {
     id: "sri-kamin",
@@ -198,6 +205,7 @@ export const places: Place[] = [
     knowhow: ["ใบเหลียงผัดไข่ 165 บาท แกงส้มปลากะพง 290", "ไปหลายคนแล้วแบ่งกันกินคุ้มกว่า"],
     price: { min: 80, max: 290, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ใต้",
+    dishes: "ขนมจีนแกงปู ใบเหลียงผัดไข่ ข้าวยำ",
   },
   {
     id: "mae-duen",
@@ -211,6 +219,7 @@ export const places: Place[] = [
     // Hours (10:00–24:00) and the khanom thuay price (40 or 60) conflict between sources: estimates.
     price: { min: 15, max: 60, per: "ต่อชิ้นหรือกล่อง", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "กลาง",
+    dishes: "ขนมถ้วย ขนมใส่ไส้ เม็ดขนุน",
   },
   {
     id: "sen-sukho",
@@ -222,6 +231,7 @@ export const places: Place[] = [
     knowhow: ["ชามละ 75 บาท", "เปิดทุกวัน 11:00 ปิดราวหกโมงครึ่งถึงทุ่มครึ่ง"],
     price: { min: 75, max: 80, per: "ต่อชาม", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "กลาง",
+    dishes: "ก๋วยเตี๋ยวสุโขทัย",
   },
   {
     id: "kong-tui-bangtan",
@@ -234,6 +244,7 @@ export const places: Place[] = [
     knowhow: ["ไก่ครึ่งตัว 90 บาท ส้มตำไทย 40", "ปิดวันจันทร์ ไปก่อนบ่ายสอง"],
     price: { min: 40, max: 90, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ตะวันตก",
+    dishes: "ไก่ย่างบางตาล ส้มตำ",
   },
 
   {
