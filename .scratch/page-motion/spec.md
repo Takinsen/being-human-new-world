@@ -15,6 +15,9 @@
 - **Q1, คู่มือ:** it is the name of every Guide (the tab, the page heading and its browser title, "คู่มือทั้งหมด", "อ่านคู่มือ", the contribute form's "ลองทำตามคู่มือแล้ว / คู่มือไหน / เลือกคู่มือ", the Place caution that points to a Guide). The Guides page lede becomes "พี่ๆ เขียนคู่มือไว้ให้แล้ว". The site description keeps "วิธีใช้ชีวิตแถวจุฬาฯ" (plain "how", not the Guide). The URL stays `/guides`. Glossary updated.
 - **Q2, how a page change moves:** prototype first (below).
 - **Q7, the prototype's verdict:** D. Tabs slide sideways in tab order, going deeper rises in, "← กลับ" sinks away, a Feed category moves only the list, and a Guide's name flies from where it was tapped into its heading.
+- **Q8, where a name flies:** wherever the same name is on both sides of the tap: a Guide from the Guides list or from a Place card's Guides into its heading; a Place's name from its card into "โน้ตที่…" on its Notes; a Starter Checklist stop only when its title is the Guide's title (otherwise it just rises in).
+- **Q9, flying back:** yes. On "← กลับ" the name flies back to where it came from when that spot is on screen; otherwise the page just sinks away.
+- **Q10, after posting a Note:** the form sinks away like "← กลับ", then the new Note rises in at the top of the Feed (or the Place's card) with "โน้ตขึ้นแล้ว".
 - **Q3, browser back/forward and iOS's edge swipe:** no transition (the browser already animates its own back). Only taps inside the site move.
 - **Q4, changes within a page, all six:**
   1. Map category chips and "มีโน้ต": pins fade in and out, the list rises in again.
