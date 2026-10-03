@@ -1,0 +1,282 @@
+/* PROTOTYPE (type-and-spacing), throwaway: lives only on the prototype/type-and-spacing branch.
+   Fonts by html[data-font], the new type scale and weights by html[data-scale="new"], the
+   wordmark by html[data-mark]. Spacing is in prototype-spacing.css. See .scratch/type-and-spacing/spec.md. */
+
+/* LINE Seed Sans TH (Dalton Maag, Thai by Cadson Demak) ships Regular and Bold only, no 500/600:
+   its headings are Bold. Self-hosted, since it isn't on Google Fonts. */
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("/prototype/fonts/LINESeedSansTH_Rg.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LINE Seed Sans TH";
+  src: url("/prototype/fonts/LINESeedSansTH_Bd.ttf") format("truetype");
+  font-weight: 700;
+  font-display: swap;
+}
+
+/* ---------- Fonts (Q7) ---------- */
+
+:root {
+  --w-head: 500;
+}
+
+:root[data-font="A"] {
+  --font: "Anuphan", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "Anuphan", "Noto Sans Thai", sans-serif;
+}
+
+:root[data-font="B"] {
+  --font: "Google Sans", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "Google Sans", "Noto Sans Thai", sans-serif;
+}
+
+:root[data-font="C"] {
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "LINE Seed Sans TH", "IBM Plex Sans Thai", sans-serif;
+}
+
+/* ---------- The wordmark (Q15) ---------- */
+
+:root[data-mark="mitr"] .wordmark,
+:root[data-mark="mitr"] .splash-mark {
+  font-family: "Mitr", sans-serif;
+  font-weight: 500;
+}
+
+:root[data-mark="new"] .wordmark,
+:root[data-mark="new"] .splash-mark {
+  font-family: var(--font-head);
+  font-weight: var(--w-head);
+}
+
+/* ---------- The new scale (Q12): 14 meta · 16 body · 20 item · 25 section · 32 page ---------- */
+
+:root[data-scale="new"] {
+  --w-head: 600;
+  --step-half: 1.25rem;
+  --step-1: 1.5625rem;
+  --step-3: 2rem;
+  --type-quote: var(--step-0);
+  --type-big: 1.5625rem;
+  --t-item: 1.25rem;
+}
+
+:root[data-scale="new"][data-font="C"] {
+  --w-head: 700;
+}
+
+/* Q9: a laptop gets the plain size; only the projector grows, and less */
+@media (min-width: 900px) {
+  :root[data-scale="new"] {
+    font-size: 100%;
+    --step-3: 2.25rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root[data-scale="new"] {
+    font-size: 112.5%;
+  }
+}
+
+:root[data-scale="new"] h1,
+:root[data-scale="new"] h2,
+:root[data-scale="new"] h3 {
+  font-weight: var(--w-head);
+}
+
+/* --step-1 is now a section heading's size; the things that only borrowed it go back to 20 */
+:root[data-scale="new"] .line-head,
+:root[data-scale="new"] .week-progress p:first-of-type {
+  font-size: var(--t-item);
+}
+
+:root[data-scale="new"] .place-icon,
+:root[data-scale="new"] .avatar {
+  font-size: 1.25rem;
+}
+
+/* A lede is read as text, at the body's size */
+:root[data-scale="new"] .lede,
+:root[data-scale="new"] .composer-prompt {
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+/* ---------- A Guide (Q8, Q16) ---------- */
+
+:root[data-scale="new"] .guide-page {
+  --read: 1rem;
+}
+
+@media (min-width: 900px) {
+  :root[data-scale="new"] .guide-page {
+    --read: 1.0625rem;
+  }
+}
+
+:root[data-scale="new"] .guide-page .page-head h1 {
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+
+@media (min-width: 900px) {
+  :root[data-scale="new"] .guide-page .page-head h1 {
+    font-size: 2.25rem;
+  }
+}
+
+:root[data-scale="new"] .guide-page .page-head .lede {
+  font-size: var(--read);
+  line-height: 1.65;
+}
+
+:root[data-scale="new"] .guide {
+  line-height: 1.65;
+}
+
+:root[data-scale="new"] .guide-steps-title {
+  font-size: var(--t-item);
+}
+
+/* The action line: body size in the heading face; its station already marks it */
+:root[data-scale="new"] .step-do {
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+:root[data-scale="new"] .guide-steps .step-do {
+  padding-top: max(0px, calc((var(--station) - 1.5em) / 2));
+}
+
+:root[data-scale="new"] .step-say q {
+  font-size: 1em;
+  font-weight: 500;
+}
+
+:root[data-scale="new"] .guide-end .station {
+  font-size: var(--step-0);
+}
+
+:root[data-scale="new"] .guide-end p {
+  font-size: 1em;
+  font-weight: var(--w-head);
+}
+
+:root[data-scale="new"] .guide .mark-next,
+:root[data-scale="new"] .guide-next a {
+  font-size: var(--t-item);
+  font-weight: var(--w-head);
+}
+
+:root[data-scale="new"] .week-progress.is-complete p:first-of-type {
+  font-size: var(--step-1);
+  font-weight: var(--w-head);
+}
+
+/* ---------- Bold only for headings, a price, a number to call and the main button (Q13) ---------- */
+
+/* Item titles: the heading face and weight */
+:root[data-scale="new"] .guide-list b,
+:root[data-scale="new"] .stop-group b,
+:root[data-scale="new"] .week-stops .week-next a,
+:root[data-scale="new"] .week-progress p:first-of-type,
+:root[data-scale="new"] .week-progress b {
+  font-family: var(--font-head);
+  font-weight: var(--w-head);
+}
+
+/* Everything else quiets to 500; colour, not weight, says it is secondary */
+:root[data-scale="new"] .draft-tag,
+:root[data-scale="new"] .tab-bar a,
+:root[data-scale="new"] .site-footer a,
+:root[data-scale="new"] .week-read,
+:root[data-scale="new"] .price .price-pending,
+:root[data-scale="new"] .related-link,
+:root[data-scale="new"] .mark-done,
+:root[data-scale="new"] .line-chip,
+:root[data-scale="new"] .detail-back,
+:root[data-scale="new"] .sheet-handle,
+:root[data-scale="new"] .contribute-form label,
+:root[data-scale="new"] .form-status,
+:root[data-scale="new"] .welcome a,
+:root[data-scale="new"] .stop-group .note-count,
+:root[data-scale="new"] .note-name a,
+:root[data-scale="new"] .note-name b,
+:root[data-scale="new"] .feed-scope,
+:root[data-scale="new"] .feed-scope-links,
+:root[data-scale="new"] .home-taste-tag,
+:root[data-scale="new"] .note-cat,
+:root[data-scale="new"] .back-link,
+:root[data-scale="new"] .detail-taste,
+:root[data-scale="new"] .detail-h,
+:root[data-scale="new"] .detail-write,
+:root[data-scale="new"] .detail-know .is-caution,
+:root[data-scale="new"] .detail-guides a,
+:root[data-scale="new"] .price-report,
+:root[data-scale="new"] .detail-guide,
+:root[data-scale="new"] .feed-more a,
+:root[data-scale="new"] .jump-links a,
+:root[data-scale="new"] .list-help,
+:root[data-scale="new"] .guide-eyebrow,
+:root[data-scale="new"] .guide-facts dd,
+:root[data-scale="new"] .guide-bring h2,
+:root[data-scale="new"] .step-when,
+:root[data-scale="new"] .step-link,
+:root[data-scale="new"] .station,
+:root[data-scale="new"] .guide-next small,
+:root[data-scale="new"] .guide .mark-next small {
+  font-weight: 500;
+}
+
+:root[data-scale="new"] .guide-facts dt {
+  font-weight: 400;
+}
+
+/* Still bold: a price on platform yellow, a number to call, the main button */
+:root[data-scale="new"] .price-strip,
+:root[data-scale="new"] .stop-tags .stop-price,
+:root[data-scale="new"] .tel,
+:root[data-scale="new"] .help-contact,
+:root[data-scale="new"] .action,
+:root[data-scale="new"] .contribute-form button {
+  font-weight: 700;
+}
+
+/* ---------- The switcher bar: plainly not part of the design ---------- */
+
+.type-switcher {
+  position: fixed;
+  z-index: 9999;
+  top: 8px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 99px;
+  background: #111;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 0.3);
+  color: #fff;
+  font: 500 12px/1.2 system-ui, sans-serif;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.type-switcher button {
+  min-height: 28px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 99px;
+  background: #333;
+  color: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.type-switcher span {
+  padding: 0 4px;
+}

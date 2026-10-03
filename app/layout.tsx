@@ -5,8 +5,11 @@ import { PageFrame } from "@/components/PageMotion";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
+import { TypeSwitcher, typeBoot } from "@/components/prototype/TypeSwitcher";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
 import "./globals.css";
+import "./prototype-type.css";
+import "./prototype-spacing.css";
 
 export const metadata: Metadata = {
   title: "ตั้งหลัก",
@@ -19,16 +22,18 @@ export const viewport: Viewport = { // The phone's bar takes the canopy's dark l
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     // Next turns smooth scrolling off while changing pages only when told (it opened pages half-scrolled).
-    <html lang="th" data-scroll-behavior="smooth">
+    <html lang="th" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Mitr:wght@400;500&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600;700&family=Mitr:wght@400;500&family=Anuphan:wght@400;500;600;700&family=Google+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
         />
       </head>
       <body>
+        {/* PROTOTYPE: set the font, scale and wordmark before first paint */}
+        <script dangerouslySetInnerHTML={{ __html: typeBoot }} />
         <Splash />
         <a href="#main" className="skip-link">
           ข้ามไปเนื้อหา
@@ -52,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TabBar />
         <ChipFocus />
         <SwipeTabs />
+        <TypeSwitcher />
       </body>
     </html>
   );
