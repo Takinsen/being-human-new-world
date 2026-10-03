@@ -1,6 +1,6 @@
 # Starter Checklist: check your cover
 
-Status: ready-for-agent
+Status: done
 
 From `../spec.md` Q16. The Starter Checklist has only a first week, no first month, so the item goes there. The Home Taste item waits for the Home Taste ticket.
 

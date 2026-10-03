@@ -1,6 +1,6 @@
 # Health: which cover you can use, more Places
 
-Status: ready-for-agent
+Status: done
 
 From `../spec.md` Q4, Q15, Q19 and `../research-food-health.md` §2.
 
