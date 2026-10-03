@@ -31,7 +31,7 @@ Status: needs-triage (grilling done 2026-10-03; prototype next)
 - **Q13, bold:** only headings (600), a price on platform yellow and a number to call, and the main button. Everything else 400 or 500, quieter by colour (`--ink-soft`) instead of weight.
 - **Q14, spacing:** proximity, strictly: 8 inside one thing, 16 between things in a list and inside a card, 32 between sections, 48 under a page head and between big sections. 4 / 12 / 24 only where there's a real reason (inside a small label). Every page gets audited for spots that are too tight or break the rule; the prototype points them out.
 - **Q15, the wordmark:** the prototype shows it both in Mitr (as a logo, splash unchanged) and in the new heading font; decide on seeing it.
-- **Q16, open:** where a step's action line and "ขั้นตอน" land on Q12's scale.
+- **Q16, a step's action line and "ขั้นตอน":** the action line at the body's size in the heading font at 600 (its numbered station already marks it); "ขั้นตอน" at 20px, a sub-heading. So a Guide gets smaller and headings still stand apart by weight.
 - Everything else in Mitr (a step's action line, the words to say, the Guide's end line) takes the new heading font.
 
 ## Prototype (to build)
