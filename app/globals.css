@@ -1490,12 +1490,6 @@ a.line-chip {
   padding-bottom: var(--space-3);
 }
 
-.home-taste-list small {
-  display: block;
-  color: var(--ink-soft);
-  font-size: var(--step--1);
-}
-
 /* ---------- Note form ---------- */
 
 .counter {
@@ -1652,41 +1646,289 @@ body:not(:has(.explorer)) main {
   margin-top: var(--space-1);
 }
 
-/* Home tastes: one tinted card among the Guide cards, not loose text on the ground */
-.home-taste-list {
-  margin: var(--space-4) 0 0;
+/* Home Taste's way in from the food section: one tinted card above the Guide cards */
+.home-taste-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: 64px;
+  margin-top: var(--space-4);
   padding: var(--space-4);
   border-radius: var(--radius-m);
-  background: var(--tint, color-mix(in srgb, var(--food) 10%, var(--paper)));
+  background: var(--tint);
+  text-decoration: none;
 }
 
-.home-taste-list .guide-icon {
+.home-taste-link .guide-icon {
+  flex: none;
   background: var(--paper);
   color: var(--c);
 }
 
-.home-taste-list li + li {
-  padding-top: var(--space-2);
-  border-top: 1px dashed color-mix(in srgb, var(--c) 25%, var(--paper));
+.home-taste-link > span:nth-child(2) {
+  flex: 1;
+  min-width: 0;
 }
 
-.home-taste-list h3 {
-  font-size: var(--step-0);
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
+.home-taste-link b {
+  display: block;
+  font-family: var(--font-head);
+  font-weight: var(--w-head);
+  font-size: var(--step-1);
+  line-height: 1.35;
 }
 
-.home-taste-list .options {
+.home-taste-link small {
+  display: block;
+  margin-top: var(--space-1);
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+
+.home-taste-arrow {
+  flex: none;
+  color: var(--c);
+  font-size: 1.25rem;
+}
+
+/* Home Taste page, before a region is picked: one big button per region (spec Q21) */
+.home-ask {
+  margin-top: var(--space-7);
+  padding: var(--space-6) var(--space-4);
+  border-radius: var(--radius-l);
+  background: var(--tint);
+}
+
+.home-ask h2 {
+  margin: 0;
+}
+
+.home-ask > p {
+  margin-top: var(--space-2);
+  color: var(--ink-soft);
+}
+
+.home-ask-regions {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-2);
   margin-top: var(--space-4);
 }
 
-.home-taste-list a {
+@media (min-width: 640px) {
+  .home-ask-regions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.home-ask-regions button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+  min-height: 112px;
+  padding: var(--space-4);
+  border: 0;
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+  color: var(--ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.home-ask-regions b {
+  font-family: var(--font-head);
+  font-weight: var(--w-head);
+  font-size: var(--step-1);
+  line-height: 1.35;
+}
+
+.home-ask-regions small {
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.45;
+}
+
+.home-ask-count {
+  margin-top: auto;
+  padding-top: var(--space-2);
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  font-weight: 500;
+}
+
+/* Once picked: the region chips, then that region's Places as photo cards */
+.home-taste {
+  margin-top: var(--space-7);
+}
+
+.home-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.home-chip {
   display: inline-flex;
   align-items: center;
+  gap: var(--space-2);
   min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
+  background: var(--paper);
+  color: var(--ink);
+  font: 500 var(--step-0) / 1 var(--font);
+  cursor: pointer;
+}
+
+.home-chip[aria-pressed="true"] {
+  border-color: var(--c);
+  background: var(--c);
+  color: #fff;
+}
+
+.home-chip-count {
+  min-width: 1.4em;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  color: var(--on-tint);
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.home-chip[aria-pressed="true"] .home-chip-count {
+  background: rgb(255 255 255 / 0.25);
+  color: #fff;
+}
+
+.home-taste h2 {
+  margin: var(--space-6) 0 0;
+}
+
+.home-dishes {
+  margin-top: var(--space-1);
+  color: var(--on-tint);
+  font-weight: 500;
+}
+
+.home-cards {
+  display: grid;
+  gap: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .home-cards {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+
+.home-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+.home-card .photo {
+  margin: 0;
+  aspect-ratio: 2 / 1;
+}
+
+/* Over the stretched link, so the photo's credit can still be tapped */
+.home-card .photo figcaption {
+  z-index: 1;
+}
+
+.home-card-photo.is-empty {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  background: var(--tint);
+  color: var(--c);
+  font-size: 3rem;
+}
+
+.home-card-body {
+  padding: var(--space-4);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.home-card-body h3 {
+  margin: 0;
+  font-size: var(--step-1);
+  line-height: 1.35;
+}
+
+.home-card-body h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-card-body h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.home-card-body > p {
+  margin: var(--space-1) 0 0;
+  color: var(--ink-soft);
+  font-size: var(--step--1);
+  line-height: 1.5;
+}
+
+.home-card-body > .home-card-price {
+  margin-top: var(--space-2);
+  color: var(--ink);
+}
+
+.home-card-body > .home-vouch {
+  margin-top: var(--space-2);
+}
+
+.home-card-body > .home-vouch.is-vouched {
+  color: var(--on-tint);
+  font-weight: 500;
+}
+
+/* A region nobody has found a place for yet (spec Q14) */
+.home-empty {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 2px dashed color-mix(in srgb, var(--c) 35%, var(--paper));
+  border-radius: var(--radius-m);
+  background: var(--paper);
+}
+
+.home-empty p {
+  margin: 0;
+}
+
+.home-empty-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  margin-top: var(--space-4);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-pill);
+  background: var(--action);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
 }
 
 /* Numbers inside a sentence: a 44px tap area without stretching the line */

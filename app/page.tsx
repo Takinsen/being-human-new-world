@@ -16,7 +16,7 @@ export default async function Home() {
     const places = placesIn(content, c.id);
     return (c.id === "food" ? [...places].sort(byPrice) : places).map((place) => {
       const guides = (place.guides ?? []).flatMap((id) => content.guides.filter((g) => g.id === id));
-      const vouch = content.homeTaste.find((h) => h.place.id === place.id)?.by;
+      const vouch = content.homeTaste.flatMap((r) => r.picks).find((h) => h.place.id === place.id)?.by;
       return {
         place,
         notes: notesOn(content, place.id),

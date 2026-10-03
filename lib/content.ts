@@ -3,6 +3,7 @@ import { seedNotes } from "@/content/notes";
 import { places as basePlaces } from "@/content/places";
 import { seniors as baseSeniors } from "@/content/seniors";
 import type { CategoryId, Guide, Note, Place, Region, Senior } from "@/content/types";
+import { isRegion, regions } from "@/content/regions";
 import { regionOf } from "./provinces";
 import { readSheet, type SheetRows } from "./sheet";
 
@@ -10,7 +11,12 @@ import { readSheet, type SheetRows } from "./sheet";
 // over it, the newest row winning (docs/adr/0005).
 
 /** A Home Taste Place and who vouched for it; no one yet means a team pick. */
-export type HomeTastePick = { place: Place; region: Region; by?: Note };
+export type HomeTastePick = { place: Place; by?: Note };
+
+/** A region's Home Taste: vouched Places first, then team picks, at most HOME_TASTE_PER_REGION */
+export type HomeTasteRegion = { region: Region; picks: HomeTastePick[] };
+
+export const HOME_TASTE_PER_REGION = 3;
 
 export type Content = {
   places: Place[];
@@ -18,15 +24,12 @@ export type Content = {
   guides: Guide[];
   /** Newest first; seed Notes last */
   notes: Note[];
-  homeTaste: HomeTastePick[];
+  /** Every region, in content/regions.ts order, even those with no Place yet */
+  homeTaste: HomeTasteRegion[];
 };
 
-const regions: Region[] = ["เหนือ", "อีสาน", "กลาง", "ใต้", "ตะวันออก", "ตะวันตก"];
 const categoryIds: CategoryId[] = ["transport", "food", "health", "household", "adjusting"];
 
-export function isRegion(value: string): value is Region {
-  return (regions as string[]).includes(value);
-}
 
 export function isCategory(value: string): value is CategoryId {
   return (categoryIds as string[]).includes(value);
@@ -109,15 +112,20 @@ function merge(rows: SheetRows): Content {
     rows.guides.some((row) => row.guideId === g.id) ? { ...g, checked: true } : g,
   );
 
-  // Home Taste: a Note from someone of that region vouches; otherwise the team's pick stands.
-  const homeTaste: HomeTastePick[] = [];
-  for (const region of regions) {
-    const by = notes.find((n) => n.homeTaste && n.region === region && n.placeId);
-    const vouched = by && place(by.placeId!);
-    const teamPick = places.find((p) => p.homeTaste === region);
-    if (vouched) homeTaste.push({ place: vouched, region, by });
-    else if (teamPick) homeTaste.push({ place: teamPick, region });
-  }
+  // Home Taste: Places someone from that region vouched for in a Note come first (newest
+  // Note first), then the team's picks.
+  const homeTaste: HomeTasteRegion[] = regions.map(({ id: region }) => {
+    const picks: HomeTastePick[] = [];
+    for (const by of notes) {
+      if (!by.homeTaste || by.region !== region || !by.placeId) continue;
+      const vouched = place(by.placeId);
+      if (vouched && !picks.some((p) => p.place.id === vouched.id)) picks.push({ place: vouched, by });
+    }
+    for (const p of places) {
+      if (p.homeTaste === region && !picks.some((pick) => pick.place.id === p.id)) picks.push({ place: p });
+    }
+    return { region, picks: picks.slice(0, HOME_TASTE_PER_REGION) };
+  });
 
   return { places, seniors, guides, notes, homeTaste };
 }

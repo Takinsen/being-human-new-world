@@ -1,4 +1,4 @@
-Status: needs-triage
+Status: done
 
 # More know-how: Household Places, food and health, Home Taste, the CU POP BUS logo
 
@@ -43,3 +43,5 @@ Note on Q16: the Starter Checklist has only a first week, no first month, so the
   - C: one sideways-scrolling row per region, yours first and tinted.
 - New team picks (from `research-food-health.md` §3 and `research-home-taste.md`): north 3 (ข้าวซอยดอยคำ, ลำดวนฟ้าฮ่าม, หอมด่วน), Isan +2 (พาข้าว, คำแพง), south +1 (ศรีขมิ้น), central 2 (ขนมไทยแม่เดือน, Suphanburi; เส้นสุโข, Sukhothai, central in the app's six regions), west 1 (ก๋งตุ๋ย ไก่ย่างบางตาล ราชบุรี). East: none found, so it shows the "tell us" prompt.
 - Screenshots: `prototype/` on that branch. Commons is blocked from the agent's browser, so the photos there are placeholders; on a normal network they are real dish photos.
+- **Q21 Home Taste variant:** B then A. With no region chosen, ask "บ้านอยู่ภาคไหน" with six big buttons; once chosen, region chips (yours selected) over that region's photo cards.
+- **Q22 Where:** its own page, with a card at the top of the food section on `/guides` that says how many places your region has. The page is `/guides/home-taste`, so the คู่มือ tab stays lit.

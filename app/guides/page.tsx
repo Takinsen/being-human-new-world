@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { NavLink } from "@/components/NavLink";
-import { BowlSteam } from "@phosphor-icons/react/dist/ssr";
 import { placeCategories } from "@/content/categories";
 import { BrandLogo, CategoryIcon, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { FlyingName } from "@/components/PageMotion";
-import { type Content, getContent, guidesIn } from "@/lib/content";
+import { HomeTasteLink } from "@/components/HomeTaste";
+import { getContent, guidesIn } from "@/lib/content";
 import { keepPhrases } from "@/lib/thaiBreaks";
 import { OldGuideLinks } from "./OldGuideLinks";
 
@@ -36,6 +36,9 @@ export default async function GuidesPage() {
             </span>
           </h2>
           <div className="inner">
+            {c.id === "food" && (
+              <HomeTasteLink counts={Object.fromEntries(content.homeTaste.map((r) => [r.region, r.picks.length]))} />
+            )}
             <ul className="guide-list">
               {guidesIn(content, c.id).map((g) => (
                 <li key={g.id}>
@@ -53,35 +56,9 @@ export default async function GuidesPage() {
                 </li>
               ))}
             </ul>
-            {c.id === "food" && <HomeTaste content={content} />}
           </div>
         </section>
       ))}
     </>
-  );
-}
-
-function HomeTaste({ content }: { content: Content }) {
-  if (!content.homeTaste.length) return null;
-  return (
-    <section className="home-taste-list" id="home-taste">
-      <h3>
-        <span className="guide-icon">
-          <BowlSteam weight="bold" aria-hidden="true" />
-        </span>
-        รสชาติบ้าน
-      </h3>
-      <p className="guide-intro">{keepPhrases("คิดถึงกับข้าวที่บ้าน ร้านพวกนี้คนจากภาคนั้นบอกว่าใช่ บางร้านทีมหามาให้ลองไปก่อน")}</p>
-      <ul className="options">
-        {content.homeTaste.map(({ place, region, by }) => (
-          <li key={region}>
-            <span>
-              <b>{keepPhrases(`อาหาร${region}`)}</b> <NavLink href={`/?place=${place.id}`}>{keepPhrases(place.name)}</NavLink>
-              <small>{keepPhrases(by ? ` ${by.name} บ้านอยู่${by.hometown} แนะนำ` : " ทีมหามาให้ลอง")}</small>
-            </span>
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }
