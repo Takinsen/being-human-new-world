@@ -9,7 +9,7 @@ import { BookOpenText, ChatCenteredText, ListChecks, MapTrifold } from "@phospho
 export const tabs = [
   { href: "/", label: "แผนที่", Icon: MapTrifold },
   { href: "/notes", label: "โน้ต", Icon: ChatCenteredText },
-  { href: "/guides", label: "วิธี", Icon: BookOpenText },
+  { href: "/guides", label: "คู่มือ", Icon: BookOpenText },
   { href: "/checklist", label: "สัปดาห์แรก", Icon: ListChecks },
 ];
 

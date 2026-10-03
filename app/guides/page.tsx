@@ -7,7 +7,7 @@ import { PageHead } from "@/components/PageHead";
 import { type Content, getContent, guidesIn } from "@/lib/content";
 import { OldGuideLinks } from "./OldGuideLinks";
 
-export const metadata: Metadata = { title: "วิธี | ตั้งหลัก" };
+export const metadata: Metadata = { title: "คู่มือ | ตั้งหลัก" };
 
 // Every Guide as one line, grouped by category; the steps are on /guides/<id> (docs/adr/0006).
 // Adjusting has no Guides, so it has no section here (docs/adr/0008).
@@ -16,7 +16,7 @@ export default async function GuidesPage() {
   return (
     <>
       <OldGuideLinks ids={content.guides.map((g) => g.id)} />
-      <PageHead title="วิธี" lede="ตอนอยู่บ้านมีคนทำให้ มาอยู่นี่ต้องทำเอง พี่ๆ เขียนวิธีไว้ให้แล้ว">
+      <PageHead title="คู่มือ" lede="ตอนอยู่บ้านมีคนทำให้ มาอยู่นี่ต้องทำเอง พี่ๆ เขียนคู่มือไว้ให้แล้ว">
         <nav className="line-filters" aria-label="ไปที่หมวด">
           {placeCategories.map((c) => (
             <a key={c.id} href={`#${c.id}`} className="line-chip" data-line={c.id}>

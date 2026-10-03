@@ -1,6 +1,6 @@
 # A Guide is called คู่มือ, not วิธี
 
-Status: ready-for-agent
+Status: done
 
 The owner renamed the Guide's Thai label (see `../spec.md`, Q1, and CONTEXT.md's **Guide (คู่มือ)**). Change every user-facing "วิธี" that names a Guide; keep "วิธี" where it only means "how".
 
@@ -26,3 +26,7 @@ The owner renamed the Guide's Thai label (see `../spec.md`, Q1, and CONTEXT.md's
 - `grep -rn "วิธี" app components lib content data sheet` shows only "how" uses, each one looked at.
 - `npm run typecheck` and `npm run build` pass.
 - The tab bar still fits at 360px wide (four labels, "สัปดาห์แรก" the longest): screenshot it.
+
+## Comments
+
+Renamed all user-facing occurrences of "วิธี" (the old label for Guide) to "คู่มือ" across the application. Changed 13 occurrences: tab label in TabBar.tsx, metadata and PageHead in guides/page.tsx, fallback title and back link in guides/[id]/page.tsx, link labels in WeekRoute.tsx and PlaceDetail.tsx, form labels and messages in ContributeForms.tsx and actions.ts, and a caution message in content/places.ts. The single remaining "วิธี" occurrence (in app/layout.tsx's description "วิธีใช้ชีวิตแถวจุฬาฯ") correctly means "how" and was kept. Verified with `npm run typecheck` and `npx next build` (both passed), and confirmed the 360px tab bar fits with all four labels including the new "คู่มือ" label.

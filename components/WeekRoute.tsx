@@ -68,7 +68,7 @@ export function WeekRoute() {
                   <Link href={item.href}>{item.title}</Link>
                   {nextSummary && <p>{nextSummary}</p>}
                   <span className="week-read" aria-hidden="true">
-                    อ่านวิธี
+                    อ่านคู่มือ
                   </span>
                 </div>
               ) : (

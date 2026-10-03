@@ -19,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const guide = guides.find((g) => g.id === id);
-  return { title: guide ? `${guide.title} | ตั้งหลัก` : "วิธี | ตั้งหลัก" };
+  return { title: guide ? `${guide.title} | ตั้งหลัก` : "คู่มือ | ตั้งหลัก" };
 }
 
 // One Guide per page, so the Guides list stays short (docs/adr/0006). It reads like an
@@ -36,7 +36,7 @@ export default async function GuidePage({ params }: Props) {
         back={
           <div className="guide-crumbs">
             <Link href={`/guides#${guide.category}`} className="back-link">
-              <ArrowLeft weight="bold" aria-hidden="true" /> วิธีทั้งหมด
+              <ArrowLeft weight="bold" aria-hidden="true" /> คู่มือทั้งหมด
             </Link>
             {/* A BTS or MRT Guide names its operator with the logo, on white; others show the category's icon */}
             <span className="guide-eyebrow">

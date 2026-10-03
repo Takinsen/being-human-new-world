@@ -151,7 +151,7 @@ export function PlaceDetail({
       {guides.length > 0 && (
         <section className="detail-section" aria-labelledby="detail-guides">
           <h3 id="detail-guides" className="detail-h">
-            อ่านวิธี
+            อ่านคู่มือ
           </h3>
           <ul className="detail-guides">
             {guides.map((guide) => (

@@ -68,7 +68,7 @@ const contributeMessages = {
   name: "ใส่ชื่อที่อยากให้ขึ้น",
   hometown: "เลือกจังหวัดที่บ้านอยู่",
   story: "เล่าเรื่องปีแรกก่อน",
-  guideId: "เลือกก่อนว่าวิธีไหน",
+  guideId: "เลือกก่อนว่าคู่มือไหน",
 };
 
 export function ContributeForms({
@@ -176,13 +176,13 @@ export function ContributeForms({
 
       {guides.length > 0 && (
         <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
-          <h2 id="guide">ลองทำตามวิธีแล้ว</h2>
+          <h2 id="guide">ลองทำตามคู่มือแล้ว</h2>
           <p className="status-note">ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย &ldquo;ร่าง&rdquo; จะหายไป</p>
           <label>
-            วิธีไหน
+            คู่มือไหน
             <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>
               <option value="" disabled>
-                เลือกวิธี
+                เลือกคู่มือ
               </option>
               {lines.map((l) => (
                 <optgroup key={l.id} label={l.name}>
