@@ -7,6 +7,7 @@ import { guides } from "@/content/guides";
 import { GuideBlock, GuideNeedToKnow } from "@/components/GuideBlock";
 import { BrandLogo, CategoryIcon } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
+import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
 
 type Props = { params: Promise<{ id: string }> };
@@ -22,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // One Guide per page, so the Guides list stays short (docs/adr/0006). It reads like an
-// article: title, a calm lede, the "need to know" box, then the steps (docs/adr/0007).
+// article: title, the gist as the lede, the "need to know" box, then the steps (docs/adr/0007).
 export default async function GuidePage({ params }: Props) {
   const { id } = await params;
   const guide = (await getContent()).guides.find((g) => g.id === id);
@@ -44,7 +45,7 @@ export default async function GuidePage({ params }: Props) {
             </span>
           </div>
         }
-        lede={guide.summary}
+        lede={guide.intro ? <TelText text={guide.intro} /> : guide.summary}
       />
       <div className="guide-body">
         <GuideNeedToKnow guide={guide} />

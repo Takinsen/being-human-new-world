@@ -25,7 +25,6 @@ export default async function NotesPage({ searchParams }: Props) {
   const writeHref = place ? `/notes/new?place=${place.id}` : active ? `/notes/new?line=${active}` : "/notes/new";
   // A space only before a name in Latin letters ("BTS สยาม"); Thai runs straight on
   const prompt = place ? `อยากบอกอะไรเกี่ยวกับ${/^[A-Za-z0-9]/.test(place.name) ? " " : ""}${place.name}…` : activeName ? `อยากบอกอะไรเรื่อง${activeName}…` : "อยากบอกอะไรคนมาใหม่…";
-  const placeName = (id?: string) => content.places.find((p) => p.id === id)?.name;
 
   return (
     <>
@@ -85,7 +84,7 @@ export default async function NotesPage({ searchParams }: Props) {
         <div className="feed">
           {notes.length === 0 && <p className="status-note">ยังไม่มีใครเขียนถึงตรงนี้ เขียนเป็นคนแรกได้เลย</p>}
           {notes.map((n, i) => (
-            <NoteCard key={n.id} note={n} placeName={place ? undefined : placeName(n.placeId)} fresh={Boolean(posted) && i === 0} />
+            <NoteCard key={n.id} note={n} fresh={Boolean(posted) && i === 0} />
           ))}
         </div>
         <ul className="feed-more">

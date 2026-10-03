@@ -1,6 +1,6 @@
 # The map is the home page; a bottom tab bar replaces the category pages
 
-Status: accepted (2026-09-25), amended 2026-09-26, 2026-09-27 and 2026-10-02 after the UX audits in `.scratch/map-first/` (`ux-audit.md` to `ux-audit-4.md`). Supersedes 0004. Its look (the transit-line language, and cards only on Guide pages) is replaced by 0007.
+Status: accepted (2026-09-25), amended 2026-09-26, 2026-09-27 and four times on 2026-10-02: after the UX audits in `.scratch/map-first/` (`ux-audit.md` to `ux-audit-4.md`), then for the tab bar and the Feed's composer, a Guide that reads like an article, and the Place card in sections (`.scratch/readable-pages/`). Supersedes 0004. Its look (the transit-line language, and cards only on Guide pages) is replaced by 0007.
 
 Friends who tried the site said it has too much text, is laid out messily, and they didn't know where to start reading. The long home page (hero, line diagram, Starter Checklist, three category bands, quotes) and the long Place cards were both to blame.
 
@@ -25,3 +25,7 @@ What stays from 0004: the map is an index into Local Know-how, not a directory. 
 
 - Links to `/transport`, `/food`, `/living` and `/map` must redirect: to the Guides page for categories, and to `/` for the map. Links to one Guide (`/guides#<id>`, used by the Starter Checklist) become `/guides/<id>`.
 - The pitch's "Being Human" line is now only the tagline on the map bar and the Senior Stories, so the demo script has to walk to the Feed.
+
+## Amendment (2026-10-02): the Place card shows all of it, in sections
+
+The owner found the card hard to read and chose layout P2 in `prototype/readable-pages`: the photo, the Place's icon and name large, then what it is in one line; then sections split by hairlines, each with a quiet heading: "เข้าจุฬาฯ ยังไง" (stations), "รู้ไว้ก่อนไป" (every caution, then every line of know-how), "โน้ตจากคนที่เคยไป" (the latest Note, with "เขียนโน้ต" beside the heading) and "อ่านวิธี" (its Guides as rows). The price with when it was last updated and "นำทาง" sit in a bar stuck to the bottom of the card. Nothing waits behind "อ่านเพิ่ม" any more: with sections and headings the whole card is short enough to read top to bottom, which was the reason for hiding the rest.

@@ -8,7 +8,7 @@ export type PlaceCategoryId = Exclude<CategoryId, "adjusting">;
 
 export type Region = "เหนือ" | "อีสาน" | "กลาง" | "ใต้" | "ตะวันออก" | "ตะวันตก";
 
-/** Who confirmed a price on the spot, and when. See docs/adr/0001. */
+/** Who confirmed a price, how, and when. The site shows only when (docs/adr/0001). */
 export type PriceCheck = {
   /** "YYYY-MM" */
   on: string;
@@ -120,23 +120,22 @@ export type GuideStep = {
   urgent?: boolean;
 };
 
-/** One line in a Guide's "need to know" box. A price goes in `price`, never typed into `value`, so its figure gets the platform yellow and its source is said (docs/adr/0001). */
+/** One row in a Guide's "need to know" box: a name and a short value, nothing under it (more goes in the steps).
+ * A price goes in `price`, never typed into `value`, so its figure gets the platform yellow and its date (docs/adr/0001). */
 export type GuideFact = {
   label: string;
-  /** A word about the value, e.g. what a price is made of or when a line answers */
-  note?: string;
 } & ({ value: string; price?: never } | { price: Price; value?: never });
 
 export type Guide = {
   id: string;
   category: PlaceCategoryId;
   title: string;
-  /** On the Guides list and as the Guide's lede: what newcomers get wrong, in a person's words */
+  /** On the Guides list (and the Guide's lede when it has no `intro`): what newcomers get wrong, in a person's words */
   summary: string;
   icon: IconKey;
   /** The Guide is about one operator's trains: its logo shows in the page head (lib/brands.ts) */
   brand?: Brand;
-  /** The article's opening paragraph, under the "need to know" box */
+  /** The gist of the whole Guide, read first: the lede under the title (docs/adr/0007, amended 2026-10-02) */
   intro?: string;
   /** Not shown since docs/adr/0007 (Guides use illustration); kept for a Place card or a later look */
   photo?: Photo;

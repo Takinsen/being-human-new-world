@@ -1,28 +1,37 @@
 import type { Price as PriceData } from "@/content/types";
-import { checkedBy, thaiMonthYear } from "@/lib/format";
+import { priceFigure, thaiMonthYear } from "@/lib/format";
 
-// A price is shown as a number only with a Price Check (docs/adr/0001).
-// `short` drops "ยังไม่มีใครไปเช็กเอง" from view where the price is a glance, not a decision
-// (a Guide's facts); screen readers still hear it. A Place card always shows it in full.
-export function Price({ price, short }: { price: PriceData; short?: boolean }) {
-  if (!price.checked) {
-    return <p className="price-pending">ยังไม่รู้ราคาจริง รอคนไปดู</p>;
-  }
-  const range = price.min === price.max ? `${price.min}` : `${price.min}–${price.max}`;
+// A price is shown as a number only with a Price Check, and says only when it was last
+// updated, not who checked it or how (docs/adr/0001, amended 2026-10-02).
+// `children` sits after the date, e.g. a Place card's way to report a price.
+export function Price({ price, children }: { price: PriceData; children?: React.ReactNode }) {
   return (
     <p className="price">
-      <span className="visually-hidden">ราคาปกติ </span>
-      <mark className="price-strip">
-        {range} บาท <small>{price.per}</small>
-      </mark>
-      <span className="price-check">
-        {price.checked.how === "web"
-          ? <>
-              ดูจากเว็บเมื่อ {thaiMonthYear(price.checked.on)}
-              <span className={short ? "visually-hidden" : undefined}> ยังไม่มีใครไปเช็กเอง</span>
-            </>
-          : `${checkedBy(price.checked)} ไปดูมาเมื่อ ${thaiMonthYear(price.checked.on)}`}
-      </span>
+      <PriceFigure price={price} />
+      {price.checked ? (
+        <small className="price-updated">
+          <PriceUpdated on={price.checked.on} />
+          {children && <> {children}</>}
+        </small>
+      ) : (
+        children && <small className="price-ask">{children}</small>
+      )}
     </p>
   );
+}
+
+/** The figure alone on platform yellow, or that nobody has checked it yet; a Guide's facts use it too */
+export function PriceFigure({ price }: { price: PriceData }) {
+  if (!price.checked) return <span className="price-pending">ยังไม่รู้ราคาจริง รอคนไปดู</span>;
+  return (
+    <>
+      <span className="visually-hidden">ราคาปกติ </span>
+      <mark className="price-strip">{priceFigure(price)}</mark>
+    </>
+  );
+}
+
+/** "อัปเดตล่าสุด ก.ย. 69": when, never who or how */
+export function PriceUpdated({ on }: { on: string }) {
+  return <>อัปเดตล่าสุด {thaiMonthYear(on)}</>;
 }
