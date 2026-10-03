@@ -14,6 +14,7 @@
 
 - **Q1, คู่มือ:** it is the name of every Guide (the tab, the page heading and its browser title, "คู่มือทั้งหมด", "อ่านคู่มือ", the contribute form's "ลองทำตามคู่มือแล้ว / คู่มือไหน / เลือกคู่มือ", the Place caution that points to a Guide). The Guides page lede becomes "พี่ๆ เขียนคู่มือไว้ให้แล้ว". The site description keeps "วิธีใช้ชีวิตแถวจุฬาฯ" (plain "how", not the Guide). The URL stays `/guides`. Glossary updated.
 - **Q2, how a page change moves:** prototype first (below).
+- **Q7, the prototype's verdict:** D. Tabs slide sideways in tab order, going deeper rises in, "← กลับ" sinks away, a Feed category moves only the list, and a Guide's name flies from where it was tapped into its heading.
 - **Q3, browser back/forward and iOS's edge swipe:** no transition (the browser already animates its own back). Only taps inside the site move.
 - **Q4, changes within a page, all six:**
   1. Map category chips and "มีโน้ต": pins fade in and out, the list rises in again.
