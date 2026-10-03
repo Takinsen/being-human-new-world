@@ -1,6 +1,6 @@
 # Type and spacing: a new font, a smaller scale, one rhythm
 
-Status: needs-info (prototype built 2026-10-03; waiting for the owner's pick)
+Status: needs-info (prototype round 2 built 2026-10-03; waiting for the owner on line breaks)
 
 ## What the owner said
 
@@ -32,6 +32,11 @@ Status: needs-info (prototype built 2026-10-03; waiting for the owner's pick)
 - **Q14, spacing:** proximity, strictly: 8 inside one thing, 16 between things in a list and inside a card, 32 between sections, 48 under a page head and between big sections. 4 / 12 / 24 only where there's a real reason (inside a small label). Every page gets audited for spots that are too tight or break the rule; the prototype points them out.
 - **Q15, the wordmark:** the prototype shows it both in Mitr (as a logo, splash unchanged) and in the new heading font; decide on seeing it.
 - **Q16, a step's action line and "ขั้นตอน":** the action line at the body's size in the heading font at 600 (its numbered station already marks it); "ขั้นตอน" at 20px, a sub-heading. So a Guide gets smaller and headings still stand apart by weight.
+- **Verdict on round 1 (2026-10-03):** fonts C, the new scale, the wordmark in Mitr. But some sentences and words break onto a second line in ugly places.
+- **Q17, line breaks:** a Thai line breaks only at a space; each phrase stays whole, and only a phrase longer than a line may break inside (between words).
+- **Q18, where:** all text, Notes and Senior Stories included, applied at render, never in the stored text. The hand-placed U+2060 in `content/guides.ts` become unnecessary; U+00A0 ("สาย 1") stays. Copying strips the joiners.
+- **Q19:** try it in the prototype first.
+- **Q20, LINE Seed's licence:** the files' licence couldn't be confirmed (their name table points at Dalton Maag's EULA and seed.line.me is blocked for the agent), so headings move to Anuphan: font D, Anuphan headings + IBM Plex Sans Thai text. No self-hosted font remains.
 - Everything else in Mitr (a step's action line, the words to say, the Guide's end line) takes the new heading font.
 
 ## Prototype
@@ -44,6 +49,14 @@ Status: needs-info (prototype built 2026-10-03; waiting for the owner's pick)
 - Known, not fixed by spacing: a Place card's icon box is a fixed 40px, so the icon still looks far from the name; the Guides list is about 10% longer on a phone (16 between cards and inside them).
 - Screenshots sent to the owner (2026-10-03): a Guide (phone top and steps, laptop), the Feed (phone, laptop), the map, the Guides list, the Starter Checklist, and the wordmark in Mitr against each font.
 - Not seen here: real phones (headless Chromium), map tiles (blocked in the agent's session).
+
+## Prototype, round 2 (2026-10-03)
+
+- Same branch (458cc8f). `?font=D` and `?wrap=word|phrase` (key W); defaults D, new, Mitr, phrase.
+- Why CSS alone can't: in Chromium 141 `word-break: keep-all` and `text-wrap: pretty` don't change Thai breaks; `balance` helps only titles.
+- How it works (`components/prototype/PhraseWrap.tsx`): inside each space-separated phrase of up to 24 letters, a word joiner goes before every character a Thai word can start with (never before a combining mark); longer phrases (45 of the 845 in content/, p50 11 letters) keep breaking between words. Short titles (Starter Checklist stops, Guides list, map list, a step's action line) also balance.
+- A scan of 19 pages at 390px and 1440px for a break between two Thai letters, or a last line of 6 letters or fewer: 108 with today's breaks, 22 with phrases. All 22 are long phrases breaking between words; a few split loanwords and names the browser's dictionary doesn't know ("แพ็ก┃เกจ", "มหิ┃ตลาธิเบศร", "ใบ┃อนุญาต").
+- Before/after screenshots sent: the Feed, the Guides list, Seniors, a Guide's steps and the Starter Checklist.
 
 ## Next
 
