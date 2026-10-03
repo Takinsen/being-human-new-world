@@ -24,3 +24,5 @@ Research: `research-household.md`, `research-food-health.md` (this folder).
 - **Q14 Empty regions:** a region with no place shows "ยังไม่มีร้านภาค… บ้านอยู่แถวนั้น รู้ร้านที่ใช่ บอกหน่อย" with a button to the Note form, "tastes like home" already ticked. Regions with only team picks show nothing extra.
 - **Q15 Health rights:** one Guide, options: gold card (and moving it to Bangkok), Chula student accident insurance, other rights such as a parent's civil-servant cover.
 - **Q16 Starter Checklist:** add the gold-card check to the first month, and trying a Home Taste place to the first month.
+- **Q17 Gaps with no real shop:** leave them out; never invent a shop. Estimates are only for a real shop's pin, hours or price.
+- **Q18 Order:** the content (Household, food and health Places, the two new Guides, the logo, the Starter Checklist) goes into `main` first, through tickets. Home Taste follows after the prototype, together with its extra places per region.
