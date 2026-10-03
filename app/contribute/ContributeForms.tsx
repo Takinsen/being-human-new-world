@@ -143,7 +143,7 @@ export function ContributeForms({
           ชื่อเรา
           <input name="by" placeholder="เช่น พี่บอส" required />
         </label>
-        <button type="submit" disabled={pricePending}>
+        <button type="submit" disabled={pricePending} aria-busy={pricePending}>
           {pricePending ? "กำลังส่ง" : "ส่งราคา"}
         </button>
         <Status state={priceState} />
@@ -168,7 +168,7 @@ export function ContributeForms({
           เรื่องปีแรก
           <textarea name="story" rows={8} required placeholder="อยากขึ้นย่อหน้าใหม่ก็เว้นบรรทัด" />
         </label>
-        <button type="submit" disabled={seniorPending}>
+        <button type="submit" disabled={seniorPending} aria-busy={seniorPending}>
           {seniorPending ? "กำลังส่ง" : "ส่งเรื่อง"}
         </button>
         <Status state={seniorState} />
@@ -202,7 +202,7 @@ export function ContributeForms({
             ชื่อเรา
             <input name="by" required />
           </label>
-          <button type="submit" disabled={guidePending}>
+          <button type="submit" disabled={guidePending} aria-busy={guidePending}>
             {guidePending ? "กำลังส่ง" : "ลองแล้ว ใช้ได้"}
           </button>
           <Status state={guideState} />

@@ -109,7 +109,7 @@ export function NoteForm({
       <p className="status-note" id="note-public">
         กดแล้วขึ้นเว็บเลย พร้อมชื่อกับจังหวัด กลับมาแก้หรือลบเองไม่ได้นะ
       </p>
-      <button type="submit" disabled={pending} aria-describedby="note-public">
+      <button type="submit" disabled={pending} aria-busy={pending} aria-describedby="note-public">
         {pending ? "กำลังส่ง" : "ส่งโน้ต"}
       </button>
     </form>

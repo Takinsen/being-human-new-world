@@ -2848,6 +2848,87 @@ body:has(.guide-page) .site-footer {
   }
 }
 
+/* Things a tap changes on a page (page-motion ticket 03): the same fades and short rises,
+   a touch quicker, since there is no page change around them */
+@media (prefers-reduced-motion: no-preference) {
+  /* Map pins: a new one fades in, one filtered out fades away (ExplorerMap keeps it a moment).
+     On the inner disc, because Leaflet moves the outer element with transform. */
+  .map-pin.is-entering .pin {
+    animation: rise-in 0.25s ease-out both;
+  }
+
+  .map-pin.is-leaving .pin {
+    animation: fade-out 0.2s ease-in both;
+  }
+
+  /* Map list: after a category or "มีโน้ต" tap the rows rise in again, a little staggered;
+     back from a Place card the whole list fades in (MapExplorer sets data-enter) */
+  .stop-list[data-enter="rise"] :is(h2, li) {
+    animation: rise-up 0.25s ease-out both;
+  }
+
+  .stop-list[data-enter="rise"] li:nth-child(2) { animation-delay: 0.04s; }
+  .stop-list[data-enter="rise"] li:nth-child(3) { animation-delay: 0.08s; }
+  .stop-list[data-enter="rise"] li:nth-child(4) { animation-delay: 0.12s; }
+  .stop-list[data-enter="rise"] li:nth-child(n + 5) { animation-delay: 0.16s; }
+
+  .stop-list[data-enter="fade"] {
+    animation: rise-in 0.25s ease-out both;
+  }
+
+  /* The welcome tip folds to nothing: a one-row grid can animate its height to 0 without
+     measuring it. Clipped only while closing, so its shadow isn't cut the rest of the time. */
+  .welcome-fold {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 0.22s ease, opacity 0.22s ease;
+  }
+
+  .welcome-fold > div {
+    min-height: 0;
+  }
+
+  .welcome-fold.is-closing {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  .welcome-fold.is-closing > div {
+    overflow: hidden;
+  }
+
+  /* "ทำแล้ว" pops its tick like a ticked station */
+  .mark-done.just-done svg {
+    animation: pop 0.25s ease-out;
+  }
+
+  /* Sending: the button breathes like a loading tab; the answer rises in */
+  .contribute-form button[aria-busy="true"] {
+    animation: tab-pending 0.9s ease-in-out infinite alternate;
+  }
+
+  .form-status {
+    animation: rise-up 0.25s ease-out both;
+  }
+
+  /* A Guides chip scrolls to its category; the heading it lands on glows once, faintly, after
+     the smooth scroll (the one thing here allowed past 250ms). :target also covers /transport
+     and the other redirects, which arrive on the same anchors. */
+  .guides-line:target .line-head .inner {
+    border-radius: var(--radius-s);
+    animation: land-glow 1s ease-out 0.35s both;
+  }
+}
+
+@keyframes fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes land-glow {
+  from { background-color: color-mix(in srgb, var(--c) 18%, transparent); }
+  to { background-color: transparent; }
+}
+
 @keyframes rise-in {
   from { opacity: 0; }
 }
