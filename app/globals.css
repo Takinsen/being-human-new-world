@@ -1693,29 +1693,26 @@ body:not(:has(.explorer)) main {
 }
 
 /* Home Taste page, before a region is picked: one big button per region, straight under the
-   page head, whose lede asks the question (spec Q21) */
+   page head (spec Q21, Q23) */
 .home-ask {
-  margin-top: var(--space-7);
-}
-
-.home-ask-regions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
+  margin-top: var(--space-7);
 }
 
 @media (min-width: 640px) {
-  .home-ask-regions {
+  .home-ask {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
-.home-ask-regions button {
+.home-ask button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: var(--space-1);
-  min-height: 112px;
+  min-height: 96px;
   padding: var(--space-4);
   border: 0;
   border-radius: var(--radius-m);
@@ -1727,25 +1724,17 @@ body:not(:has(.explorer)) main {
   cursor: pointer;
 }
 
-.home-ask-regions b {
+.home-ask b {
   font-family: var(--font-head);
   font-weight: var(--w-head);
   font-size: var(--step-1);
   line-height: 1.35;
 }
 
-.home-ask-regions small {
+.home-ask small {
   color: var(--ink-soft);
   font-size: var(--step--1);
   line-height: 1.45;
-}
-
-.home-ask-count {
-  margin-top: auto;
-  padding-top: var(--space-2);
-  color: var(--on-tint);
-  font-size: var(--step--1);
-  font-weight: 500;
 }
 
 /* Once picked: the region chips, then that region's Places as photo cards */
@@ -1794,20 +1783,10 @@ body:not(:has(.explorer)) main {
   color: #fff;
 }
 
-.home-taste h2 {
-  margin: var(--space-6) 0 0;
-}
-
-.home-dishes {
-  margin-top: var(--space-1);
-  color: var(--on-tint);
-  font-weight: 500;
-}
-
 .home-cards {
   display: grid;
   gap: var(--space-4);
-  margin: var(--space-4) 0 0;
+  margin: var(--space-6) 0 0;
   padding: 0;
   list-style: none;
 }
@@ -1848,7 +1827,11 @@ body:not(:has(.explorer)) main {
   font-size: 3rem;
 }
 
+/* Name, what to order, who vouched; the price sits at the foot, level across a row of cards */
 .home-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   padding: var(--space-4);
   min-width: 0;
   overflow-wrap: anywhere;
@@ -1871,30 +1854,28 @@ body:not(:has(.explorer)) main {
   inset: 0;
 }
 
-.home-card-body > p {
+.home-card-dishes {
   margin: var(--space-1) 0 0;
   color: var(--ink-soft);
-  font-size: var(--step--1);
-  line-height: 1.5;
 }
 
-.home-card-body > .home-card-price {
-  margin-top: var(--space-2);
-  color: var(--ink);
-}
-
-.home-card-body > .home-vouch {
-  margin-top: var(--space-2);
-}
-
-.home-card-body > .home-vouch.is-vouched {
+.home-vouch {
+  margin: var(--space-2) 0 0;
   color: var(--on-tint);
+  font-size: var(--step--1);
   font-weight: 500;
+}
+
+.home-card-price {
+  margin: 0;
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-size: var(--step--1);
 }
 
 /* A region nobody has found a place for yet (spec Q14) */
 .home-empty {
-  margin-top: var(--space-4);
+  margin-top: var(--space-6);
   padding: var(--space-4);
   border: 2px dashed color-mix(in srgb, var(--c) 35%, var(--paper));
   border-radius: var(--radius-m);
@@ -1910,7 +1891,7 @@ body:not(:has(.explorer)) main {
   align-items: center;
   gap: var(--space-2);
   min-height: 44px;
-  margin-top: var(--space-4);
+  margin-top: var(--space-2);
   padding: 0 var(--space-4);
   border-radius: var(--radius-pill);
   background: var(--action);

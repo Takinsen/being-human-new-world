@@ -68,6 +68,8 @@ export type Place = {
   price?: Price;
   /** Set when the Place is Home Taste for a region */
   homeTaste?: Region;
+  /** Home Taste: what to order there, a few dish names */
+  dishes?: string;
   /** Stations: how to get into Chula from here, one line */
   toChula?: string;
   /** Ids of the Guides that go with this Place, the closest first */

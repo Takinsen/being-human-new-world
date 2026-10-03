@@ -81,9 +81,7 @@ export function PlaceDetail({
         {place.homeTaste && (
           <p className="detail-taste">
             {keepPhrases(
-              stop.homeTasteBy
-                ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน`
-                : `อาหาร${place.homeTaste} ทีมหามาให้ลอง ยังรอคน${place.homeTaste}มาบอกว่าใช่ไหม`,
+              stop.homeTasteBy ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน` : `อาหาร${place.homeTaste}`,
             )}
           </p>
         )}
