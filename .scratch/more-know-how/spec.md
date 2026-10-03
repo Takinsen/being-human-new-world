@@ -26,3 +26,5 @@ Research: `research-household.md`, `research-food-health.md` (this folder).
 - **Q16 Starter Checklist:** add the gold-card check to the first month, and trying a Home Taste place to the first month.
 - **Q17 Gaps with no real shop:** leave them out; never invent a shop. Estimates are only for a real shop's pin, hours or price.
 - **Q18 Order:** the content (Household, food and health Places, the two new Guides, the logo, the Starter Checklist) goes into `main` first, through tickets. Home Taste follows after the prototype, together with its extra places per region.
+- **Q19 Out-of-date content:** fix it from the research: the Samyan Mitrtown food court (cashless now, closes around 21:00–22:00) and the `sick` Guide's gold-card tip (you can move it yourself now; link to the new rights Guide).
+- **Q20 Central region:** look for a place with clearly central-provinces food (Suphanburi, Ayutthaya and the like). If none turns up, central shows the "tell us" prompt like east and west.

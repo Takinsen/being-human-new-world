@@ -7,6 +7,7 @@ import {
   FirstAidKit,
   ForkKnife,
   HandHeart,
+  Key,
   Motorcycle,
   Taxi,
   Train,
@@ -31,6 +32,7 @@ const icons: Record<IconKey, Icon> = {
   trash: Trash,
   sick: FirstAidKit,
   basket: Basket,
+  key: Key,
   care: HandHeart,
 };
 

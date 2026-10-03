@@ -50,6 +50,7 @@ export type IconKey =
   | "trash"
   | "sick"
   | "basket"
+  | "key"
   /** Adjusting's icon; it has no Places, so there is no map pin for it */
   | "care";
 
