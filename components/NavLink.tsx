@@ -41,5 +41,13 @@ function Going({ anchor }: { anchor: RefObject<HTMLAnchorElement | null> }) {
     if (went.current && !pending) endMotion();
     went.current = pending;
   }, [anchor, pending]);
+  // Gone in the same render that it stopped going (the page it led to has no such link, e.g.
+  // "ดูโน้ตจากทุกที่" on a Place's Notes): arrived all the same, so nothing stays armed
+  useEffect(
+    () => () => {
+      if (went.current) endMotion();
+    },
+    [],
+  );
   return null;
 }
