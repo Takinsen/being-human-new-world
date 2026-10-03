@@ -60,3 +60,7 @@ Status: done (2026-10-02), except that the owner still has to read the rewritten
 
 - Fold the winners into the real code (not the prototype CSS as is).
 - Amend docs/adr/0007: the dotted path joins only things in order (Guide steps, first-week stations).
+
+## Comments
+
+- 2026-10-03: `/code-review` against 138ccff. Fixes in `issues/01-review-fixes.md`; the unit field deferred to `issues/02-price-unit-field.md`.
