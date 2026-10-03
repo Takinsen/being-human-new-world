@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Check, MapPin, WarningCircle } from "@phosphor-icons/react/dist/ssr";
 import { firstWeek } from "@/content/checklist";
 import type { Guide, GuideFact, GuideStep } from "@/content/types";
-import { priceFigure, thaiMonthYear } from "@/lib/format";
 import { MarkDone } from "./MarkDone";
+import { PriceFigure, PriceUpdated } from "./Price";
 import { TelText } from "./TelText";
 
 // A Guide reads like an article (docs/adr/0007, amended 2026-10-02): a calm reading
@@ -12,15 +12,16 @@ import { TelText } from "./TelText";
 
 /**
  * The "need to know" box: one fact per row (cost, hours, a number to call), the name on the
- * left and the value beside it; one fine line for when the prices were last updated; then
- * what to bring. Above the article on a phone; beside it, sticky, on a wide screen.
+ * left and the value beside it; one fine line for when the prices were last updated, giving
+ * the oldest month, so no price looks fresher than it is; then what to bring. Above the
+ * article on a phone; beside it, sticky, on a wide screen.
  */
 export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   if (!guide.facts && !guide.bring) return null;
-  const updated = guide.facts
+  const oldest = guide.facts
     ?.flatMap((f) => (f.price?.checked ? [f.price.checked.on] : []))
     .sort()
-    .at(-1);
+    .at(0);
   return (
     <aside className="guide-know" aria-label="รู้ไว้ก่อน">
       {guide.facts && (
@@ -36,7 +37,11 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
         </dl>
       )}
       {/* When, not who or how (docs/adr/0001, amended 2026-10-02) */}
-      {updated && <p className="guide-source">อัปเดตล่าสุด {thaiMonthYear(updated)}</p>}
+      {oldest && (
+        <p className="guide-source">
+          <PriceUpdated on={oldest} />
+        </p>
+      )}
       {guide.bring && (
         <section className="guide-bring" aria-labelledby="bring">
           <h2 id="bring">พกไปด้วย</h2>
@@ -51,17 +56,11 @@ export function GuideNeedToKnow({ guide }: { guide: Guide }) {
   );
 }
 
-/** A price shows as a number only with a Price Check, on platform yellow, its unit joined on (docs/adr/0001) */
+/** Words, or a price drawn the way a Place card draws it, its unit joined on (docs/adr/0001) */
 function FactValue({ fact }: { fact: GuideFact }) {
   if (fact.value) return <TelText text={fact.value} />;
   if (!fact.price) return null;
-  if (!fact.price.checked) return <span className="fact-pending">ยังไม่รู้ราคาจริง รอคนไปดู</span>;
-  return (
-    <>
-      <span className="visually-hidden">ราคาปกติ </span>
-      <mark className="fact-price">{priceFigure(fact.price)}</mark>
-    </>
-  );
+  return <PriceFigure price={fact.price} />;
 }
 
 /** The article: the steps along the dotted path (or options between thin rules), then where to read on. The intro is the page's lede. */

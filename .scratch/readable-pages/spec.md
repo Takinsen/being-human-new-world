@@ -1,7 +1,5 @@
 # Readable pages: the map list, a Guide's head and the Note card
 
-Status: done (2026-10-02), except that the owner still has to read the rewritten ledes (below).
-
 ## What the owner said
 
 - Map drawer: the station line that copies a train line doesn't fit Places like food.

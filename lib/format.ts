@@ -8,30 +8,26 @@ export function thaiMonthYear(yyyyMm: string): string {
   return `${thaiMonths[m - 1]} ${String(y + 543).slice(-2)}`;
 }
 
-/** ISO timestamp -> "25 ก.ย. 69" */
-export function thaiDate(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return "";
-  const local = new Date(d.getTime() + 7 * 3600 * 1000); // Bangkok
-  return `${local.getUTCDate()} ${thaiMonths[local.getUTCMonth()]} ${String(local.getUTCFullYear() + 543).slice(-2)}`;
-}
+const bangkok = 7 * 3600 * 1000; // UTC+7
+const day = 24 * 3600 * 1000;
 
-/** How long ago, counted back all the way: "เมื่อกี้", "2 ชั่วโมงที่แล้ว", "เมื่อวาน", "2 ปีที่แล้ว" */
+/** How long ago, counted back all the way: "เมื่อกี้", "2 ชั่วโมงที่แล้ว", "เมื่อวาน", "2 ปีที่แล้ว".
+ * Days count calendar days in Bangkok, so "เมื่อวาน" is the day before today, however few hours ago. */
 export function timeAgo(iso: string, now = Date.now()): string {
   const then = new Date(iso).getTime();
   if (Number.isNaN(then)) return "";
   const minutes = Math.max(0, now - then) / 60000;
-  const hours = minutes / 60;
-  const days = hours / 24;
   if (minutes < 1) return "เมื่อกี้";
-  if (hours < 1) return `${Math.floor(minutes)} นาทีที่แล้ว`;
-  if (days < 1) return `${Math.floor(hours)} ชั่วโมงที่แล้ว`;
+  if (minutes < 60) return `${Math.floor(minutes)} นาทีที่แล้ว`;
+  const days = Math.floor((now + bangkok) / day) - Math.floor((then + bangkok) / day);
+  if (days < 1) return `${Math.floor(minutes / 60)} ชั่วโมงที่แล้ว`;
   if (days < 2) return "เมื่อวาน";
-  if (days < 7) return `${Math.floor(days)} วันที่แล้ว`;
+  if (days < 7) return `${days} วันที่แล้ว`;
   if (days < 30) return `${Math.floor(days / 7)} สัปดาห์ที่แล้ว`;
-  if (days < 365) return `${Math.floor(days / 30)} เดือนที่แล้ว`;
+  const months = Math.floor(days / 30);
+  if (months < 12) return `${months} เดือนที่แล้ว`;
   const years = Math.floor(days / 365);
-  return years === 1 ? "ปีที่แล้ว" : `${years} ปีที่แล้ว`;
+  return years <= 1 ? "ปีที่แล้ว" : `${years} ปีที่แล้ว`;
 }
 
 /** A price with its unit joined on: "17–44 บาท/เที่ยว", "40 บาท ขึ้นไป/ครั้ง" */

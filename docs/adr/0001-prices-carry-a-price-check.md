@@ -2,7 +2,7 @@
 
 Status: accepted (2026-09-25), amended 2026-09-27 and three times on 2026-10-02
 
-"What's normal" is the core of the product, and prices are its sharpest form. If the site says a dish costs 45 baht and the shop charges 60, every other piece of Local Know-how loses credibility. So every price shown as a number must carry a Price Check: who confirmed it on the spot, and when (e.g. "40–50 บาท · ตรวจ ก.ย. 69 โดยพี่บอส"). A price without one renders as "รอตรวจราคา" instead of a number.
+"What's normal" is the core of the product, and prices are its sharpest form. If the site says a dish costs 45 baht and the shop charges 60, every other piece of Local Know-how loses credibility. So every price shown as a number must carry a Price Check: who confirmed it on the spot, and when (e.g. "40–50 บาท · ตรวจ ก.ย. 69 โดยพี่บอส"; replaced: see the last amendment below). A price without one renders as "รอตรวจราคา" instead of a number.
 
 ## Considered options
 

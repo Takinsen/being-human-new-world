@@ -2,7 +2,7 @@
 
 Status: ready-for-agent
 
-The two-axis `/code-review` of `git diff 138ccff...HEAD` on `claude/youthful-newton-2zia7g` (2026-10-03) found the items below. The decisions behind the change are in `../README.md` (Q1–Q16) and in the 2026-10-02 amendments to docs/adr/0001, 0006 and 0007. Fix all of it in one pass, then build, screenshot the map list, a Place card (phone and wide), a Guide and the Feed, and run `/code-review` again against the commit before the fixes.
+The two-axis `/code-review` of `git diff 138ccff...HEAD` on `claude/youthful-newton-2zia7g` (2026-10-03) found the items below. The decisions behind the change are in `../spec.md` (Q1–Q16) and in the 2026-10-02 amendments to docs/adr/0001, 0006 and 0007. Fix all of it in one pass, then build, screenshot the map list, a Place card (phone and wide), a Guide and the Feed, and run `/code-review` again against the commit before the fixes.
 
 ## Owner's decisions (2026-10-03)
 
@@ -27,3 +27,12 @@ Standards:
 - **Comments.** New rules with no "why" comment, where the reason isn't obvious: `.detail-h`, `.detail-write`, `.detail-empty`, `.detail-guides`, `.note-sign`, `.explorer-panel .detail-bar`. Match the file's habit, one short line.
 
 Leave as is (looked at, not a problem): the Notes section's "ยังไม่มีใครเขียนถึงที่นี่" empty state; phone numbers in a Place's summary becoming links; the Place card's price at body size and the plainer icon (both are P2 as the owner chose it); CONTEXT.md's Price Check quoting "อัปเดตล่าสุด" (the entry did the same before).
+
+## Comments
+
+- 2026-10-03: fixed in one pass. Choices worth checking:
+  - New tokens: `--radius-xs` (4px, also used by `--radius-leaf`), `--type-big` (1.75rem) and `--icon-row` (28px). The Place card's name now shares `--type-big` with a number to call, so it is 1.75rem, not 1.875rem. The two fine lines under a price use `--step--1` (meta), not 0.8125rem. The list's icon glyph is `--step-2` (was 1.375rem); the card's icon box falls back to `--station`. A Guide row's 52px became the usual 44px plus `--space-1` padding.
+  - The not-yet-checked pill on a Place card lost its stray top margin, which pushed it below the bar's centre.
+  - Home Taste in the list stays grey as before (`.stop-group small` used to override its food colour); its own rule now says grey.
+  - `thaiDate` went with the `title`, as nothing else used it.
+  - Built; screenshots of the list, a Place card (phone and wide, a station and a food Place), Rabbit (ก.ย. 69), ไม่สบาย and the Feed, plus the unchecked state on a card and in a Guide's box with the data changed for the shot only.
