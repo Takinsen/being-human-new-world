@@ -1,6 +1,6 @@
 # Type and spacing: a new font, a smaller scale, one rhythm
 
-Status: needs-triage (grilling done 2026-10-03; prototype next)
+Status: needs-info (prototype built 2026-10-03; waiting for the owner's pick)
 
 ## What the owner said
 
@@ -34,9 +34,17 @@ Status: needs-triage (grilling done 2026-10-03; prototype next)
 - **Q16, a step's action line and "ขั้นตอน":** the action line at the body's size in the heading font at 600 (its numbered station already marks it); "ขั้นตอน" at 20px, a sub-heading. So a Guide gets smaller and headings still stand apart by weight.
 - Everything else in Mitr (a step's action line, the words to say, the Guide's end line) takes the new heading font.
 
-## Prototype (to build)
+## Prototype
 
-- Branch `prototype/type-and-spacing`, built with `NEXT_PUBLIC_PROTOTYPE=1`.
-- Switches: `?font=O|A|B|C`, `?scale=old|new`, `?mark=mitr|new`; the ←/→ keys and the black bar as before.
-- Screenshots of home, one Guide and the Feed, at 390px and 1440px, sent to the owner side by side.
+- Branch: `prototype/type-and-spacing` (beb5d4b), local only.
+- Build with `NEXT_PUBLIC_PROTOTYPE=1`. Switch with `?font=O|A|B|C`, `?scale=old|new`, `?mark=mitr|new`, or the black bar at the top (←/→ font, S scale, M wordmark).
+  - Fonts: `app/prototype-type.css`. LINE Seed Sans TH is self-hosted from `public/prototype/fonts/`; it has Regular and Bold only, so C's headings are 700, the others 600. Its files came from the npm package `@fontpkg/line-seed-sans-th` (LINE's site was unreachable from the agent); their name table says LINE, Dalton Maag, Thai by Cadson Demak. Take the files from LINE itself if C wins.
+  - The new scale and weights: `app/prototype-type.css`. The spacing rhythm: `app/prototype-spacing.css`, every rule under `:root[data-scale="new"]`.
+- Spacing judgement calls made in the prototype: filters sit 32 over the list they filter (Feed and Guides), not 48; the laptop Guide box is 20rem (at 18rem "17–47 บาท/เที่ยว" spilled out, on the old scale too).
+- Known, not fixed by spacing: a Place card's icon box is a fixed 40px, so the icon still looks far from the name; the Guides list is about 10% longer on a phone (16 between cards and inside them).
+- Screenshots sent to the owner (2026-10-03): a Guide (phone top and steps, laptop), the Feed (phone, laptop), the map, the Guides list, the Starter Checklist, and the wordmark in Mitr against each font.
+- Not seen here: real phones (headless Chromium), map tiles (blocked in the agent's session).
+
+## Next
+
 - Once the owner picks, amend ADR 0007 (type and the projector growth) and write tickets under `issues/`.
