@@ -6,6 +6,7 @@ import { BrandLogo, CategoryIcon, IconFor } from "@/components/icons";
 import { PageHead } from "@/components/PageHead";
 import { FlyingName } from "@/components/PageMotion";
 import { type Content, getContent, guidesIn } from "@/lib/content";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { OldGuideLinks } from "./OldGuideLinks";
 
 export const metadata: Metadata = { title: "คู่มือ | ตั้งหลัก" };
@@ -44,9 +45,9 @@ export default async function GuidesPage() {
                     </span>
                     <span>
                       <b>
-                        <FlyingName name={`guide-title-${g.id}`}>{g.title}</FlyingName>
+                        <FlyingName name={`guide-title-${g.id}`}>{keepPhrases(g.title)}</FlyingName>
                       </b>
-                      <small>{g.summary}</small>
+                      <small>{keepPhrases(g.summary)}</small>
                     </span>
                   </NavLink>
                 </li>
@@ -70,13 +71,13 @@ function HomeTaste({ content }: { content: Content }) {
         </span>
         รสชาติบ้าน
       </h3>
-      <p className="guide-intro">คิดถึงกับข้าวที่บ้าน ร้านพวกนี้คนจากภาคนั้นบอกว่าใช่ บางร้านทีมหามาให้ลองไปก่อน</p>
+      <p className="guide-intro">{keepPhrases("คิดถึงกับข้าวที่บ้าน ร้านพวกนี้คนจากภาคนั้นบอกว่าใช่ บางร้านทีมหามาให้ลองไปก่อน")}</p>
       <ul className="options">
         {content.homeTaste.map(({ place, region, by }) => (
           <li key={region}>
             <span>
-              <b>อาหาร{region}</b> <NavLink href={`/?place=${place.id}`}>{place.name}</NavLink>
-              <small>{by ? ` ${by.name} บ้านอยู่${by.hometown} แนะนำ` : " ทีมหามาให้ลอง"}</small>
+              <b>{keepPhrases(`อาหาร${region}`)}</b> <NavLink href={`/?place=${place.id}`}>{keepPhrases(place.name)}</NavLink>
+              <small>{keepPhrases(by ? ` ${by.name} บ้านอยู่${by.hometown} แนะนำ` : " ทีมหามาให้ลอง")}</small>
             </span>
           </li>
         ))}

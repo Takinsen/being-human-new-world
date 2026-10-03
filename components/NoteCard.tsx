@@ -1,6 +1,7 @@
 import { NavLink } from "./NavLink";
 import { categories } from "@/content/categories";
 import type { Note } from "@/content/types";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { TimeAgo } from "./TimeAgo";
 
 /**
@@ -16,16 +17,16 @@ export function NoteCard({ note, compact, fresh }: { note: Note; compact?: boole
         // The category in words too, so the colour of the leaf isn't the only cue
         <p className="note-cat">{categories.find((c) => c.id === note.category)?.name}</p>
       )}
-      <p className="note-text">{note.text}</p>
+      <p className="note-text">{keepPhrases(note.text)}</p>
       <footer className="note-by">
         <span className="note-sign">
           <span className="note-name">
-            {note.seniorId ? <NavLink href={`/seniors#${note.seniorId}`}>{note.name}</NavLink> : <b>{note.name}</b>}
+            {note.seniorId ? <NavLink href={`/seniors#${note.seniorId}`}>{keepPhrases(note.name)}</NavLink> : <b>{keepPhrases(note.name)}</b>}
           </span>
           <span aria-hidden="true">•</span>
           <span className="note-home">
             <span className="visually-hidden">บ้านอยู่</span>
-            {note.hometown}
+            {keepPhrases(note.hometown)}
           </span>
         </span>
         {note.on && <TimeAgo iso={note.on} className="note-ago" />}

@@ -140,7 +140,17 @@ h1, h2, h3 {
   text-wrap: balance;
 }
 
-/* Balance on a paragraph breaks Thai words more often; pretty only avoids a lone last word */
+/* Short titles balance too, so a lone last phrase evens out (Thai lines break only at a
+   space: lib/thaiBreaks.ts) */
+.week-stops a,
+.guide-list b,
+.stop-group b,
+.detail-guides a span,
+.step-do {
+  text-wrap: balance;
+}
+
+/* A lede breaks only at its spaces, so pretty keeps a short last phrase off a line of its own */
 .lede {
   text-wrap: pretty;
 }

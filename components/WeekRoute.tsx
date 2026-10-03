@@ -6,6 +6,7 @@ import { firstWeek } from "@/content/checklist";
 import { FlyingName } from "./PageMotion";
 import { Peeps } from "./People";
 import { guides } from "@/content/guides";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { useChecklist } from "@/lib/useChecklist";
 
 // Starter Checklist drawn as a line with stations; the page supplies the title.
@@ -24,7 +25,7 @@ export function WeekRoute() {
         {complete && <Peeps className="week-cheer" set="cheer" />}
         <p aria-live="polite">
           {complete ? (
-            "ครบแล้ว ตั้งหลักได้แล้ว"
+            keepPhrases("ครบแล้ว ตั้งหลักได้แล้ว")
           ) : (
             <>
               <span>ทำไปแล้ว</span> <b>{count}</b> <span>จาก</span> {firstWeek.length}
@@ -52,8 +53,10 @@ export function WeekRoute() {
           const isDone = done.includes(item.id);
           const isNext = item === next;
           // The stop's title flies into the Guide's heading only where it is the Guide's own title
+          // (compared as written, before keepPhrases)
           const guide = guideAt(item.href);
-          const title = guide?.title === item.title ? <FlyingName name={`guide-title-${guide.id}`}>{item.title}</FlyingName> : item.title;
+          const shown = keepPhrases(item.title);
+          const title = guide?.title === item.title ? <FlyingName name={`guide-title-${guide.id}`}>{shown}</FlyingName> : shown;
           return (
             <li
               key={item.id}
@@ -71,7 +74,7 @@ export function WeekRoute() {
               {isNext ? (
                 <div className="week-next">
                   <NavLink href={item.href}>{title}</NavLink>
-                  {nextSummary && <p>{nextSummary}</p>}
+                  {nextSummary && <p>{keepPhrases(nextSummary)}</p>}
                   <span className="week-read" aria-hidden="true">
                     อ่านคู่มือ
                   </span>

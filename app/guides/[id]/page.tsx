@@ -10,6 +10,7 @@ import { PageHead } from "@/components/PageHead";
 import { FlyingName } from "@/components/PageMotion";
 import { TelText } from "@/components/TelText";
 import { getContent } from "@/lib/content";
+import { keepPhrases } from "@/lib/thaiBreaks";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -33,7 +34,7 @@ export default async function GuidePage({ params }: Props) {
   return (
     <div className="guide-page" data-line={guide.category}>
       <PageHead
-        title={<FlyingName name={`guide-title-${guide.id}`}>{guide.title}</FlyingName>}
+        title={<FlyingName name={`guide-title-${guide.id}`}>{keepPhrases(guide.title)}</FlyingName>}
         back={
           <div className="guide-crumbs">
             <NavLink href={`/guides#${guide.category}`} className="back-link">

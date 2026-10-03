@@ -5,6 +5,7 @@ import { type FormEvent, useActionState, useState } from "react";
 import type { CategoryId, Region } from "@/content/types";
 import { FormStatus } from "@/components/FormStatus";
 import { ProvinceSelect } from "@/components/ProvinceSelect";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { clearValidity, thaiValidity } from "@/lib/thaiValidity";
 import { type FormState, saveGuideCheck, savePrice, saveSenior } from "./actions";
 
@@ -16,11 +17,11 @@ function Status({ state }: { state: FormState }) {
   if (!state) return null;
   return (
     <FormStatus error={!state.ok} signal={state}>
-      {state.message}
+      {keepPhrases(state.message)}
       {state.href && (
         <>
           {" "}
-          <NavLink href={state.href}>{state.link ?? "ไปดู"}</NavLink>
+          <NavLink href={state.href}>{keepPhrases(state.link ?? "ไปดู")}</NavLink>
         </>
       )}
     </FormStatus>
@@ -118,7 +119,7 @@ export function ContributeForms({
         onSubmit={checkRange}
       >
         <h2 id="price">บอกราคาที่เห็น</h2>
-        <p className="status-note">ไปมาแล้วเห็นราคาเท่าไหร่ ใส่ไว้ตรงนี้ ราคาจะขึ้นพร้อมชื่อเรากับเดือนนี้</p>
+        <p className="status-note">{keepPhrases("ไปมาแล้วเห็นราคาเท่าไหร่ ใส่ไว้ตรงนี้ ราคาจะขึ้นพร้อมชื่อเรากับเดือนนี้")}</p>
         <PlaceSelect
           lines={lines}
           places={places}
@@ -151,7 +152,7 @@ export function ContributeForms({
 
       <form action={seniorAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
         <h2 id="senior">เล่าปีแรกของเรา</h2>
-        <p className="status-note">ปีแรกเราเจออะไรมาบ้าง เล่าให้น้องฟัง ขึ้นเว็บแล้วกลับมาแก้ตรงนี้ไม่ได้นะ</p>
+        <p className="status-note">{keepPhrases("ปีแรกเราเจออะไรมาบ้าง เล่าให้น้องฟัง ขึ้นเว็บแล้วกลับมาแก้ตรงนี้ไม่ได้นะ")}</p>
         <div className="form-row">
           <label>
             ชื่อที่อยากให้ขึ้น
@@ -177,7 +178,7 @@ export function ContributeForms({
       {guides.length > 0 && (
         <form action={guideAction} className="contribute-form" onInvalidCapture={thaiValidity(contributeMessages)} onInput={clearValidity}>
           <h2 id="guide">ลองทำตามคู่มือแล้ว</h2>
-          <p className="status-note">ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย &ldquo;ร่าง&rdquo; จะหายไป</p>
+          <p className="status-note">{keepPhrases("ลองทำตามแล้วใช้ได้จริง บอกเราตรงนี้ ป้าย “ร่าง” จะหายไป")}</p>
           <label>
             คู่มือไหน
             <select name="guideId" required value={guideId} onChange={(e) => setGuideId(e.target.value)}>

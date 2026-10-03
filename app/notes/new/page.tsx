@@ -7,6 +7,7 @@ import { PageLeave } from "@/components/PageMotion";
 import { getContent, isCategory } from "@/lib/content";
 import { provincesByRegion } from "@/lib/provinces";
 import { sheetConfigured } from "@/lib/sheet";
+import { keepPhrases } from "@/lib/thaiBreaks";
 import { NoteForm } from "./NoteForm";
 
 export const metadata: Metadata = { title: "เขียนโน้ต | ตั้งหลัก" };
@@ -26,13 +27,13 @@ export default async function NewNotePage({ searchParams }: Props) {
         lede="อยากบอกอะไรน้องที่เพิ่งมา เขียนสั้นๆ เหมือนพิมพ์บอกเพื่อน"
         back={
           <NavLink href={from ? `/?place=${from.id}` : fromLine ? `/notes?line=${fromLine.id}` : "/notes"} className="back-link">
-            <ArrowLeft weight="bold" aria-hidden="true" /> {from ? from.name : fromLine ? `โน้ตเรื่อง${fromLine.name}` : "โน้ต"}
+            <ArrowLeft weight="bold" aria-hidden="true" /> {keepPhrases(from ? from.name : fromLine ? `โน้ตเรื่อง${fromLine.name}` : "โน้ต")}
           </NavLink>
         }
       />
       <div className="inner">
         {!sheetConfigured() && (
-          <p className="form-status is-error">ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้ส่งโน้ตยังไม่ขึ้น</p>
+          <p className="form-status is-error">{keepPhrases("ยังไม่ได้ต่อ Google Sheet ต้องตั้ง SHEET_API_URL ก่อน ตอนนี้ส่งโน้ตยังไม่ขึ้น")}</p>
         )}
         <NoteForm
           lines={categories.map((c) => ({ id: c.id, name: c.name, hasPlaces: c.hasPlaces }))}
