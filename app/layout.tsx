@@ -3,6 +3,7 @@ import { ChipFocus } from "@/components/ChipFocus";
 import { NavLink } from "@/components/NavLink";
 import { PageFrame } from "@/components/PageMotion";
 import { PlainCopy } from "@/components/PlainCopy";
+import { HomeTasteSwitcher } from "@/components/prototype/HomeTasteSwitcher";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ChipFocus />
         <SwipeTabs />
         <PlainCopy />
+        <HomeTasteSwitcher />
       </body>
     </html>
   );
