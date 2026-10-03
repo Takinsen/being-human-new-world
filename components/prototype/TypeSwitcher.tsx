@@ -6,7 +6,8 @@
 //                   C LINE Seed Sans TH headings + IBM Plex Sans Thai text
 //   ?scale=old|new  today's sizes, weights and spacing, or the new scale (Q8, Q12–Q14, Q16)
 //   ?mark=mitr|new  the wordmark in Mitr, or in the font's heading face (Q15)
-// Keys: ←/→ font, S scale, M wordmark. The bar shows only when NEXT_PUBLIC_PROTOTYPE=1.
+//   ?wrap=word|phrase  Thai lines break between any two words (today), or only at spaces (Q17)
+// Keys: ←/→ font, S scale, M wordmark, W wrap. The bar shows only when NEXT_PUBLIC_PROTOTYPE=1.
 
 import { useEffect, useState } from "react";
 
@@ -15,20 +16,22 @@ const FONTS = [
   { key: "A", name: "Anuphan" },
   { key: "B", name: "Google Sans" },
   { key: "C", name: "LINE Seed + Plex Thai" },
+  { key: "D", name: "Anuphan + Plex Thai" },
 ];
-type State = { font: string; scale: string; mark: string };
+type State = { font: string; scale: string; mark: string; wrap: string };
 const KEY = "tanglak:prototype-type";
-const DEFAULTS: State = { font: "A", scale: "new", mark: "new" };
+const DEFAULTS: State = { font: "D", scale: "new", mark: "mitr", wrap: "phrase" };
 
 /** Runs before first paint (app/layout.tsx), so a page never flashes the wrong font */
 export const typeBoot = `try{var q=new URLSearchParams(location.search),s={};try{s=JSON.parse(sessionStorage.getItem("${KEY}")||"{}")}catch(e){}
-var d=document.documentElement.dataset;d.font=(q.get("font")||s.font||"${DEFAULTS.font}").toUpperCase();d.scale=q.get("scale")||s.scale||"${DEFAULTS.scale}";d.mark=q.get("mark")||s.mark||"${DEFAULTS.mark}"}catch(e){}`;
+var d=document.documentElement.dataset;d.font=(q.get("font")||s.font||"${DEFAULTS.font}").toUpperCase();d.scale=q.get("scale")||s.scale||"${DEFAULTS.scale}";d.mark=q.get("mark")||s.mark||"${DEFAULTS.mark}";d.wrap=q.get("wrap")||s.wrap||"${DEFAULTS.wrap}"}catch(e){}`;
 
 function apply(s: State) {
   const d = document.documentElement.dataset;
   d.font = s.font;
   d.scale = s.scale;
   d.mark = s.mark;
+  d.wrap = s.wrap;
   try {
     sessionStorage.setItem(KEY, JSON.stringify(s));
   } catch {}
@@ -36,6 +39,7 @@ function apply(s: State) {
   url.searchParams.set("font", s.font);
   url.searchParams.set("scale", s.scale);
   url.searchParams.set("mark", s.mark);
+  url.searchParams.set("wrap", s.wrap);
   history.replaceState(history.state, "", url);
 }
 
@@ -43,7 +47,7 @@ export function TypeSwitcher() {
   const [s, setS] = useState<State>(DEFAULTS);
   useEffect(() => {
     const d = document.documentElement.dataset;
-    setS({ font: d.font ?? DEFAULTS.font, scale: d.scale ?? DEFAULTS.scale, mark: d.mark ?? DEFAULTS.mark });
+    setS({ font: d.font ?? DEFAULTS.font, scale: d.scale ?? DEFAULTS.scale, mark: d.mark ?? DEFAULTS.mark, wrap: d.wrap ?? DEFAULTS.wrap });
   }, []);
 
   const set = (next: State) => {
@@ -56,6 +60,7 @@ export function TypeSwitcher() {
   };
   const flipScale = () => set({ ...s, scale: s.scale === "new" ? "old" : "new" });
   const flipMark = () => set({ ...s, mark: s.mark === "new" ? "mitr" : "new" });
+  const flipWrap = () => set({ ...s, wrap: s.wrap === "phrase" ? "word" : "phrase" });
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -65,6 +70,7 @@ export function TypeSwitcher() {
       else if (e.key === "ArrowRight") cycle(1);
       else if (e.key === "s" || e.key === "S") flipScale();
       else if (e.key === "m" || e.key === "M") flipMark();
+      else if (e.key === "w" || e.key === "W") flipWrap();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -88,6 +94,9 @@ export function TypeSwitcher() {
       </button>
       <button type="button" onClick={flipMark} aria-pressed={s.mark === "new"}>
         โลโก้: {s.mark === "new" ? "ฟอนต์ใหม่" : "Mitr"}
+      </button>
+      <button type="button" onClick={flipWrap} aria-pressed={s.wrap === "phrase"}>
+        ตัดบรรทัด: {s.wrap === "phrase" ? "ตามวลี" : "ตามคำ"}
       </button>
     </div>
   );

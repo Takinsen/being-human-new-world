@@ -38,6 +38,12 @@
   --font-head: "LINE Seed Sans TH", "IBM Plex Sans Thai", sans-serif;
 }
 
+/* D: C with Anuphan for headings, after LINE Seed's licence couldn't be confirmed (Q20) */
+:root[data-font="D"] {
+  --font: "IBM Plex Sans Thai", "Noto Sans Thai", system-ui, sans-serif;
+  --font-head: "Anuphan", "IBM Plex Sans Thai", sans-serif;
+}
+
 /* ---------- The wordmark (Q15) ---------- */
 
 :root[data-mark="mitr"] .wordmark,
@@ -279,4 +285,14 @@
 
 .type-switcher span {
   padding: 0 4px;
+}
+
+/* ---------- Breaking at phrases (Q17): short titles balance, so a lone last phrase evens out ---------- */
+
+:root[data-wrap="phrase"] .week-stops a,
+:root[data-wrap="phrase"] .guide-list b,
+:root[data-wrap="phrase"] .stop-group b,
+:root[data-wrap="phrase"] .detail-guide,
+:root[data-wrap="phrase"] .step-do {
+  text-wrap: balance;
 }

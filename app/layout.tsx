@@ -5,6 +5,7 @@ import { PageFrame } from "@/components/PageMotion";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
+import { PhraseWrap } from "@/components/prototype/PhraseWrap";
 import { TypeSwitcher, typeBoot } from "@/components/prototype/TypeSwitcher";
 import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
 import "./globals.css";
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ChipFocus />
         <SwipeTabs />
         <TypeSwitcher />
+        <PhraseWrap />
       </body>
     </html>
   );
