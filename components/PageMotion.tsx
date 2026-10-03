@@ -31,20 +31,23 @@ export function navType(from: URL, to: URL, back: boolean): NavType | undefined 
   return "nav-forward";
 }
 
+// Posting a Note: the form leaving sinks, the page it lands on fades in (PageLeave, PageArrive)
+type Motion = NavType | "nav-posted";
+
 // The way the coming page change moves, held from the tap until the new page is in. Not React's
 // transition types: those wait on the root for whichever transition commits next, and Next commits
 // small ones of its own around a tap, which took them about half the time.
-let motion: NavType | null = null;
+let motion: Motion | null = null;
 const listeners = new Set<() => void>();
 
-function setMotion(next: NavType | null) {
+function setMotion(next: Motion | null) {
   if (next === motion) return;
   motion = next;
   listeners.forEach((listener) => listener());
 }
 
 /** Say how the page change about to start moves. Nothing moves for anyone who asks for less motion. */
-export function startMotion(type: NavType | undefined) {
+export function startMotion(type: Motion | undefined) {
   setMotion(type && window.matchMedia("(prefers-reduced-motion: no-preference)").matches ? type : null);
 }
 
@@ -75,7 +78,11 @@ export function PageFrame({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("popstate", endMotion);
   }, []);
   return (
-    <ViewTransition default="none" update={moving && moving !== "nav-filter" ? moving : "none"} onUpdate={keepOldPicture}>
+    <ViewTransition
+      default="none"
+      update={moving && moving !== "nav-filter" && moving !== "nav-posted" ? moving : "none"}
+      onUpdate={keepOldPicture}
+    >
       <div className="page-frame">{children}</div>
     </ViewTransition>
   );
@@ -86,6 +93,29 @@ export function FeedMotion({ children }: { children: ReactNode }) {
   const moving = useMotion();
   return (
     <ViewTransition default="none" update={moving === "nav-filter" ? "list-refresh" : "none"} onUpdate={keepOldPicture}>
+      {children}
+    </ViewTransition>
+  );
+}
+
+/**
+ * The Note form's page. Sent, it moves only by going away, so a Note that didn't go up (the
+ * form updates in place with a message) never moves the page.
+ */
+export function PageLeave({ children }: { children: ReactNode }) {
+  const moving = useMotion();
+  return (
+    <ViewTransition default="none" exit={moving === "nav-posted" ? "page-leave" : "none"}>
+      {children}
+    </ViewTransition>
+  );
+}
+
+/** A page a posted Note lands on (the Feed, the map): it fades in as the form sinks away */
+export function PageArrive({ children }: { children: ReactNode }) {
+  const moving = useMotion();
+  return (
+    <ViewTransition default="none" enter={moving === "nav-posted" ? "page-arrive" : "none"}>
       {children}
     </ViewTransition>
   );

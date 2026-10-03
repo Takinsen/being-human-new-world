@@ -6,7 +6,7 @@ import { ChipInView } from "@/components/ChipFocus";
 import { CategoryIcon } from "@/components/icons";
 import { NoteCard } from "@/components/NoteCard";
 import { PageHead } from "@/components/PageHead";
-import { FeedMotion, FlyingName } from "@/components/PageMotion";
+import { FeedMotion, FlyingName, PageArrive } from "@/components/PageMotion";
 import { Peeps } from "@/components/People";
 import { PostedStatus } from "@/components/PostedStatus";
 import { getContent, isCategory } from "@/lib/content";
@@ -28,7 +28,7 @@ export default async function NotesPage({ searchParams }: Props) {
   const prompt = place ? `อยากบอกอะไรเกี่ยวกับ${/^[A-Za-z0-9]/.test(place.name) ? " " : ""}${place.name}…` : activeName ? `อยากบอกอะไรเรื่อง${activeName}…` : "อยากบอกอะไรคนมาใหม่…";
 
   return (
-    <>
+    <PageArrive>
       <PageHead
         title={
           place ? (
@@ -116,6 +116,6 @@ export default async function NotesPage({ searchParams }: Props) {
           </li>
         </ul>
       </div>
-    </>
+    </PageArrive>
   );
 }

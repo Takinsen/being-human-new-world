@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { placeCategories } from "@/content/categories";
 import { MapExplorer } from "@/components/map/MapExplorer";
+import { PageArrive } from "@/components/PageMotion";
 import type { Place } from "@/content/types";
 import { getContent, notesOn, placesIn } from "@/lib/content";
 
@@ -25,8 +26,10 @@ export default async function Home() {
     });
   });
   return (
-    <Suspense fallback={<div className="explorer map-loading">กำลังโหลดแผนที่</div>}>
-      <MapExplorer stops={stops} categories={placeCategories} />
-    </Suspense>
+    <PageArrive>
+      <Suspense fallback={<div className="explorer map-loading">กำลังโหลดแผนที่</div>}>
+        <MapExplorer stops={stops} categories={placeCategories} />
+      </Suspense>
+    </PageArrive>
   );
 }

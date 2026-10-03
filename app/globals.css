@@ -2990,6 +2990,10 @@ body:has(.explorer) .page-frame {
   ::view-transition-old(.nav-back) { animation-name: page-sink; animation-duration: 0.18s; }
   ::view-transition-new(.nav-back) { animation-name: rise-in; }
 
+  /* After posting a Note: the form sinks away where it was, the page it lands on fades in */
+  ::view-transition-old(.page-leave) { animation-name: page-sink; animation-duration: 0.18s; }
+  ::view-transition-new(.page-arrive) { animation-name: rise-in; }
+
   ::view-transition-group(site-footer) { animation: none; }
   ::view-transition-old(site-footer) { animation-name: fade-out; animation-duration: 0.14s; }
   ::view-transition-new(site-footer) { animation-name: rise-in; }

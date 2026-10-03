@@ -3,6 +3,7 @@ import { NavLink } from "@/components/NavLink";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 import { categories } from "@/content/categories";
 import { PageHead } from "@/components/PageHead";
+import { PageLeave } from "@/components/PageMotion";
 import { getContent, isCategory } from "@/lib/content";
 import { provincesByRegion } from "@/lib/provinces";
 import { sheetConfigured } from "@/lib/sheet";
@@ -19,7 +20,7 @@ export default async function NewNotePage({ searchParams }: Props) {
   // Came from a filtered Feed: keep that category through the form and back (UX audit 7, U10).
   const fromLine = !from && line && isCategory(line) ? categories.find((c) => c.id === line) : undefined;
   return (
-    <>
+    <PageLeave>
       <PageHead
         title="เขียนโน้ต"
         lede="อยากบอกอะไรน้องที่เพิ่งมา เขียนสั้นๆ เหมือนพิมพ์บอกเพื่อน"
@@ -41,6 +42,6 @@ export default async function NewNotePage({ searchParams }: Props) {
           initialLine={fromLine?.id}
         />
       </div>
-    </>
+    </PageLeave>
   );
 }
