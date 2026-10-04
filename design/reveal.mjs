@@ -31,6 +31,11 @@ if (!args.includes("--no-shots")) {
     localStorage.setItem("tanglak:welcome-dismissed", "1");
     localStorage.setItem("tanglak:checklist:v1", JSON.stringify(["to-chula", "rabbit"]));
   });
+  // The map asks {a,b,c}.tile.openstreetmap.org; a network that allows only the plain host
+  // (as in the cloud sandbox) still gets the tiles from there
+  await phone.route(/^https:\/\/[abc]\.tile\.openstreetmap\.org\//, (route) =>
+    route.continue({ url: route.request().url().replace(/\/\/[abc]\./, "//") }),
+  );
   const page = await phone.newPage();
   const shots = { notes: "/notes", map: "/?place=somtam-chula-20", checklist: "/checklist" };
   for (const [name, path] of Object.entries(shots)) {
