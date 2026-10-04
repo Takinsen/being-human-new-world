@@ -12,7 +12,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "ตั้งหลัก",
-  description: "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก วิธีใช้ชีวิตแถวจุฬาฯ ที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่เหมือนกัน",
+  description: "มาใหม่แถวจุฬาฯ? Starter Pack อยู่นี่แล้ว วิธีใช้ชีวิตแถวนี้ที่แผนที่ไม่ได้บอก จากรุ่นพี่ที่เคยมาใหม่เหมือนกัน",
 };
 
 export const viewport: Viewport = { // The phone's bar takes the canopy's dark leaves (--leaf-dark in globals.css)

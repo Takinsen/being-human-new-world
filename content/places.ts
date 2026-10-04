@@ -14,7 +14,11 @@ export const places: Place[] = [
     lat: 13.7324,
     lng: 100.5294,
     summary: "ใกล้ฝั่งสามย่านสุด เดินใต้ดินทะลุเข้าสามย่านมิตรทาวน์ได้",
-    photo: { file: "Exit no.2 Sam Yan MRT.jpg", alt: "ทางออก 2 สถานี MRT สามย่าน" },
+    photos: [
+      { file: "Exit no.2 Sam Yan MRT.jpg", alt: "ทางออก 2 สถานี MRT สามย่าน" },
+      { file: "201701 Concourse of Sam Yan Station.jpg", alt: "ชั้นจำหน่ายตั๋ว สถานี MRT สามย่าน" },
+      { file: "201701 Platform 1 of Sam Yan Station.jpg", alt: "ชานชาลา สถานี MRT สามย่าน" },
+    ],
     knowhow: [
       "บัตรเครดิตหรือเดบิตที่มีรูปคลื่นแตะจ่าย แตะผ่านประตูได้เลย ไม่ต้องซื้อเหรียญ",
       "ใช้บัตรใบเดียวกันแตะทั้งตอนเข้าและตอนออก",
@@ -33,7 +37,11 @@ export const places: Place[] = [
     lat: 13.7456,
     lng: 100.5347,
     summary: "ที่เปลี่ยนสายสุขุมวิทกับสีลม จะเดินหรือต่อรถป๊อปเข้าจุฬาฯ ก็ได้",
-    photo: { file: "Siam BTS Station, view from Siam Paragon.jpg", alt: "สถานี BTS สยาม มองจากสยามพารากอน" },
+    photos: [
+      { file: "Siam BTS Station, view from Siam Paragon.jpg", alt: "สถานี BTS สยาม มองจากสยามพารากอน" },
+      { file: "Siam Station Upper Platform 201801.jpg", alt: "ภายในสถานี BTS สยาม" },
+      { file: "BTS Siam Platform 2.JPG", alt: "ชานชาลา 2 สถานี BTS สยาม ฝั่งไปหมอชิต" },
+    ],
     knowhow: [
       "ขึ้นทุกวันก็ทำบัตร Rabbit ไปเลย ไม่ต้องต่อคิวตู้ทุกเช้า",
       "ช่วง 7:30–9:00 คนแน่นมาก เผื่อเวลาไว้อย่างน้อย 15 นาที",
@@ -51,7 +59,11 @@ export const places: Place[] = [
     lat: 13.7466,
     lng: 100.529,
     summary: "ใกล้ฝั่งบรรทัดทองกับหอแถวนั้น",
-    photo: { file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" },
+    photos: [
+      { file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" },
+      { file: "202307 Entrance of National Stadium BTS Station.jpg", alt: "บันไดทางขึ้นสถานี BTS สนามกีฬาแห่งชาติ" },
+      { file: "National Stadium BTS Station (2021).jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติ มองจากถนน" },
+    ],
     knowhow: [],
     toChula: "ขึ้นรถป๊อปสาย\u00a02 ฟรี วิ่ง จ.–ส. หรือเดินเลียบถนนบรรทัดทองลงมาก็ได้",
     guides: ["to-chula", "rabbit"],
@@ -67,7 +79,13 @@ export const places: Place[] = [
     lng: 100.5282,
     summary: "Samyan Food Legends ชั้น 4 แอร์เย็น ร้านให้เลือกเยอะ เปิด 10:00 ถึงราว 22:00",
     guides: ["eat-cheap", "late-night"],
-    photo: { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
+    photos: [
+      { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
+      { file: "Samyan Mitrtown,Pathumwan,Bangkok (77).jpg", alt: "โซนร้านอาหารในสามย่านมิตรทาวน์" },
+      { file: "Samyan Mitrtown,Pathumwan,Bangkok (34).jpg", alt: "ข้าวกะเพราไข่ดาว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao man gai.jpg", alt: "ข้าวมันไก่ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Bami mu daeng kiao.JPG", alt: "บะหมี่หมูแดงเกี๊ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: [
       "ไม่ต้องแลกบัตรแล้ว สแกน QR จ่ายที่ร้านได้เลย หรือจ่ายด้วย TrueMoney",
       "ศูนย์อาหารปิดพร้อมห้าง หิวดึกลงไปโซน 24 ชั่วโมงชั้นล่าง",
@@ -81,6 +99,13 @@ export const places: Place[] = [
     lat: 13.7371,
     lng: 100.5253,
     summary: "ตลาดสดกับร้านอาหาร ชั้นบนมีร้านข้าวให้เลือกเยอะ",
+    photos: [
+      { file: "Thai lunch.jpg", alt: "ข้าวราดแกงกับกับข้าวหลายอย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao rat restaurant.JPG", alt: "ร้านข้าวราดแกง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khau kaduk mu yam plathu.JPG", alt: "กับข้าวใส่กล่องจากร้านข้าวแกง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Barracuda for sale.jpg", alt: "ปลาสดในตลาดสด เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Poultry at Chinatowns Talat Leng-Buai-la market (6491924593).jpg", alt: "ไก่และเป็ดแขวนขายในตลาดสด เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     guides: ["eat-cheap"],
     knowhow: ["ร้านข้าวราดแกงคิดตามจำนวนกับข้าวที่ตัก บอกก่อนว่าจะเอากี่อย่าง"],
     price: { min: 50, max: 80, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
@@ -93,7 +118,13 @@ export const places: Place[] = [
     lng: 100.5222,
     summary: "ร้านอาหารเรียงยาวทั้งถนน คนเยอะตั้งแต่เย็นยันดึก",
     guides: ["eat-cheap"],
-    photo: { file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" },
+    photos: [
+      { file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" },
+      { file: "Food stands in Chinatown, Bangkok.jpg", alt: "ร้านริมทางตอนค่ำในกรุงเทพฯ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "FishBall-ChickenStick-Sausage IMG 7461.jpg", alt: "ลูกชิ้นและไส้กรอกปิ้ง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao mu krop.jpg", alt: "ข้าวหมูกรอบ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Tom yam kung maenam.jpg", alt: "ต้มยำกุ้งน้ำข้น เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["หลายร้านดังคิวยาวช่วงหัวค่ำ ถ้าหิวจริงให้มาก่อน 18:00 หรือหลัง 20:30"],
     cautions: ["ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน"],
     price: { min: 60, max: 200, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
@@ -106,7 +137,13 @@ export const places: Place[] = [
     lat: 13.7375,
     lng: 100.5225,
     summary: "ร้านอาหารใต้บนถนนบรรทัดทอง ฝั่งตรงข้ามจุฬาฯ ซอย 34 เปิดทุกวันตั้งแต่ 11:00",
-    photo: { file: "Kaeng tai pla.JPG", alt: "แกงไตปลา อาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Kaeng tai pla.JPG", alt: "แกงไตปลา อาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khua kling.JPG", alt: "คั่วกลิ้ง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Mu phat sato southern style.jpg", alt: "หมูผัดสะตอ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Southtern-Thai-style rice with curry.jpg", alt: "ข้าวราดแกงแบบใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "2019 02 Southern Thai vegetable platter.jpg", alt: "ผักเหนาะที่ร้านอาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["เผ็ดแบบใต้จริง กินเผ็ดไม่เก่งก็บอกลดเผ็ดตอนสั่ง", "ไปหลายคนแบ่งกันกินคุ้มกว่า"],
     price: { min: 120, max: 250, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ใต้",
@@ -120,7 +157,13 @@ export const places: Place[] = [
     lat: 13.739,
     lng: 100.5235,
     summary: "ส้มตำโต๊ะแดงในจุฬาฯ ซอย 20 ใกล้อุทยาน 100 ปี เปิดเย็นถึงดึก 16:30–23:30",
-    photo: { file: "Som Tam green papaya salad, Bangkok, Thailand.jpg", alt: "ส้มตำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Som Tam green papaya salad, Bangkok, Thailand.jpg", alt: "ส้มตำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Kho mu yang kratha ron.jpg", alt: "คอหมูย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "SomTam Larb StickyRice.JPG", alt: "ส้มตำ ลาบ และข้าวเหนียว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Lao sticky rice.jpg", alt: "ข้าวเหนียวในกระติ๊บ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "DFC 1265 Street food stall in Thailand with a colorful sign advertising som tam larb and nam tok and a motorcyclist pausing on the sidewalk.jpg", alt: "ร้านส้มตำริมทาง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["คนชอบสั่งส้มตำไทยกับคอหมูย่าง"],
     price: { min: 50, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
@@ -130,7 +173,13 @@ export const places: Place[] = [
   // Pins are estimates from the address; check them on the spot. Dish photos are illustrations.
   {
     id: "khao-soi-doi-kham",
-    photo: { file: "Khanom chin nam ngiao.jpg", alt: "ขนมจีนน้ำเงี้ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Khanom chin nam ngiao.jpg", alt: "ขนมจีนน้ำเงี้ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao Soi 02.jpg", alt: "ข้าวซอย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Thanin market chiang mai sausage.jpg", alt: "ไส้อั่ว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "2013 Khao kan chin.jpg", alt: "ข้าวกั้นจิ้น เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "DFC 2237 A small street-side eatery with plastic tables and chairs under an umbrella set beneath a weathered two-story building along a quiet road.jpg", alt: "ร้านอาหารห้องแถวเล็กๆ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     name: "ข้าวซอยดอยคำ จุฬาฯ ซอย 14",
     category: "food",
     lat: 13.743,
@@ -143,7 +192,13 @@ export const places: Place[] = [
   },
   {
     id: "lamduan-faham",
-    photo: { file: "Khao soi Chiang Mai.jpg", alt: "ข้าวซอย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Khao soi Chiang Mai.jpg", alt: "ข้าวซอย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao soi nuea.jpg", alt: "ข้าวซอยเนื้อ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Northern Thailand style curry noodle - ข้าวซอย (5725991023).jpg", alt: "ข้าวซอยไก่ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao Soi Northern Thai food ข้าวซอย ผักดอง.jpg", alt: "ข้าวซอยกับผักกาดดองและหอมแดง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "2014 11 Street food stall Chiang Mai.jpg", alt: "ร้านเส้นริมทางในเชียงใหม่ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     name: "ข้าวซอยลำดวนฟ้าฮ่าม บรรทัดทอง",
     category: "food",
     lat: 13.7452,
@@ -156,7 +211,13 @@ export const places: Place[] = [
   },
   {
     id: "hom-duan",
-    photo: { file: "Kaeng hangle.jpg", alt: "แกงฮังเล เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Kaeng hangle.jpg", alt: "แกงฮังเล เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Namphrik Num and Khaep Mu.jpg", alt: "น้ำพริกหนุ่มกับแคบหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Nam phrik ong.jpg", alt: "น้ำพริกอ่อง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khanom chin nam ngiao supoe.jpg", alt: "ขนมจีนน้ำเงี้ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Samyan Mitrtown,Pathumwan,Bangkok (28).jpg", alt: "ภายในสามย่านมิตรทาวน์" },
+    ],
     name: "หอมด่วน สามย่านมิตรทาวน์",
     category: "food",
     lat: 13.7339,
@@ -169,7 +230,13 @@ export const places: Place[] = [
   },
   {
     id: "pa-khao",
-    photo: { file: "Sai krok Isan yai.jpg", alt: "ไส้กรอกอีสาน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Sai krok Isan yai.jpg", alt: "ไส้กรอกอีสาน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "2013 Tam Lao.jpg", alt: "ตำลาว ส้มตำใส่ปลาร้า เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Pla ra96.jpg", alt: "หม้อปลาร้าในรถเข็นส้มตำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "ตำไทยไข่เค็ม ส้มตำ ตำถาด Tumtaad กระบี่ 01.jpg", alt: "ตำไทยไข่เค็ม เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Sai krok isan.jpg", alt: "ไส้กรอกอีสานปิ้งบนเตา เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     name: "พาข้าว บรรทัดทอง",
     category: "food",
     lat: 13.744,
@@ -182,7 +249,13 @@ export const places: Place[] = [
   },
   {
     id: "kham-paeng",
-    photo: { file: "Lap mu isan.JPG", alt: "ลาบหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Lap mu isan.JPG", alt: "ลาบหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Kai thot takhrai.jpg", alt: "ไก่ทอด เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Moo nam tok.jpg", alt: "หมูน้ำตก เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Nam tok kor moo yang.jpg", alt: "น้ำตกคอหมูย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Cuisine of Isan.jpg", alt: "อาหารอีสานวางเต็มโต๊ะ กินกันหลายคน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     name: "คำแพง ซอยจุฬาฯ 16",
     category: "food",
     lat: 13.741,
@@ -195,7 +268,13 @@ export const places: Place[] = [
   },
   {
     id: "sri-kamin",
-    photo: { file: "Khao yam.jpg", alt: "ข้าวยำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Khao yam.jpg", alt: "ข้าวยำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "ขนมจีนแกงปูใบชะพลู.jpg", alt: "แกงปูใบชะพลูกินกับขนมจีน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Kaeng lueang.JPG", alt: "แกงเหลือง แกงส้มแบบใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Gnetum gnemon 48941240.jpg", alt: "ต้นเหลียง ผักใต้ที่ใช้ทำใบเหลียงผัดไข่ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Kaeng pla thu and tom mara.jpg", alt: "สำรับข้าวที่ร้านอาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     name: "ศรีขมิ้น สวนหลวงสแควร์",
     category: "food",
     lat: 13.743,
@@ -213,7 +292,13 @@ export const places: Place[] = [
     lat: 13.7422,
     lng: 100.5224,
     summary: "ขนมไทยสูตรคุณยายจากตลาดสามชุก สุพรรณบุรี ขนมถ้วย ขนมใส่ไส้ เม็ดขนุน คั้นกะทิเอง",
-    photo: { file: "Khanom thuay.jpg", alt: "ขนมถ้วย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Khanom thuay.jpg", alt: "ขนมถ้วย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khanom sot sai2024.jpg", alt: "ขนมใส่ไส้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Thai market sweets 01.jpg", alt: "ขนมไทยสีทอง ทองหยอด ฝอยทอง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khanom chan.jpg", alt: "ขนมชั้น เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Thai sweets shop - 2011-03-18 - 001.jpg", alt: "แผงขนมไทยริมทางในกรุงเทพฯ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["ขนมไทยกว่า 50 อย่าง บางอย่างชิ้นละ 15 บาท"],
     // Hours (10:00–24:00) and the khanom thuay price (40 or 60) conflict between sources: estimates.
     price: { min: 15, max: 60, per: "ต่อชิ้นหรือกล่อง", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
@@ -227,6 +312,13 @@ export const places: Place[] = [
     lat: 13.735,
     lng: 100.5268,
     summary: "ก๋วยเตี๋ยวสุโขทัย หมูแดง ถั่วฝักยาว ถั่วลิสง ที่ U-Center ซอยจุฬาฯ 42 นิสิตจุฬาฯ ลด 5%",
+    photos: [
+      { file: "Sukhothai noodle ก๋วยเตี๋ยวสุโขทัย - img 03.jpg", alt: "ก๋วยเตี๋ยวสุโขทัย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Guay Tiaw Sukhothai (80595693).jpeg", alt: "ก๋วยเตี๋ยวสุโขทัยใส่หมูแดงและถั่วฝักยาว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Sukhothai Noodles at Amphawa Thai Noodle House, San Francisco.jpg", alt: "ก๋วยเตี๋ยวสุโขทัยแห้ง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Thai seasoning set.jpg", alt: "เครื่องปรุงก๋วยเตี๋ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Ari Samphan Noodles Stall.jpg", alt: "ร้านก๋วยเตี๋ยวริมทางในกรุงเทพฯ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["ชามละ 75 บาท", "เปิดทุกวัน 11:00 ปิดราวหกโมงครึ่งถึงทุ่มครึ่ง"],
     price: { min: 75, max: 80, per: "ต่อชาม", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "กลาง",
@@ -239,7 +331,13 @@ export const places: Place[] = [
     lat: 13.7366,
     lng: 100.5252,
     summary: "ไก่ย่างบางตาลสูตรราชบุรี หมักขมิ้นจนเหลือง ซอยจุฬาฯ 11 ตรงข้ามโจ๊กสามย่าน เปิดเช้าถึงบ่ายสอง",
-    photo: { file: "Gaiyangtaladdonwai06.jpg", alt: "ไก่ย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [
+      { file: "Gaiyangtaladdonwai06.jpg", alt: "ไก่ย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Grilled chicken in Thailand.jpg", alt: "ไก่ย่างบนเตาถ่าน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Kai yang CM.jpg", alt: "ไก่ย่างกับน้ำจิ้ม เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Somtam kaiyang khaoniaow.jpg", alt: "ส้มตำ ไก่ย่าง ข้าวเหนียว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Som tam thai.JPG", alt: "ส้มตำไทย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["ไก่ครึ่งตัว 90 บาท ส้มตำไทย 40", "ปิดวันจันทร์ ไปก่อนบ่ายสอง"],
     price: { min: 40, max: 90, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ตะวันตก",
@@ -254,6 +352,13 @@ export const places: Place[] = [
     lat: 13.7318,
     lng: 100.5352,
     summary: "ที่กินถูกที่เปิดวันเสาร์–อาทิตย์ ตอนโรงอาหารคณะปิด ชั้น 2 อาคาร ส.ธ.",
+    photos: [
+      { file: "Food Court, Ying Charoen Market.jpg", alt: "ศูนย์อาหาร เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao kaeng.jpg", alt: "ข้าวแกงในโรงอาหาร เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Khao mok kai (chicken biryani), Bangkok, 2018-10-09.jpg", alt: "ข้าวหมกไก่ อาหารมุสลิม เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Vegetarian kaeng som.JPG", alt: "แกงส้มเจ อาหารมังสวิรัติ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Common local Thai food. 50฿ (baht) = $1.50 (pork) noodle soup in Phuket, Thailand.jpg", alt: "ก๋วยเตี๋ยวหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: [
       "เปิดจันทร์–ศุกร์ 6:00–17:00 เสาร์–อาทิตย์ 6:00–15:00",
       "ร้านติดธงฟ้า ราคาคุมไว้ มีอาหารมังสวิรัติกับอาหารมุสลิม",
@@ -272,6 +377,13 @@ export const places: Place[] = [
     lat: 13.7395,
     lng: 100.5223,
     summary: "ข้าวต้มกับมาม่าโอ้โห เปิดราว 16:30 ถึงเที่ยงคืน ของกินดึกที่คนแถวนี้รู้จัก",
+    photos: [
+      { file: "Khao tom kui.jpg", alt: "ข้าวต้มกุ๊ยกับกับข้าว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Phat mama.jpg", alt: "ผัดมาม่า เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Tom yum noodle Bangkok.JPG", alt: "ก๋วยเตี๋ยวต้มยำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Mu daet diao.jpg", alt: "หมูแดดเดียว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "DFC 1643 A busy Thai street food stall at night with a vendor preparing dishes behind the counter and a customer waiting as large pots and ingredients fill the scene.jpg", alt: "ร้านอาหารริมทางตอนกลางคืน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: [
       "จองคิวล่วงหน้าหนึ่งวันทางโทรศัพท์ได้ที่ 06-4118-5888 รับชั่วโมงละไม่กี่คิว",
       "ไม่ได้จองก็มาหลัง 21:00 คิวสั้นลง",
@@ -288,6 +400,13 @@ export const places: Place[] = [
     lat: 13.7435,
     lng: 100.5221,
     summary: "ก๋วยเตี๋ยวเรือ เปิดทุกวัน 11:00 ถึงเที่ยงคืน ระหว่างซอยจุฬาฯ 12 กับ 14",
+    photos: [
+      { file: "Boat noodles.jpg", alt: "ก๋วยเตี๋ยวเรือน้ำตก เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Boat Noodles with sliced beef round steak, beef ball, braised shank and tendon.jpg", alt: "ก๋วยเตี๋ยวเรือเนื้อ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Bowl of boat noodles.jpg", alt: "ก๋วยเตี๋ยวเรือ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Thai condiment set (fish sauce, sugar, chilli vinegar, chilli powder, etc.).jpg", alt: "เครื่องปรุงก๋วยเตี๋ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+      { file: "Street food vendor by night (6962509412).jpg", alt: "ร้านริมทางตอนกลางคืนในกรุงเทพฯ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    ],
     knowhow: ["เส้นเล็กน้ำตกเป็นชามที่คนสั่งกันบ่อย"],
     guides: ["late-night"],
     price: { min: 69, max: 89, per: "ต่อชาม", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
@@ -303,7 +422,11 @@ export const places: Place[] = [
     lng: 100.5362,
     // The ER is what people come here for at night, so it leads; it isn't a caution (UX audit 7, U2).
     summary: "ห้องฉุกเฉินเปิด 24 ชั่วโมง ชั้น 1 อาคาร ภ.ป.ร. ฝั่งถนนราชดำริ ไปเองไม่ไหวโทร 1669",
-    photo: { file: "King Chulalongkorn Memorial Hospital and MDCU Chulalongkorn University.jpg", alt: "โรงพยาบาลจุฬาลงกรณ์" },
+    photos: [
+      { file: "King Chulalongkorn Memorial Hospital and MDCU Chulalongkorn University.jpg", alt: "โรงพยาบาลจุฬาลงกรณ์" },
+      { file: "KCMH-MDCU.jpg", alt: "อาคารภูมิสิริมังคลานุสรณ์ โรงพยาบาลจุฬาลงกรณ์" },
+      { file: "PPRBuild.JPG", alt: "อาคาร ภ.ป.ร. โรงพยาบาลจุฬาลงกรณ์" },
+    ],
     knowhow: [
       "โรงพยาบาลใหญ่ใกล้มหาลัย ไว้ตอนเป็นหนักหรือต้องหาหมอเฉพาะทาง",
       "ถ้าไม่ฉุกเฉิน ไปศูนย์บริการสุขภาพ จุฬาฯ ที่อาคารจามจุรี 9 ชั้น 2 ก่อน นิสิตไม่เสียเงิน",
@@ -321,6 +444,10 @@ export const places: Place[] = [
     lng: 100.5257,
     // Hours lead: it's closed at night, which is when people look (UX audit 7, U2).
     summary: "ไม่สบายแต่ไม่ฉุกเฉิน มาที่นี่ก่อน เปิด จ.–ศ. 8:00–15:30 เที่ยงปิดพัก อยู่อาคารจามจุรี 9 ชั้น 2 นิสิตไม่เสียเงิน",
+    photos: [
+      { file: "Chiang-Mai Thailand Travel-Medicine-Clinic-Chiang-Mai-01.jpg", alt: "คลินิก เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Hospital Pharmacy.JPG", alt: "ห้องยา เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "พกบัตรนิสิตไปด้วย",
       "เที่ยงปิด 11:30–13:00 โทรถามก่อนได้ที่ 02-218-0568",
@@ -338,6 +465,11 @@ export const places: Place[] = [
     lat: 13.7405,
     lng: 100.5255,
     summary: "ศูนย์สุขภาพของ กทม. ที่ใกล้จุฬาฯ สุด ใช้บัตรทองด้วยบัตรประชาชนใบเดียว ซอยจุฬาฯ 36 เปิด จ.–ศ. 8:00–16:00",
+    photos: [
+      { file: "รพ.สต. โรงพยาบาลส่งเสริมสุขภาพตำบล บ้านหนองรี อำเภอบ้านนา จังหวัดนครนายก.jpg", alt: "หน่วยบริการสุขภาพของรัฐ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "รพ.สต.วังลึก (2025) - img 02.jpg", alt: "ทางเข้าหน่วยบริการสุขภาพของรัฐ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "ภายใน รพ.สต. โรงพยาบาลส่งเสริมสุขภาพตำบล บ้านหนองรี อำเภอบ้านนา จังหวัดนครนายก.jpg", alt: "ห้องจ่ายยา เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "บัตรทองยังไม่ได้ย้ายมากรุงเทพฯ ก็รักษาที่นี่ได้ ไม่ต้องมีใบส่งตัว",
       "เข้าทางซอยจุฬาฯ 5 ฝั่งถนนพระราม 4 ได้ด้วย",
@@ -355,6 +487,11 @@ export const places: Place[] = [
     lat: 13.7383,
     lng: 100.5267,
     summary: "ไม่สบายตอนกลางคืนแต่ไม่ฉุกเฉิน มาที่นี่ เปิดทุกวัน 18:00–06:00 นิสิตจุฬาฯ ทุกคนใช้ได้",
+    photos: [
+      { file: "Cmadong.JPG", alt: "หอพักนิสิตจุฬาฯ" },
+      { file: "A first aid box.jpg", alt: "กล่องปฐมพยาบาล เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Ambulance red cross in Bangkok.jpg", alt: "รถพยาบาล เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "ดูแลเบื้องต้น มีรถพยาบาล",
       "ไม่ได้พักหอในก็มาได้ พกบัตรนิสิต",
@@ -373,6 +510,11 @@ export const places: Place[] = [
     lat: 13.7418,
     lng: 100.5226,
     summary: "ร้านยาที่เปิดดึกแถวบรรทัดทอง ทุกวัน 15:00–23:00",
+    photos: [
+      { file: "Thai Pharmacy.JPG", alt: "ร้านขายยา เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Takabb Anti-Cough Pills on a drugstore shelf in Thailand.jpg", alt: "ชั้นวางยาในร้านขายยา เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Phuket Town Thailand-Phuket-Town-Pharmacy-01.jpg", alt: "ร้านขายยาห้องแถว เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "โทรถามก่อนว่ามียาที่ต้องการไหมได้ที่ 083-808-7766",
     ],
@@ -390,6 +532,11 @@ export const places: Place[] = [
     lat: 13.7334,
     lng: 100.5289,
     summary: "ซูเปอร์ฯ เปิด 24 ชั่วโมง ชั้น B1 ดึกแค่ไหนก็มาซื้อน้ำแพ็ค ผงซักฟอก ของใช้เข้าห้องได้",
+    photos: [
+      { file: "Samyan Mitrtown Back.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
+      { file: "Big C Ratchadamri (I).jpg", alt: "บิ๊กซีสาขาอื่น เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Meat products for sale.JPG", alt: "โซนของสดในซูเปอร์ฯ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "ครึ่งร้านเป็นของสด ของใช้ในบ้านมีไม่เยอะเท่าบิ๊กซีใหญ่ หาไม่เจอลองไดโซะชั้นเดียวกัน",
       "ห้างปิด 22:00 แต่โซน 24 ชั่วโมงยังเปิด เข้าทางประตูโซนนั้น",
@@ -405,6 +552,10 @@ export const places: Place[] = [
     lat: 13.74,
     lng: 100.5253,
     summary: "ร้านซักผ้าหยอดเหรียญ เปิด 24 ชั่วโมง มีเครื่องอบ อยู่ไอแอมปาร์ค ซอยจุฬาฯ 9 ข้างอุทยาน 100 ปี",
+    photos: [
+      { file: "DFC 3498 A bright welcoming Otteri wash dry laundromat at night with customers folding clothes and washing machines lining the back wall.jpg", alt: "ร้านซักผ้า Otteri สาขาอื่น เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Chiang Mai laundromats Mermasis 20191230b.jpg", alt: "เครื่องซักผ้าหยอดเหรียญ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "มีเครื่องแลกเหรียญ รับแบงก์ 20 50 100 และขายน้ำยาซักผ้ากับน้ำยาปรับผ้านุ่มในร้าน",
       "ซักรอบหนึ่งราว 30 นาที ขึ้นไปนั่งร้านกาแฟข้างบนรอได้",
@@ -423,6 +574,11 @@ export const places: Place[] = [
     lat: 13.7394,
     lng: 100.5242,
     summary: "ตู้กดน้ำดื่มฟรีของ PMCU ลานข้างร้านชาตรามือ พกขวดไปเติมได้",
+    photos: [
+      { file: "CU Centenary Park (I).jpg", alt: "อุทยาน 100 ปี จุฬาฯ" },
+      { file: "Chulalongkorn University Centenary Park.jpg", alt: "สนามหญ้าในอุทยาน 100 ปี จุฬาฯ" },
+      { file: "E8661-Pattaya-water-vending-machines.jpg", alt: "ตู้กดน้ำดื่ม เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: ["ใต้อาคาร U-Center ฝั่งสามย่านก็มีอีกตู้"],
     guides: ["drinking-water"],
   },
@@ -434,6 +590,10 @@ export const places: Place[] = [
     lat: 13.735,
     lng: 100.527,
     summary: "ตู้กดน้ำดื่มฟรีของ PMCU ใต้ U-Center ซอยจุฬาฯ 42 ฝั่งสามย่าน",
+    photos: [
+      { file: "Melaka-drinking-water-vending-machine-2348.jpg", alt: "ตู้กดน้ำดื่ม เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Free Pure Water Vending machine in Japan.jpg", alt: "ตู้กดน้ำดื่มฟรี เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: ["ตึกเดียวกันมีเซเว่นกับธนาคาร"],
     guides: ["drinking-water"],
   },
@@ -445,6 +605,11 @@ export const places: Place[] = [
     lat: 13.7328,
     lng: 100.5306,
     summary: "ซูเปอร์ฯ ขนาดกลางชั้นใต้ดิน ลง MRT สามย่านแล้วเดินเข้าได้ไม่ต้องขึ้นข้างบน",
+    photos: [
+      { file: "CHAMCHURI SQUARE.jpg", alt: "อาคารจามจุรีสแควร์" },
+      { file: "MRTEnsamyan.JPG", alt: "ทางเชื่อมใต้ดินจากจามจุรีสแควร์ไป MRT สามย่าน" },
+      { file: "Товары Lotus's (20250324184821).jpg", alt: "ชั้นวางน้ำอัดลมใน Lotus's go fresh จามจุรีสแควร์" },
+    ],
     knowhow: [
       "ผักแบ่งขายกำเล็ก ชั่งน้ำหนักเอาได้",
       "พกถุงผ้าไปเอง",
@@ -461,6 +626,10 @@ export const places: Place[] = [
     lat: 13.7401,
     lng: 100.5255,
     summary: "ซูเปอร์ฯ เล็กฝั่งบรรทัดทอง เปิด 10:00–21:00 ทุกวัน ตึกเดียวกับร้านซักผ้า Otteri",
+    photos: [
+      { file: "โลตัส โกเฟรช สุทธิสาร.jpg", alt: "Lotus's go fresh สาขาอื่น เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Lotusgofresh.jpg", alt: "หน้าร้าน Lotus's go fresh เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: ["ของใช้ประจำวัน ทิชชู่ น้ำยาล้างจาน มีครบ ไม่ต้องข้ามไปห้าง"],
     guides: ["coin-laundry"],
   },
@@ -472,6 +641,11 @@ export const places: Place[] = [
     lat: 13.7333,
     lng: 100.5287,
     summary: "ของจุกจิกเข้าห้อง กล่อง ไม้แขวน ที่คว่ำจาน อยู่ชั้น B1",
+    photos: [
+      { file: "SamyanMitrtown102019night.jpg", alt: "สามย่านมิตรทาวน์ตอนกลางคืน" },
+      { file: "Daiso store in Westfield Belconnen August 2024.jpg", alt: "ร้านไดโซะในห้าง เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Daiso store in Mirdiff mall, Dubai.jpg", alt: "หน้าร้านไดโซะ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "ย้ายเข้าหอใหม่ มาที่นี่ทีเดียวได้ของจัดห้องเกือบครบ",
     ],
@@ -487,6 +661,11 @@ export const places: Place[] = [
     lat: 13.7446,
     lng: 100.53,
     summary: "ของใช้ในบ้านกับเครื่องมือช่างราคาถูก ปลั๊กพ่วง หลอดไฟ ไขควง อยู่ MBK ชั้น 5",
+    photos: [
+      { file: "MBK Center (New facade).jpg", alt: "ห้างเอ็มบีเค" },
+      { file: "MBK Center Level 5 201801.jpg", alt: "ทางเดินชั้น 5 เอ็มบีเค" },
+      { file: "MR.DIY Sunway Giza (220401).jpg", alt: "ร้าน MR.DIY สาขาอื่น เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "ไฟในห้องเสีย ปลั๊กไม่พอ มาที่นี่ได้ของถูกกว่าห้างอื่นแถวนี้",
       "ขึ้น BTS สนามกีฬาแห่งชาติ แล้วเดินสะพานเชื่อมเข้า MBK ได้",
@@ -504,6 +683,11 @@ export const places: Place[] = [
     lat: 13.7335,
     lng: 100.529,
     summary: "ปั๊มกุญแจ เปลี่ยนถ่านนาฬิกา ชั้น B1 หน้าลิฟต์ฝั่งเหนือ ก่อนถึงห้องน้ำ",
+    photos: [
+      { file: "Chuam Mitr tunnel Samyan Mitrtown side.jpg", alt: "อุโมงค์ชวนมิตร ทางเดินระหว่าง MRT สามย่านกับสามย่านมิตรทาวน์" },
+      { file: "Car key duplication.jpg", alt: "เครื่องปั๊มกุญแจ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+      { file: "Key cutting (Nizhny Novgorod, 2007).jpg", alt: "ปั๊มกุญแจ เป็นภาพประกอบ ไม่ใช่ที่นี่" },
+    ],
     knowhow: [
       "ปั๊มสำรองไว้สักดอก เผื่อกุญแจหายตอนดึก",
       "ดอกที่ปั๊มแล้วไขไม่เข้า เอากลับไปให้ร้านแก้ได้",

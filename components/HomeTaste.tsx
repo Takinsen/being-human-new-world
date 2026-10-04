@@ -50,8 +50,8 @@ export function HomeTaste({ regions }: { regions: HomeTasteData }) {
             <li key={place.id}>
               {/* The name is the link and stretches over the card; the photo's credit stays its own link */}
               <article className="home-card">
-                {place.photo ? (
-                  <Photo photo={place.photo} className="home-card-photo" />
+                {place.photos?.[0] ? (
+                  <Photo photo={place.photos[0]} className="home-card-photo" />
                 ) : (
                   <span className="home-card-photo is-empty" aria-hidden="true">
                     <BowlSteam weight="duotone" />

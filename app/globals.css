@@ -2012,10 +2012,13 @@ body:not(:has(.explorer)) main {
   text-decoration: none;
 }
 
-/* Place card: photo, name and price, actions, then the rest */
+/* Place card: photos, name and price, then the sections. One rhythm (.scratch/place-photos):
+   24px between the strip, the head and each section; 8px inside the head */
 .detail {
   display: grid;
-  gap: var(--space-4);
+  /* minmax: a strip wider than the card scrolls instead of widening it */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
   margin-top: var(--space-4);
 }
 
@@ -2023,15 +2026,15 @@ body:not(:has(.explorer)) main {
   margin-top: 0;
 }
 
-.detail-photo {
-  border-radius: var(--radius-m);
-  aspect-ratio: 2 / 1;
-}
-
 .detail-head {
   display: grid;
+  justify-items: start;
   gap: var(--space-2);
   margin-top: 0;
+}
+
+.detail-head > * {
+  justify-self: stretch;
 }
 
 .detail-head h2:focus-visible {
@@ -2056,26 +2059,30 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
 }
 
-.detail-taste {
+/* Home Taste: a tag in the category's tint under the name */
+.detail-head .detail-taste {
+  justify-self: start;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-s);
+  background: var(--tint);
   color: var(--on-tint);
   font-size: var(--step--1);
   font-weight: 500;
 }
 
-/* Each section under a hairline, with a quiet heading: the content is what's read */
+/* Each section under a hairline, with a heading in ink: easy to find when scanning */
 .detail-section {
-  padding-top: var(--space-4);
+  padding-top: var(--space-5);
   border-top: 1px solid var(--rule);
 }
 
-/* Quiet on purpose: small grey words, the line's icon the only colour */
 .detail-h {
   display: flex;
   align-items: center;
   gap: var(--space-2);
-  margin-bottom: var(--space-2);
-  color: var(--ink-soft);
-  font: 500 var(--step--1) / 1.5 var(--font);
+  margin-bottom: var(--space-3);
+  color: var(--ink);
+  font: var(--w-head) var(--step-0) / 1.4 var(--font-head);
 }
 
 .detail-h svg {
@@ -2087,6 +2094,16 @@ body:not(:has(.explorer)) main {
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.detail-h-row .detail-h {
+  margin-bottom: 0;
+}
+
+/* "เขียนโน้ต"'s 44px tap target shouldn't push the row down */
+.detail-h-row .detail-write {
+  margin-block: -10px;
 }
 
 /* "เขียนโน้ต" beside the Notes heading: small to look at, a full tap target to press */
@@ -2108,9 +2125,22 @@ body:not(:has(.explorer)) main {
   margin-top: var(--space-2);
 }
 
-/* No Note yet: said plainly, in grey, so it doesn't read as a Note */
+/* No Note yet: said plainly, then the way to write the first, in a soft box that
+   doesn't read as a Note */
 .detail-empty {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed color-mix(in srgb, var(--leaf-dark) 35%, var(--rule));
+  border-radius: var(--radius-m);
+  background: color-mix(in srgb, var(--leaf) 6%, var(--paper));
   color: var(--ink-soft);
+}
+
+.detail-empty strong {
+  color: var(--ink);
+  font-weight: 500;
 }
 
 /* Every caution, then every line of know-how. A caution is a heads-up from someone who's
@@ -2177,9 +2207,22 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
 }
 
-/* The price under what the Place is, in the card's head */
+/* The price under what the Place is, in the card's head: the figure in bold ink on a
+   platform-yellow marker (docs/adr/0001), lighter than a solid block; when it was updated and
+   the way to correct it on one line under it */
 .detail-head .price {
-  margin-top: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.detail-head .price-strip {
+  padding: 0 0.1em;
+  border-radius: 0;
+  background: linear-gradient(transparent 58%, var(--platform) 58%, var(--platform) 92%, transparent 92%);
+  font-size: var(--step-1);
+}
+
+.detail-head .price-updated {
+  margin-top: var(--space-1);
 }
 
 /* นำทาง beside the way back: in the sheet's top bar on phones, above the card on wide screens */
@@ -2389,9 +2432,81 @@ body:not(:has(.explorer)) main {
   top: var(--space-2);
 }
 
-/* Phones: the sheet is short, so a photo is a strip */
-.sheet-body .detail-photo {
-  aspect-ratio: 3 / 1;
+/* ---------- Place photo strip (components/PhotoStrip.tsx) ----------
+   A row of small squares running to the edges of the sheet or panel, so the next photo is cut
+   by the screen's edge, not the card's padding (.scratch/place-photos/spec.md) */
+.strip {
+  --bleed: var(--gutter);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.explorer-panel .strip {
+  --bleed: var(--space-4);
+}
+
+.strip-track {
+  display: flex;
+  gap: var(--space-2);
+  margin-inline: calc(var(--bleed) * -1);
+  padding-inline: var(--bleed);
+  scroll-padding-inline: var(--bleed);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.strip-track::-webkit-scrollbar {
+  display: none;
+}
+
+.strip-track:focus-visible {
+  outline: 3px solid var(--action);
+  outline-offset: 2px;
+}
+
+.strip-track li {
+  flex: none;
+  width: 132px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-s);
+  background: var(--rule);
+  scroll-snap-align: start;
+}
+
+.strip-track img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  color: transparent;
+  user-select: none;
+}
+
+/* Only one photo: it fills the card's width */
+.strip-track:has(li:only-child) {
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.strip-track li:only-child {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-m);
+}
+
+.strip figcaption {
+  justify-self: end;
+  font-size: 0.7rem;
+}
+
+.strip figcaption a {
+  display: inline-block;
+  padding-block: var(--space-1);
+  color: var(--ink-soft);
+  text-decoration-color: color-mix(in srgb, var(--ink-soft) 40%, transparent);
 }
 
 /* ---------- Audit 3 (.scratch/map-first/ux-audit-3.md) ---------- */

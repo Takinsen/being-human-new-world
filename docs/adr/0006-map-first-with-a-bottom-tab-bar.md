@@ -33,3 +33,7 @@ The owner found the card hard to read and chose layout P2 in `prototype/readable
 ## Amendment (2026-10-04): nothing stuck over the card
 
 The bar at the bottom of the card covered a quarter of a half sheet (`.scratch/map-polish/`). The price, with when it was last updated, now sits under what the Place is, in the card's head, and scrolls with it; "นำทาง" sits beside "← ดูที่อื่น", in the sheet's top bar on phones and above the card on wide screens, so it is always one tap away. A card opens the sheet to about 70% of the map (the list stays at half); full screen is still one tap.
+
+## Amendment (2026-10-04): photos to swipe, and one rhythm
+
+The owner wanted the card laid out better and more than one photo (`.scratch/place-photos/`). A Place now carries several photos, swiped through sideways in a row of small squares at the top of the card (picked from three prototype looks); the row runs to the screen's edge so the next photo shows it can be swiped, and one line under it credits the first photo in view. A Place with one photo shows it the card's width. Under the name, its Home Taste is a tag in the category's tint; the price figure sits on a yellow marker rather than a solid block; section headings are in ink, not small grey; the card keeps 24px between the strip, the head and each section. With no Note yet, the Notes section is an invitation to write the first, with its own button, instead of one grey line.
