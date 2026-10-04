@@ -6,7 +6,7 @@ import { PlainCopy } from "@/components/PlainCopy";
 import { Splash } from "@/components/Splash";
 import { SwipeTabs } from "@/components/SwipeTabs";
 import { TabBar } from "@/components/TabBar";
-import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
+import { LOGO_NOTICE, SHOW_LOGOS } from "@/lib/brands";
 import { keepPhrases } from "@/lib/thaiBreaks";
 import "./globals.css";
 
@@ -46,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {keepPhrases("ข้อมูลแถวจุฬาฯ ทีมตั้งหลักกับรุ่นพี่ที่เคยมาใหม่ช่วยกันเขียน รู้อะไรที่ยังไม่มี")}{" "}
             <NavLink href="/contribute">{keepPhrases("ช่วยเติมได้เลย")}</NavLink>
           </p>
-          {SHOW_TRANSIT_LOGOS && (
+          {SHOW_LOGOS && (
             <p className="logo-notice">
               <small>{keepPhrases(LOGO_NOTICE)}</small>
             </p>

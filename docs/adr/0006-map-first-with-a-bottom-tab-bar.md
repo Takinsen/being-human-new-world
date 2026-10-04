@@ -29,3 +29,7 @@ What stays from 0004: the map is an index into Local Know-how, not a directory. 
 ## Amendment (2026-10-02): the Place card shows all of it, in sections
 
 The owner found the card hard to read and chose layout P2 in `prototype/readable-pages`: the photo, the Place's icon and name large, then what it is in one line; then sections split by hairlines, each with a quiet heading: "เข้าจุฬาฯ ยังไง" (stations), "รู้ไว้ก่อนไป" (every caution, then every line of know-how), "โน้ตจากคนที่เคยไป" (the latest Note, with "เขียนโน้ต" beside the heading) and "อ่านวิธี" (its Guides as rows). The price with when it was last updated and "นำทาง" sit in a bar stuck to the bottom of the card. Nothing waits behind "อ่านเพิ่ม" any more: with sections and headings the whole card is short enough to read top to bottom, which was the reason for hiding the rest.
+
+## Amendment (2026-10-04): nothing stuck over the card
+
+The bar at the bottom of the card covered a quarter of a half sheet (`.scratch/map-polish/`). The price, with when it was last updated, now sits under what the Place is, in the card's head, and scrolls with it; "นำทาง" sits beside "← ดูที่อื่น", in the sheet's top bar on phones and above the card on wide screens, so it is always one tap away. A card opens the sheet to about 70% of the map (the list stays at half); full screen is still one tap.

@@ -11,10 +11,10 @@ import type { CategoryId } from "@/content/types";
 import { keepPhrases } from "@/lib/thaiBreaks";
 import { useChecklist } from "@/lib/useChecklist";
 import { CategoryIcon, PlaceIcon } from "../icons";
-import { LOGO_NOTICE, SHOW_TRANSIT_LOGOS } from "@/lib/brands";
+import { LOGO_NOTICE, SHOW_LOGOS } from "@/lib/brands";
 import { Wordmark } from "../PageHead";
 import { Canopy } from "../Canopy";
-import { PlaceDetail } from "./PlaceDetail";
+import { GoThere, PlaceDetail } from "./PlaceDetail";
 import type { MapStop } from "./types";
 
 // Leaflet touches `window`, so the map renders only in the browser.
@@ -28,8 +28,9 @@ const sidebarWidth = (vw: number) => (vw >= 1600 ? 460 : 380);
 const SHEET_CLOSED = 60; // px: just the handle
 // Share of the map the sheet covers on phones; less on short screens so the map stays usable,
 // but more on the shortest (large text), where a smaller half sheet can't fit one list row.
-const sheetShare = (areaHeight: number, full: boolean) =>
-  full ? 0.94 : areaHeight < 480 ? 0.6 : areaHeight < 620 ? 0.42 : 0.5;
+// A Place's card is there to be read, so it opens taller than the list, with its pin still in view.
+const sheetShare = (areaHeight: number, full: boolean, card: boolean) =>
+  full ? 0.94 : areaHeight < 480 ? 0.6 : areaHeight < 620 ? 0.42 : card ? 0.7 : 0.5;
 
 function useViewport() {
   const [size, setSize] = useState({ w: 390, h: 800 });
@@ -226,7 +227,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   };
 
   const covered = !wide && sheetOpen && sheetFull;
-  const sheetHeight = sheetOpen ? Math.round(area.h * sheetShare(area.h, sheetFull)) : SHEET_CLOSED;
+  const sheetHeight = sheetOpen ? Math.round(area.h * sheetShare(area.h, sheetFull, Boolean(selected))) : SHEET_CLOSED;
   const inset = wide ? { left: sidebar + 16, top: 16, bottom: 0 } : { left: 0, top: area.top, bottom: sheetHeight };
 
   const filters = (
@@ -325,7 +326,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
       <NavLink href="/seniors#help" className="list-help">
         <Phone weight="bold" aria-hidden="true" /> {keepPhrases("เหงาหรือเครียด คุยกับคนได้")}
       </NavLink>
-      {SHOW_TRANSIT_LOGOS && <p className="fine-print">{keepPhrases(LOGO_NOTICE)}</p>}
+      {SHOW_LOGOS && <p className="fine-print">{keepPhrases(LOGO_NOTICE)}</p>}
     </div>
   );
 
@@ -407,6 +408,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
                   {sheetOpen ? <CaretDown weight="bold" aria-hidden="true" /> : <CaretUp weight="bold" aria-hidden="true" />}
                 </button>
               )}
+              {selected && sheetOpen && <GoThere place={selected.place} />}
               {sheetOpen && (
                 <button
                   type="button"

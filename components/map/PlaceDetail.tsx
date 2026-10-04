@@ -18,11 +18,13 @@ import { FlyingName } from "../PageMotion";
 import { Photo } from "../Photo";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
+import type { Place } from "@/content/types";
 import type { MapStop } from "./types";
 
-// The selected Place (docs/adr/0006, amended 2026-10-02): the photo, the name large and what
-// the Place is, then sections split by hairlines, each with a quiet heading; nothing waits
-// behind "อ่านเพิ่ม". The price and นำทาง sit in a bar stuck to the bottom of the card.
+// The selected Place (docs/adr/0006, amended 2026-10-04): the photo, the name large, what
+// the Place is and its price, then sections split by hairlines, each with a quiet heading; nothing
+// waits behind "อ่านเพิ่ม". นำทาง sits up top, beside the way back (GoThere), so nothing is stuck
+// over the card's text.
 export function PlaceDetail({
   stop,
   posted,
@@ -59,9 +61,12 @@ export function PlaceDetail({
   return (
     <article className="detail" data-line={place.category}>
       {onBack && (
-        <button type="button" className="back-link detail-back" onClick={onBack}>
-          <ArrowLeft weight="bold" aria-hidden="true" /> ดูที่อื่น
-        </button>
+        <div className="detail-top">
+          <button type="button" className="back-link detail-back" onClick={onBack}>
+            <ArrowLeft weight="bold" aria-hidden="true" /> ดูที่อื่น
+          </button>
+          <GoThere place={place} />
+        </div>
       )}
       <Photo photo={place.photo} className="detail-photo" />
 
@@ -84,6 +89,14 @@ export function PlaceDetail({
               stop.homeTasteBy ? `อาหาร${place.homeTaste}ที่${stop.homeTasteBy} บอกว่าเหมือนบ้าน` : `อาหาร${place.homeTaste}`,
             )}
           </p>
+        )}
+        {place.price && (
+          <Price price={place.price}>
+            {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
+            <NavLink href={`/contribute?place=${place.id}#price`} className="price-report">
+              {place.price.checked ? "ราคาไม่ตรง?" : "บอกราคา"}
+            </NavLink>
+          </Price>
         )}
       </header>
 
@@ -171,24 +184,17 @@ export function PlaceDetail({
         </section>
       )}
 
-      {/* Stuck to the bottom while the card scrolls: what it costs and the way there */}
-      <div className="detail-bar">
-        {place.price ? (
-          <Price price={place.price}>
-            {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
-            <NavLink href={`/contribute?place=${place.id}#price`} className="price-report">
-              {place.price.checked ? "ราคาไม่ตรง?" : "บอกราคา"}
-            </NavLink>
-          </Price>
-        ) : (
-          <span />
-        )}
-        <a className="action" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
-          <NavigationArrow weight="bold" aria-hidden="true" />
-          นำทาง
-          <span className="visually-hidden"> ไป{place.name} ใน Google Maps (เปิดแท็บใหม่)</span>
-        </a>
-      </div>
     </article>
+  );
+}
+
+/** นำทาง: the way there in Google Maps, beside the card's way back */
+export function GoThere({ place }: { place: Place }) {
+  return (
+    <a className="action go-there" href={mapsUrl(place.lat, place.lng)} target="_blank" rel="noreferrer">
+      <NavigationArrow weight="bold" aria-hidden="true" />
+      นำทาง
+      <span className="visually-hidden"> ไป{place.name} ใน Google Maps (เปิดแท็บใหม่)</span>
+    </a>
   );
 }
