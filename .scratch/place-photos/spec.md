@@ -1,6 +1,6 @@
 # Place card: photos to swipe, and a tidier layout
 
-Status: needs-info (waiting on the owner to pick a strip variant)
+Status: done (not merged: the owner reviews the branch first)
 
 The owner wants the Place card (the card in the map's sheet, e.g. ส้มตำเจ๊อ้อย จุฬาฯ ซอย 20) laid
 out and spaced better, with several photos to swipe through sideways.
@@ -31,4 +31,6 @@ out and spaced better, with several photos to swipe through sideways.
   illustrations and say so in their alt; stations, Chulalongkorn Hospital and Lotus's Chamchuri
   have real photos of the place.
 - Many photos are CC BY or CC BY-SA: a slide that shows one needs its author and licence beside it.
-- The card's layout pass (Q4) is in. Variants A, B and C are live behind `?variant=` (B by default).
+- The card's layout pass (Q4) is in.
+- **Q10 Picked: C**, the row of small squares. A, B and the `?variant=` switch are gone; the
+  prototype with all three is commit 71777a8 on `claude/keen-planck-ofo3uc`. Recorded in docs/adr/0006.

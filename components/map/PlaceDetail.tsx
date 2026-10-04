@@ -15,7 +15,7 @@ import { keepPhrases } from "@/lib/thaiBreaks";
 import { PlaceIcon } from "../icons";
 import { NoteCard } from "../NoteCard";
 import { FlyingName } from "../PageMotion";
-import { PhotoStrip, type StripVariant } from "../PhotoStrip";
+import { PhotoStrip } from "../PhotoStrip";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
 import type { Place } from "@/content/types";
@@ -30,7 +30,6 @@ export function PlaceDetail({
   posted,
   focusOnOpen,
   onBack,
-  variant,
 }: {
   stop: MapStop;
   posted?: boolean;
@@ -38,8 +37,6 @@ export function PlaceDetail({
   focusOnOpen: boolean;
   /** Wide screens show a back button here; on phones the sheet's top bar is the way back */
   onBack?: () => void;
-  /** PROTOTYPE: the photo strip's look (.scratch/place-photos/spec.md) */
-  variant: StripVariant;
 }) {
   const { place, notes, guides } = stop;
   const [latest] = notes;
@@ -71,7 +68,7 @@ export function PlaceDetail({
           <GoThere place={place} />
         </div>
       )}
-      {place.photos && <PhotoStrip photos={place.photos} label={place.name} variant={variant} />}
+      {place.photos && <PhotoStrip photos={place.photos} label={place.name} />}
 
       <header className="detail-head">
         <div className="detail-title">

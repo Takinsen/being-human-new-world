@@ -2433,9 +2433,8 @@ body:not(:has(.explorer)) main {
 }
 
 /* ---------- Place photo strip (components/PhotoStrip.tsx) ----------
-   PROTOTYPE (.scratch/place-photos/spec.md): variants a, b and c; keep the picked one.
-   b and c run to the edges of the sheet or panel, so the next photo is cut by the screen's
-   edge, not the card's padding */
+   A row of small squares running to the edges of the sheet or panel, so the next photo is cut
+   by the screen's edge, not the card's padding (.scratch/place-photos/spec.md) */
 .strip {
   --bleed: var(--gutter);
   display: grid;
@@ -2446,13 +2445,12 @@ body:not(:has(.explorer)) main {
   --bleed: var(--space-4);
 }
 
-.strip-frame {
-  position: relative;
-}
-
 .strip-track {
   display: flex;
   gap: var(--space-2);
+  margin-inline: calc(var(--bleed) * -1);
+  padding-inline: var(--bleed);
+  scroll-padding-inline: var(--bleed);
   overflow-x: auto;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
@@ -2470,9 +2468,12 @@ body:not(:has(.explorer)) main {
 
 .strip-track li {
   flex: none;
-  scroll-snap-align: start;
+  width: 132px;
+  aspect-ratio: 1;
   overflow: hidden;
+  border-radius: var(--radius-s);
   background: var(--rule);
+  scroll-snap-align: start;
 }
 
 .strip-track img {
@@ -2482,6 +2483,18 @@ body:not(:has(.explorer)) main {
   object-fit: cover;
   color: transparent;
   user-select: none;
+}
+
+/* Only one photo: it fills the card's width */
+.strip-track:has(li:only-child) {
+  margin-inline: 0;
+  padding-inline: 0;
+}
+
+.strip-track li:only-child {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: var(--radius-m);
 }
 
 .strip figcaption {
@@ -2494,121 +2507,6 @@ body:not(:has(.explorer)) main {
   padding-block: var(--space-1);
   color: var(--ink-soft);
   text-decoration-color: color-mix(in srgb, var(--ink-soft) 40%, transparent);
-}
-
-/* a: one photo the card's width at a time, dots on it */
-.strip-a .strip-track {
-  border-radius: var(--radius-m);
-  gap: 0;
-}
-
-.strip-a .strip-track li {
-  width: 100%;
-  aspect-ratio: 2 / 1;
-}
-
-.strip-dots {
-  position: absolute;
-  left: 50%;
-  bottom: var(--space-2);
-  display: flex;
-  gap: 5px;
-  padding: 5px 7px;
-  border-radius: var(--radius-pill);
-  background: rgb(29 39 51 / 0.45);
-  transform: translateX(-50%);
-}
-
-.strip-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 3px;
-  background: rgb(255 255 255 / 0.55);
-  transition: width 0.2s ease;
-}
-
-.strip-dots .is-on {
-  width: 16px;
-  background: #fff;
-}
-
-/* b: each about 82% wide, the next one peeking in, a counter on the frame */
-.strip-b .strip-track,
-.strip-c .strip-track {
-  margin-inline: calc(var(--bleed) * -1);
-  padding-inline: var(--bleed);
-  scroll-padding-inline: var(--bleed);
-}
-
-.strip-b .strip-track li {
-  width: 82%;
-  aspect-ratio: 3 / 2;
-  border-radius: var(--radius-m);
-}
-
-.strip-count {
-  position: absolute;
-  top: var(--space-2);
-  right: var(--space-2);
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-pill);
-  background: rgb(29 39 51 / 0.72);
-  color: #fff;
-  font-size: 0.75rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-}
-
-/* c: a row of small squares */
-.strip-c .strip-track li {
-  width: 132px;
-  aspect-ratio: 1;
-  border-radius: var(--radius-s);
-}
-
-/* Only one photo: it fills the card's width, whatever the variant */
-.strip .strip-track li:only-child {
-  width: 100%;
-  aspect-ratio: 2 / 1;
-  border-radius: var(--radius-m);
-}
-
-.strip-b .strip-track:has(li:only-child),
-.strip-c .strip-track:has(li:only-child) {
-  margin-inline: 0;
-  padding-inline: 0;
-}
-
-/* PROTOTYPE: the variant switch, floating over the card above the tab bar */
-.proto-bar {
-  position: fixed;
-  left: 50%;
-  bottom: calc(72px + env(safe-area-inset-bottom));
-  z-index: 1100;
-  display: flex;
-  gap: 2px;
-  padding: 3px;
-  border-radius: var(--radius-pill);
-  background: var(--ink);
-  box-shadow: var(--shadow-2);
-  transform: translateX(-50%);
-}
-
-.proto-bar button {
-  min-height: 36px;
-  padding: 0 var(--space-3);
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: none;
-  color: #fff;
-  font: 500 0.8rem var(--font);
-  white-space: nowrap;
-  cursor: pointer;
-}
-
-.proto-bar button[aria-pressed="true"] {
-  background: var(--platform);
-  color: var(--ink);
 }
 
 /* ---------- Audit 3 (.scratch/map-first/ux-audit-3.md) ---------- */
