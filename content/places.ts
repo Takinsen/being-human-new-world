@@ -365,6 +365,7 @@ export const places: Place[] = [
   },
   {
     id: "bw-drugs-chula-16",
+    brand: "bw-drugs",
     icon: "sick",
     name: "ร้านยา B&W Drugs ซอยจุฬาฯ 16",
     category: "health",
@@ -383,6 +384,7 @@ export const places: Place[] = [
   {
     // The id predates the name; Notes may point at it, so it stays.
     id: "samyan-mitrtown-supermarket",
+    brand: "bigc",
     name: "บิ๊กซี ฟู้ดเพลส สามย่านมิตรทาวน์",
     category: "household",
     lat: 13.7334,
@@ -396,6 +398,7 @@ export const places: Place[] = [
   },
   {
     id: "otteri-im-park",
+    brand: "otteri",
     icon: "laundry",
     name: "Otteri ไอแอมปาร์ค",
     category: "household",
@@ -436,6 +439,7 @@ export const places: Place[] = [
   },
   {
     id: "lotus-chamchuri",
+    brand: "lotuss",
     name: "Lotus's go fresh จามจุรีสแควร์",
     category: "household",
     lat: 13.7328,
@@ -450,6 +454,7 @@ export const places: Place[] = [
   },
   {
     id: "lotus-im-park",
+    brand: "lotuss",
     name: "Lotus's go fresh ไอแอมปาร์ค",
     category: "household",
     // Same building as Otteri; pin is an estimate.
@@ -461,6 +466,7 @@ export const places: Place[] = [
   },
   {
     id: "daiso-samyan",
+    brand: "daiso",
     name: "ไดโซะ สามย่านมิตรทาวน์",
     category: "household",
     lat: 13.7333,
@@ -474,6 +480,7 @@ export const places: Place[] = [
   },
   {
     id: "mrdiy-mbk",
+    brand: "mrdiy",
     name: "MR.DIY เอ็มบีเค",
     category: "household",
     // MBK's pin is an estimate, next to BTS National Stadium.
@@ -490,6 +497,7 @@ export const places: Place[] = [
   },
   {
     id: "magnano-samyan",
+    brand: "magnano",
     icon: "key",
     name: "แมกนาโน่ สามย่านมิตรทาวน์",
     category: "household",

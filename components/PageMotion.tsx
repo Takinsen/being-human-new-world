@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useEffect, useSyncExternalStore, ViewTransition, type ViewTransitionInstance } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useSyncExternalStore, ViewTransition, type ViewTransitionInstance } from "react";
 import { usePathname } from "next/navigation";
 import { tabs } from "./tabs";
 
@@ -71,7 +71,13 @@ function useMotion() {
 export function PageFrame({ children }: { children: ReactNode }) {
   const moving = useMotion();
   const pathname = usePathname();
+  const frame = useRef<HTMLDivElement>(null);
   useEffect(endMotion, [pathname]);
+  // A swipe leaves the page where the finger let go (SwipeTabs.tsx); the new page comes in straight.
+  // A layout effect, so it runs before the new picture is taken.
+  useLayoutEffect(() => {
+    frame.current?.style.removeProperty("transform");
+  }, [pathname]);
   // The browser's back mid-tap is still the browser's back
   useEffect(() => {
     window.addEventListener("popstate", endMotion);
@@ -83,7 +89,9 @@ export function PageFrame({ children }: { children: ReactNode }) {
       update={moving && moving !== "nav-filter" && moving !== "nav-posted" ? moving : "none"}
       onUpdate={keepOldPicture}
     >
-      <div className="page-frame">{children}</div>
+      <div className="page-frame" ref={frame}>
+        {children}
+      </div>
     </ViewTransition>
   );
 }
@@ -122,14 +130,19 @@ export function PageArrive({ children }: { children: ReactNode }) {
 }
 
 // The new page arrives scrolled (to the top, or to a #section), so the picture's box would slide
-// up or down the screen to get there. It goes there at once instead, and the old picture stays
-// where it was on screen (--page-shift in app/globals.css); only the pictures move.
+// up or down the screen to get there; after a swipe, it would slide back from where the finger left
+// it. It goes there at once instead, and the old picture stays where it was on screen
+// (--page-shift and --page-shift-x in app/globals.css); only the pictures move.
 function keepOldPicture(instance: ViewTransitionInstance) {
   const { group } = instance as ViewTransitionInstance & { group: Animatable };
+  const root = document.documentElement.style;
+  root.setProperty("--page-shift", "0px");
+  root.setProperty("--page-shift-x", "0px");
   for (const move of group.getAnimations()) {
     const [from, to] = (move.effect as KeyframeEffect).getKeyframes();
-    const y = (k?: Keyframe) => (typeof k?.transform === "string" ? new DOMMatrix(k.transform).f : 0);
-    document.documentElement.style.setProperty("--page-shift", `${y(from) - y(to)}px`);
+    const matrix = (k?: Keyframe) => (typeof k?.transform === "string" ? new DOMMatrix(k.transform) : new DOMMatrix());
+    root.setProperty("--page-shift", `${matrix(from).f - matrix(to).f}px`);
+    root.setProperty("--page-shift-x", `${matrix(from).e - matrix(to).e}px`);
     move.cancel();
   }
 }

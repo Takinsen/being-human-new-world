@@ -33,8 +33,8 @@ export type Photo = {
   alt: string;
 };
 
-/** A transit operator whose logo we show to name a station or a Guide; see lib/brands.ts */
-export type Brand = "bts" | "mrt" | "pop";
+/** An operator or chain whose logo we show to name a station, a shop or a Guide; see lib/brands.ts */
+export type Brand = "bts" | "mrt" | "pop" | "bigc" | "lotuss" | "daiso" | "mrdiy" | "otteri" | "magnano" | "bw-drugs";
 
 /** Icon keys map to Phosphor icons in components/icons.tsx. */
 export type IconKey =
@@ -76,7 +76,7 @@ export type Place = {
   guides?: string[];
   /** Icon when there is no photo; defaults to the category's */
   icon?: IconKey;
-  /** A station: show its operator's logo instead of the icon (lib/brands.ts) */
+  /** A station or a chain's branch: show its logo instead of the icon (lib/brands.ts) */
   brand?: Brand;
 };
 

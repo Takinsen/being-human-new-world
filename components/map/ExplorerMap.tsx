@@ -14,8 +14,8 @@ const PIN = 44; // px, also the tap target
 const GAP = PIN + 4; // pins closer than this on screen get nudged apart
 
 // The pin shows its category's icon (docs/adr/0006); the icon itself is CSS.
-// A station shows its operator's logo instead, on white, ringed in the category's
-// colour (lib/brands.ts). The logo is decorative: the marker's tooltip names the station.
+// A station or a chain's branch shows its logo instead, on white, ringed in the category's
+// colour (lib/brands.ts). The logo is decorative: the marker's tooltip names the Place.
 // Built once per look, so Leaflet only swaps a marker's element when it changes.
 const icons = new Map<string, L.DivIcon>();
 function pinIcon(category: string, icon: string, logo: string | undefined, selected: boolean, leaving = false) {

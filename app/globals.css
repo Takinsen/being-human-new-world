@@ -523,7 +523,7 @@ svg { flex: none; }
 .map-pin .pin[data-icon="water"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M134.88%2C6.17a12%2C12%2C0%2C0%2C0-13.76%2C0%2C259%2C259%2C0%2C0%2C0-42.18%2C39C50.85%2C77.43%2C36%2C111.62%2C36%2C144a92%2C92%2C0%2C0%2C0%2C184%2C0C220%2C66.64%2C138.36%2C8.6%2C134.88%2C6.17ZM128%2C212a68.07%2C68.07%2C0%2C0%2C1-68-68c0-33.31%2C20-63.37%2C36.7-82.71A249.35%2C249.35%2C0%2C0%2C1%2C128%2C31.11a249.35%2C249.35%2C0%2C0%2C1%2C31.3%2C30.18C176%2C80.63%2C196%2C110.69%2C196%2C144A68.07%2C68.07%2C0%2C0%2C1%2C128%2C212Zm49.62-52.4a52%2C52%2C0%2C0%2C1-34%2C34%2C12.2%2C12.2%2C0%2C0%2C1-3.6.55%2C12%2C12%2C0%2C0%2C1-3.6-23.45%2C28%2C28%2C0%2C0%2C0%2C18.32-18.32%2C12%2C12%2C0%2C0%2C1%2C22.9%2C7.2Z%22%2F%3E%3C%2Fsvg%3E"); }
 .map-pin .pin[data-icon="key"] { --icon: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20256%20256%22%3E%3Cpath%20d%3D%22M196%2C76a16%2C16%2C0%2C1%2C1-16-16A16%2C16%2C0%2C0%2C1%2C196%2C76Zm48%2C22.74A84.3%2C84.3%2C0%2C0%2C1%2C160.11%2C180H160a83.52%2C83.52%2C0%2C0%2C1-23.65-3.38l-7.86%2C7.87A12%2C12%2C0%2C0%2C1%2C120%2C188H108v12a12%2C12%2C0%2C0%2C1-12%2C12H84v12a12%2C12%2C0%2C0%2C1-12%2C12H40a20%2C20%2C0%2C0%2C1-20-20V187.31a19.86%2C19.86%2C0%2C0%2C1%2C5.86-14.14l53.52-53.52A84%2C84%2C0%2C1%2C1%2C244%2C98.74ZM202.43%2C53.57A59.48%2C59.48%2C0%2C0%2C0%2C158%2C36c-32%2C1-58%2C27.89-58%2C59.89a59.69%2C59.69%2C0%2C0%2C0%2C4.2%2C22.19%2C12%2C12%2C0%2C0%2C1-2.55%2C13.21L44%2C189v23H60V200a12%2C12%2C0%2C0%2C1%2C12-12H84V176a12%2C12%2C0%2C0%2C1%2C12-12h19l9.65-9.65a12%2C12%2C0%2C0%2C1%2C13.22-2.55A59.58%2C59.58%2C0%2C0%2C0%2C160%2C156h.08c32%2C0%2C58.87-26.07%2C59.89-58A59.55%2C59.55%2C0%2C0%2C0%2C202.43%2C53.57Z%22%2F%3E%3C%2Fsvg%3E"); }
 
-/* Transit logos (lib/brands.ts): BTS and MRT exactly as their owners drew them, never
+/* Logos (lib/brands.ts): exactly as their owners drew them, never
    recoloured or stretched, always on white. Where a logo stands in for an icon, the
    category's colour stays as the ring, so the category still reads. */
 .brand-logo {
@@ -876,6 +876,9 @@ body:has(.explorer) {
 
 main {
   flex: 1 0 auto;
+  /* A page dragged right (components/SwipeTabs.tsx) mustn't widen the page: the browser would
+     drop the slide that follows */
+  overflow-x: clip;
 }
 
 body:has(.explorer) main {
@@ -2174,41 +2177,28 @@ body:not(:has(.explorer)) main {
   color: var(--ink-soft);
 }
 
-/* What it costs and the way there, stuck to the bottom of the sheet or panel while the card scrolls */
-.detail-bar {
-  position: sticky;
-  bottom: 0;
-  z-index: 2;
+/* The price under what the Place is, in the card's head */
+.detail-head .price {
+  margin-top: var(--space-3);
+}
+
+/* นำทาง beside the way back: in the sheet's top bar on phones, above the card on wide screens */
+.go-there {
+  flex: none;
+}
+
+.sheet-bar .go-there {
+  align-self: center;
+  min-height: 40px;
+  margin-right: var(--space-3);
+  padding: 0 var(--space-4);
+}
+
+.detail-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  margin-inline: calc(-1 * var(--gutter));
-  padding: var(--space-3) var(--gutter);
-  border-top: 1px solid var(--rule);
-  background: var(--paper);
-}
-
-/* Down over the scroll area's own bottom padding, so nothing shows under the bar */
-.sheet-body .detail-bar {
-  bottom: calc(-1 * var(--space-4));
-  margin-bottom: calc(-1 * var(--space-4));
-  padding-bottom: calc(var(--space-3) + var(--space-4));
-}
-
-/* The wide panel pads by --space-5, not the gutter: the bar reaches its edges and bottom the same way */
-.explorer-panel .detail-bar {
-  bottom: calc(-1 * var(--space-4));
-  margin: 0 calc(-1 * var(--space-4)) calc(-1 * var(--space-4));
-  padding: var(--space-3) var(--space-4) var(--space-4);
-}
-
-.detail-bar .price {
-  margin: 0;
-}
-
-.detail-bar .action {
-  flex: none;
 }
 
 /* "ราคาไม่ตรง?": the way to report a price from where it's checked (docs/adr/0001) */
@@ -2278,12 +2268,33 @@ body:not(:has(.explorer)) main {
   flex: none;
 }
 
-/* Chips that scroll fade at the edge, so it's clear there are more */
+/* Chips that scroll fade at an edge with more past it, so it's clear there are more
+   (components/ChipFocus.tsx marks the row; unmarked, as before scripts run, it fades on the right) */
 .feed-filters,
 .page-head .line-filters,
 .explorer-top .line-filters {
-  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
-  mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  --fade-l: 0px;
+  --fade-r: 24px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 var(--fade-l), #000 calc(100% - var(--fade-r)), transparent);
+}
+
+.line-filters[data-more] {
+  --fade-r: 0px;
+}
+
+.line-filters[data-more~="left"] {
+  --fade-l: 24px;
+}
+
+.line-filters[data-more~="right"] {
+  --fade-r: 24px;
+}
+
+/* The map's row runs to the screen's edges, past the 10px the chips start in from */
+.explorer-top .line-filters {
+  margin-inline: -10px;
+  padding-left: 10px;
 }
 
 .feed-more {
@@ -2437,6 +2448,10 @@ h2 {
   padding-block: 6px;
   padding-right: 40px;
   scroll-padding-inline: var(--gutter) 40px;
+}
+
+.explorer-top .line-filters {
+  scroll-padding-inline: 34px 40px;
 }
 
 /* With a card open, the sheet's top bar is the way back */
@@ -3277,7 +3292,7 @@ body:has(.explorer) .page-frame {
   ::view-transition-old(.nav-forward),
   ::view-transition-old(.nav-back),
   ::view-transition-old(.list-refresh) {
-    translate: 0 var(--page-shift, 0);
+    translate: var(--page-shift-x, 0) var(--page-shift, 0);
   }
 
   ::view-transition-old(.tab-left) { animation-name: slide-out-left; }
@@ -3645,7 +3660,7 @@ body:has(.explorer) .page-frame {
   display: block;
 }
 
-/* The trademark notice only where a BTS or MRT logo is on the page (audit 12, F16) */
+/* The trademark notice only where a logo is on the page (audit 12, F16) */
 body:not(:has(.brand-logo)) .logo-notice {
   display: none;
 }
