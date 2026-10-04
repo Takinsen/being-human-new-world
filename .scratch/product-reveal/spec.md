@@ -26,7 +26,9 @@ One 16:9 slide for the class presentation, the moment the audience first sees à¸
 - `design/reveal.html` is the slide; `design/reveal.mjs` takes the three screens from the running
   app (`design/reveal/`), makes `design/reveal/qr.svg` from the link in `#link`, and renders
   `design/reveal.png`. How to run it is at the top of the script.
-- The first render came from a cloud sandbox whose network policy blocks the map tiles
-  (`tile.openstreetmap.org`), so the map behind the card is grey. Run the script where the tiles
-  load to get the real map.
+- Rendered again on 2026-10-04 with the map's tiles and the card's photo strip. The network has to
+  reach `tile.openstreetmap.org` (the script sends `{a,b,c}.` there), `commons.wikimedia.org` and
+  `thumb.wikimedia.org`; in the cloud sandbox Chromium also needs the proxy's CA in `~/.pki/nssdb`.
+- The card shows three Commons photos (CC licences): a slide that shows them needs their authors
+  and licences, as `.scratch/place-photos/spec.md` says.
 - The card says no one has written about the place yet: none of the seed Notes is pinned to a Place.
