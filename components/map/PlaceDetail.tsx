@@ -15,21 +15,22 @@ import { keepPhrases } from "@/lib/thaiBreaks";
 import { PlaceIcon } from "../icons";
 import { NoteCard } from "../NoteCard";
 import { FlyingName } from "../PageMotion";
-import { Photo } from "../Photo";
+import { PhotoStrip, type StripVariant } from "../PhotoStrip";
 import { Price } from "../Price";
 import { TelText } from "../TelText";
 import type { Place } from "@/content/types";
 import type { MapStop } from "./types";
 
-// The selected Place (docs/adr/0006, amended 2026-10-04): the photo, the name large, what
-// the Place is and its price, then sections split by hairlines, each with a quiet heading; nothing
-// waits behind "อ่านเพิ่ม". นำทาง sits up top, beside the way back (GoThere), so nothing is stuck
+// The selected Place (docs/adr/0006, amended 2026-10-04): its photos to swipe through, the name
+// large, its Home Taste, what the Place is and its price, then sections split by hairlines, each
+// under a heading; nothing waits behind "อ่านเพิ่ม". นำทาง sits up top, beside the way back (GoThere), so nothing is stuck
 // over the card's text.
 export function PlaceDetail({
   stop,
   posted,
   focusOnOpen,
   onBack,
+  variant,
 }: {
   stop: MapStop;
   posted?: boolean;
@@ -37,6 +38,8 @@ export function PlaceDetail({
   focusOnOpen: boolean;
   /** Wide screens show a back button here; on phones the sheet's top bar is the way back */
   onBack?: () => void;
+  /** PROTOTYPE: the photo strip's look (.scratch/place-photos/spec.md) */
+  variant: StripVariant;
 }) {
   const { place, notes, guides } = stop;
   const [latest] = notes;
@@ -68,7 +71,7 @@ export function PlaceDetail({
           <GoThere place={place} />
         </div>
       )}
-      <Photo photo={place.photo} className="detail-photo" />
+      {place.photos && <PhotoStrip photos={place.photos} label={place.name} variant={variant} />}
 
       <header className="detail-head">
         <div className="detail-title">
@@ -79,10 +82,7 @@ export function PlaceDetail({
             <FlyingName name={`place-name-${place.id}`}>{keepPhrases(place.name)}</FlyingName>
           </h2>
         </div>
-        {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
-        <p className="detail-summary">
-          <TelText text={place.summary} />
-        </p>
+        {/* Home Taste as a tag under the name, so it reads as what the Place is, not a stray line */}
         {place.homeTaste && (
           <p className="detail-taste">
             {keepPhrases(
@@ -90,6 +90,10 @@ export function PlaceDetail({
             )}
           </p>
         )}
+        {/* What the place is, first: someone opening a health centre at night needs its hours before anything else */}
+        <p className="detail-summary">
+          <TelText text={place.summary} />
+        </p>
         {place.price && (
           <Price price={place.price}>
             {/* Prices get checked by whoever was just there (docs/adr/0001, 0005) */}
@@ -140,9 +144,11 @@ export function PlaceDetail({
           <h3 id="detail-notes" className="detail-h">
             โน้ตจากคนที่เคยไป
           </h3>
-          <NavLink href={`/notes/new?place=${place.id}`} className="detail-write">
-            <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
-          </NavLink>
+          {latest && (
+            <NavLink href={`/notes/new?place=${place.id}`} className="detail-write">
+              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ต
+            </NavLink>
+          )}
         </div>
         {posted && (
           <p className="form-status" role="status" tabIndex={-1} ref={status}>
@@ -159,7 +165,17 @@ export function PlaceDetail({
             )}
           </>
         ) : (
-          <p className="detail-empty">{keepPhrases("ยังไม่มีใครเขียนถึงที่นี่")}</p>
+          // No Note yet: an invitation to write the first, not a blank under the heading
+          <div className="detail-empty">
+            <p>
+              <strong>{keepPhrases("ยังไม่มีใครเขียนถึงที่นี่")}</strong>
+              <br />
+              {keepPhrases("เคยไปแล้ว? เล่าให้คนมาใหม่ฟังหน่อย")}
+            </p>
+            <NavLink href={`/notes/new?place=${place.id}`} className="action">
+              <PencilSimpleLine weight="bold" aria-hidden="true" /> เขียนโน้ตแรก
+            </NavLink>
+          </div>
         )}
       </section>
 

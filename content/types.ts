@@ -62,7 +62,8 @@ export type Place = {
   lng: number;
   /** One line: why a Newcomer would come here */
   summary: string;
-  photo?: Photo;
+  /** Swiped through at the top of its card; the first one also stands for the Place elsewhere */
+  photos?: Photo[];
   knowhow: string[];
   cautions?: string[];
   price?: Price;

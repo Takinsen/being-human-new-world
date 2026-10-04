@@ -14,7 +14,7 @@ export const places: Place[] = [
     lat: 13.7324,
     lng: 100.5294,
     summary: "ใกล้ฝั่งสามย่านสุด เดินใต้ดินทะลุเข้าสามย่านมิตรทาวน์ได้",
-    photo: { file: "Exit no.2 Sam Yan MRT.jpg", alt: "ทางออก 2 สถานี MRT สามย่าน" },
+    photos: [{ file: "Exit no.2 Sam Yan MRT.jpg", alt: "ทางออก 2 สถานี MRT สามย่าน" }],
     knowhow: [
       "บัตรเครดิตหรือเดบิตที่มีรูปคลื่นแตะจ่าย แตะผ่านประตูได้เลย ไม่ต้องซื้อเหรียญ",
       "ใช้บัตรใบเดียวกันแตะทั้งตอนเข้าและตอนออก",
@@ -33,7 +33,7 @@ export const places: Place[] = [
     lat: 13.7456,
     lng: 100.5347,
     summary: "ที่เปลี่ยนสายสุขุมวิทกับสีลม จะเดินหรือต่อรถป๊อปเข้าจุฬาฯ ก็ได้",
-    photo: { file: "Siam BTS Station, view from Siam Paragon.jpg", alt: "สถานี BTS สยาม มองจากสยามพารากอน" },
+    photos: [{ file: "Siam BTS Station, view from Siam Paragon.jpg", alt: "สถานี BTS สยาม มองจากสยามพารากอน" }],
     knowhow: [
       "ขึ้นทุกวันก็ทำบัตร Rabbit ไปเลย ไม่ต้องต่อคิวตู้ทุกเช้า",
       "ช่วง 7:30–9:00 คนแน่นมาก เผื่อเวลาไว้อย่างน้อย 15 นาที",
@@ -51,7 +51,7 @@ export const places: Place[] = [
     lat: 13.7466,
     lng: 100.529,
     summary: "ใกล้ฝั่งบรรทัดทองกับหอแถวนั้น",
-    photo: { file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" },
+    photos: [{ file: "Early morning in National Stadium BTS sky train station, Bangkok, Thailand.jpg", alt: "สถานี BTS สนามกีฬาแห่งชาติตอนเช้า" }],
     knowhow: [],
     toChula: "ขึ้นรถป๊อปสาย\u00a02 ฟรี วิ่ง จ.–ส. หรือเดินเลียบถนนบรรทัดทองลงมาก็ได้",
     guides: ["to-chula", "rabbit"],
@@ -67,7 +67,7 @@ export const places: Place[] = [
     lng: 100.5282,
     summary: "Samyan Food Legends ชั้น 4 แอร์เย็น ร้านให้เลือกเยอะ เปิด 10:00 ถึงราว 22:00",
     guides: ["eat-cheap", "late-night"],
-    photo: { file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" },
+    photos: [{ file: "Samyan Mitrtown สามย่านมิตรทาวน์.jpg", alt: "อาคารสามย่านมิตรทาวน์" }],
     knowhow: [
       "ไม่ต้องแลกบัตรแล้ว สแกน QR จ่ายที่ร้านได้เลย หรือจ่ายด้วย TrueMoney",
       "ศูนย์อาหารปิดพร้อมห้าง หิวดึกลงไปโซน 24 ชั่วโมงชั้นล่าง",
@@ -93,7 +93,7 @@ export const places: Place[] = [
     lng: 100.5222,
     summary: "ร้านอาหารเรียงยาวทั้งถนน คนเยอะตั้งแต่เย็นยันดึก",
     guides: ["eat-cheap"],
-    photo: { file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" },
+    photos: [{ file: "Banthat Thong Road.jpg", alt: "ถนนบรรทัดทอง" }],
     knowhow: ["หลายร้านดังคิวยาวช่วงหัวค่ำ ถ้าหิวจริงให้มาก่อน 18:00 หรือหลัง 20:30"],
     cautions: ["ร้านที่ขึ้นรีวิวบ่อยมักแพงกว่าร้านข้างๆ ที่คนแถวนั้นกิน"],
     price: { min: 60, max: 200, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
@@ -106,7 +106,7 @@ export const places: Place[] = [
     lat: 13.7375,
     lng: 100.5225,
     summary: "ร้านอาหารใต้บนถนนบรรทัดทอง ฝั่งตรงข้ามจุฬาฯ ซอย 34 เปิดทุกวันตั้งแต่ 11:00",
-    photo: { file: "Kaeng tai pla.JPG", alt: "แกงไตปลา อาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Kaeng tai pla.JPG", alt: "แกงไตปลา อาหารใต้ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     knowhow: ["เผ็ดแบบใต้จริง กินเผ็ดไม่เก่งก็บอกลดเผ็ดตอนสั่ง", "ไปหลายคนแบ่งกันกินคุ้มกว่า"],
     price: { min: 120, max: 250, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ใต้",
@@ -120,7 +120,7 @@ export const places: Place[] = [
     lat: 13.739,
     lng: 100.5235,
     summary: "ส้มตำโต๊ะแดงในจุฬาฯ ซอย 20 ใกล้อุทยาน 100 ปี เปิดเย็นถึงดึก 16:30–23:30",
-    photo: { file: "Som Tam green papaya salad, Bangkok, Thailand.jpg", alt: "ส้มตำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Som Tam green papaya salad, Bangkok, Thailand.jpg", alt: "ส้มตำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     knowhow: ["คนชอบสั่งส้มตำไทยกับคอหมูย่าง"],
     price: { min: 50, max: 150, per: "ต่อจาน", checked: { on: "2026-09", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "อีสาน",
@@ -130,7 +130,7 @@ export const places: Place[] = [
   // Pins are estimates from the address; check them on the spot. Dish photos are illustrations.
   {
     id: "khao-soi-doi-kham",
-    photo: { file: "Khanom chin nam ngiao.jpg", alt: "ขนมจีนน้ำเงี้ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Khanom chin nam ngiao.jpg", alt: "ขนมจีนน้ำเงี้ยว เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "ข้าวซอยดอยคำ จุฬาฯ ซอย 14",
     category: "food",
     lat: 13.743,
@@ -143,7 +143,7 @@ export const places: Place[] = [
   },
   {
     id: "lamduan-faham",
-    photo: { file: "Khao soi Chiang Mai.jpg", alt: "ข้าวซอย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Khao soi Chiang Mai.jpg", alt: "ข้าวซอย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "ข้าวซอยลำดวนฟ้าฮ่าม บรรทัดทอง",
     category: "food",
     lat: 13.7452,
@@ -156,7 +156,7 @@ export const places: Place[] = [
   },
   {
     id: "hom-duan",
-    photo: { file: "Kaeng hangle.jpg", alt: "แกงฮังเล เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Kaeng hangle.jpg", alt: "แกงฮังเล เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "หอมด่วน สามย่านมิตรทาวน์",
     category: "food",
     lat: 13.7339,
@@ -169,7 +169,7 @@ export const places: Place[] = [
   },
   {
     id: "pa-khao",
-    photo: { file: "Sai krok Isan yai.jpg", alt: "ไส้กรอกอีสาน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Sai krok Isan yai.jpg", alt: "ไส้กรอกอีสาน เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "พาข้าว บรรทัดทอง",
     category: "food",
     lat: 13.744,
@@ -182,7 +182,7 @@ export const places: Place[] = [
   },
   {
     id: "kham-paeng",
-    photo: { file: "Lap mu isan.JPG", alt: "ลาบหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Lap mu isan.JPG", alt: "ลาบหมู เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "คำแพง ซอยจุฬาฯ 16",
     category: "food",
     lat: 13.741,
@@ -195,7 +195,7 @@ export const places: Place[] = [
   },
   {
     id: "sri-kamin",
-    photo: { file: "Khao yam.jpg", alt: "ข้าวยำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Khao yam.jpg", alt: "ข้าวยำ เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     name: "ศรีขมิ้น สวนหลวงสแควร์",
     category: "food",
     lat: 13.743,
@@ -213,7 +213,7 @@ export const places: Place[] = [
     lat: 13.7422,
     lng: 100.5224,
     summary: "ขนมไทยสูตรคุณยายจากตลาดสามชุก สุพรรณบุรี ขนมถ้วย ขนมใส่ไส้ เม็ดขนุน คั้นกะทิเอง",
-    photo: { file: "Khanom thuay.jpg", alt: "ขนมถ้วย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Khanom thuay.jpg", alt: "ขนมถ้วย เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     knowhow: ["ขนมไทยกว่า 50 อย่าง บางอย่างชิ้นละ 15 บาท"],
     // Hours (10:00–24:00) and the khanom thuay price (40 or 60) conflict between sources: estimates.
     price: { min: 15, max: 60, per: "ต่อชิ้นหรือกล่อง", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
@@ -239,7 +239,7 @@ export const places: Place[] = [
     lat: 13.7366,
     lng: 100.5252,
     summary: "ไก่ย่างบางตาลสูตรราชบุรี หมักขมิ้นจนเหลือง ซอยจุฬาฯ 11 ตรงข้ามโจ๊กสามย่าน เปิดเช้าถึงบ่ายสอง",
-    photo: { file: "Gaiyangtaladdonwai06.jpg", alt: "ไก่ย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" },
+    photos: [{ file: "Gaiyangtaladdonwai06.jpg", alt: "ไก่ย่าง เป็นภาพประกอบ ไม่ใช่ของร้านนี้" }],
     knowhow: ["ไก่ครึ่งตัว 90 บาท ส้มตำไทย 40", "ปิดวันจันทร์ ไปก่อนบ่ายสอง"],
     price: { min: 40, max: 90, per: "ต่อจาน", checked: { on: "2026-10", by: "ทีมตั้งหลัก", how: "web" } },
     homeTaste: "ตะวันตก",
@@ -303,7 +303,7 @@ export const places: Place[] = [
     lng: 100.5362,
     // The ER is what people come here for at night, so it leads; it isn't a caution (UX audit 7, U2).
     summary: "ห้องฉุกเฉินเปิด 24 ชั่วโมง ชั้น 1 อาคาร ภ.ป.ร. ฝั่งถนนราชดำริ ไปเองไม่ไหวโทร 1669",
-    photo: { file: "King Chulalongkorn Memorial Hospital and MDCU Chulalongkorn University.jpg", alt: "โรงพยาบาลจุฬาลงกรณ์" },
+    photos: [{ file: "King Chulalongkorn Memorial Hospital and MDCU Chulalongkorn University.jpg", alt: "โรงพยาบาลจุฬาลงกรณ์" }],
     knowhow: [
       "โรงพยาบาลใหญ่ใกล้มหาลัย ไว้ตอนเป็นหนักหรือต้องหาหมอเฉพาะทาง",
       "ถ้าไม่ฉุกเฉิน ไปศูนย์บริการสุขภาพ จุฬาฯ ที่อาคารจามจุรี 9 ชั้น 2 ก่อน นิสิตไม่เสียเงิน",

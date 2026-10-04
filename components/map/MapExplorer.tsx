@@ -15,6 +15,8 @@ import { LOGO_NOTICE, SHOW_LOGOS } from "@/lib/brands";
 import { Wordmark } from "../PageHead";
 import { Canopy } from "../Canopy";
 import { GoThere, PlaceDetail } from "./PlaceDetail";
+import { StripVariantBar } from "./StripVariantBar";
+import { stripVariant } from "../PhotoStrip";
 import type { MapStop } from "./types";
 
 // Leaflet touches `window`, so the map renders only in the browser.
@@ -116,6 +118,7 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   // State lives in the URL so other pages can link straight to a category or a Place.
   const selectedId = params.get("place") ?? undefined;
   const posted = params.get("posted") === "1";
+  const variant = stripVariant(params.get("variant"));
   const lineParam = params.get("line");
   // No category chosen means every Place shows (docs/adr/0006).
   const active = useMemo<CategoryId[]>(
@@ -360,7 +363,16 @@ export function MapExplorer({ stops, categories }: { stops: MapStop[]; categorie
   );
 
   const panelBody = selected ? (
-    <PlaceDetail stop={selected} posted={posted} focusOnOpen={userOpened.current} onBack={wide ? back : undefined} />
+    <>
+      <PlaceDetail
+        stop={selected}
+        posted={posted}
+        focusOnOpen={userOpened.current}
+        onBack={wide ? back : undefined}
+        variant={variant}
+      />
+      <StripVariantBar variant={variant} />
+    </>
   ) : (
     <>
       {count}
