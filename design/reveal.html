@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<!-- The Product Reveal slide (.scratch/product-reveal/spec.md). 1920×1080; design/reveal.mjs
+     takes the screens from the app, makes the QR from #link and renders design/reveal.png -->
+<title>ตั้งหลัก Product Reveal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600&family=IBM+Plex+Sans+Thai:wght@500&family=Mitr:wght@500&display=block">
+<style>
+  :root {
+    --ink: #1d2733;
+    --paper: #fffdf9;
+    --leaf: #6aa178;
+    --leaf-dark: #3f7552;
+    --shade: #33634a;
+    --sun: #ffe7a3;
+    --bezel: #18212b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    position: relative;
+    background: var(--leaf-dark);
+    color: var(--paper);
+    font-family: "IBM Plex Sans Thai", sans-serif;
+  }
+
+  /* Under the canopy: its crowns in deeper shade along the top, light falling through */
+  .crowns { position: absolute; inset: 0 0 auto; width: 100%; height: 190px; }
+  .pool {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--sun) 26%, transparent), transparent);
+  }
+  .spots { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .copy {
+    position: absolute;
+    left: 120px;
+    top: 0;
+    bottom: 0;
+    width: 720px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .mark {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-family: "Mitr", sans-serif;
+    font-weight: 500;
+    font-size: 150px;
+    line-height: 1.2;
+  }
+  .mark svg { width: 110px; height: 110px; flex: none; }
+  .tagline {
+    margin: 36px 0 0;
+    font-family: "Anuphan", sans-serif;
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 1.45;
+    color: color-mix(in srgb, var(--paper) 88%, var(--leaf-dark));
+  }
+  .try {
+    margin-top: 88px;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+  .qr {
+    width: 196px;
+    height: 196px;
+    padding: 18px;
+    border-radius: 24px;
+    background: var(--paper);
+    flex: none;
+  }
+  .qr img { display: block; width: 100%; height: 100%; }
+  #link {
+    font-size: 44px;
+    letter-spacing: 0.01em;
+  }
+
+  /* Three phones, the map in front. A plain frame: no brand's shape */
+  .phone {
+    position: absolute;
+    width: 414px;
+    padding: 12px;
+    border-radius: 62px;
+    background: var(--bezel);
+    box-shadow:
+      0 0 0 2px color-mix(in srgb, var(--bezel) 70%, #fff),
+      0 50px 90px -20px rgb(10 30 18 / 0.55),
+      0 18px 36px -12px rgb(10 30 18 / 0.45);
+    transform-origin: top left;
+    transform: scale(var(--s));
+  }
+  .phone img {
+    display: block;
+    width: 390px;
+    height: 844px;
+    border-radius: 50px;
+  }
+  /* Lefts and tops are where each lands once scaled. The checklist's ticks sit at its left edge,
+     so nothing covers that phone; the Feed tucks behind the map a little */
+  .phone.main { --s: 0.9; left: 1160px; top: 150px; z-index: 2; }
+  .phone.side { --s: 0.74; top: 220px; z-index: 1; }
+  .phone.left { left: 892px; }
+  .phone.right { left: 1546px; }
+</style>
+</head>
+<body>
+  <svg class="crowns" viewBox="0 0 1920 190" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="var(--shade)" d="M0 0H1920V96C1880 140 1812 142 1776 112C1740 158 1664 160 1630 118C1590 164 1508 158 1482 116C1444 156 1368 152 1342 110C1304 150 1226 148 1200 106C1160 146 1086 142 1060 102C1022 140 946 138 920 98C880 136 806 132 782 94C744 132 670 128 644 90C606 128 532 124 506 88C468 124 394 120 368 84C330 120 256 116 232 80C194 116 120 112 96 78C64 104 22 102 0 82Z"/>
+  </svg>
+  <div class="pool" style="left:980px;top:-120px;width:900px;height:620px"></div>
+  <div class="pool" style="left:-260px;top:620px;width:900px;height:700px;opacity:.7"></div>
+  <svg class="spots" viewBox="0 0 1920 1080" aria-hidden="true">
+    <g fill="var(--sun)" opacity="0.5">
+      <circle cx="210" cy="132" r="6"/><circle cx="420" cy="58" r="4"/><circle cx="612" cy="150" r="7"/>
+      <circle cx="790" cy="44" r="4.5"/><circle cx="960" cy="186" r="5"/><circle cx="1110" cy="70" r="6.5"/>
+      <circle cx="1330" cy="40" r="4"/><circle cx="1560" cy="90" r="7"/><circle cx="1780" cy="160" r="5"/>
+      <circle cx="96" cy="960" r="5"/><circle cx="330" cy="1030" r="3.5"/><circle cx="700" cy="990" r="6"/>
+      <circle cx="1860" cy="560" r="4.5"/><circle cx="1880" cy="900" r="6"/>
+    </g>
+  </svg>
+
+  <section class="copy">
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="var(--paper)" aria-hidden="true">
+        <path d="M12 23V5" fill="none" stroke="var(--paper)" stroke-width="1.6" stroke-linecap="round"/>
+        <ellipse cx="12" cy="5" rx="2.4" ry="4"/>
+        <ellipse cx="8" cy="11" rx="2.2" ry="3.8" transform="rotate(-55 8 11)"/>
+        <ellipse cx="16" cy="11" rx="2.2" ry="3.8" transform="rotate(55 16 11)"/>
+        <ellipse cx="8.4" cy="17" rx="2" ry="3.4" transform="rotate(-60 8.4 17)"/>
+        <ellipse cx="15.6" cy="17" rx="2" ry="3.4" transform="rotate(60 15.6 17)"/>
+      </svg>
+      <span>ตั้งหลัก</span>
+    </div>
+    <p class="tagline">บ้านยังเป็นบ้าน<br>ที่นี่คือที่ตั้งหลัก</p>
+    <div class="try">
+      <div class="qr"><img src="reveal/qr.svg" alt=""></div>
+      <span id="link">starter.tanakrit.dev</span>
+    </div>
+  </section>
+
+  <div class="phone side left"><img src="reveal/notes.png" alt="หน้าโน้ต"></div>
+  <div class="phone side right"><img src="reveal/checklist.png" alt="หน้าสัปดาห์แรก"></div>
+  <div class="phone main"><img src="reveal/map.png" alt="แผนที่ เปิดการ์ดร้านส้มตำ"></div>
+</body>
+</html>
