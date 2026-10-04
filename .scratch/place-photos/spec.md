@@ -1,6 +1,6 @@
 # Place card: photos to swipe, and a tidier layout
 
-Status: needs-info (waiting on network access to Wikimedia Commons)
+Status: needs-info (waiting on the owner to pick a strip variant)
 
 The owner wants the Place card (the card in the map's sheet, e.g. ส้มตำเจ๊อ้อย จุฬาฯ ซอย 20) laid
 out and spaced better, with several photos to swipe through sideways.
@@ -23,3 +23,12 @@ out and spaced better, with several photos to swipe through sideways.
 - **Q9 Prototype:** three variants on the real card, switched with `?variant=`, the strip at the
   top of the card in each: A full width with dots; B about 85% wide so the next photo peeks, with a
   1/5 counter; C a row of small square photos.
+
+## Progress
+
+- Every Place has photos, each file checked on Commons (exists, JPEG ≥1000px wide, free licence,
+  no file on two Places): 5 per Everyday Food Place, 2–3 elsewhere, 132 in all. Most are
+  illustrations and say so in their alt; stations, Chulalongkorn Hospital and Lotus's Chamchuri
+  have real photos of the place.
+- Many photos are CC BY or CC BY-SA: a slide that shows one needs its author and licence beside it.
+- The card's layout pass (Q4) is in. Variants A, B and C are live behind `?variant=` (B by default).
