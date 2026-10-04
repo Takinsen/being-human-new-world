@@ -2016,6 +2016,8 @@ body:not(:has(.explorer)) main {
    24px between the strip, the head and each section; 8px inside the head */
 .detail {
   display: grid;
+  /* minmax: a strip wider than the card scrolls instead of widening it */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
   margin-top: var(--space-4);
 }
@@ -2494,7 +2496,7 @@ body:not(:has(.explorer)) main {
   text-decoration-color: color-mix(in srgb, var(--ink-soft) 40%, transparent);
 }
 
-/* a: one photo the card's width at a time, dots under it */
+/* a: one photo the card's width at a time, dots on it */
 .strip-a .strip-track {
   border-radius: var(--radius-m);
   gap: 0;
@@ -2506,28 +2508,28 @@ body:not(:has(.explorer)) main {
 }
 
 .strip-dots {
+  position: absolute;
+  left: 50%;
+  bottom: var(--space-2);
   display: flex;
-  justify-content: center;
-  gap: 6px;
-  margin-top: calc(var(--space-1) * -1);
+  gap: 5px;
+  padding: 5px 7px;
+  border-radius: var(--radius-pill);
+  background: rgb(29 39 51 / 0.45);
+  transform: translateX(-50%);
 }
 
 .strip-dots span {
   width: 6px;
   height: 6px;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 3px;
+  background: rgb(255 255 255 / 0.55);
   transition: width 0.2s ease;
 }
 
 .strip-dots .is-on {
-  width: 18px;
-  border-radius: 3px;
-  background: var(--ink);
-}
-
-.strip-a figcaption {
-  margin-top: calc(var(--space-5) * -1);
+  width: 16px;
+  background: #fff;
 }
 
 /* b: each about 82% wide, the next one peeking in, a counter on the frame */

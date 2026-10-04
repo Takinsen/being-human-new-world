@@ -7,7 +7,7 @@ import { commonsImage, commonsPage } from "@/lib/format";
 /**
  * PROTOTYPE (.scratch/place-photos/spec.md, Q9): three looks for the strip, switched with
  * `?variant=` on the map. Once one is picked, keep only that one and drop `variant`.
- * - a: one photo the card's width at a time, dots under it
+ * - a: one photo the card's width at a time, dots on it
  * - b: each about 82% wide so the next one peeks in, a 1/5 counter on it
  * - c: a row of small squares
  */
@@ -92,14 +92,14 @@ export function PhotoStrip({ photos, label, variant }: { photos: Photo[]; label:
             {at + 1}/{shown.length}
           </span>
         )}
+        {many && variant === "a" && (
+          <span className="strip-dots" aria-hidden="true">
+            {shown.map((p, i) => (
+              <span key={p.file} className={i === at ? "is-on" : undefined} />
+            ))}
+          </span>
+        )}
       </div>
-      {many && variant === "a" && (
-        <span className="strip-dots" aria-hidden="true">
-          {shown.map((p, i) => (
-            <span key={p.file} className={i === at ? "is-on" : undefined} />
-          ))}
-        </span>
-      )}
       <figcaption>
         <a
           href={commonsPage(current.file)}
