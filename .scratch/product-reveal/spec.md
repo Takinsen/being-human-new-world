@@ -12,11 +12,14 @@ One 16:9 slide for the class presentation, the moment the audience first sees �
   Place card open, right the Starter Checklist. The centre one is in front and largest.
 - **Q4 Real screens** from the app at 390×844 with real content, in a plain phone frame with no brand.
 - **Q5 Background:** the canopy's dark green with light falling through, as on the splash.
-- **Q6 Text:** the wordmark, the tagline "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก", a QR and the link.
+- **Q6 Text:** the wordmark, the tagline (Q10), a QR and the link.
   Thai only, no captions under the phones.
 - **Q7 Link:** `starter.tanakrit.dev`.
 - **Q8 Centre card:** ส้มตำเจ๊อ้อย จุฬาฯ ซอย 20 (a Home Taste Place, อีสาน).
 - **Q9 Checklist:** the first two items ticked.
+- **Q10 Tagline:** "มาใหม่แถวจุฬาฯ? Starter Pack อยู่นี่แล้ว", replacing "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก".
+- **Q11 Everywhere:** the site's description, README and CONTEXT.md take the new tagline too, so the
+  slide and a shared link say the same thing.
 
 ## Done
 

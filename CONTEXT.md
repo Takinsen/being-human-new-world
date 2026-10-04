@@ -1,6 +1,6 @@
 # ตั้งหลัก (Being Human New World)
 
-A starter pack that gives people who have just moved into a Bangkok campus area the local know-how that maps and search engines don't carry. Tagline: "บ้านยังเป็นบ้าน ที่นี่คือที่ตั้งหลัก". All user-facing text is Thai, written in a senior-to-junior voice.
+A starter pack that gives people who have just moved into a Bangkok campus area the local know-how that maps and search engines don't carry. Tagline: "มาใหม่แถวจุฬาฯ? Starter Pack อยู่นี่แล้ว". All user-facing text is Thai, written in a senior-to-junior voice.
 
 ## Language
 
